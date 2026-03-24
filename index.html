@@ -15,12 +15,12 @@
             --verde-whatsapp: #25d366; 
             --insta: #E1306C;
             --face: #1877F2;
+            --laranja-destaque: #ff9800;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Open Sans', sans-serif; background: #f0f7ff; overflow-x: hidden; color: #333; }
 
-        /* HEADER */
         header { 
             background: #fff; 
             padding: 15px 0; 
@@ -31,7 +31,6 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        /* CONTAINER DO LOGO */
         .brand-container {
             display: flex;
             align-items: center;
@@ -55,26 +54,13 @@
         }
 
         @keyframes brilhoTexto {
-            0%, 100% { 
-                text-shadow: 0 0 10px rgba(0,170,255,0.3);
-                transform: scale(1);
-            }
-            50% { 
-                text-shadow: 0 0 20px rgba(0,170,255,0.7), 0 0 30px rgba(0,51,153,0.5);
-                transform: scale(1.02);
-            }
+            0%, 100% { text-shadow: 0 0 10px rgba(0,170,255,0.3); transform: scale(1); }
+            50% { text-shadow: 0 0 20px rgba(0,170,255,0.7), 0 0 30px rgba(0,51,153,0.5); transform: scale(1.02); }
         }
 
-        .logo-text:hover {
-            animation: pularTexto 0.5s ease;
-        }
+        .logo-text:hover { animation: pularTexto 0.5s ease; }
+        @keyframes pularTexto { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
-        @keyframes pularTexto {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        /* MENU */
         .nav-container {
             width: 100%;
             overflow-x: auto;
@@ -103,22 +89,16 @@
             transition: all 0.3s ease;
         }
 
-        .link-txt { 
-            color: var(--azul-premium); 
-            border: 2px solid var(--azul-premium); 
-        }
-        
+        .link-txt { color: var(--azul-premium); border: 2px solid var(--azul-premium); }
         .link-insta { color: var(--insta); border: 2px solid var(--insta); }
         .link-face { color: var(--face); border: 2px solid var(--face); }
         .link-contato { color: var(--verde-whatsapp); border: 2px solid var(--verde-whatsapp); }
-        .link-sobre { color: var(--azul-premium); border: 2px solid var(--azul-premium); }
 
-        .link-insta:hover, .link-face:hover, .link-contato:hover, .link-sobre:hover, .link-txt:hover {
+        .link-insta:hover, .link-face:hover, .link-contato:hover, .link-txt:hover {
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        /* HERO SLIDER */
         .hero { 
             margin-top: 135px; 
             width: 100%;
@@ -150,15 +130,8 @@
             justify-content: center;
         }
         
-        .overlay { 
-            width: 100%; 
-            height: 100%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-        }
+        .overlay { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
 
-        /* SETAS DE NAVEGAÇÃO */
         .seta {
             position: absolute;
             top: 50%;
@@ -179,21 +152,10 @@
             transition: all 0.3s;
             border: 2px solid rgba(255,255,255,0.3);
         }
+        .seta:hover { background: rgba(0,68,171,0.5); transform: translateY(-50%) scale(1.1); }
+        .seta-esquerda { left: 20px; }
+        .seta-direita { right: 20px; }
 
-        .seta:hover {
-            background: rgba(0,68,171,0.5);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .seta-esquerda {
-            left: 20px;
-        }
-
-        .seta-direita {
-            right: 20px;
-        }
-
-        /* INDICADORES */
         .indicadores {
             position: absolute;
             bottom: 20px;
@@ -203,7 +165,6 @@
             gap: 10px;
             z-index: 10;
         }
-
         .indicador {
             width: 12px;
             height: 12px;
@@ -213,16 +174,10 @@
             transition: all 0.3s;
             border: 1px solid white;
         }
+        .indicador.ativo { background: var(--azul-claro); transform: scale(1.2); }
 
-        .indicador.ativo {
-            background: var(--azul-claro);
-            transform: scale(1.2);
-        }
-
-        /* SEÇÕES */
         section { padding: 50px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
         
-        /* CARD DA ESCOLA */
         .card { 
             background: white; 
             padding: 40px; 
@@ -233,7 +188,6 @@
             transition: all 0.3s ease;
             border: 2px solid rgba(0,170,255,0.1);
         }
-
         .card::after {
             content: '';
             position: absolute;
@@ -241,44 +195,15 @@
             left: -60%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(
-                to right,
-                rgba(255,255,255,0) 0%,
-                rgba(0,170,255,0.2) 50%,
-                rgba(255,255,255,0) 100%
-            );
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(0,170,255,0.2) 50%, rgba(255,255,255,0) 100%);
             transform: rotate(30deg);
             animation: brilhoCard 4s linear infinite;
         }
+        @keyframes brilhoCard { 0% { transform: rotate(30deg) translateX(-100%); } 100% { transform: rotate(30deg) translateX(100%); } }
+        .card:hover { transform: scale(1.02); border-color: var(--azul-claro); box-shadow: 0 15px 30px rgba(0,170,255,0.2); }
+        .card h2 { font-family: 'Montserrat'; color: var(--azul-escuro); margin-bottom: 15px; font-size: 2rem; position: relative; z-index: 1; }
+        .card p { font-size: 1.2rem; color: #555; position: relative; z-index: 1; }
 
-        @keyframes brilhoCard {
-            0% { transform: rotate(30deg) translateX(-100%); }
-            100% { transform: rotate(30deg) translateX(100%); }
-        }
-
-        .card:hover {
-            transform: scale(1.02);
-            border-color: var(--azul-claro);
-            box-shadow: 0 15px 30px rgba(0,170,255,0.2);
-        }
-
-        .card h2 { 
-            font-family: 'Montserrat'; 
-            color: var(--azul-escuro); 
-            margin-bottom: 15px; 
-            font-size: 2rem; 
-            position: relative;
-            z-index: 1;
-        }
-        
-        .card p { 
-            font-size: 1.2rem; 
-            color: #555;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* CATEGORIAS */
         .categorias-container {
             background: white;
             padding: 40px 20px;
@@ -290,7 +215,6 @@
             overflow: hidden;
             border: 2px solid rgba(0,170,255,0.1);
         }
-
         .categorias-container::after {
             content: '';
             position: absolute;
@@ -298,56 +222,20 @@
             left: -60%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(
-                to right,
-                rgba(255,255,255,0) 0%,
-                rgba(0,170,255,0.15) 50%,
-                rgba(255,255,255,0) 100%
-            );
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(0,170,255,0.15) 50%, rgba(255,255,255,0) 100%);
             transform: rotate(30deg);
             animation: brilhoCategorias 6s linear infinite;
         }
+        @keyframes brilhoCategorias { 0% { transform: rotate(30deg) translateX(-100%); } 100% { transform: rotate(30deg) translateX(100%); } }
+        .categorias-container h2 { font-family: 'Montserrat'; color: var(--azul-escuro); font-size: 2rem; margin-bottom: 30px; position: relative; z-index: 1; }
 
-        @keyframes brilhoCategorias {
-            0% { transform: rotate(30deg) translateX(-100%); }
-            100% { transform: rotate(30deg) translateX(100%); }
-        }
-
-        .categorias-container h2 {
-            font-family: 'Montserrat';
-            color: var(--azul-escuro);
-            font-size: 2rem;
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .grid-categorias { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 25px; 
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 1;
-        }
-        
+        .grid-categorias { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; position: relative; z-index: 1; }
         .cat-item { 
-            background: #f8f9fa; 
-            padding: 30px 20px; 
-            border-radius: 15px; 
-            font-weight: 800; 
-            font-size: 1.3rem;
-            color: var(--azul-escuro);
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            border: 2px solid rgba(0,170,255,0.2);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
+            background: #f8f9fa; padding: 30px 20px; border-radius: 15px; font-weight: 800; font-size: 1.3rem;
+            color: var(--azul-escuro); display: flex; align-items: center; justify-content: center;
+            border: 2px solid rgba(0,170,255,0.2); box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative; overflow: hidden; transition: all 0.3s ease;
         }
-
         .cat-item::after {
             content: '';
             position: absolute;
@@ -355,31 +243,13 @@
             left: -60%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(
-                to right,
-                rgba(255,255,255,0) 0%,
-                rgba(0,170,255,0.3) 50%,
-                rgba(255,255,255,0) 100%
-            );
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(0,170,255,0.3) 50%, rgba(255,255,255,0) 100%);
             transform: rotate(30deg);
             animation: brilho 4s linear infinite;
         }
-
-        @keyframes brilho {
-            0% { transform: rotate(30deg) translateX(-100%); }
-            100% { transform: rotate(30deg) translateX(100%); }
-        }
-
-        .cat-item:hover {
-            transform: scale(1.05);
-            border-color: var(--azul-claro);
-            box-shadow: 0 15px 30px rgba(0,170,255,0.3);
-        }
-
-        .cat-item .emoji {
-            font-size: 2rem;
-            margin-right: 10px;
-        }
+        @keyframes brilho { 0% { transform: rotate(30deg) translateX(-100%); } 100% { transform: rotate(30deg) translateX(100%); } }
+        .cat-item:hover { transform: scale(1.05); border-color: var(--azul-claro); box-shadow: 0 15px 30px rgba(0,170,255,0.3); }
+        .cat-item .emoji { font-size: 2rem; margin-right: 10px; }
 
         .info-idades {
             font-size: 1.2rem;
@@ -392,24 +262,39 @@
             z-index: 1;
             border: 2px dashed var(--azul-claro);
         }
+        .info-idades strong { color: var(--azul-escuro); font-size: 1.3rem; }
+        .info-idades span { color: var(--azul-premium); font-weight: 800; }
 
-        .info-idades strong {
-            color: var(--azul-escuro);
-            font-size: 1.3rem;
-        }
-
-        .info-idades span {
-            color: var(--azul-premium);
+        .btn-prematricula {
+            background: linear-gradient(135deg, var(--laranja-destaque), #f57c00);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 60px;
             font-weight: 800;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 20px auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 25px rgba(255,152,0,0.3);
+            animation: pulseBotao 2s infinite;
+            text-decoration: none;
+        }
+        
+        @keyframes pulseBotao {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 25px rgba(255,152,0,0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 15px 35px rgba(255,152,0,0.5); }
+        }
+        
+        .btn-prematricula:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #f57c00, #ff9800);
+            box-shadow: 0 15px 35px rgba(255,152,0,0.4);
         }
 
-        .info-idades .obs {
-            font-size: 1rem;
-            color: #666;
-            margin-top: 5px;
-        }
-
-        /* PATROCINADORES */
         .patrocinadores {
             background: white;
             padding: 40px 20px;
@@ -421,7 +306,6 @@
             overflow: hidden;
             border: 2px solid rgba(0,170,255,0.1);
         }
-
         .patrocinadores::after {
             content: '';
             position: absolute;
@@ -429,191 +313,46 @@
             left: -60%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(
-                to right,
-                rgba(255,255,255,0) 0%,
-                rgba(0,170,255,0.15) 50%,
-                rgba(255,255,255,0) 100%
-            );
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(0,170,255,0.15) 50%, rgba(255,255,255,0) 100%);
             transform: rotate(30deg);
             animation: brilhoPatrocinadores 6s linear infinite;
         }
+        @keyframes brilhoPatrocinadores { 0% { transform: rotate(30deg) translateX(-100%); } 100% { transform: rotate(30deg) translateX(100%); } }
+        .patrocinadores h2 { font-family: 'Montserrat'; color: var(--azul-escuro); font-size: 2rem; margin-bottom: 30px; position: relative; z-index: 1; }
+        .patrocinadores-grid { display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; position: relative; z-index: 1; }
+        .patrocinador-item { background: #f8f9fa; padding: 20px; border-radius: 15px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; border: 2px solid rgba(0,170,255,0.1); }
+        .patrocinador-item:hover { transform: scale(1.05); border-color: var(--azul-claro); box-shadow: 0 10px 25px rgba(0,170,255,0.2); }
+        .patrocinador-item img { max-width: 150px; max-height: 80px; object-fit: contain; }
+        .chamada-patrocinio { margin-top: 30px; font-size: 1.2rem; color: #555; position: relative; z-index: 1; }
+        .chamada-patrocinio a { color: var(--azul-premium); font-weight: 800; text-decoration: none; }
+        .chamada-patrocinio a:hover { color: var(--azul-escuro); text-decoration: underline; }
 
-        @keyframes brilhoPatrocinadores {
-            0% { transform: rotate(30deg) translateX(-100%); }
-            100% { transform: rotate(30deg) translateX(100%); }
-        }
-
-        .patrocinadores h2 {
-            font-family: 'Montserrat';
-            color: var(--azul-escuro);
-            font-size: 2rem;
-            margin-bottom: 30px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .patrocinadores-grid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 1;
-        }
-
-        .patrocinador-item {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            border: 2px solid rgba(0,170,255,0.1);
-        }
-
-        .patrocinador-item:hover {
-            transform: scale(1.05);
-            border-color: var(--azul-claro);
-            box-shadow: 0 10px 25px rgba(0,170,255,0.2);
-        }
-
-        .patrocinador-item img {
-            max-width: 150px;
-            max-height: 80px;
-            object-fit: contain;
-        }
-
-        .chamada-patrocinio {
-            margin-top: 30px;
-            font-size: 1.2rem;
-            color: #555;
-            position: relative;
-            z-index: 1;
-        }
-
-        .chamada-patrocinio a {
-            color: var(--azul-premium);
-            font-weight: 800;
-            text-decoration: none;
-        }
-
-        .chamada-patrocinio a:hover {
-            color: var(--azul-escuro);
-            text-decoration: underline;
-        }
-
-        /* LOCALIZAÇÃO COM MAPA GRANDE */
         .loc-card {
-            background: #fff; 
-            padding: 40px 30px; 
-            border-radius: 30px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08); 
-            display: flex;
-            flex-direction: column; 
-            align-items: center; 
-            gap: 25px;
-            border: 6px solid var(--azul-claro);
-            position: relative;
+            background: #fff; padding: 40px 30px; border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08); display: flex;
+            flex-direction: column; align-items: center; gap: 25px;
+            border: 6px solid var(--azul-claro); position: relative;
             animation: pulsarBordaAzul 1.5s ease-in-out infinite;
         }
-
-        @keyframes pulsarBordaAzul {
-            0%, 100% { 
-                border-color: var(--azul-claro);
-                box-shadow: 0 0 10px rgba(0,170,255,0.3);
-            }
-            50% { 
-                border-color: var(--azul-premium);
-                box-shadow: 0 0 25px rgba(0,170,255,0.8);
-            }
-        }
-
-        .loc-card h2 { 
-            font-size: 2.5rem; 
-            color: var(--azul-escuro);
-            margin-bottom: 10px;
-        }
-
-        .mapa-container {
-            width: 100%;
-            height: 400px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            border: 3px solid white;
-        }
-
-        .mapa-container iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        .endereco-info {
-            text-align: center;
-            margin: 10px 0;
-        }
-
-        .endereco-info p {
-            font-size: 1.2rem;
-            color: #555;
-        }
-
-        .endereco-info strong {
-            color: var(--azul-escuro);
-            font-size: 1.4rem;
-        }
-
+        @keyframes pulsarBordaAzul { 0%, 100% { border-color: var(--azul-claro); box-shadow: 0 0 10px rgba(0,170,255,0.3); } 50% { border-color: var(--azul-premium); box-shadow: 0 0 25px rgba(0,170,255,0.8); } }
+        .loc-card h2 { font-size: 2.5rem; color: var(--azul-escuro); margin-bottom: 10px; }
+        .mapa-container { width: 100%; height: 400px; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 3px solid white; }
+        .mapa-container iframe { width: 100%; height: 100%; border: 0; }
+        .endereco-info { text-align: center; margin: 10px 0; }
+        .endereco-info p { font-size: 1.2rem; color: #555; }
+        .endereco-info strong { color: var(--azul-escuro); font-size: 1.4rem; }
         .btn-mapa {
-            background: var(--azul-premium); 
-            color: white; 
-            text-decoration: none;
-            padding: 15px 40px; 
-            border-radius: 50px; 
-            font-weight: 800;
-            font-size: 1.2rem;
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-            box-shadow: 0 10px 20px rgba(0,71,171,0.2);
-            transition: all 0.3s;
+            background: var(--azul-premium); color: white; text-decoration: none;
+            padding: 15px 40px; border-radius: 50px; font-weight: 800;
+            font-size: 1.2rem; display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 10px 20px rgba(0,71,171,0.2); transition: all 0.3s;
         }
+        .btn-mapa:hover { background: var(--azul-escuro); transform: scale(1.05); }
+        .btn-mapa .emoji { display: inline-block; animation: mexerEmoji 2s ease-in-out infinite; font-size: 1.5rem; }
+        @keyframes mexerEmoji { 0%, 100% { transform: translateX(0) rotate(0deg); } 25% { transform: translateX(-5px) rotate(-10deg); } 75% { transform: translateX(5px) rotate(10deg); } }
 
-        .btn-mapa:hover {
-            background: var(--azul-escuro);
-            transform: scale(1.05);
-        }
-
-        .btn-mapa .emoji {
-            display: inline-block;
-            animation: mexerEmoji 2s ease-in-out infinite;
-            font-size: 1.5rem;
-        }
-
-        @keyframes mexerEmoji {
-            0%, 100% { transform: translateX(0) rotate(0deg); }
-            25% { transform: translateX(-5px) rotate(-10deg); }
-            75% { transform: translateX(5px) rotate(10deg); }
-        }
-
-        footer { 
-            background: var(--azul-escuro); 
-            color: white; 
-            padding: 40px; 
-            text-align: center; 
-            font-size: 1rem; 
-            font-weight: 700; 
-        }
-        
-        .rights { 
-            margin-top: 15px; 
-            opacity: 0.7; 
-            font-weight: 400; 
-            font-size: 0.8rem; 
-        }
+        footer { background: var(--azul-escuro); color: white; padding: 40px; text-align: center; font-size: 1rem; font-weight: 700; }
+        .rights { margin-top: 15px; opacity: 0.7; font-weight: 400; font-size: 0.8rem; }
 
         @media (max-width: 768px) {
             .hero { margin-top: 135px; }
@@ -626,6 +365,7 @@
             .patrocinador-item img { max-width: 120px; max-height: 60px; }
             .loc-card h2 { font-size: 2rem; }
             .mapa-container { height: 300px; }
+            .btn-prematricula { font-size: 1rem; padding: 14px 25px; }
         }
     </style>
 </head>
@@ -637,9 +377,9 @@
     </div>
     <div class="nav-container">
         <ul class="nav-menu">
-            <li><a href="#sobre" class="link-txt">MATRÍCULAS</a></li>
-            <li><a href="#atividades" class="link-txt">CATEGORIAS</a></li>
-            <li><a href="sobre.html" class="link-sobre">SOBRE NÓS</a></li>
+            <li><a href="diretoria.html" class="link-txt">DIRETORIA</a></li>
+            <li><a href="funcionarios.html" class="link-txt">FUNCIONÁRIOS</a></li>
+            <li><a href="galerias.html" class="link-txt">GALERIA DE FOTOS</a></li>
             <li><a href="#" class="link-insta">INSTAGRAM</a></li>
             <li><a href="#" class="link-face">FACEBOOK</a></li>
             <li><a href="https://wa.me/5592999999999" class="link-contato">CONTATOS</a></li>
@@ -650,23 +390,13 @@
 <div class="hero">
     <div class="slides-container">
         <div class="slides" id="slider">
-            <div class="slide" style="background-image: url('imagem1.jpg');">
-                <div class="overlay"></div>
-            </div>
-            <div class="slide" style="background-image: url('imagem2.jpg');">
-                <div class="overlay"></div>
-            </div>
-            <div class="slide" style="background-image: url('imagem3.jpg');">
-                <div class="overlay"></div>
-            </div>
-            <div class="slide" style="background-image: url('./pascoa.jpg');">
-                <div class="overlay"></div>
-            </div>
+            <div class="slide" style="background-image: url('imagem1.jpg');"><div class="overlay"></div></div>
+            <div class="slide" style="background-image: url('imagem2.jpg');"><div class="overlay"></div></div>
+            <div class="slide" style="background-image: url('imagem3.jpg');"><div class="overlay"></div></div>
+            <div class="slide" style="background-image: url('./pascoa.jpg');"><div class="overlay"></div></div>
         </div>
-        
         <div class="seta seta-esquerda" onclick="mudarSlide(-1)">❮</div>
         <div class="seta seta-direita" onclick="mudarSlide(1)">❯</div>
-        
         <div class="indicadores" id="indicadores">
             <div class="indicador ativo" onclick="irParaSlide(0)"></div>
             <div class="indicador" onclick="irParaSlide(1)"></div>
@@ -683,23 +413,21 @@
     </div>
 </section>
 
-<!-- SEÇÃO DE CATEGORIAS -->
+<div style="text-align: center; margin: 20px 0;">
+    <a href="prematricula.html" class="btn-prematricula">
+        📝 PRÉ-MATRÍCULA ONLINE
+    </a>
+    <p style="color: #666; margin-top: 10px; font-size: 0.9rem;">Faça sua solicitação de matrícula de forma rápida e segura</p>
+</div>
+
 <div class="categorias-container" id="atividades">
     <h2>🏆 CATEGORIAS</h2>
     
     <div class="grid-categorias">
-        <div class="cat-item">
-            <span class="emoji">⚽</span> FUTEBOL
-        </div>
-        <div class="cat-item">
-            <span class="emoji">🥋</span> TAEKWONDO
-        </div>
-        <div class="cat-item">
-            <span class="emoji">🏓</span> TÊNIS DE MESA
-        </div>
-        <div class="cat-item">
-            <span class="emoji">🤸</span> GINÁSTICA
-        </div>
+        <div class="cat-item"><span class="emoji">⚽</span> FUTEBOL</div>
+        <div class="cat-item"><span class="emoji">🥋</span> TAEKWONDO</div>
+        <div class="cat-item"><span class="emoji">🏓</span> TÊNIS DE MESA</div>
+        <div class="cat-item"><span class="emoji">🤸</span> GINÁSTICA</div>
     </div>
     
     <div class="info-idades">
@@ -708,16 +436,11 @@
     </div>
 </div>
 
-<!-- SEÇÃO DE PATROCINADORES -->
 <div class="patrocinadores">
     <h2>🏆 NOSSOS PATROCINADORES</h2>
     <div class="patrocinadores-grid">
-        <div class="patrocinador-item">
-            <img src="./dubom.png" alt="Patrocinador 1">
-        </div>
-        <div class="patrocinador-item">
-            <img src="./sao-jose.png" alt="Patrocinador 2">
-        </div>
+        <div class="patrocinador-item"><img src="./dubom.png" alt="Dubom"></div>
+        <div class="patrocinador-item"><img src="./sao-jose.png" alt="São José"></div>
     </div>
     <div class="chamada-patrocinio">
         📢 <strong>Sua marca pode estar aqui!</strong><br>
@@ -731,7 +454,6 @@
         <h2> VENHA NOS CONHECER </h2>
         
         <div class="mapa-container">
-            <!-- MAPA INTERATIVO GRANDE -->
             <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.123456789!2d-60.0445!3d-3.0911!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMDUnMjguMCJTIDYwwrAwMic0MC4yIlc!5e0!3m2!1spt-BR!2sbr!4v1234567890"
                 allowfullscreen=""
@@ -775,19 +497,39 @@
 
     function atualizarSlider() {
         slides.style.transform = `translateX(-${slideIndex * 25}%)`;
-        
         indicadores.forEach((ind, i) => {
-            if (i === slideIndex) {
-                ind.classList.add('ativo');
-            } else {
-                ind.classList.remove('ativo');
-            }
+            if (i === slideIndex) ind.classList.add('ativo');
+            else ind.classList.remove('ativo');
         });
     }
 
-    setInterval(() => {
-        mudarSlide(1);
-    }, 5000);
+    setInterval(() => { mudarSlide(1); }, 5000);
+</script>
+
+<!-- CÓDIGO PARA CONTAR VISITAS (SÓ NO SITE PÚBLICO) -->
+<script>
+    function registrarVisitaPublica() {
+        let visitas = localStorage.getItem('visitas_site');
+        if (visitas) {
+            visitas = JSON.parse(visitas);
+        } else {
+            visitas = { registros: [], totalGeral: 0 };
+        }
+        
+        const hoje = new Date().toDateString();
+        const index = visitas.registros.findIndex(r => new Date(r.data).toDateString() === hoje);
+        
+        if (index !== -1) {
+            visitas.registros[index].quantidade++;
+        } else {
+            visitas.registros.push({ data: new Date(), quantidade: 1 });
+        }
+        visitas.totalGeral++;
+        
+        localStorage.setItem('visitas_site', JSON.stringify(visitas));
+    }
+    
+    registrarVisitaPublica();
 </script>
 
 </body>
