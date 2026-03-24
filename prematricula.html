@@ -6,9 +6,6 @@
     <title>Pré-Matrícula | Escolinha do Jacaré</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
 
     <style>
         :root {
@@ -318,28 +315,6 @@
             .form-card h1 { font-size: 1.5rem; }
             .mensagem-sucesso h2 { font-size: 1.3rem; }
         }
-
-        /* Estilo do calendário Flatpickr para desktop */
-        .flatpickr-calendar {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            font-family: 'Open Sans', sans-serif;
-        }
-        .flatpickr-monthDropdown-months, .flatpickr-yearDropdown {
-            font-size: 1rem;
-            padding: 5px;
-        }
-        
-        /* Esconder o calendário Flatpickr no celular */
-        @media (max-width: 768px) {
-            .flatpickr-calendar {
-                display: none !important;
-            }
-            .flatpickr-input {
-                cursor: pointer;
-            }
-        }
     </style>
 </head>
 <body>
@@ -383,7 +358,6 @@
             <div class="form-linha">
                 <div class="form-grupo">
                     <label>Data de nascimento <span class="obrigatorio">*</span></label>
-                    <!-- Usando type="date" nativo (melhor no celular) -->
                     <input type="date" id="dataNasc">
                     <div class="mensagem-erro" id="erroData">Campo obrigatório</div>
                     <div id="infoIdade" class="info-idade" style="display:none;"></div>
