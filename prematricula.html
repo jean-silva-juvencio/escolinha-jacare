@@ -319,6 +319,7 @@
             .mensagem-sucesso h2 { font-size: 1.3rem; }
         }
 
+        /* Estilo do calendário Flatpickr para desktop */
         .flatpickr-calendar {
             background: white;
             border-radius: 20px;
@@ -328,6 +329,16 @@
         .flatpickr-monthDropdown-months, .flatpickr-yearDropdown {
             font-size: 1rem;
             padding: 5px;
+        }
+        
+        /* Esconder o calendário Flatpickr no celular */
+        @media (max-width: 768px) {
+            .flatpickr-calendar {
+                display: none !important;
+            }
+            .flatpickr-input {
+                cursor: pointer;
+            }
         }
     </style>
 </head>
@@ -372,7 +383,8 @@
             <div class="form-linha">
                 <div class="form-grupo">
                     <label>Data de nascimento <span class="obrigatorio">*</span></label>
-                    <input type="text" id="dataNasc" placeholder="dd/mm/aaaa" autocomplete="off">
+                    <!-- Usando type="date" nativo (melhor no celular) -->
+                    <input type="date" id="dataNasc">
                     <div class="mensagem-erro" id="erroData">Campo obrigatório</div>
                     <div id="infoIdade" class="info-idade" style="display:none;"></div>
                 </div>
@@ -531,16 +543,6 @@
     // URL DO GOOGLE APPS SCRIPT (SUA PLANILHA)
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx0IMoFnsRaocqdv-AWi6wVmcQcPqHWUv336fgnCv71st2HNujUpht_NhE25pF3ZkU3ow/exec';
 
-    // INICIALIZAR CALENDÁRIO COM SELETOR DE MÊS E ANO
-    flatpickr("#dataNasc", {
-        dateFormat: "d/m/Y",
-        locale: "pt",
-        maxDate: "today",
-        allowInput: true,
-        yearSelectorType: "dropdown",
-        monthSelectorType: "dropdown"
-    });
-
     let fotoSelecionada = false;
     let fotoDataUrl = '';
 
@@ -593,11 +595,7 @@
         const dataNascStr = document.getElementById('dataNasc').value;
         if (!dataNascStr) return null;
         
-        // Converter dd/mm/aaaa para Date
-        const partes = dataNascStr.split('/');
-        if (partes.length !== 3) return null;
-        const dataNasc = new Date(partes[2], partes[1] - 1, partes[0]);
-        
+        const dataNasc = new Date(dataNascStr);
         const hoje = new Date();
         let idade = hoje.getFullYear() - dataNasc.getFullYear();
         const m = hoje.getMonth() - dataNasc.getMonth();
@@ -693,7 +691,7 @@
             isValid = false;
         }
         
-        const dataNascStr = document.getElementById('dataNasc').value.trim();
+        const dataNascStr = document.getElementById('dataNasc').value;
         if (!dataNascStr) {
             document.getElementById('erroData').style.display = 'block';
             document.getElementById('dataNasc').classList.add('erro');
@@ -773,15 +771,6 @@
         const remedioDesc = remedio === 'Sim' ? document.getElementById('remedioDesc').value : '';
         const idade = calcularIdade();
         
-        // Converter data para formato ISO (YYYY-MM-DD)
-        let dataFormatada = '';
-        if (dataNascStr) {
-            const partes = dataNascStr.split('/');
-            if (partes.length === 3) {
-                dataFormatada = `${partes[2]}-${partes[1]}-${partes[0]}`;
-            }
-        }
-        
         const solicitacao = {
             id: Date.now(),
             protocolo: `JAC-${Date.now()}`,
@@ -790,7 +779,7 @@
             foto: fotoDataUrl,
             aluno: {
                 nome: nome,
-                dataNasc: dataFormatada,
+                dataNasc: dataNascStr,
                 idade: idade,
                 turma: turma,
                 categoria: document.getElementById('categoriaEspecifica').value,
