@@ -518,6 +518,9 @@
 </footer>
 
 <script>
+    // URL DO GOOGLE APPS SCRIPT (SUA PLANILHA)
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx0IMoFnsRaocqdv-AWi6wVmcQcPqHWUv336fgnCv71st2HNujUpht_NhE25pF3ZkU3ow/exec';
+
     let fotoSelecionada = false;
     let fotoDataUrl = '';
 
@@ -629,6 +632,21 @@
             }
         });
     });
+
+    // FUNÇÃO PARA ENVIAR PARA PLANILHA
+    async function enviarParaPlanilha(dados) {
+        try {
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+            console.log('✅ Dados enviados para planilha com sucesso!');
+        } catch (error) {
+            console.log('❌ Erro ao enviar para planilha:', error);
+        }
+    }
 
     document.getElementById('formPrematricula').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -761,9 +779,29 @@
             origem: document.getElementById('origem').value
         };
         
+        // Salvar no localStorage
         const solicitacoes = JSON.parse(localStorage.getItem('solicitacoes_prematricula') || '[]');
         solicitacoes.push(solicitacao);
         localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+        
+        // Enviar para planilha (dados resumidos para planilha)
+        const dadosPlanilha = {
+            protocolo: solicitacao.protocolo,
+            dataEnvio: new Date().toLocaleString('pt-BR'),
+            nomeAluno: solicitacao.aluno.nome,
+            idade: solicitacao.aluno.idade,
+            turma: solicitacao.aluno.turma,
+            categoria: solicitacao.aluno.categoria,
+            responsavel: solicitacao.responsavel.nome,
+            telefone: solicitacao.responsavel.telefone,
+            email: solicitacao.responsavel.email,
+            endereco: `${solicitacao.endereco.rua}, ${solicitacao.endereco.numero} - ${solicitacao.endereco.bairro}`,
+            moradores: solicitacao.moradores,
+            remedio: solicitacao.remedio,
+            origem: solicitacao.origem
+        };
+        
+        enviarParaPlanilha(dadosPlanilha);
         
         document.getElementById('protocoloDiv').innerHTML = `🔑 PROTOCOLO: ${solicitacao.protocolo}`;
         document.getElementById('formularioContainer').classList.add('hidden');
