@@ -6,6 +6,9 @@
     <title>Pré-Matrícula | Escolinha do Jacaré</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
 
     <style>
         :root {
@@ -102,10 +105,6 @@
             color: #666;
             margin-bottom: 30px;
             font-size: 0.9rem;
-        }
-
-        .form-card .subtitulo strong {
-            color: var(--laranja-destaque);
         }
 
         .form-grupo {
@@ -319,6 +318,17 @@
             .form-card h1 { font-size: 1.5rem; }
             .mensagem-sucesso h2 { font-size: 1.3rem; }
         }
+
+        .flatpickr-calendar {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            font-family: 'Open Sans', sans-serif;
+        }
+        .flatpickr-monthDropdown-months, .flatpickr-yearDropdown {
+            font-size: 1rem;
+            padding: 5px;
+        }
     </style>
 </head>
 <body>
@@ -362,7 +372,7 @@
             <div class="form-linha">
                 <div class="form-grupo">
                     <label>Data de nascimento <span class="obrigatorio">*</span></label>
-                    <input type="date" id="dataNasc">
+                    <input type="text" id="dataNasc" placeholder="dd/mm/aaaa" autocomplete="off">
                     <div class="mensagem-erro" id="erroData">Campo obrigatório</div>
                     <div id="infoIdade" class="info-idade" style="display:none;"></div>
                 </div>
@@ -521,6 +531,16 @@
     // URL DO GOOGLE APPS SCRIPT (SUA PLANILHA)
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx0IMoFnsRaocqdv-AWi6wVmcQcPqHWUv336fgnCv71st2HNujUpht_NhE25pF3ZkU3ow/exec';
 
+    // INICIALIZAR CALENDÁRIO COM SELETOR DE MÊS E ANO
+    flatpickr("#dataNasc", {
+        dateFormat: "d/m/Y",
+        locale: "pt",
+        maxDate: "today",
+        allowInput: true,
+        yearSelectorType: "dropdown",
+        monthSelectorType: "dropdown"
+    });
+
     let fotoSelecionada = false;
     let fotoDataUrl = '';
 
@@ -570,13 +590,18 @@
     });
 
     function calcularIdade() {
-        const dataNasc = document.getElementById('dataNasc').value;
-        if (!dataNasc) return null;
+        const dataNascStr = document.getElementById('dataNasc').value;
+        if (!dataNascStr) return null;
+        
+        // Converter dd/mm/aaaa para Date
+        const partes = dataNascStr.split('/');
+        if (partes.length !== 3) return null;
+        const dataNasc = new Date(partes[2], partes[1] - 1, partes[0]);
+        
         const hoje = new Date();
-        const nasc = new Date(dataNasc);
-        let idade = hoje.getFullYear() - nasc.getFullYear();
-        const m = hoje.getMonth() - nasc.getMonth();
-        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
+        let idade = hoje.getFullYear() - dataNasc.getFullYear();
+        const m = hoje.getMonth() - dataNasc.getMonth();
+        if (m < 0 || (m === 0 && hoje.getDate() < dataNasc.getDate())) idade--;
         return idade;
     }
 
@@ -668,8 +693,8 @@
             isValid = false;
         }
         
-        const data = document.getElementById('dataNasc').value;
-        if (!data) {
+        const dataNascStr = document.getElementById('dataNasc').value.trim();
+        if (!dataNascStr) {
             document.getElementById('erroData').style.display = 'block';
             document.getElementById('dataNasc').classList.add('erro');
             isValid = false;
@@ -748,6 +773,15 @@
         const remedioDesc = remedio === 'Sim' ? document.getElementById('remedioDesc').value : '';
         const idade = calcularIdade();
         
+        // Converter data para formato ISO (YYYY-MM-DD)
+        let dataFormatada = '';
+        if (dataNascStr) {
+            const partes = dataNascStr.split('/');
+            if (partes.length === 3) {
+                dataFormatada = `${partes[2]}-${partes[1]}-${partes[0]}`;
+            }
+        }
+        
         const solicitacao = {
             id: Date.now(),
             protocolo: `JAC-${Date.now()}`,
@@ -756,7 +790,7 @@
             foto: fotoDataUrl,
             aluno: {
                 nome: nome,
-                dataNasc: data,
+                dataNasc: dataFormatada,
                 idade: idade,
                 turma: turma,
                 categoria: document.getElementById('categoriaEspecifica').value,
@@ -784,7 +818,7 @@
         solicitacoes.push(solicitacao);
         localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
         
-        // Enviar para planilha (dados resumidos para planilha)
+        // Enviar para planilha
         const dadosPlanilha = {
             protocolo: solicitacao.protocolo,
             dataEnvio: new Date().toLocaleString('pt-BR'),
