@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Galeria de Fotos | Escolinha do Jacaré</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --azul-escuro: #003399;
+            --azul-premium: #0047AB;
+            --azul-claro: #00aaff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            background: #f0f7ff; 
+            color: #333;
+        }
+
+        /* HEADER */
+        header { 
+            background: #fff; 
+            padding: 15px 0; 
+            position: fixed; 
+            width: 100%; 
+            top: 0; 
+            z-index: 2000; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-text { 
+            text-decoration: none; 
+            font-family: 'Montserrat'; 
+            font-weight: 900; 
+            font-size: 1.8rem; 
+            background: linear-gradient(45deg, var(--azul-escuro), var(--azul-claro));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-voltar {
+            background: var(--azul-premium);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .btn-voltar:hover {
+            background: var(--azul-escuro);
+            transform: scale(1.05);
+        }
+
+        .btn-acesso {
+            background: #555;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-acesso:hover {
+            background: var(--azul-premium);
+        }
+
+        /* CONTEÚDO PRINCIPAL */
+        .container {
+            max-width: 1200px;
+            margin: 120px auto 50px;
+            padding: 0 20px;
+        }
+
+        .titulo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .titulo h1 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .titulo p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* SEÇÃO SOBRE NÓS */
+        .sobre-section {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sobre-section::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(0,170,255,0.1) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(30deg);
+            animation: brilhoSobre 8s linear infinite;
+        }
+
+        @keyframes brilhoSobre {
+            0% { transform: rotate(30deg) translateX(-100%); }
+            100% { transform: rotate(30deg) translateX(100%); }
+        }
+
+        .sobre-section h2 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .sobre-section p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* LINHA DO TEMPO - 3 ÉPOCAS */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-card {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid rgba(0,170,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(0,170,255,0.15) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(30deg);
+            animation: brilhoTimeline 6s linear infinite;
+        }
+
+        @keyframes brilhoTimeline {
+            0% { transform: rotate(30deg) translateX(-100%); }
+            100% { transform: rotate(30deg) translateX(100%); }
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--azul-claro);
+            box-shadow: 0 15px 30px rgba(0,170,255,0.2);
+        }
+
+        .timeline-card .icone {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .timeline-card .periodo {
+            font-size: 0.85rem;
+            color: var(--azul-premium);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .timeline-card .titulo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--azul-escuro);
+            margin-bottom: 10px;
+        }
+
+        .timeline-card .descricao {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .btn-ver-fotos {
+            background: var(--azul-premium);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+        }
+
+        .btn-ver-fotos:hover {
+            background: var(--azul-escuro);
+            transform: scale(1.05);
+        }
+
+        .valores-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .valor-item {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            transition: all 0.3s;
+        }
+
+        .valor-item:hover {
+            transform: translateY(-5px);
+            background: #f0f7ff;
+        }
+
+        .valor-item .emoji {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .valor-item h3 {
+            color: var(--azul-escuro);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .valor-item p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        /* BARRA ADMIN */
+        .toolbar {
+            display: none;
+            justify-content: flex-end;
+            margin-bottom: 30px;
+        }
+
+        .toolbar.ativo {
+            display: flex;
+        }
+
+        .btn-admin {
+            background: var(--azul-premium);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-admin:hover {
+            background: var(--azul-escuro);
+            transform: scale(1.05);
+        }
+
+        /* GRADE DE FOTOS GERAL */
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .foto-item {
+            position: relative;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .foto-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .foto-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: all 0.3s;
+        }
+
+        .foto-item:hover img {
+            transform: scale(1.02);
+        }
+
+        .btn-excluir-foto {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,68,68,0.9);
+            color: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .btn-excluir-foto:hover {
+            background: #ff0000;
+            transform: scale(1.1);
+        }
+
+        .modo-admin .btn-excluir-foto {
+            display: flex;
+        }
+
+        .sem-fotos {
+            text-align: center;
+            padding: 60px;
+            background: white;
+            border-radius: 30px;
+            color: #999;
+            grid-column: 1 / -1;
+        }
+
+        /* MODAL VISUALIZAÇÃO */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .modal-content img {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 10px;
+        }
+
+        .fechar-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* MODAL DE FOTOS DAS ÉPOCAS */
+        .modal-epoca {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1100;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .modal-epoca-content {
+            background: white;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 25px;
+            position: relative;
+        }
+
+        .modal-epoca-content h2 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .fechar-modal-epoca {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .fotos-epoca-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .foto-epoca-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .foto-epoca-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .foto-epoca-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .btn-add-foto-epoca {
+            background: var(--azul-premium);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* MODAL ADMIN */
+        .modal-admin {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1200;
+        }
+
+        .modal-admin-content {
+            background: white;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .modal-admin-content h2 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            margin-bottom: 20px;
+        }
+
+        .modal-admin-content input, .modal-admin-content select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .modal-admin-content button {
+            background: var(--azul-premium);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 50px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .fechar-modal-admin {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .preview-img {
+            max-width: 100%;
+            max-height: 150px;
+            margin-top: 10px;
+            border-radius: 10px;
+        }
+
+        /* LOGIN */
+        .login-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1300;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+        }
+
+        .login-box button {
+            background: var(--azul-premium);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 50px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .status-admin {
+            background: #4caf50;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+
+        footer {
+            background: var(--azul-escuro);
+            color: white;
+            text-align: center;
+            padding: 40px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .container { margin-top: 140px; }
+            .timeline { grid-template-columns: 1fr; gap: 15px; }
+            .valores-grid { grid-template-columns: 1fr; }
+            .sobre-section { padding: 25px; }
+            .titulo h1 { font-size: 2rem; }
+            .header-container { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <a href="index.html" class="logo-text">🐊 ESCOLINHA DO JACARÉ</a>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn-acesso" onclick="mostrarLogin()">🔒 ACESSO FUNCIONÁRIOS</button>
+            <a href="index.html" class="btn-voltar">← VOLTAR</a>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="titulo">
+        <h1>📸 GALERIA DE FOTOS</h1>
+        <p>Momentos especiais dos nossos treinos e eventos</p>
+        <div id="statusAdmin"></div>
+    </div>
+
+    <!-- SEÇÃO SOBRE NÓS COM LINHA DO TEMPO -->
+    <div class="sobre-section">
+        <h2>📖 NOSSA HISTÓRIA</h2>
+        <p>Fundada no coração do bairro Alvorada, a Escolinha do Jacaré nasceu do sonho de transformar vidas através do esporte. Mais que formar atletas, nosso objetivo é formar cidadãos com valores sólidos como respeito, disciplina e trabalho em equipe.</p>
+        
+        <!-- LINHA DO TEMPO - 3 ÉPOCAS -->
+        <div class="timeline">
+            <div class="timeline-card">
+                <div class="icone">🏢</div>
+                <div class="periodo">2020 - 2022</div>
+                <div class="titulo">Ginásio</div>
+                <div class="descricao">Primeiros passos da escolinha, aulas no ginásio municipal. Iniciamos com futebol e taekwondo.</div>
+                <button class="btn-ver-fotos" onclick="abrirGaleriaEpoca('ginasio')">📸 VER FOTOS</button>
+            </div>
+            <div class="timeline-card">
+                <div class="icone">🏠</div>
+                <div class="periodo">2022 - 2024</div>
+                <div class="titulo">CDC</div>
+                <div class="descricao">Crescimento e novas modalidades no Centro de Convivência. Chegada do tênis de mesa e ginástica.</div>
+                <button class="btn-ver-fotos" onclick="abrirGaleriaEpoca('cdc')">📸 VER FOTOS</button>
+            </div>
+            <div class="timeline-card">
+                <div class="icone">🏟️</div>
+                <div class="periodo">2024 - Presente</div>
+                <div class="titulo">Unidos do Alvorada</div>
+                <div class="descricao">Nossa casa atual, na quadra da Unidos do Alvorada. Mais estrutura, mais alunos e muito mais história para construir.</div>
+                <button class="btn-ver-fotos" onclick="abrirGaleriaEpoca('alvorada')">📸 VER FOTOS</button>
+            </div>
+        </div>
+        
+        <div class="valores-grid">
+            <div class="valor-item">
+                <span class="emoji">🏆</span>
+                <h3>Missão</h3>
+                <p>Formar cidadãos através do esporte, promovendo saúde, educação e cidadania.</p>
+            </div>
+            <div class="valor-item">
+                <span class="emoji">👁️</span>
+                <h3>Visão</h3>
+                <p>Ser referência em formação esportiva e educacional no bairro Alvorada.</p>
+            </div>
+            <div class="valor-item">
+                <span class="emoji">❤️</span>
+                <h3>Valores</h3>
+                <p>Respeito, disciplina, inclusão, trabalho em equipe e paixão pelo esporte.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbar" id="toolbarAdmin">
+        <button class="btn-admin" onclick="abrirModalAdmin()">➕ ADICIONAR FOTO</button>
+    </div>
+
+    <!-- GALERIA GERAL -->
+    <div id="galeria" class="galeria-grid">
+        <div class="sem-fotos">
+            <p>📸 Nenhuma foto cadastrada.<br>Clique em "ACESSO FUNCIONÁRIOS" para adicionar imagens!</p>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DE FOTOS DAS ÉPOCAS -->
+<div id="modalEpoca" class="modal-epoca">
+    <div class="modal-epoca-content">
+        <span class="fechar-modal-epoca" onclick="fecharModalEpoca()">&times;</span>
+        <h2 id="modalEpocaTitulo">📸 Fotos - Ginásio</h2>
+        <div id="fotosEpocaGrid" class="fotos-epoca-grid"></div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button id="btnAddFotoEpoca" class="btn-add-foto-epoca" onclick="abrirModalAddFotoEpoca()" style="display: none;">➕ ADICIONAR FOTO</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ADICIONAR FOTO NA ÉPOCA -->
+<div id="modalAddFotoEpoca" class="modal-admin">
+    <div class="modal-admin-content">
+        <span class="fechar-modal-admin" onclick="fecharModalAddFotoEpoca()">&times;</span>
+        <h2>➕ ADICIONAR FOTO</h2>
+        <form id="formFotoEpoca">
+            <div class="upload-area" onclick="document.getElementById('fileInputEpoca').click()">
+                📸 Clique para selecionar imagem
+                <input type="file" id="fileInputEpoca" accept="image/*" style="display:none">
+                <img id="previewEpoca" class="preview-img" style="display:none">
+            </div>
+            <input type="text" id="fotoUrlEpoca" placeholder="Ou cole a URL da imagem">
+            <button type="submit">SALVAR FOTO</button>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL VISUALIZAÇÃO -->
+<div id="modalVisualizacao" class="modal" onclick="fecharModalVisualizacao()">
+    <span class="fechar-modal">&times;</span>
+    <div class="modal-content"><img id="modalImg" src=""></div>
+</div>
+
+<!-- MODAL ADMIN (GALERIA GERAL) -->
+<div id="modalAdmin" class="modal-admin">
+    <div class="modal-admin-content">
+        <span class="fechar-modal-admin" onclick="fecharModalAdmin()">&times;</span>
+        <h2>➕ ADICIONAR FOTO</h2>
+        <form id="formFoto">
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                📸 Clique para selecionar imagem
+                <input type="file" id="fileInput" accept="image/*" style="display:none">
+                <img id="preview" class="preview-img" style="display:none">
+            </div>
+            <input type="text" id="fotoUrl" placeholder="Ou cole a URL da imagem">
+            <button type="submit">SALVAR FOTO</button>
+        </form>
+    </div>
+</div>
+
+<!-- LOGIN -->
+<div id="loginOverlay" class="login-overlay">
+    <div class="login-box">
+        <h2>🔒 ACESSO FUNCIONÁRIOS</h2>
+        <input type="password" id="senhaAdmin" placeholder="Digite a senha">
+        <button onclick="verificarSenhaAdmin()">ENTRAR</button>
+        <div id="erroLogin" style="color:red; margin-top:10px;"></div>
+    </div>
+</div>
+
+<script>
+    const SENHA_ADMIN = 'jacare123';
+    let modoAdmin = false;
+    let fotos = [];
+    
+    // Fotos por época
+    let fotosEpocas = {
+        ginasio: [],
+        cdc: [],
+        alvorada: []
+    };
+    let epocaAtual = '';
+
+    function carregarDados() {
+        // Carregar galeria geral
+        const salvas = localStorage.getItem('escolinha_galeria');
+        if (salvas) fotos = JSON.parse(salvas);
+        else fotos = [];
+        
+        // Carregar fotos das épocas
+        const salvasEpocas = localStorage.getItem('fotos_epocas');
+        if (salvasEpocas) fotosEpocas = JSON.parse(salvasEpocas);
+        else {
+            // Fotos de exemplo para cada época
+            fotosEpocas = {
+                ginasio: [
+                    { id: 1, url: 'https://placehold.co/400x300/003399/white?text=Ginásio+2020' },
+                    { id: 2, url: 'https://placehold.co/400x300/0047AB/white?text=Primeiro+Treino' }
+                ],
+                cdc: [
+                    { id: 3, url: 'https://placehold.co/400x300/00aaff/white?text=CDC+2022' },
+                    { id: 4, url: 'https://placehold.co/400x300/003399/white?text=Ampliando+Turmas' }
+                ],
+                alvorada: [
+                    { id: 5, url: 'https://placehold.co/400x300/0047AB/white?text=Quadra+Alvorada' },
+                    { id: 6, url: 'https://placehold.co/400x300/00aaff/white?text=Nova+Casa' }
+                ]
+            };
+            localStorage.setItem('fotos_epocas', JSON.stringify(fotosEpocas));
+        }
+        
+        atualizarGaleria();
+    }
+
+    function salvarFotosEpocas() {
+        localStorage.setItem('fotos_epocas', JSON.stringify(fotosEpocas));
+    }
+
+    function atualizarGaleria() {
+        const galeriaDiv = document.getElementById('galeria');
+        
+        if (fotos.length === 0) {
+            galeriaDiv.innerHTML = '<div class="sem-fotos"><p>📸 Nenhuma foto cadastrada.<br>' + (modoAdmin ? 'Clique em "ADICIONAR FOTO" para começar!' : 'Clique em "ACESSO FUNCIONÁRIOS" para adicionar imagens!') + '</p></div>';
+            return;
+        }
+        
+        galeriaDiv.innerHTML = fotos.map(foto => `
+            <div class="foto-item">
+                <button class="btn-excluir-foto" onclick="excluirFoto(${foto.id}, event)">✖</button>
+                <img src="${foto.url}" onclick="abrirFoto('${foto.url}')" onerror="this.src='https://via.placeholder.com/400x300/cccccc/666666?text=Erro'">
+            </div>
+        `).join('');
+        
+        if (modoAdmin) {
+            document.getElementById('galeria').classList.add('modo-admin');
+        } else {
+            document.getElementById('galeria').classList.remove('modo-admin');
+        }
+    }
+
+    function abrirGaleriaEpoca(epoca) {
+        epocaAtual = epoca;
+        let titulo = '';
+        if (epoca === 'ginasio') titulo = '📸 Fotos - Ginásio (2020-2022)';
+        else if (epoca === 'cdc') titulo = '📸 Fotos - CDC (2022-2024)';
+        else titulo = '📸 Fotos - Unidos do Alvorada (2024-Presente)';
+        
+        document.getElementById('modalEpocaTitulo').innerText = titulo;
+        
+        const fotosEpoca = fotosEpocas[epoca] || [];
+        const grid = document.getElementById('fotosEpocaGrid');
+        
+        if (fotosEpoca.length === 0) {
+            grid.innerHTML = '<div class="sem-fotos" style="grid-column:1/-1; padding:40px;">📸 Nenhuma foto nesta época. Adicione fotos para contar essa história!</div>';
+        } else {
+            grid.innerHTML = fotosEpoca.map(foto => `
+                <div class="foto-epoca-item">
+                    <img src="${foto.url}" onclick="abrirFoto('${foto.url}')" onerror="this.src='https://via.placeholder.com/400x300/cccccc/666666?text=Erro'">
+                    ${modoAdmin ? `<button class="btn-excluir-foto" style="position:relative; display:flex; margin:5px auto;" onclick="excluirFotoEpoca('${epoca}', ${foto.id}, event)">✖ Excluir</button>` : ''}
+                </div>
+            `).join('');
+        }
+        
+        const btnAdd = document.getElementById('btnAddFotoEpoca');
+        if (modoAdmin) {
+            btnAdd.style.display = 'inline-block';
+        } else {
+            btnAdd.style.display = 'none';
+        }
+        
+        document.getElementById('modalEpoca').style.display = 'flex';
+    }
+
+    function excluirFotoEpoca(epoca, id, event) {
+        event.stopPropagation();
+        if (confirm('Excluir esta foto permanentemente?')) {
+            fotosEpocas[epoca] = fotosEpocas[epoca].filter(f => f.id !== id);
+            salvarFotosEpocas();
+            abrirGaleriaEpoca(epocaAtual);
+        }
+    }
+
+    function abrirModalAddFotoEpoca() {
+        if (!modoAdmin) return;
+        document.getElementById('modalAddFotoEpoca').style.display = 'flex';
+        document.getElementById('formFotoEpoca').reset();
+        document.getElementById('previewEpoca').style.display = 'none';
+        document.getElementById('fotoUrlEpoca').value = '';
+    }
+
+    function fecharModalAddFotoEpoca() {
+        document.getElementById('modalAddFotoEpoca').style.display = 'none';
+    }
+
+    function fecharModalEpoca() {
+        document.getElementById('modalEpoca').style.display = 'none';
+    }
+
+    document.getElementById('fileInputEpoca').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('previewEpoca').src = event.target.result;
+                document.getElementById('previewEpoca').style.display = 'block';
+                document.getElementById('fotoUrlEpoca').value = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById('formFotoEpoca').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const url = document.getElementById('fotoUrlEpoca').value;
+        if (!url) { alert('Selecione uma imagem ou cole uma URL!'); return; }
+        
+        if (!fotosEpocas[epocaAtual]) fotosEpocas[epocaAtual] = [];
+        fotosEpocas[epocaAtual].push({
+            id: Date.now(),
+            url: url
+        });
+        salvarFotosEpocas();
+        fecharModalAddFotoEpoca();
+        abrirGaleriaEpoca(epocaAtual);
+    });
+
+    function abrirFoto(url) {
+        document.getElementById('modalImg').src = url;
+        document.getElementById('modalVisualizacao').style.display = 'flex';
+    }
+
+    function excluirFoto(id, event) {
+        event.stopPropagation();
+        if (confirm('Excluir esta foto permanentemente?')) {
+            fotos = fotos.filter(f => f.id !== id);
+            localStorage.setItem('escolinha_galeria', JSON.stringify(fotos));
+            atualizarGaleria();
+        }
+    }
+
+    function mostrarLogin() { document.getElementById('loginOverlay').style.display = 'flex'; }
+    function fecharLogin() { document.getElementById('loginOverlay').style.display = 'none'; }
+
+    function verificarSenhaAdmin() {
+        if (document.getElementById('senhaAdmin').value === SENHA_ADMIN) {
+            modoAdmin = true;
+            fecharLogin();
+            document.getElementById('toolbarAdmin').classList.add('ativo');
+            document.getElementById('statusAdmin').innerHTML = '<span class="status-admin">✅ Modo Administrador ativo</span>';
+            atualizarGaleria();
+        } else {
+            document.getElementById('erroLogin').innerText = 'Senha incorreta!';
+        }
+    }
+
+    function abrirModalAdmin() {
+        if (!modoAdmin) { mostrarLogin(); return; }
+        document.getElementById('modalAdmin').style.display = 'flex';
+        document.getElementById('formFoto').reset();
+        document.getElementById('preview').style.display = 'none';
+        document.getElementById('fotoUrl').value = '';
+    }
+
+    function fecharModalAdmin() { document.getElementById('modalAdmin').style.display = 'none'; }
+    function fecharModalVisualizacao() { document.getElementById('modalVisualizacao').style.display = 'none'; }
+
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('preview').src = event.target.result;
+                document.getElementById('preview').style.display = 'block';
+                document.getElementById('fotoUrl').value = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById('formFoto').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const url = document.getElementById('fotoUrl').value;
+        if (!url) { alert('Selecione uma imagem ou cole uma URL!'); return; }
+        fotos.push({
+            id: Date.now(),
+            url: url
+        });
+        localStorage.setItem('escolinha_galeria', JSON.stringify(fotos));
+        atualizarGaleria();
+        fecharModalAdmin();
+    });
+
+    window.onclick = function(e) {
+        if (e.target === document.getElementById('modalVisualizacao')) fecharModalVisualizacao();
+        if (e.target === document.getElementById('modalAdmin')) fecharModalAdmin();
+        if (e.target === document.getElementById('loginOverlay')) fecharLogin();
+        if (e.target === document.getElementById('modalEpoca')) fecharModalEpoca();
+        if (e.target === document.getElementById('modalAddFotoEpoca')) fecharModalAddFotoEpoca();
+    };
+
+    carregarDados();
+</script>
+
+</body>
+</html>

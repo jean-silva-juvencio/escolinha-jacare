@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pré-Matrícula | Escolinha do Jacaré</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --azul-escuro: #003399;
+            --azul-premium: #0047AB;
+            --azul-claro: #00aaff;
+            --verde-whatsapp: #25d366;
+            --laranja-destaque: #ff9800;
+            --vermelho-erro: #ff4444;
+            --verde-sucesso: #4caf50;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            background: linear-gradient(135deg, #f0f7ff 0%, #e0ecf9 100%);
+            min-height: 100vh;
+        }
+
+        header { 
+            background: #fff; 
+            padding: 15px 0; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-text {
+            text-decoration: none;
+            font-family: 'Montserrat';
+            font-weight: 900;
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, var(--azul-escuro), var(--azul-claro));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-voltar {
+            background: var(--azul-premium);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .btn-voltar:hover {
+            background: var(--azul-escuro);
+            transform: scale(1.05);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 40px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-card h1 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .form-card .subtitulo {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .form-card .subtitulo strong {
+            color: var(--laranja-destaque);
+        }
+
+        .form-grupo {
+            margin-bottom: 20px;
+        }
+
+        .form-grupo label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-grupo label .obrigatorio {
+            color: var(--vermelho-erro);
+            margin-left: 5px;
+        }
+
+        .form-grupo input, .form-grupo select, .form-grupo textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .form-grupo input:focus, .form-grupo select:focus, .form-grupo textarea:focus {
+            outline: none;
+            border-color: var(--azul-claro);
+            box-shadow: 0 0 0 3px rgba(0,170,255,0.1);
+        }
+
+        .form-grupo input.erro, .form-grupo select.erro {
+            border-color: var(--vermelho-erro);
+            background: rgba(255,68,68,0.05);
+        }
+
+        .mensagem-erro {
+            color: var(--vermelho-erro);
+            font-size: 0.75rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-linha {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+
+        .upload-area:hover {
+            border-color: var(--azul-claro);
+            background: #f5f5f5;
+        }
+
+        .upload-area.drag-over {
+            border-color: var(--laranja-destaque);
+            background: #fff3e0;
+        }
+
+        .preview-foto {
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-top: 15px;
+            border: 3px solid var(--azul-claro);
+            display: none;
+        }
+
+        .info-idade {
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 50px;
+            text-align: center;
+            margin-top: 5px;
+            font-size: 0.85rem;
+            color: var(--azul-premium);
+            font-weight: 600;
+        }
+
+        .sub-categoria {
+            margin-top: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            display: none;
+        }
+
+        .sub-categoria.ativo {
+            display: block;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+        }
+
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            cursor: pointer;
+            font-weight: normal;
+        }
+
+        .btn-enviar {
+            background: linear-gradient(135deg, var(--laranja-destaque), #f57c00);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-enviar:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(255,152,0,0.3);
+        }
+
+        .mensagem-sucesso {
+            background: linear-gradient(135deg, var(--verde-sucesso), #45a049);
+            color: white;
+            padding: 35px;
+            border-radius: 30px;
+            text-align: center;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .mensagem-sucesso h2 {
+            font-family: 'Montserrat';
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .mensagem-sucesso .protocolo {
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 50px;
+            margin: 20px 0;
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .mensagem-sucesso .aviso {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            font-size: 0.9rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        footer {
+            background: var(--azul-escuro);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .form-card { padding: 25px; }
+            .form-linha { grid-template-columns: 1fr; gap: 15px; }
+            .form-card h1 { font-size: 1.5rem; }
+            .mensagem-sucesso h2 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <a href="index.html" class="logo-text">🐊 ESCOLINHA DO JACARÉ</a>
+        <a href="index.html" class="btn-voltar">← VOLTAR AO INÍCIO</a>
+    </div>
+</header>
+
+<div class="container">
+    <!-- FORMULÁRIO -->
+    <div id="formularioContainer" class="form-card">
+        <h1>📝 PRÉ-MATRÍCULA</h1>
+        <div class="subtitulo">
+            Preencha todos os campos <strong>obrigatórios (*)</strong> para enviar sua solicitação.<br>
+            Após o envio, aguarde o contato da diretoria.
+        </div>
+
+        <form id="formPrematricula">
+            <!-- FOTO DO ALUNO -->
+            <div class="form-grupo">
+                <label>Foto 3x4 do aluno <span class="obrigatorio">*</span></label>
+                <div class="upload-area" id="uploadArea" onclick="document.getElementById('fotoInput').click()">
+                    📸 Clique aqui para selecionar a foto do aluno
+                    <input type="file" id="fotoInput" accept="image/*" style="display:none">
+                    <img id="previewFoto" class="preview-foto" alt="Prévia da foto">
+                </div>
+                <div class="mensagem-erro" id="erroFoto">Selecione uma foto 3x4 do aluno</div>
+                <input type="hidden" id="fotoDataUrl" value="">
+            </div>
+
+            <!-- DADOS DO ALUNO -->
+            <div class="form-grupo">
+                <label>Nome completo do aluno <span class="obrigatorio">*</span></label>
+                <input type="text" id="nomeAluno" placeholder="Digite o nome completo">
+                <div class="mensagem-erro" id="erroNome">Campo obrigatório</div>
+            </div>
+
+            <div class="form-linha">
+                <div class="form-grupo">
+                    <label>Data de nascimento <span class="obrigatorio">*</span></label>
+                    <input type="date" id="dataNasc">
+                    <div class="mensagem-erro" id="erroData">Campo obrigatório</div>
+                    <div id="infoIdade" class="info-idade" style="display:none;"></div>
+                </div>
+                <div class="form-grupo">
+                    <label>Turma desejada <span class="obrigatorio">*</span></label>
+                    <select id="turma">
+                        <option value="">Selecione...</option>
+                        <option value="Futebol">⚽ Futebol</option>
+                        <option value="Taekwondo">🥋 Taekwondo</option>
+                        <option value="Ginástica">🤸 Ginástica</option>
+                        <option value="Tênis de Mesa">🏓 Tênis de Mesa</option>
+                        <option value="Judô">🥋 Judô</option>
+                    </select>
+                    <div class="mensagem-erro" id="erroTurma">Campo obrigatório</div>
+                </div>
+            </div>
+
+            <!-- SUB-CATEGORIA -->
+            <div id="subCategoria" class="sub-categoria">
+                <label>Categoria específica</label>
+                <select id="categoriaEspecifica">
+                    <option value="">Selecione a categoria...</option>
+                    <option value="Sub-5">Sub-5 (até 5 anos)</option>
+                    <option value="Sub-7">Sub-7 (até 7 anos)</option>
+                    <option value="Sub-9">Sub-9 (até 9 anos)</option>
+                    <option value="Sub-11">Sub-11 (até 11 anos)</option>
+                    <option value="Sub-13">Sub-13 (até 13 anos)</option>
+                    <option value="Sub-15">Sub-15 (até 15 anos)</option>
+                    <option value="Sub-17">Sub-17 (até 17 anos)</option>
+                </select>
+            </div>
+
+            <!-- ESCOLA E SÉRIE -->
+            <div class="form-linha">
+                <div class="form-grupo">
+                    <label>Escola onde estuda</label>
+                    <input type="text" id="escola" placeholder="Nome da escola">
+                </div>
+                <div class="form-grupo">
+                    <label>Série</label>
+                    <input type="text" id="serie" placeholder="Série/Ano">
+                </div>
+            </div>
+
+            <!-- DADOS DO RESPONSÁVEL -->
+            <div class="form-grupo">
+                <label>Nome do responsável <span class="obrigatorio">*</span></label>
+                <input type="text" id="responsavel" placeholder="Nome completo do pai/mãe/responsável">
+                <div class="mensagem-erro" id="erroResponsavel">Campo obrigatório</div>
+            </div>
+
+            <div class="form-linha">
+                <div class="form-grupo">
+                    <label>Telefone (WhatsApp) <span class="obrigatorio">*</span></label>
+                    <input type="tel" id="telefone" placeholder="(92) 9xxxx-xxxx">
+                    <div class="mensagem-erro" id="erroTelefone">Digite um telefone válido</div>
+                </div>
+                <div class="form-grupo">
+                    <label>E-mail <span class="obrigatorio">*</span></label>
+                    <input type="email" id="email" placeholder="seuemail@exemplo.com">
+                    <div class="mensagem-erro" id="erroEmail">Digite um e-mail válido</div>
+                </div>
+            </div>
+
+            <!-- ENDEREÇO -->
+            <div class="form-linha">
+                <div class="form-grupo">
+                    <label>Endereço (Rua/Avenida) <span class="obrigatorio">*</span></label>
+                    <input type="text" id="endereco" placeholder="Rua/Avenida">
+                    <div class="mensagem-erro" id="erroEndereco">Campo obrigatório</div>
+                </div>
+                <div class="form-grupo">
+                    <label>Número <span class="obrigatorio">*</span></label>
+                    <input type="text" id="numero" placeholder="Número">
+                    <div class="mensagem-erro" id="erroNumero">Campo obrigatório</div>
+                </div>
+            </div>
+
+            <div class="form-linha">
+                <div class="form-grupo">
+                    <label>Bairro <span class="obrigatorio">*</span></label>
+                    <input type="text" id="bairro" placeholder="Bairro">
+                    <div class="mensagem-erro" id="erroBairro">Campo obrigatório</div>
+                </div>
+                <div class="form-grupo">
+                    <label>CEP</label>
+                    <input type="text" id="cep" placeholder="Opcional">
+                </div>
+            </div>
+
+            <!-- MORADORES -->
+            <div class="form-grupo">
+                <label>Quantas pessoas moram na sua casa? <span class="obrigatorio">*</span></label>
+                <input type="number" id="moradores" min="1" max="20" placeholder="Número de moradores">
+                <div class="mensagem-erro" id="erroMoradores">Campo obrigatório</div>
+            </div>
+
+            <!-- REMÉDIO CONTROLADO -->
+            <div class="form-grupo">
+                <label>Faz uso de remédio controlado? <span class="obrigatorio">*</span></label>
+                <div class="radio-group">
+                    <label><input type="radio" name="remedio" value="Não" checked> Não</label>
+                    <label><input type="radio" name="remedio" value="Sim"> Sim</label>
+                </div>
+                <input type="text" id="remedioDesc" placeholder="Se sim, qual remédio?" style="margin-top: 10px; display: none;">
+            </div>
+
+            <!-- COMO CONHECEU -->
+            <div class="form-grupo">
+                <label>Como conheceu a Escolinha do Jacaré?</label>
+                <select id="origem">
+                    <option value="">Selecione...</option>
+                    <option value="Instagram">📱 Instagram</option>
+                    <option value="Facebook">📘 Facebook</option>
+                    <option value="Amigo/Indicação">👥 Amigo/Indicação</option>
+                    <option value="Panfleto">📄 Panfleto</option>
+                    <option value="Passou em frente">🚶 Passou em frente</option>
+                    <option value="Outros">📢 Outros</option>
+                </select>
+            </div>
+
+            <!-- DECLARAÇÃO -->
+            <div class="checkbox-group">
+                <input type="checkbox" id="declaracao" required>
+                <label for="declaracao">Declaro que as informações acima são verdadeiras e estou ciente que após análise, a matrícula será confirmada mediante apresentação dos documentos originais. <span class="obrigatorio">*</span></label>
+            </div>
+            <div class="mensagem-erro" id="erroDeclaracao" style="margin-left: 30px;">Você precisa confirmar esta declaração</div>
+
+            <button type="submit" class="btn-enviar">📨 ENVIAR SOLICITAÇÃO</button>
+        </form>
+    </div>
+
+    <!-- MENSAGEM DE SUCESSO -->
+    <div id="mensagemSucesso" class="mensagem-sucesso hidden">
+        <h2>✅ SOLICITAÇÃO ENVIADA COM SUCESSO!</h2>
+        <p>Recebemos sua pré-matrícula com sucesso!</p>
+        <div id="protocoloDiv" class="protocolo"></div>
+        <p><strong>Aguarde o contato da diretoria.</strong></p>
+        <p>Entre em contato em até <strong>48 horas</strong> para saber se foi aprovado.</p>
+        <div class="aviso">
+            📍 Quadra da Unidos do Alvorada - Aos sábados, 8h às 12h
+        </div>
+        <div style="margin-top: 25px;">
+            <a href="index.html" class="btn-voltar" style="background: white; color: var(--azul-escuro);">← VOLTAR AO INÍCIO</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    ESCOLINHA DO JACARÉ - ALVORADA<br>
+    Manaus/AM - Brasil
+    <div class="rights">© 2026 - Todos os direitos reservados.</div>
+</footer>
+
+<script>
+    let fotoSelecionada = false;
+    let fotoDataUrl = '';
+
+    const uploadArea = document.getElementById('uploadArea');
+    const fotoInput = document.getElementById('fotoInput');
+    const previewFoto = document.getElementById('previewFoto');
+
+    fotoInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                fotoDataUrl = event.target.result;
+                previewFoto.src = fotoDataUrl;
+                previewFoto.style.display = 'block';
+                fotoSelecionada = true;
+                document.getElementById('erroFoto').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        uploadArea.classList.add('drag-over');
+    });
+
+    uploadArea.addEventListener('dragleave', function() {
+        uploadArea.classList.remove('drag-over');
+    });
+
+    uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('drag-over');
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                fotoDataUrl = event.target.result;
+                previewFoto.src = fotoDataUrl;
+                previewFoto.style.display = 'block';
+                fotoSelecionada = true;
+                document.getElementById('erroFoto').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    function calcularIdade() {
+        const dataNasc = document.getElementById('dataNasc').value;
+        if (!dataNasc) return null;
+        const hoje = new Date();
+        const nasc = new Date(dataNasc);
+        let idade = hoje.getFullYear() - nasc.getFullYear();
+        const m = hoje.getMonth() - nasc.getMonth();
+        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
+        return idade;
+    }
+
+    function mostrarIdade() {
+        const idade = calcularIdade();
+        const infoDiv = document.getElementById('infoIdade');
+        if (idade !== null && idade >= 0) {
+            infoDiv.innerHTML = `📊 Idade calculada: <strong>${idade} anos</strong>`;
+            infoDiv.style.display = 'block';
+            
+            let categoriaSugerida = '';
+            if (idade <= 5) categoriaSugerida = 'Sub-5';
+            else if (idade <= 7) categoriaSugerida = 'Sub-7';
+            else if (idade <= 9) categoriaSugerida = 'Sub-9';
+            else if (idade <= 11) categoriaSugerida = 'Sub-11';
+            else if (idade <= 13) categoriaSugerida = 'Sub-13';
+            else if (idade <= 15) categoriaSugerida = 'Sub-15';
+            else if (idade <= 17) categoriaSugerida = 'Sub-17';
+            
+            if (categoriaSugerida) {
+                const selectCategoria = document.getElementById('categoriaEspecifica');
+                if (selectCategoria && selectCategoria.value === '') {
+                    selectCategoria.value = categoriaSugerida;
+                }
+                infoDiv.innerHTML += `<br>🎯 Sugestão: <strong>${categoriaSugerida}</strong>`;
+            }
+        } else {
+            infoDiv.style.display = 'none';
+        }
+    }
+
+    function mostrarSubCategoria() {
+        const turma = document.getElementById('turma').value;
+        const subDiv = document.getElementById('subCategoria');
+        if (turma !== '') {
+            subDiv.classList.add('ativo');
+            mostrarIdade();
+        } else {
+            subDiv.classList.remove('ativo');
+        }
+    }
+
+    document.getElementById('dataNasc').addEventListener('change', mostrarIdade);
+    document.getElementById('turma').addEventListener('change', mostrarSubCategoria);
+
+    document.querySelectorAll('input[name="remedio"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const descField = document.getElementById('remedioDesc');
+            if (this.value === 'Sim') {
+                descField.style.display = 'block';
+            } else {
+                descField.style.display = 'none';
+            }
+        });
+    });
+
+    document.getElementById('formPrematricula').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let isValid = true;
+        
+        document.querySelectorAll('.mensagem-erro').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('input, select').forEach(el => el.classList.remove('erro'));
+        
+        if (!fotoSelecionada) {
+            document.getElementById('erroFoto').style.display = 'block';
+            isValid = false;
+        }
+        
+        const nome = document.getElementById('nomeAluno').value.trim();
+        if (!nome) {
+            document.getElementById('erroNome').style.display = 'block';
+            document.getElementById('nomeAluno').classList.add('erro');
+            isValid = false;
+        }
+        
+        const data = document.getElementById('dataNasc').value;
+        if (!data) {
+            document.getElementById('erroData').style.display = 'block';
+            document.getElementById('dataNasc').classList.add('erro');
+            isValid = false;
+        }
+        
+        const turma = document.getElementById('turma').value;
+        if (!turma) {
+            document.getElementById('erroTurma').style.display = 'block';
+            document.getElementById('turma').classList.add('erro');
+            isValid = false;
+        }
+        
+        const responsavel = document.getElementById('responsavel').value.trim();
+        if (!responsavel) {
+            document.getElementById('erroResponsavel').style.display = 'block';
+            document.getElementById('responsavel').classList.add('erro');
+            isValid = false;
+        }
+        
+        const telefone = document.getElementById('telefone').value.trim();
+        const numeros = telefone.replace(/\D/g, '');
+        if (numeros.length < 10 || numeros.length > 11) {
+            document.getElementById('erroTelefone').style.display = 'block';
+            document.getElementById('telefone').classList.add('erro');
+            isValid = false;
+        }
+        
+        const email = document.getElementById('email').value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            document.getElementById('erroEmail').style.display = 'block';
+            document.getElementById('email').classList.add('erro');
+            isValid = false;
+        }
+        
+        const endereco = document.getElementById('endereco').value.trim();
+        if (!endereco) {
+            document.getElementById('erroEndereco').style.display = 'block';
+            document.getElementById('endereco').classList.add('erro');
+            isValid = false;
+        }
+        
+        const numero = document.getElementById('numero').value.trim();
+        if (!numero) {
+            document.getElementById('erroNumero').style.display = 'block';
+            document.getElementById('numero').classList.add('erro');
+            isValid = false;
+        }
+        
+        const bairro = document.getElementById('bairro').value.trim();
+        if (!bairro) {
+            document.getElementById('erroBairro').style.display = 'block';
+            document.getElementById('bairro').classList.add('erro');
+            isValid = false;
+        }
+        
+        const moradores = document.getElementById('moradores').value.trim();
+        if (!moradores || parseInt(moradores) < 1) {
+            document.getElementById('erroMoradores').style.display = 'block';
+            document.getElementById('moradores').classList.add('erro');
+            isValid = false;
+        }
+        
+        const declaracao = document.getElementById('declaracao').checked;
+        if (!declaracao) {
+            document.getElementById('erroDeclaracao').style.display = 'block';
+            isValid = false;
+        }
+        
+        if (!isValid) {
+            alert('Por favor, preencha todos os campos obrigatórios corretamente.');
+            return;
+        }
+        
+        const remedio = document.querySelector('input[name="remedio"]:checked').value;
+        const remedioDesc = remedio === 'Sim' ? document.getElementById('remedioDesc').value : '';
+        const idade = calcularIdade();
+        
+        const solicitacao = {
+            id: Date.now(),
+            protocolo: `JAC-${Date.now()}`,
+            dataEnvio: new Date().toISOString(),
+            status: 'pendente',
+            foto: fotoDataUrl,
+            aluno: {
+                nome: nome,
+                dataNasc: data,
+                idade: idade,
+                turma: turma,
+                categoria: document.getElementById('categoriaEspecifica').value,
+                escola: document.getElementById('escola').value,
+                serie: document.getElementById('serie').value
+            },
+            responsavel: {
+                nome: responsavel,
+                telefone: telefone,
+                email: email
+            },
+            endereco: {
+                rua: endereco,
+                numero: numero,
+                bairro: bairro,
+                cep: document.getElementById('cep').value
+            },
+            moradores: parseInt(moradores),
+            remedio: remedio === 'Sim' ? `Sim - ${remedioDesc}` : 'Não',
+            origem: document.getElementById('origem').value
+        };
+        
+        const solicitacoes = JSON.parse(localStorage.getItem('solicitacoes_prematricula') || '[]');
+        solicitacoes.push(solicitacao);
+        localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+        
+        document.getElementById('protocoloDiv').innerHTML = `🔑 PROTOCOLO: ${solicitacao.protocolo}`;
+        document.getElementById('formularioContainer').classList.add('hidden');
+        document.getElementById('mensagemSucesso').classList.remove('hidden');
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    mostrarSubCategoria();
+</script>
+
+</body>
+</html>

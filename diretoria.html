@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Diretoria | Escolinha do Jacaré</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <style>
+        :root {
+            --azul-escuro: #003399;
+            --azul-premium: #0047AB;
+            --azul-claro: #00aaff;
+            --verde-whatsapp: #25d366;
+            --laranja-destaque: #ff9800;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            background: linear-gradient(135deg, #f0f7ff 0%, #e0ecf9 100%);
+            min-height: 100vh;
+        }
+
+        header { 
+            background: #fff; 
+            padding: 15px 0; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo-text {
+            text-decoration: none;
+            font-family: 'Montserrat';
+            font-weight: 900;
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, var(--azul-escuro), var(--azul-claro));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-voltar {
+            background: var(--azul-premium);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .btn-voltar:hover {
+            background: var(--azul-escuro);
+            transform: scale(1.05);
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 100px);
+            background: linear-gradient(135deg, var(--azul-escuro), var(--azul-premium));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-card {
+            background: rgba(255,255,255,0.98);
+            border-radius: 40px;
+            padding: 50px 40px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.6s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .login-card .icone { font-size: 4rem; margin-bottom: 15px; }
+        .login-card h1 { font-family: 'Montserrat'; color: var(--azul-escuro); font-size: 1.8rem; margin-bottom: 10px; }
+        .login-card p { color: #666; margin-bottom: 30px; font-size: 0.9rem; }
+        .login-card input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 60px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            outline: none;
+        }
+        .login-card input:focus { border-color: var(--azul-claro); box-shadow: 0 0 0 3px rgba(0,170,255,0.1); }
+        .login-card button {
+            background: var(--azul-premium);
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .login-card button:hover { background: var(--azul-escuro); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,68,171,0.3); }
+        .erro { color: #ff4444; margin-top: 15px; font-size: 0.85rem; background: rgba(255,68,68,0.1); padding: 10px; border-radius: 50px; }
+        
+        .info-acesso { margin-top: 20px; font-size: 0.7rem; color: #999; border-top: 1px solid #eee; padding-top: 15px; }
+
+        /* MODAL RECUPERAÇÃO (removido) */
+        /* MODAL ADMIN */
+        .modal-admin {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+        
+        .modal-admin-content {
+            background: white;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            animation: fadeInUp 0.3s ease;
+        }
+        
+        .modal-admin-content h2 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            margin-bottom: 20px;
+        }
+        
+        .modal-admin-content input, .modal-admin-content select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+        }
+        
+        .modal-admin-content button {
+            background: var(--azul-premium);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 50px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        /* PAINEL DE ANÁLISE */
+        .painel {
+            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header-painel {
+            background: linear-gradient(135deg, var(--azul-premium), var(--azul-escuro));
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-painel h1 {
+            font-family: 'Montserrat';
+            font-size: 1.5rem;
+        }
+        
+        .info-usuario {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+        
+        .btn-admin {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-admin:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card-analise {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .card-analise:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .card-analise .valor {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+        }
+
+        .card-analise .label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .card-analise .icone {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .graficos-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .grafico-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .grafico-card h3 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        canvas {
+            max-height: 300px;
+            width: 100% !important;
+        }
+
+        .botoes-acao {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-exportar {
+            background: var(--verde-whatsapp);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-exportar:hover {
+            transform: scale(1.05);
+            filter: brightness(1.05);
+        }
+
+        footer {
+            background: var(--azul-escuro);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .graficos-container {
+                grid-template-columns: 1fr;
+            }
+            .header-painel {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <a href="index.html" class="logo-text">ESCOLINHA DO JACARÉ</a>
+        <a href="funcionarios.html" class="btn-voltar">← VOLTAR AO PAINEL</a>
+    </div>
+</header>
+
+<!-- TELA DE LOGIN -->
+<div id="telaLogin" class="login-container">
+    <div class="login-card">
+        <div class="icone">🔐</div>
+        <h1>ÁREA DA DIRETORIA</h1>
+        <p>Análise de dados da Escolinha do Jacaré</p>
+        <input type="email" id="emailLogin" placeholder="E-mail" required>
+        <input type="password" id="senhaLogin" placeholder="Senha">
+        <button onclick="verificarLogin()">ACESSAR</button>
+        <div id="erroLogin" class="erro"></div>
+        <div class="info-acesso">🔒 Acesso restrito a 3 diretores autorizados</div>
+    </div>
+</div>
+
+<!-- MODAL ADMIN (TROCAR SENHA) -->
+<div id="modalAdmin" class="modal-admin">
+    <div class="modal-admin-content">
+        <span class="fechar-modal" onclick="fecharModalAdmin()">&times;</span>
+        <h2>⚙️ GERENCIAR USUÁRIOS</h2>
+        <div id="listaUsuariosAdmin"></div>
+        <hr style="margin: 20px 0;">
+        <h3>Trocar senha</h3>
+        <select id="usuarioSelecionado">
+            <option value="">Selecione um usuário</option>
+        </select>
+        <input type="password" id="novaSenha" placeholder="Nova senha">
+        <button onclick="trocarSenha()">ALTERAR SENHA</button>
+        <div id="msgAdmin" style="margin-top: 15px; color: #666;"></div>
+    </div>
+</div>
+
+<!-- PAINEL DE ANÁLISE -->
+<div id="painelAnalise" class="painel">
+    <div class="header-painel">
+        <h1>📊 ANÁLISE DE DADOS | ESCOLINHA DO JACARÉ</h1>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <div class="info-usuario" id="infoUsuario"></div>
+            <button class="btn-admin" onclick="abrirModalAdmin()">⚙️ ADMIN</button>
+            <button class="btn-admin" onclick="logout()">🚪 SAIR</button>
+        </div>
+    </div>
+
+    <div class="cards-container">
+        <div class="card-analise">
+            <div class="icone">👥</div>
+            <div class="valor" id="totalAlunos">0</div>
+            <div class="label">Total de Alunos</div>
+        </div>
+        <div class="card-analise">
+            <div class="icone">📋</div>
+            <div class="valor" id="totalSolicitacoes">0</div>
+            <div class="label">Solicitações Recebidas</div>
+        </div>
+        <div class="card-analise">
+            <div class="icone">👁️</div>
+            <div class="valor" id="totalVisitas">0</div>
+            <div class="label">Visitas ao Site</div>
+        </div>
+        <div class="card-analise">
+            <div class="icone">✅</div>
+            <div class="valor" id="taxaAprovacao">0%</div>
+            <div class="label">Taxa de Aprovação</div>
+        </div>
+    </div>
+
+    <div class="graficos-container">
+        <div class="grafico-card">
+            <h3>⚽ Alunos por Turma</h3>
+            <canvas id="graficoTurmas"></canvas>
+        </div>
+        <div class="grafico-card">
+            <h3>🎂 Aniversariantes por Mês</h3>
+            <canvas id="graficoAniversario"></canvas>
+        </div>
+        <div class="grafico-card">
+            <h3>📊 Alunos por Faixa Etária (Sub)</h3>
+            <canvas id="graficoSub"></canvas>
+        </div>
+        <div class="grafico-card">
+            <h3>🏘️ Alunos por Bairro</h3>
+            <canvas id="graficoBairro"></canvas>
+        </div>
+        <div class="grafico-card">
+            <h3>👁️ Visitas ao Site (Últimos 30 dias)</h3>
+            <canvas id="graficoVisitas"></canvas>
+        </div>
+        <div class="grafico-card">
+            <h3>📋 Status das Solicitações</h3>
+            <canvas id="graficoSolicitacoes"></canvas>
+        </div>
+    </div>
+
+    <div class="botoes-acao">
+        <button class="btn-exportar" onclick="exportarDados()">📥 EXPORTAR DADOS (CSV)</button>
+    </div>
+</div>
+
+<footer>
+    ESCOLINHA DO JACARÉ - ALVORADA<br>
+    Manaus/AM - Brasil
+    <div class="rights">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</div>
+</footer>
+
+<script>
+    // CONFIGURAÇÃO DO EMAILJS (removido - não será mais usado)
+    
+    // USUÁRIOS FIXOS (3 pessoas)
+    const USUARIOS = [
+        { email: "diretor.jean@escolinha.com", nome: "Jean Silva", senha: "Clash454647*", isAdmin: true },
+        { email: "diretor.jacare@escolinha.com", nome: "jacaré", senha: "jacare1998", isAdmin: false },
+        { email: "diretor.max@escolinha.com", nome: "max", senha: "max1998", isAdmin: false }
+    ];
+    
+    let usuarioLogado = null;
+    let alunos = [];
+    let solicitacoes = [];
+    let visitasData = { registros: [], totalGeral: 0 };
+    
+    let graficoTurmas, graficoAniversario, graficoSub, graficoBairro, graficoVisitas, graficoSolicitacoes;
+    
+    // FUNÇÕES DE LOGIN
+    function verificarLogin() {
+        const email = document.getElementById('emailLogin').value.trim();
+        const senha = document.getElementById('senhaLogin').value;
+        
+        const usuario = USUARIOS.find(u => u.email === email && u.senha === senha);
+        
+        if (usuario) {
+            usuarioLogado = usuario;
+            document.getElementById('telaLogin').style.display = 'none';
+            document.getElementById('painelAnalise').style.display = 'block';
+            document.getElementById('infoUsuario').innerHTML = `👤 ${usuario.nome}`;
+            carregarDados();
+        } else {
+            document.getElementById('erroLogin').innerText = 'E-mail ou senha incorretos!';
+        }
+    }
+    
+    function logout() {
+        usuarioLogado = null;
+        document.getElementById('telaLogin').style.display = 'flex';
+        document.getElementById('painelAnalise').style.display = 'none';
+        document.getElementById('emailLogin').value = '';
+        document.getElementById('senhaLogin').value = '';
+        document.getElementById('erroLogin').innerText = '';
+    }
+    
+    // ADMIN (trocar senha)
+    function abrirModalAdmin() {
+        if (!usuarioLogado || !usuarioLogado.isAdmin) {
+            alert('Apenas o administrador pode acessar esta área!');
+            return;
+        }
+        
+        const select = document.getElementById('usuarioSelecionado');
+        select.innerHTML = '<option value="">Selecione um usuário</option>';
+        USUARIOS.forEach(u => {
+            if (u.email !== usuarioLogado.email) {
+                select.innerHTML += `<option value="${u.email}">${u.nome} (${u.email})</option>`;
+            }
+        });
+        
+        document.getElementById('modalAdmin').style.display = 'flex';
+    }
+    
+    function fecharModalAdmin() {
+        document.getElementById('modalAdmin').style.display = 'none';
+        document.getElementById('usuarioSelecionado').value = '';
+        document.getElementById('novaSenha').value = '';
+        document.getElementById('msgAdmin').innerHTML = '';
+    }
+    
+    function trocarSenha() {
+        const email = document.getElementById('usuarioSelecionado').value;
+        const novaSenha = document.getElementById('novaSenha').value;
+        
+        if (!email || !novaSenha) {
+            document.getElementById('msgAdmin').innerHTML = '<span style="color: red;">Preencha todos os campos!</span>';
+            return;
+        }
+        
+        const usuario = USUARIOS.find(u => u.email === email);
+        if (usuario) {
+            usuario.senha = novaSenha;
+            document.getElementById('msgAdmin').innerHTML = '<span style="color: green;">✅ Senha alterada com sucesso!</span>';
+            setTimeout(fecharModalAdmin, 2000);
+        }
+    }
+    
+    // FUNÇÕES DE DADOS
+    function carregarDados() {
+        const alunosSalvos = localStorage.getItem('escolinha_alunos');
+        if (alunosSalvos) alunos = JSON.parse(alunosSalvos);
+        else alunos = [];
+        
+        const solicitacoesSalvas = localStorage.getItem('solicitacoes_prematricula');
+        if (solicitacoesSalvas) solicitacoes = JSON.parse(solicitacoesSalvas);
+        else solicitacoes = [];
+        
+        const visitasSalvas = localStorage.getItem('visitas_site');
+        if (visitasSalvas) visitasData = JSON.parse(visitasSalvas);
+        else visitasData = { registros: [], totalGeral: 0 };
+        
+        atualizarCards();
+        atualizarGraficos();
+    }
+    
+    function atualizarCards() {
+        const totalAlunos = alunos.length;
+        const totalSolicitacoes = solicitacoes.length;
+        const totalVisitas = visitasData.totalGeral || 0;
+        const aprovadas = solicitacoes.filter(s => s.status === 'aprovada').length;
+        const taxaAprovacao = totalSolicitacoes > 0 ? Math.round((aprovadas / totalSolicitacoes) * 100) : 0;
+        
+        document.getElementById('totalAlunos').innerText = totalAlunos;
+        document.getElementById('totalSolicitacoes').innerText = totalSolicitacoes;
+        document.getElementById('totalVisitas').innerText = totalVisitas;
+        document.getElementById('taxaAprovacao').innerText = `${taxaAprovacao}%`;
+    }
+    
+    function atualizarGraficos() {
+        // 1. Alunos por Turma
+        const turmas = ['Futebol', 'Taekwondo', 'Ginástica', 'Tênis de Mesa', 'Judô'];
+        const turmasCount = turmas.map(t => alunos.filter(a => a.turma === t).length);
+        if (graficoTurmas) graficoTurmas.destroy();
+        graficoTurmas = new Chart(document.getElementById('graficoTurmas'), {
+            type: 'bar',
+            data: { labels: turmas, datasets: [{ label: 'Alunos', data: turmasCount, backgroundColor: '#0047AB', borderRadius: 10 }] },
+            options: { responsive: true, maintainAspectRatio: true }
+        });
+        
+        // 2. Aniversariantes por Mês
+        const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+        const aniversarios = meses.map((_, i) => alunos.filter(a => {
+            if (!a.dataNasc) return false;
+            const nasc = new Date(a.dataNasc);
+            return nasc.getMonth() === i;
+        }).length);
+        const aniversariosLabels = meses.map((mes, i) => `${mes} (${aniversarios[i]})`);
+        if (graficoAniversario) graficoAniversario.destroy();
+        graficoAniversario = new Chart(document.getElementById('graficoAniversario'), {
+            type: 'bar',
+            data: { labels: aniversariosLabels, datasets: [{ label: 'Aniversariantes', data: aniversarios, backgroundColor: '#ff9800', borderRadius: 8 }] },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { rotation: 45 } } } }
+        });
+        
+        // 3. Alunos por Faixa Etária (Sub)
+        const subCategorias = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Sub-20', 'Sub-30'];
+        const subCount = subCategorias.map(cat => alunos.filter(a => a.categoria === cat).length);
+        if (graficoSub) graficoSub.destroy();
+        graficoSub = new Chart(document.getElementById('graficoSub'), {
+            type: 'bar',
+            data: { labels: subCategorias, datasets: [{ label: 'Alunos', data: subCount, backgroundColor: '#00aaff', borderRadius: 10 }] },
+            options: { responsive: true, maintainAspectRatio: true }
+        });
+        
+        // 4. Alunos por Bairro
+        const bairrosMap = new Map();
+        alunos.forEach(a => { if (a.bairro && a.bairro.trim() !== '') { bairrosMap.set(a.bairro.trim(), (bairrosMap.get(a.bairro.trim()) || 0) + 1); } });
+        const bairrosOrdenados = Array.from(bairrosMap.entries()).sort((a, b) => b[1] - a[1]);
+        const bairrosLabels = bairrosOrdenados.map(item => `${item[0]} (${item[1]})`);
+        const bairrosCount = bairrosOrdenados.map(item => item[1]);
+        if (graficoBairro) graficoBairro.destroy();
+        graficoBairro = new Chart(document.getElementById('graficoBairro'), {
+            type: 'bar',
+            data: { labels: bairrosLabels, datasets: [{ label: 'Alunos', data: bairrosCount, backgroundColor: '#ff9800', borderRadius: 8 }] },
+            options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false } } }
+        });
+        
+        // 5. Visitas
+        const ultimos30Dias = [];
+        const labelsVisitas = [];
+        const hoje = new Date();
+        for (let i = 29; i >= 0; i--) {
+            const data = new Date(hoje);
+            data.setDate(hoje.getDate() - i);
+            labelsVisitas.push(`${data.getDate()}/${data.getMonth()+1}`);
+            const visita = visitasData.registros.find(r => new Date(r.data).toDateString() === data.toDateString());
+            ultimos30Dias.push(visita ? visita.quantidade : 0);
+        }
+        if (graficoVisitas) graficoVisitas.destroy();
+        graficoVisitas = new Chart(document.getElementById('graficoVisitas'), {
+            type: 'line',
+            data: { labels: labelsVisitas, datasets: [{ label: 'Visitas', data: ultimos30Dias, borderColor: '#003399', backgroundColor: 'rgba(0,51,153,0.1)', fill: true, tension: 0.3 }] },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
+        });
+        
+        // 6. Status das Solicitações
+        const pendentes = solicitacoes.filter(s => s.status === 'pendente').length;
+        const aprovadas = solicitacoes.filter(s => s.status === 'aprovada').length;
+        const recusadas = solicitacoes.filter(s => s.status === 'recusada').length;
+        if (graficoSolicitacoes) graficoSolicitacoes.destroy();
+        graficoSolicitacoes = new Chart(document.getElementById('graficoSolicitacoes'), {
+            type: 'pie',
+            data: { labels: ['🟡 Pendentes', '🟢 Aprovadas', '🔴 Recusadas'], datasets: [{ data: [pendentes, aprovadas, recusadas], backgroundColor: ['#ff9800', '#4caf50', '#f44336'] }] },
+            options: { responsive: true, maintainAspectRatio: true }
+        });
+    }
+    
+    function calcularIdade(dataNasc) {
+        if (!dataNasc) return '-';
+        const hoje = new Date();
+        const nasc = new Date(dataNasc);
+        let idade = hoje.getFullYear() - nasc.getFullYear();
+        const m = hoje.getMonth() - nasc.getMonth();
+        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
+        return idade;
+    }
+    
+    function exportarDados() {
+        const dados = [];
+        alunos.forEach(a => {
+            dados.push({
+                Tipo: 'Aluno', Nome: a.nome, Turma: a.turma, 'Sub-Categoria': a.categoria || '',
+                Bairro: a.bairro || '', 'Data Nascimento': a.dataNasc || '', Idade: calcularIdade(a.dataNasc),
+                Responsavel: a.responsavel || '', Telefone: a.telefone || '', Endereco: a.endereco || ''
+            });
+        });
+        solicitacoes.forEach(s => {
+            dados.push({
+                Tipo: 'Solicitação', Nome: s.aluno?.nome || '', Turma: s.aluno?.turma || '',
+                'Data Envio': s.dataEnvio ? new Date(s.dataEnvio).toLocaleDateString('pt-BR') : '',
+                Status: s.status || '', Responsavel: s.responsavel?.nome || '', Telefone: s.responsavel?.telefone || ''
+            });
+        });
+        visitasData.registros.forEach(v => {
+            dados.push({ Tipo: 'Visita', Data: new Date(v.data).toLocaleDateString('pt-BR'), Quantidade: v.quantidade });
+        });
+        
+        if (dados.length === 0) { alert('Não há dados para exportar!'); return; }
+        
+        const headers = Object.keys(dados[0]);
+        const csv = [headers.join(',')];
+        dados.forEach(row => {
+            const valores = headers.map(h => {
+                let val = row[h] || '';
+                if (typeof val === 'string' && (val.includes(',') || val.includes('"'))) val = `"${val.replace(/"/g, '""')}"`;
+                return val;
+            });
+            csv.push(valores.join(','));
+        });
+        
+        const blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.setAttribute('download', `dados_escolinha_${new Date().toISOString().slice(0,10)}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        alert('✅ Dados exportados com sucesso!');
+    }
+</script>
+
+</body>
+</html>
