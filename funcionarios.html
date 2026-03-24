@@ -13,7 +13,6 @@
             --azul-premium: #0047AB;
             --azul-claro: #00aaff;
             --verde-whatsapp: #25d366; 
-            --destaque-aniversario: #ff9800;
             --laranja-destaque: #ff9800;
         }
 
@@ -75,8 +74,6 @@
             align-items: center;
             min-height: calc(100vh - 100px);
             background: linear-gradient(135deg, var(--azul-escuro), var(--azul-premium));
-            position: relative;
-            overflow: hidden;
         }
         
         .login-card {
@@ -107,7 +104,7 @@
             margin-bottom: 20px;
             outline: none;
         }
-        .login-card input:focus { border-color: var(--azul-claro); box-shadow: 0 0 0 3px rgba(0,170,255,0.1); }
+        .login-card input:focus { border-color: var(--azul-claro); }
         .login-card button {
             background: var(--azul-premium);
             color: white;
@@ -118,10 +115,9 @@
             font-weight: 800;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s;
         }
-        .login-card button:hover { background: var(--azul-escuro); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,68,171,0.3); }
-        .erro { color: #ff4444; margin-top: 15px; font-size: 0.85rem; background: rgba(255,68,68,0.1); padding: 10px; border-radius: 50px; }
+        .login-card button:hover { background: var(--azul-escuro); transform: translateY(-2px); }
+        .erro { color: #ff4444; margin-top: 15px; font-size: 0.85rem; }
         .info-acesso { margin-top: 20px; font-size: 0.7rem; color: #999; border-top: 1px solid #eee; padding-top: 15px; }
 
         .painel {
@@ -141,7 +137,6 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
         
         .contador-visitas {
@@ -161,37 +156,10 @@
             justify-content: center;
         }
         
-        .contador-visitas .info h3 {
-            font-size: 0.8rem;
-            opacity: 0.8;
-            letter-spacing: 1px;
-        }
-        
         .contador-visitas .numero {
             font-size: 2.5rem;
             font-weight: 800;
             font-family: 'Montserrat';
-            line-height: 1;
-        }
-        
-        .btn-estatisticas {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid rgba(255,255,255,0.5);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1rem;
-        }
-        
-        .btn-estatisticas:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.05);
         }
         
         .tabs {
@@ -201,7 +169,6 @@
             background: white;
             padding: 10px;
             border-radius: 60px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         
         .tab-btn {
@@ -209,20 +176,16 @@
             border-radius: 50px;
             font-weight: 800;
             cursor: pointer;
-            transition: all 0.3s;
             background: #f0f0f0;
             color: #333;
             border: none;
             font-size: 1rem;
+            flex: 1;
         }
         
         .tab-btn.ativo {
             background: var(--azul-premium);
             color: white;
-        }
-        
-        .tab-btn:hover:not(.ativo) {
-            background: #e0e0e0;
         }
         
         .tab-content {
@@ -246,12 +209,6 @@
             padding: 15px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-        }
-        
-        .stat-card.total {
-            background: linear-gradient(135deg, var(--azul-premium), var(--azul-escuro));
-            color: white;
         }
         
         .stat-card.pendente {
@@ -259,21 +216,16 @@
             color: white;
         }
         
+        .stat-card.total {
+            background: linear-gradient(135deg, var(--azul-premium), var(--azul-escuro));
+            color: white;
+        }
+        
         .stat-card .numero {
             font-size: 2rem;
             font-weight: 800;
-            font-family: 'Montserrat';
         }
         
-        .stat-card .label {
-            font-size: 0.8rem;
-            opacity: 0.9;
-        }
-        
-        .stat-card .emoji {
-            font-size: 1.5rem;
-        }
-
         .welcome-message {
             background: linear-gradient(135deg, var(--azul-premium), var(--azul-escuro));
             color: white;
@@ -281,24 +233,6 @@
             border-radius: 60px;
             margin-bottom: 15px;
             text-align: center;
-            font-size: 1.1rem;
-            font-weight: 600;
-            animation: slideIn 0.5s ease;
-            transition: opacity 0.5s ease;
-        }
-        
-        .aniversario-message {
-            background: linear-gradient(135deg, #ff9800, #f57c00);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 60px;
-            margin-bottom: 15px;
-            text-align: center;
-            font-size: 1rem;
-            font-weight: 600;
-            animation: pulse 2s infinite;
-            cursor: pointer;
-            transition: all 0.3s;
         }
         
         .nova-solicitacao-alerta {
@@ -308,29 +242,10 @@
             border-radius: 60px;
             margin-bottom: 15px;
             text-align: center;
-            animation: fadeInUp 0.3s ease;
             display: none;
+            font-weight: bold;
         }
         
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-        
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .welcome-message.fade-out { opacity: 0; }
-        .welcome-message .nome, .aniversario-message .nome {
-            font-weight: 800;
-            background: rgba(255,255,255,0.2);
-            padding: 3px 12px;
-            border-radius: 50px;
-            display: inline-block;
-        }
-
         .toolbar {
             display: flex;
             justify-content: space-between;
@@ -347,58 +262,35 @@
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
-            align-items: center;
         }
         
         .filtros select, .filtros input {
             padding: 10px 15px;
             border: 2px solid #ddd;
             border-radius: 50px;
-            font-size: 0.9rem;
-            outline: none;
         }
         
         .btn-group {
             display: flex;
             gap: 10px;
-            flex-wrap: wrap;
         }
         
-        .btn-novo, .btn-ordenar, .btn-excluir-multiplos, .btn-aniversario {
+        .btn-novo, .btn-excluir-multiplos, .btn-sair {
             padding: 10px 20px;
             border-radius: 50px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
             border: none;
         }
         
-        .btn-novo { background: var(--verde-whatsapp); color: white; }
-        .btn-novo:hover { transform: scale(1.05); filter: brightness(1.05); }
-        .btn-ordenar { background: var(--azul-premium); color: white; }
-        .btn-ordenar:hover { background: var(--azul-escuro); transform: scale(1.05); }
+        .btn-novo { background: #25d366; color: white; }
         .btn-excluir-multiplos { background: #ff4444; color: white; }
-        .btn-excluir-multiplos:hover { background: #cc0000; transform: scale(1.05); }
-        .btn-aniversario { background: linear-gradient(135deg, #ff9800, #f57c00); color: white; }
-        .btn-aniversario:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255,152,0,0.3); }
+        .btn-sair { background: #ff4444; color: white; }
         
-        .btn-sair {
-            background: #ff4444;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .btn-sair:hover { background: #cc0000; transform: scale(1.05); }
-
         .tabela-container {
             background: white;
             border-radius: 20px;
             overflow-x: auto;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         
         table {
@@ -415,7 +307,6 @@
         th {
             background: var(--azul-premium);
             color: white;
-            font-weight: 800;
         }
         
         tr:hover {
@@ -423,57 +314,9 @@
             cursor: pointer;
         }
         
-        .linha-aniversario {
-            background: linear-gradient(90deg, #fff3e0, #ffe0b3);
-            animation: brilhoAniversario 1.5s ease-in-out infinite;
-            border-left: 4px solid var(--destaque-aniversario);
-        }
-        
-        @keyframes brilhoAniversario {
-            0% { background: linear-gradient(90deg, #fff3e0, #ffe0b3); }
-            50% { background: linear-gradient(90deg, #ffe0b3, #ffcc80); }
-            100% { background: linear-gradient(90deg, #fff3e0, #ffe0b3); }
-        }
-        
-        .nome-aniversario-mes {
-            font-weight: 800;
-            position: relative;
-        }
-        
-        .nome-aniversario-mes::after {
-            content: " ⭐";
-            font-size: 1rem;
-        }
-        
-        .nome-aniversario-dia::after {
-            content: " 🎈";
-            font-size: 1rem;
-        }
-        
         .checkbox-col {
             width: 40px;
             text-align: center;
-        }
-        
-        .checkbox-col input {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-        
-        .foto-mini {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-            background: #ddd;
-            cursor: pointer;
-        }
-        
-        .sem-alunos, .sem-solicitacoes {
-            text-align: center;
-            padding: 50px;
-            color: #999;
         }
         
         .status-badge {
@@ -488,152 +331,20 @@
         .status-aprovada { background: #4caf50; color: white; }
         .status-recusada { background: #f44336; color: white; }
         
-        .btn-aprovar, .btn-recusar, .btn-ver, .btn-reativar {
+        .btn-aprovar, .btn-recusar, .btn-ver, .btn-editar, .btn-excluir {
             padding: 5px 12px;
             border-radius: 50px;
             font-size: 0.7rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
             border: none;
             margin: 2px;
         }
         .btn-aprovar { background: #4caf50; color: white; }
-        .btn-aprovar:hover { background: #45a049; transform: scale(1.05); }
         .btn-recusar { background: #f44336; color: white; }
-        .btn-recusar:hover { background: #da190b; transform: scale(1.05); }
-        .btn-reativar { background: #2196f3; color: white; }
-        .btn-reativar:hover { background: #0b7dda; transform: scale(1.05); }
         .btn-ver { background: var(--azul-premium); color: white; }
-        .btn-ver:hover { background: var(--azul-escuro); transform: scale(1.05); }
-
-        .modal-estatisticas {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1500;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(3px);
-        }
-        
-        .modal-estatisticas-content {
-            background: white;
-            border-radius: 30px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 30px;
-            animation: fadeInUp 0.3s ease;
-        }
-        
-        .modal-estatisticas-content h2 {
-            font-family: 'Montserrat';
-            color: var(--azul-escuro);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .filtros-estatisticas {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
-        
-        .filtro-estatistica {
-            background: #f0f0f0;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .filtro-estatistica.ativo {
-            background: var(--azul-premium);
-            color: white;
-        }
-        
-        .estatistica-numero {
-            font-size: 3rem;
-            font-weight: 800;
-            font-family: 'Montserrat';
-            color: var(--azul-escuro);
-            text-align: center;
-            margin: 20px 0;
-        }
-        
-        .estatistica-label {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        
-        .grafico-container {
-            background: #f5f5f5;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .grafico-bar {
-            background: linear-gradient(90deg, var(--azul-premium), var(--azul-claro));
-            height: 30px;
-            border-radius: 15px;
-            width: 0%;
-            transition: width 0.5s ease;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 10px;
-            color: white;
-            font-weight: 700;
-        }
-        
-        .detalhes-estatisticas {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .detalhe-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 15px;
-            text-align: center;
-        }
-        
-        .detalhe-card .valor {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--azul-escuro);
-        }
-        
-        .detalhe-card .label {
-            font-size: 0.8rem;
-            color: #666;
-        }
-        
-        .fechar-modal-estatisticas {
-            background: #ff4444;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 20px;
-            width: 100%;
-        }
+        .btn-editar { background: #ff9800; color: white; }
+        .btn-excluir { background: #ff4444; color: white; }
 
         .modal {
             display: none;
@@ -665,7 +376,6 @@
             right: 25px;
             font-size: 28px;
             cursor: pointer;
-            color: #999;
         }
         
         .form-grupo {
@@ -676,7 +386,6 @@
             display: block;
             font-weight: 700;
             margin-bottom: 5px;
-            color: #333;
         }
         
         .form-grupo input, .form-grupo select {
@@ -703,31 +412,11 @@
             width: 100%;
             margin-top: 10px;
         }
-        
-        .upload-area {
-            border: 2px dashed #ddd;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 15px;
-            cursor: pointer;
-        }
-        .preview-img {
-            max-width: 100%;
-            max-height: 150px;
-            margin-top: 10px;
-            border-radius: 10px;
-        }
 
         @media (max-width: 768px) {
             .form-linha { grid-template-columns: 1fr; }
             .tabs { flex-direction: column; border-radius: 20px; }
-            .tab-btn { text-align: center; }
-            .stats-container { grid-template-columns: repeat(2, 1fr); }
             .toolbar { flex-direction: column; }
-            .nav-bar { flex-direction: column; text-align: center; margin: 10px; }
-            .stats-visitas { flex-direction: column; text-align: center; }
-            .detalhes-estatisticas { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -745,935 +434,576 @@
     <div class="login-card">
         <div class="icone">🔐</div>
         <h1>ÁREA RESTRITA</h1>
-        <p>Acesso exclusivo para funcionários da Escolinha do Jacaré</p>
+        <p>Acesso exclusivo para funcionários</p>
         <input type="text" id="nomeUsuario" placeholder="Seu nome">
-        <input type="password" id="senhaInput" placeholder="Digite a senha de acesso">
-        <button onclick="verificarSenha()">ACESSAR SISTEMA</button>
+        <input type="password" id="senhaInput" placeholder="Digite a senha">
+        <button onclick="verificarSenha()">ACESSAR</button>
         <div id="erroLogin" class="erro"></div>
-        <div class="info-acesso">🔒 Ambiente seguro • Acesso autorizado apenas</div>
+        <div class="info-acesso">🔒 Acesso autorizado apenas</div>
     </div>
 </div>
 
 <div id="painelInterno" class="painel">
     <div id="welcomeMessage" class="welcome-message"></div>
-    <div id="aniversarioMessage" class="aniversario-message" style="display:none;" onclick="filtrarAniversariantes()"></div>
     <div id="novaSolicitacaoAlerta" class="nova-solicitacao-alerta"></div>
     
     <div class="stats-visitas">
         <div class="contador-visitas">
             <div class="icone">👁️</div>
-            <div class="info">
-                <h3>TOTAL DE VISITAS</h3>
+            <div>
                 <div class="numero" id="totalVisitas">0</div>
+                <div>VISITAS TOTAL</div>
             </div>
         </div>
-        <button class="btn-estatisticas" onclick="abrirModalEstatisticas()">
-            📊 ESTATÍSTICAS DO SITE
-        </button>
     </div>
     
     <div class="tabs">
-        <button class="tab-btn ativo" onclick="abrirTab('alunos')">👥 ALUNOS</button>
-        <button class="tab-btn" onclick="abrirTab('solicitacoes')">📋 SOLICITAÇÕES</button>
+        <button class="tab-btn ativo" onclick="abrirTab('solicitacoes')">📋 SOLICITAÇÕES</button>
+        <button class="tab-btn" onclick="abrirTab('alunos')">👥 ALUNOS</button>
     </div>
     
-    <div id="tabAlunos" class="tab-content ativo">
+    <!-- ABA SOLICITAÇÕES -->
+    <div id="tabSolicitacoes" class="tab-content ativo">
         <div class="stats-container">
-            <div class="stat-card total">
-                <div class="emoji">📊</div>
-                <div class="numero" id="totalAlunos">0</div>
-                <div class="label">Total de Alunos</div>
-            </div>
-            <div class="stat-card">
-                <div class="emoji">⚽</div>
-                <div class="numero" id="totalFutebol">0</div>
-                <div class="label">Futebol</div>
-            </div>
-            <div class="stat-card">
-                <div class="emoji">🥋</div>
-                <div class="numero" id="totalTaekwondo">0</div>
-                <div class="label">Taekwondo</div>
-            </div>
-            <div class="stat-card">
-                <div class="emoji">🤸</div>
-                <div class="numero" id="totalGinastica">0</div>
-                <div class="label">Ginástica</div>
-            </div>
-            <div class="stat-card">
-                <div class="emoji">🏓</div>
-                <div class="numero" id="totalTenisMesa">0</div>
-                <div class="label">Tênis de Mesa</div>
-            </div>
-            <div class="stat-card">
-                <div class="emoji">🥋</div>
-                <div class="numero" id="totalJudo">0</div>
-                <div class="label">Judô</div>
-            </div>
-        </div>
-
-        <div class="toolbar">
-            <div class="filtros">
-                <select id="filtroTurma">
-                    <option value="todas">Todas as turmas</option>
-                    <option value="Futebol">⚽ Futebol</option>
-                    <option value="Taekwondo">🥋 Taekwondo</option>
-                    <option value="Ginástica">🤸 Ginástica</option>
-                    <option value="Tênis de Mesa">🏓 Tênis de Mesa</option>
-                    <option value="Judô">🥋 Judô</option>
-                </select>
-                <input type="text" id="buscaNome" placeholder="Buscar por nome...">
-            </div>
-            <div class="btn-group">
-                <button class="btn-aniversario" onclick="filtrarAniversariantes()">🎂 ANIVERSARIANTES</button>
-                <button class="btn-ordenar" onclick="ordenarAlunos()">📋 Ordenar</button>
-                <button class="btn-excluir-multiplos" onclick="abrirConfirmacaoMultipla('alunos')">🗑️ Excluir Selecionados</button>
-                <button class="btn-novo" onclick="abrirModalCadastro()">➕ NOVO ALUNO</button>
-                <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
-            </div>
-        </div>
-
-        <div class="tabela-container">
-            <table id="tabelaAlunos">
-                <thead>
-                    
-                        <th class="checkbox-col"><input type="checkbox" id="selecionarTodosAlunos" onchange="selecionarTodosAlunos()"></th>
-                        <th>Foto</th>
-                        <th>Nome</th>
-                        <th>Idade</th>
-                        <th>Turma</th>
-                        <th>Telefone</th>
-                        <th>Aniversário</th>
-                    
-                </thead>
-                <tbody id="corpoTabelaAlunos">
-                    <td colspan="7" class="sem-alunos">Nenhum aluno cadastrado. Clique em "+ NOVO ALUNO" para começar.    </td>
-                </tbody>
-             </table
-        </div>
-    </div>
-    
-    <div id="tabSolicitacoes" class="tab-content">
-        <div class="stats-container">
-            <div class="stat-card pendente" id="cardPendentes">
-                <div class="emoji">📋</div>
+            <div class="stat-card pendente">
                 <div class="numero" id="totalPendentes">0</div>
-                <div class="label">Solicitações Pendentes</div>
+                <div>Pendentes</div>
+            </div>
+            <div class="stat-card total">
+                <div class="numero" id="totalSolicitacoes">0</div>
+                <div>Total Solicitações</div>
             </div>
         </div>
         
         <div class="toolbar">
             <div class="filtros">
                 <select id="filtroStatus">
-                    <option value="todas">Todas as solicitações</option>
+                    <option value="todas">Todas</option>
                     <option value="pendente">🟡 Pendentes</option>
                     <option value="aprovada">🟢 Aprovadas</option>
                     <option value="recusada">🔴 Recusadas</option>
                 </select>
                 <input type="text" id="buscaSolicitacao" placeholder="Buscar por nome...">
+                <button class="btn-excluir-multiplos" onclick="excluirSelecionadosSolicitacoes()">🗑️ Excluir</button>
             </div>
             <div class="btn-group">
-                <button class="btn-excluir-multiplos" onclick="abrirConfirmacaoMultipla('solicitacoes')">🗑️ Excluir Selecionados</button>
+                <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
             </div>
         </div>
         
         <div class="tabela-container">
-            <table id="tabelaSolicitacoes">
+            <table>
                 <thead>
-                    
+                    <tr>
                         <th class="checkbox-col"><input type="checkbox" id="selecionarTodosSolicitacoes" onchange="selecionarTodosSolicitacoes()"></th>
-                        <th>Foto</th>
-                        <th>Nome</th>
-                        <th>Turma</th>
-                        <th>Responsável</th>
-                        <th>Data</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    
+                        <th>Nome</th><th>Turma</th><th>Idade</th><th>Responsável</th><th>Telefone</th><th>Data</th><th>Status</th><th>Ações</th>
+                    </tr>
                 </thead>
-                <tbody id="corpoTabelaSolicitacoes">
-                    <td colspan="8" class="sem-solicitacoes">Nenhuma solicitação de matrícula recebida.</td>
-                </tbody>
-             </table
+                <tbody id="corpoTabelaSolicitacoes"></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- ABA ALUNOS -->
+    <div id="tabAlunos" class="tab-content">
+        <div class="stats-container">
+            <div class="stat-card total">
+                <div class="numero" id="totalAlunos">0</div>
+                <div>Total Alunos</div>
+            </div>
+        </div>
+        
+        <div class="toolbar">
+            <div class="filtros">
+                <select id="filtroTurmaAlunos">
+                    <option value="todas">Todas</option>
+                    <option value="Futebol">⚽ Futebol</option>
+                    <option value="Taekwondo">🥋 Taekwondo</option>
+                    <option value="Ginástica">🤸 Ginástica</option>
+                    <option value="Tênis de Mesa">🏓 Tênis de Mesa</option>
+                    <option value="Judô">🥋 Judô</option>
+                </select>
+                <input type="text" id="buscaAluno" placeholder="Buscar...">
+                <button class="btn-novo" onclick="abrirModalCadastroAluno()">➕ NOVO</button>
+                <button class="btn-excluir-multiplos" onclick="excluirSelecionadosAlunos()">🗑️ Excluir</button>
+            </div>
+        </div>
+        
+        <div class="tabela-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="checkbox-col"><input type="checkbox" id="selecionarTodosAlunos" onchange="selecionarTodosAlunos()"></th>
+                        <th>Nome</th><th>Idade</th><th>Turma</th><th>Responsável</th><th>Telefone</th><th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="corpoTabelaAlunos"></tbody>
+            </table>
         </div>
     </div>
 </div>
 
-<div id="modalEstatisticas" class="modal-estatisticas">
-    <div class="modal-estatisticas-content">
-        <h2>📊 ESTATÍSTICAS DO SITE</h2>
-        <div class="filtros-estatisticas">
-            <button class="filtro-estatistica ativo" data-periodo="hoje">📅 HOJE</button>
-            <button class="filtro-estatistica" data-periodo="semana">📆 SEMANA</button>
-            <button class="filtro-estatistica" data-periodo="mes">📊 MÊS</button>
-            <button class="filtro-estatistica" data-periodo="ano">🗓️ ANO</button>
-            <button class="filtro-estatistica" data-periodo="todos">📈 TODOS</button>
+<!-- MODAIS -->
+<div id="modalDetalhesSolicitacao" class="modal">
+    <div class="modal-content">
+        <span class="fechar-modal" onclick="fecharModalDetalhesSolicitacao()">&times;</span>
+        <h2>📋 DETALHES</h2>
+        <div id="detalhesSolicitacaoConteudo"></div>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button id="btnAprovarDetalhes" class="btn-aprovar" style="flex:1;">✅ APROVAR</button>
+            <button id="btnRecusarDetalhes" class="btn-recusar" style="flex:1;">❌ RECUSAR</button>
         </div>
-        <div class="estatistica-numero" id="visitasPeriodo">0</div>
-        <div class="estatistica-label" id="labelPeriodo">visitas neste período</div>
-        <div class="grafico-container">
-            <div class="grafico-bar" id="graficoBar">0%</div>
-        </div>
-        <div class="detalhes-estatisticas">
-            <div class="detalhe-card">
-                <div class="valor" id="mediaDia">0</div>
-                <div class="label">Média por dia</div>
-            </div>
-            <div class="detalhe-card">
-                <div class="valor" id="melhorDia">0</div>
-                <div class="label">Maior visita em um dia</div>
-            </div>
-            <div class="detalhe-card">
-                <div class="valor" id="totalGeral">0</div>
-                <div class="label">Total geral</div>
-            </div>
-            <div class="detalhe-card">
-                <div class="valor" id="ultimaVisita">-</div>
-                <div class="label">Última visita</div>
-            </div>
-        </div>
-        <button class="fechar-modal-estatisticas" onclick="fecharModalEstatisticas()">FECHAR</button>
     </div>
 </div>
 
 <div id="modalAluno" class="modal">
     <div class="modal-content">
-        <span class="fechar-modal" onclick="fecharModal()">&times;</span>
-        <h2 id="modalTitulo">CADASTRAR ALUNO</h2>
+        <span class="fechar-modal" onclick="fecharModalAluno()">&times;</span>
+        <h2 id="modalAlunoTitulo">CADASTRAR ALUNO</h2>
         <form id="formAluno">
             <input type="hidden" id="alunoId">
-            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-                📸 Clique para selecionar imagem
-                <input type="file" id="fileInput" accept="image/*" style="display:none">
-                <img id="preview" class="preview-img" style="display:none">
-            </div>
-            <input type="text" id="fotoUrl" placeholder="Ou cole a URL da imagem">
             <div class="form-linha">
-                <div class="form-grupo"><label>Nome completo *</label><input type="text" id="nome" required></div>
-                <div class="form-grupo"><label>Data de nascimento</label><input type="date" id="dataNasc"></div>
+                <div class="form-grupo"><label>Nome *</label><input type="text" id="nomeAluno" required></div>
+                <div class="form-grupo"><label>Data Nasc.</label><input type="date" id="dataNascAluno"></div>
             </div>
             <div class="form-linha">
-                <div class="form-grupo"><label>Sexo</label><select id="sexo"><option>Masculino</option><option>Feminino</option></select></div>
-                <div class="form-grupo"><label>Turma *</label><select id="turma" required>
-                    <option>Futebol</option><option>Taekwondo</option><option>Ginástica</option><option>Tênis de Mesa</option><option>Judô</option>
-                </select></div>
+                <div class="form-grupo"><label>Turma *</label><select id="turmaAluno"><option>Futebol</option><option>Taekwondo</option><option>Ginástica</option><option>Tênis de Mesa</option><option>Judô</option></select></div>
+                <div class="form-grupo"><label>Responsável *</label><input type="text" id="responsavelAluno" required></div>
             </div>
             <div class="form-linha">
-                <div class="form-grupo"><label>Peso (kg)</label><input type="text" id="peso"></div>
-                <div class="form-grupo"><label>Altura (cm)</label><input type="text" id="altura"></div>
-            </div>
-            <div class="form-grupo"><label>Responsável *</label><input type="text" id="responsavel" required></div>
-            <div class="form-linha">
-                <div class="form-grupo"><label>Telefone *</label><input type="text" id="telefone" required></div>
-                <div class="form-grupo"><label>Telefone 2</label><input type="text" id="telefone2"></div>
-            </div>
-            <div class="form-grupo"><label>Endereço</label><input type="text" id="endereco"></div>
-            <div class="form-linha">
-                <div class="form-grupo"><label>Número</label><input type="text" id="numeroCasa"></div>
-                <div class="form-grupo"><label>Bairro</label><input type="text" id="bairro"></div>
+                <div class="form-grupo"><label>Telefone *</label><input type="text" id="telefoneAluno" required></div>
+                <div class="form-grupo"><label>Telefone 2</label><input type="text" id="telefone2Aluno"></div>
             </div>
             <div class="form-linha">
-                <div class="form-grupo"><label>Escola</label><input type="text" id="escola"></div>
-                <div class="form-grupo"><label>Série</label><input type="text" id="serie"></div>
+                <div class="form-grupo"><label>Endereço</label><input type="text" id="enderecoAluno"></div>
+                <div class="form-grupo"><label>Bairro</label><input type="text" id="bairroAluno"></div>
             </div>
-            <div class="form-grupo"><label>Remédio controlado?</label><input type="text" id="remedio" placeholder="Não ou especificar"></div>
-            <button type="submit" class="btn-salvar">SALVAR ALUNO</button>
-            <button type="button" id="btnExcluir" class="btn-excluir" style="display:none" onclick="excluirAlunoUnico()">EXCLUIR ALUNO</button>
+            <button type="submit" class="btn-salvar">SALVAR</button>
         </form>
-    </div>
-</div>
-
-<div id="modalDetalhesSolicitacao" class="modal">
-    <div class="modal-content">
-        <span class="fechar-modal" onclick="fecharModalDetalhesSolicitacao()">&times;</span>
-        <h2>📋 DETALHES DA SOLICITAÇÃO</h2>
-        <div id="detalhesSolicitacaoConteudo"></div>
-        <div style="display: flex; gap: 10px; margin-top: 20px;">
-            <button id="btnAprovarDetalhes" class="btn-aprovar" style="flex:1; padding:12px;">✅ APROVAR MATRÍCULA</button>
-            <button id="btnRecusarDetalhes" class="btn-recusar" style="flex:1; padding:12px;">❌ RECUSAR</button>
-            <button id="btnReativarDetalhes" class="btn-reativar" style="flex:1; padding:12px; display:none;">🔄 REATIVAR</button>
-        </div>
     </div>
 </div>
 
 <div id="modalDetalhesAluno" class="modal">
     <div class="modal-content">
         <span class="fechar-modal" onclick="fecharModalDetalhesAluno()">&times;</span>
-        <h2>📄 FICHA COMPLETA</h2>
+        <h2>📄 FICHA DO ALUNO</h2>
         <div id="detalhesAlunoConteudo"></div>
-        <button class="btn-editar" onclick="editarDoDetalhes()">✏️ EDITAR</button>
-    </div>
-</div>
-
-<div id="modalConfirmacao" class="modal-confirmacao" style="display: none;">
-    <div class="confirmacao-content">
-        <div class="emoji-alerta">🗑️⚠️</div>
-        <h3>Excluir Itens Selecionados?</h3>
-        <div id="confirmacaoMensagem"></div>
-        <div class="confirmacao-botoes">
-            <button class="btn-cancelar" onclick="fecharModalConfirmacao()">CANCELAR</button>
-            <button class="btn-confirmar" id="btnConfirmarExclusao">SIM, EXCLUIR</button>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button class="btn-editar" onclick="editarAlunoModal()">✏️ EDITAR</button>
+            <button class="btn-excluir" onclick="excluirAlunoModal()">🗑️ EXCLUIR</button>
         </div>
     </div>
 </div>
 
-<div id="modalAlerta" class="modal-alerta" style="display: none;">
-    <div class="alerta-content">
-        <div class="alerta-icone">⚠️</div>
-        <h3 id="alertaTitulo">Atenção!</h3>
-        <p id="alertaMensagem"></p>
-        <button class="alerta-botao" onclick="fecharModalAlerta()">OK, ENTENDI</button>
-    </div>
-</div>
-
 <script>
-    const SENHA_CORRETA = 'jacare123';
-    let alunos = [];
+    const SENHA = 'jacare123';
     let solicitacoes = [];
+    let alunos = [];
     let alunoSelecionadoId = null;
-    let nomeUsuario = '';
-    let timeoutWelcome = null;
-    let ordemAtual = 'id';
-    let modoExclusao = null;
-    let idsParaExcluir = [];
-    let ultimoTotalPendentes = 0;
-    let intervaloAtualizacao = null;
-    
-    let visitasData = { registros: [], totalGeral: 0 };
-    
-    function carregarVisitas() {
-        const salvas = localStorage.getItem('visitas_site');
-        if (salvas) {
-            visitasData = JSON.parse(salvas);
-        } else {
-            visitasData = { registros: [], totalGeral: 0 };
-            localStorage.setItem('visitas_site', JSON.stringify(visitasData));
-        }
-        const totalElement = document.getElementById('totalVisitas');
-        if (totalElement) totalElement.innerText = visitasData.totalGeral;
-    }
-    
-    function getVisitasPorPeriodo(periodo) {
-        const hoje = new Date();
-        const inicioDia = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
-        const inicioSemana = new Date(hoje);
-        inicioSemana.setDate(hoje.getDate() - hoje.getDay());
-        const inicioMes = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
-        const inicioAno = new Date(hoje.getFullYear(), 0, 1);
-        let registrosFiltrados = [];
-        switch(periodo) {
-            case 'hoje': registrosFiltrados = visitasData.registros.filter(r => new Date(r.data) >= inicioDia); break;
-            case 'semana': registrosFiltrados = visitasData.registros.filter(r => new Date(r.data) >= inicioSemana); break;
-            case 'mes': registrosFiltrados = visitasData.registros.filter(r => new Date(r.data) >= inicioMes); break;
-            case 'ano': registrosFiltrados = visitasData.registros.filter(r => new Date(r.data) >= inicioAno); break;
-            default: registrosFiltrados = [...visitasData.registros];
-        }
-        const total = registrosFiltrados.reduce((sum, r) => sum + r.quantidade, 0);
-        const dias = registrosFiltrados.length;
-        const media = dias > 0 ? Math.round(total / dias) : 0;
-        const maior = registrosFiltrados.length > 0 ? Math.max(...registrosFiltrados.map(r => r.quantidade)) : 0;
-        return { total, media, maior };
-    }
-    
-    function atualizarModalEstatisticas(periodo) {
-        const stats = getVisitasPorPeriodo(periodo);
-        const totalGeral = visitasData.totalGeral;
-        document.getElementById('visitasPeriodo').innerText = stats.total;
-        let label = '';
-        switch(periodo) {
-            case 'hoje': label = 'visitas hoje'; break;
-            case 'semana': label = 'visitas nesta semana'; break;
-            case 'mes': label = 'visitas neste mês'; break;
-            case 'ano': label = 'visitas neste ano'; break;
-            default: label = 'visitas no total';
-        }
-        document.getElementById('labelPeriodo').innerHTML = label;
-        document.getElementById('mediaDia').innerHTML = stats.media;
-        document.getElementById('melhorDia').innerHTML = stats.maior;
-        document.getElementById('totalGeral').innerHTML = totalGeral;
-        const ultima = visitasData.registros.length > 0 ? new Date(visitasData.registros[visitasData.registros.length - 1].data).toLocaleDateString('pt-BR') : '-';
-        document.getElementById('ultimaVisita').innerHTML = ultima;
-        const percentual = totalGeral > 0 ? Math.round((stats.total / totalGeral) * 100) : 0;
-        const barra = document.getElementById('graficoBar');
-        barra.style.width = `${percentual}%`;
-        barra.innerHTML = `${percentual}%`;
-    }
-    
-    function abrirModalEstatisticas() {
-        atualizarModalEstatisticas('hoje');
-        document.getElementById('modalEstatisticas').style.display = 'flex';
-        document.querySelectorAll('.filtro-estatistica').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filtro-estatistica').forEach(b => b.classList.remove('ativo'));
-                this.classList.add('ativo');
-                atualizarModalEstatisticas(this.dataset.periodo);
-            });
-        });
-    }
-    
-    function fecharModalEstatisticas() { document.getElementById('modalEstatisticas').style.display = 'none'; }
-    
-    function getSaudacao() {
-        const hora = new Date().getHours();
-        if (hora >= 5 && hora < 12) return '🌅 Bom dia';
-        else if (hora >= 12 && hora < 18) return '☀️ Boa tarde';
-        else return '🌙 Boa noite';
-    }
-    
-    function mostrarBoasVindas(nome) {
-        const saudacao = getSaudacao();
-        const welcomeDiv = document.getElementById('welcomeMessage');
-        welcomeDiv.innerHTML = `<span>${saudacao}, <span class="nome">${nome}</span>! 👋</span><br><span style="font-size: 0.9rem;">Seja bem-vindo(a) ao painel de controle da Escolinha do Jacaré</span>`;
-        welcomeDiv.classList.remove('fade-out');
-        welcomeDiv.style.display = 'block';
-        if (timeoutWelcome) clearTimeout(timeoutWelcome);
-        timeoutWelcome = setTimeout(() => {
-            welcomeDiv.classList.add('fade-out');
-            setTimeout(() => welcomeDiv.style.display = 'none', 500);
-        }, 5000);
-    }
-    
-    function isAniversarianteHoje(dataNasc) {
-        if (!dataNasc) return false;
-        const hoje = new Date();
-        const nasc = new Date(dataNasc);
-        return hoje.getMonth() === nasc.getMonth() && hoje.getDate() === nasc.getDate();
-    }
-    
-    function isAniversarianteMes(dataNasc) {
-        if (!dataNasc) return false;
-        const hoje = new Date();
-        const nasc = new Date(dataNasc);
-        return hoje.getMonth() === nasc.getMonth();
-    }
-    
-    function getAniversariantesProximos(dias = 7) {
-        const hoje = new Date();
-        const dataLimite = new Date(hoje);
-        dataLimite.setDate(hoje.getDate() + dias);
-        return alunos.filter(a => {
-            if (!a.dataNasc) return false;
-            const nasc = new Date(a.dataNasc);
-            const aniversarioEsseAno = new Date(hoje.getFullYear(), nasc.getMonth(), nasc.getDate());
-            const aniversarioProximoAno = new Date(hoje.getFullYear() + 1, nasc.getMonth(), nasc.getDate());
-            return (aniversarioEsseAno >= hoje && aniversarioEsseAno <= dataLimite) || (aniversarioProximoAno >= hoje && aniversarioProximoAno <= dataLimite);
-        });
-    }
-    
-    function getAniversariantesMes() {
-        const hoje = new Date();
-        const mesAtual = hoje.getMonth();
-        return alunos.filter(a => {
-            if (!a.dataNasc) return false;
-            const nasc = new Date(a.dataNasc);
-            return nasc.getMonth() === mesAtual;
-        });
-    }
-    
-    function verificarAniversariantesProximos() {
-        const proximos = getAniversariantesProximos(7);
-        const aniversariantesMes = getAniversariantesMes();
-        const msgDiv = document.getElementById('aniversarioMessage');
-        if (proximos.length > 0) {
-            if (proximos.length === 1) {
-                msgDiv.innerHTML = `🎂 <span class="nome">${proximos[0].nome.split(' ')[0]}</span> faz aniversário em ${proximos[0].dataNasc.split('-').reverse().join('/')}! 🎉<br>👆 Clique aqui para ver todos os aniversariantes do mês (${aniversariantesMes.length} no total)`;
-            } else if (proximos.length <= 3) {
-                const nomes = proximos.map(a => a.nome.split(' ')[0]).join(', ');
-                msgDiv.innerHTML = `🎂 ${proximos.length} aniversariantes nos próximos dias: <span class="nome">${nomes}</span>! 🎉<br>👆 Clique aqui para ver todos os aniversariantes do mês (${aniversariantesMes.length} no total)`;
-            } else {
-                msgDiv.innerHTML = `🎂 Temos ${proximos.length} aniversariantes nos próximos dias! 🎉<br>👆 Clique aqui para ver todos os aniversariantes do mês (${aniversariantesMes.length} no total)`;
+    let intervalo = null;
+
+    const PLANILHA_ID = '1blMplaMjl7D6-FQM89rIzfa3kZbqMqqdjX3UDJWbvFw';
+
+    // BUSCAR TODOS OS DADOS DA PLANILHA CORRETAMENTE
+    async function buscarSolicitacoesDaPlanilha() {
+        try {
+            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv`;
+            const response = await fetch(url);
+            const texto = await response.text();
+            const linhas = texto.split('\n');
+            
+            const novas = [];
+            // Pular cabeçalho (linha 0)
+            for (let i = 1; i < linhas.length; i++) {
+                const linha = linhas[i].trim();
+                if (!linha) continue;
+                
+                // Parse manual do CSV
+                const valores = [];
+                let atual = '';
+                let dentroAspas = false;
+                for (let c of linha) {
+                    if (c === '"') {
+                        dentroAspas = !dentroAspas;
+                    } else if (c === ',' && !dentroAspas) {
+                        valores.push(atual);
+                        atual = '';
+                    } else {
+                        atual += c;
+                    }
+                }
+                valores.push(atual);
+                
+                // Limpar aspas
+                const limpar = (v) => v.replace(/^"|"$/g, '').trim();
+                
+                if (valores.length >= 13 && limpar(valores[2])) {
+                    novas.push({
+                        id: Date.now() + i,
+                        protocolo: limpar(valores[0]),
+                        dataEnvio: limpar(valores[1]),
+                        nomeAluno: limpar(valores[2]),
+                        idade: limpar(valores[3]),
+                        turma: limpar(valores[4]),
+                        categoria: limpar(valores[5]),
+                        responsavel: limpar(valores[6]),
+                        telefone: limpar(valores[7]),
+                        email: limpar(valores[8]),
+                        endereco: limpar(valores[9]),
+                        moradores: limpar(valores[10]),
+                        remedio: limpar(valores[11]),
+                        origem: limpar(valores[12]),
+                        status: 'pendente'
+                    });
+                }
             }
-            msgDiv.style.display = 'block';
-        } else if (aniversariantesMes.length > 0) {
-            msgDiv.innerHTML = `🎂 Este mês temos ${aniversariantesMes.length} aniversariante(s)! 🎉<br>👆 Clique aqui para ver todos!`;
-            msgDiv.style.display = 'block';
-        } else {
-            msgDiv.style.display = 'none';
+            return novas.reverse();
+        } catch (error) {
+            console.error('Erro:', error);
+            return [];
         }
     }
-    
-    function filtrarAniversariantes() {
-        const aniversariantes = getAniversariantesMes();
-        if (aniversariantes.length === 0) {
-            alert('Não há aniversariantes neste mês!');
-            return;
+
+    async function atualizarSolicitacoes() {
+        const pendentesAntes = solicitacoes.filter(s => s.status === 'pendente').length;
+        const novas = await buscarSolicitacoesDaPlanilha();
+        
+        // Mesclar mantendo status
+        const mapa = new Map();
+        solicitacoes.forEach(s => mapa.set(s.protocolo + s.nomeAluno, s));
+        novas.forEach(n => {
+            const chave = n.protocolo + n.nomeAluno;
+            if (!mapa.has(chave)) mapa.set(chave, n);
+        });
+        solicitacoes = Array.from(mapa.values());
+        localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+        
+        atualizarStatsSolicitacoes();
+        filtrarSolicitacoes();
+        
+        const pendentesAgora = solicitacoes.filter(s => s.status === 'pendente').length;
+        if (pendentesAgora > pendentesAntes) {
+            const alerta = document.getElementById('novaSolicitacaoAlerta');
+            alerta.innerHTML = `📢 ${pendentesAgora - pendentesAntes} nova(s) solicitação(ões)! 🎉`;
+            alerta.style.display = 'block';
+            setTimeout(() => alerta.style.display = 'none', 5000);
         }
-        abrirTab('alunos');
-        atualizarTabelaAlunos(aniversariantes);
     }
-    
-    function calcularIdade(dataNasc) {
-        if (!dataNasc) return '-';
-        const hoje = new Date();
-        const nasc = new Date(dataNasc);
-        let idade = hoje.getFullYear() - nasc.getFullYear();
-        const m = hoje.getMonth() - nasc.getMonth();
-        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
-        return idade;
-    }
-    
-    function formatarData(dataNasc) {
-        if (!dataNasc) return '-';
-        return new Date(dataNasc).toLocaleDateString('pt-BR');
-    }
-    
-    function formatarNomeComIcone(nome, dataNasc) {
-        let nomeFormatado = nome;
-        if (isAniversarianteHoje(dataNasc)) {
-            nomeFormatado = `<span class="nome-aniversario-dia">${nome}</span>`;
-        } else if (isAniversarianteMes(dataNasc)) {
-            nomeFormatado = `<span class="nome-aniversario-mes">${nome}</span>`;
-        }
-        return nomeFormatado;
-    }
-    
-    function carregarDados() {
-        const alunosSalvos = localStorage.getItem('escolinha_alunos');
-        if (alunosSalvos) alunos = JSON.parse(alunosSalvos);
-        else alunos = [];
-        const solicitacoesSalvas = localStorage.getItem('solicitacoes_prematricula');
-        if (solicitacoesSalvas) solicitacoes = JSON.parse(solicitacoesSalvas);
-        else solicitacoes = [];
-        atualizarEstatisticas();
-        atualizarTabelaAlunos();
-        atualizarTabelaSolicitacoes();
-        verificarAniversariantesProximos();
-        const pendentesAtuais = solicitacoes.filter(s => s.status === 'pendente').length;
-        if (pendentesAtuais > ultimoTotalPendentes && pendentesAtuais > 0) {
-            const alertaDiv = document.getElementById('novaSolicitacaoAlerta');
-            alertaDiv.innerHTML = `📢 ${pendentesAtuais - ultimoTotalPendentes} nova(s) solicitação(ões) recebida(s)! 🎉`;
-            alertaDiv.style.display = 'block';
-            setTimeout(() => alertaDiv.style.display = 'none', 5000);
-        }
-        ultimoTotalPendentes = pendentesAtuais;
-    }
-    
-    function atualizarEstatisticas() {
-        document.getElementById('totalAlunos').innerText = alunos.length;
-        document.getElementById('totalFutebol').innerText = alunos.filter(a => a.turma === 'Futebol').length;
-        document.getElementById('totalTaekwondo').innerText = alunos.filter(a => a.turma === 'Taekwondo').length;
-        document.getElementById('totalGinastica').innerText = alunos.filter(a => a.turma === 'Ginástica').length;
-        document.getElementById('totalTenisMesa').innerText = alunos.filter(a => a.turma === 'Tênis de Mesa').length;
-        document.getElementById('totalJudo').innerText = alunos.filter(a => a.turma === 'Judô').length;
+
+    function atualizarStatsSolicitacoes() {
         document.getElementById('totalPendentes').innerText = solicitacoes.filter(s => s.status === 'pendente').length;
+        document.getElementById('totalSolicitacoes').innerText = solicitacoes.length;
     }
-    
-    function atualizarTabelaAlunos(filtrados = null) {
-        const turmaFiltro = document.getElementById('filtroTurma').value;
-        const busca = document.getElementById('buscaNome').value.toLowerCase();
-        let alunosFiltrados = filtrados !== null ? filtrados : alunos;
-        if (filtrados === null) {
-            alunosFiltrados = alunos.filter(a => {
-                if (turmaFiltro !== 'todas' && a.turma !== turmaFiltro) return false;
-                if (busca && !a.nome.toLowerCase().includes(busca)) return false;
-                return true;
-            });
-        }
-        const tbody = document.getElementById('corpoTabelaAlunos');
-        if (alunosFiltrados.length === 0) {
-            tbody.innerHTML = ' <td colspan="7" class="sem-alunos">Nenhum aluno encontrado.    ';
-            return;
-        }
-        tbody.innerHTML = alunosFiltrados.map(aluno => {
-            const ehAniversarianteHoje = isAniversarianteHoje(aluno.dataNasc);
-            const classeLinha = ehAniversarianteHoje ? 'class="linha-aniversario"' : '';
-            const nomeFormatado = formatarNomeComIcone(aluno.nome, aluno.dataNasc);
-            return `
-                <tr ${classeLinha} onclick="abrirDetalhesAluno(${aluno.id})">
-                    <td class="checkbox-col"><input type="checkbox" class="selecionar-aluno" value="${aluno.id}" onclick="event.stopPropagation()">   </td>
-                    <td>${aluno.fotoUrl ? `<img src="${aluno.fotoUrl}" class="foto-mini" onclick="abrirFotoGrande('${aluno.fotoUrl}'); event.stopPropagation()">` : '<div class="foto-mini" style="background:#ddd;"></div>'}</td>
-                    <td><strong>${nomeFormatado}</strong></td>
-                    <td>${calcularIdade(aluno.dataNasc)} anos</td>
-                    <td>${aluno.turma}</td>
-                    <td>${aluno.telefone}</td>
-                    <td>${formatarData(aluno.dataNasc)}</td>
-                </tr>
-            `;
-        }).join('');
-    }
-    
-    function atualizarTabelaSolicitacoes() {
-        const statusFiltro = document.getElementById('filtroStatus').value;
+
+    function filtrarSolicitacoes() {
+        const status = document.getElementById('filtroStatus').value;
         const busca = document.getElementById('buscaSolicitacao').value.toLowerCase();
         let filtradas = solicitacoes.filter(s => {
-            if (statusFiltro !== 'todas' && s.status !== statusFiltro) return false;
-            if (busca && !s.aluno.nome.toLowerCase().includes(busca)) return false;
+            if (status !== 'todas' && s.status !== status) return false;
+            if (busca && !s.nomeAluno.toLowerCase().includes(busca)) return false;
             return true;
         });
+        renderizarSolicitacoes(filtradas);
+    }
+
+    function renderizarSolicitacoes(lista) {
         const tbody = document.getElementById('corpoTabelaSolicitacoes');
-        if (filtradas.length === 0) {
-            tbody.innerHTML = ' <td colspan="8" class="sem-solicitacoes">Nenhuma solicitação encontrada.    ';
+        if (lista.length === 0) {
+            tbody.innerHTML = ' <td colspan="9">Nenhuma solicitação encontrada.    ';
             return;
         }
-        tbody.innerHTML = filtradas.map(s => {
-            let statusClass = '', statusText = '';
-            if (s.status === 'pendente') { statusClass = 'status-pendente'; statusText = '🟡 Pendente'; }
-            else if (s.status === 'aprovada') { statusClass = 'status-aprovada'; statusText = '🟢 Aprovada'; }
-            else { statusClass = 'status-recusada'; statusText = '🔴 Recusada'; }
+        tbody.innerHTML = lista.map(s => {
+            let classe = '', texto = '';
+            if (s.status === 'pendente') { classe = 'status-pendente'; texto = '🟡 Pendente'; }
+            else if (s.status === 'aprovada') { classe = 'status-aprovada'; texto = '🟢 Aprovada'; }
+            else { classe = 'status-recusada'; texto = '🔴 Recusada'; }
             return `
                 <tr>
-                    <td class="checkbox-col"><input type="checkbox" class="selecionar-solicitacao" value="${s.id}" onclick="event.stopPropagation()"></td>
-                    <td>${s.foto ? `<img src="${s.foto}" class="foto-mini" onclick="abrirFotoGrande('${s.foto}'); event.stopPropagation()">` : '<div class="foto-mini" style="background:#ddd;"></div>'}</td>
-                    <td onclick="verDetalhesSolicitacao(${s.id})"><strong>${s.aluno.nome}</strong></td>
-                    <td onclick="verDetalhesSolicitacao(${s.id})">${s.aluno.turma}${s.aluno.categoria ? ` - ${s.aluno.categoria}` : ''}</td>
-                    <td onclick="verDetalhesSolicitacao(${s.id})">${s.responsavel.nome}<br><small>${s.responsavel.telefone}</small></td>
-                    <td onclick="verDetalhesSolicitacao(${s.id})"><small>${new Date(s.dataEnvio).toLocaleDateString('pt-BR')}</small></td>
-                    <td onclick="verDetalhesSolicitacao(${s.id})"><span class="status-badge ${statusClass}">${statusText}</span></td>
+                    <td class="checkbox-col"><input type="checkbox" class="sel-solic" value="${s.id}"></td>
+                    <td onclick="verSolicitacao(${s.id})"><strong>${s.nomeAluno}</strong></td>
+                    <td onclick="verSolicitacao(${s.id})">${s.turma}${s.categoria ? ` - ${s.categoria}` : ''}</td>
+                    <td onclick="verSolicitacao(${s.id})">${s.idade}</td>
+                    <td onclick="verSolicitacao(${s.id})">${s.responsavel}</td>
+                    <td onclick="verSolicitacao(${s.id})">${s.telefone}</td>
+                    <td onclick="verSolicitacao(${s.id})">${s.dataEnvio}</td>
+                    <td onclick="verSolicitacao(${s.id})"><span class="status-badge ${classe}">${texto}</span></td>
                     <td>
-                        <button class="btn-ver" onclick="verDetalhesSolicitacao(${s.id})">👁️ Ver</button>
+                        <button class="btn-ver" onclick="verSolicitacao(${s.id})">👁️</button>
                         ${s.status === 'pendente' ? `
-                            <button class="btn-aprovar" onclick="aprovarSolicitacao(${s.id})">✅ Aprovar</button>
-                            <button class="btn-recusar" onclick="recusarSolicitacao(${s.id})">❌ Recusar</button>
-                        ` : s.status === 'recusada' ? `
-                            <button class="btn-reativar" onclick="reativarSolicitacao(${s.id})">🔄 Reativar</button>
+                            <button class="btn-aprovar" onclick="aprovarSolicitacao(${s.id})">✅</button>
+                            <button class="btn-recusar" onclick="recusarSolicitacao(${s.id})">❌</button>
                         ` : ''}
                     </td>
                 </tr>
             `;
         }).join('');
     }
-    
+
+    function selecionarTodosSolicitacoes() {
+        const chk = document.getElementById('selecionarTodosSolicitacoes').checked;
+        document.querySelectorAll('.sel-solic').forEach(cb => cb.checked = chk);
+    }
+
+    function excluirSelecionadosSolicitacoes() {
+        const ids = Array.from(document.querySelectorAll('.sel-solic:checked')).map(cb => parseInt(cb.value));
+        if (ids.length === 0) { alert('Selecione pelo menos uma!'); return; }
+        if (confirm(`Excluir ${ids.length} solicitação(ões)?`)) {
+            solicitacoes = solicitacoes.filter(s => !ids.includes(s.id));
+            localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+            atualizarStatsSolicitacoes();
+            filtrarSolicitacoes();
+        }
+    }
+
     function aprovarSolicitacao(id) {
-        const index = solicitacoes.findIndex(s => s.id === id);
-        if (index === -1) return;
-        const s = solicitacoes[index];
-        if (confirm(`✅ APROVAR matrícula de ${s.aluno.nome}?`)) {
-            const novoAluno = {
+        const s = solicitacoes.find(s => s.id === id);
+        if (s && confirm(`Aprovar ${s.nomeAluno}?`)) {
+            s.status = 'aprovada';
+            // Adicionar aos alunos
+            alunos.push({
                 id: Date.now(),
-                nome: s.aluno.nome,
-                dataNasc: s.aluno.dataNasc,
-                turma: s.aluno.turma,
-                responsavel: s.responsavel.nome,
-                telefone: s.responsavel.telefone,
-                telefone2: '',
-                endereco: s.endereco.rua,
-                numeroCasa: s.endereco.numero,
-                bairro: s.endereco.bairro,
-                escola: s.aluno.escola || '',
-                serie: s.aluno.serie || '',
-                remedio: s.remedio,
-                fotoUrl: s.foto
-            };
-            alunos.push(novoAluno);
+                nome: s.nomeAluno,
+                dataNasc: '',
+                turma: s.turma,
+                responsavel: s.responsavel,
+                telefone: s.telefone,
+                endereco: s.endereco?.split(',')[0] || ''
+            });
             localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-            solicitacoes.splice(index, 1);
             localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-            alert(`✅ Matrícula de ${s.aluno.nome} aprovada!`);
+            atualizarStatsSolicitacoes();
+            filtrarSolicitacoes();
+            carregarAlunos();
             fecharModalDetalhesSolicitacao();
-            carregarDados();
+            alert(`✅ ${s.nomeAluno} aprovado!`);
         }
     }
-    
+
     function recusarSolicitacao(id) {
-        const index = solicitacoes.findIndex(s => s.id === id);
-        if (index === -1) return;
-        const s = solicitacoes[index];
-        const motivo = prompt(`Motivo da recusa para ${s.aluno.nome}:`, 'Documentação incompleta');
-        if (motivo !== null) {
+        const s = solicitacoes.find(s => s.id === id);
+        if (s && confirm(`Recusar ${s.nomeAluno}?`)) {
             s.status = 'recusada';
-            s.motivoRecusa = motivo;
             localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-            alert(`❌ Solicitação de ${s.aluno.nome} recusada.`);
+            atualizarStatsSolicitacoes();
+            filtrarSolicitacoes();
             fecharModalDetalhesSolicitacao();
-            carregarDados();
+            alert(`❌ ${s.nomeAluno} recusado.`);
         }
     }
-    
-    function reativarSolicitacao(id) {
-        const index = solicitacoes.findIndex(s => s.id === id);
-        if (index === -1) return;
-        const s = solicitacoes[index];
-        if (confirm(`🔄 Reativar a solicitação de ${s.aluno.nome}?`)) {
-            s.status = 'pendente';
-            delete s.motivoRecusa;
-            localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-            alert(`🔄 Solicitação de ${s.aluno.nome} foi reativada.`);
-            fecharModalDetalhesSolicitacao();
-            carregarDados();
-        }
-    }
-    
-    function verDetalhesSolicitacao(id) {
+
+    function verSolicitacao(id) {
         const s = solicitacoes.find(s => s.id === id);
         if (!s) return;
         document.getElementById('detalhesSolicitacaoConteudo').innerHTML = `
-            <div style="display:flex; gap:20px; flex-wrap:wrap;">
-                <div>${s.foto ? `<img src="${s.foto}" style="width:150px; border-radius:15px;">` : '📸 Sem foto'}</div>
-                <div>
-                    <p><strong>Protocolo:</strong> ${s.protocolo}</p>
-                    <p><strong>Aluno:</strong> ${s.aluno.nome}</p>
-                    <p><strong>Turma:</strong> ${s.aluno.turma}</p>
-                    <p><strong>Responsável:</strong> ${s.responsavel.nome}</p>
-                    <p><strong>Telefone:</strong> ${s.responsavel.telefone}</p>
-                    <p><strong>Endereço:</strong> ${s.endereco.rua}, ${s.endereco.numero} - ${s.endereco.bairro}</p>
-                    <p><strong>Remédio:</strong> ${s.remedio}</p>
-                </div>
-            </div>
+            <p><strong>Protocolo:</strong> ${s.protocolo}</p>
+            <p><strong>Aluno:</strong> ${s.nomeAluno}</p>
+            <p><strong>Idade:</strong> ${s.idade} anos</p>
+            <p><strong>Turma:</strong> ${s.turma} ${s.categoria ? `- ${s.categoria}` : ''}</p>
+            <p><strong>Responsável:</strong> ${s.responsavel}</p>
+            <p><strong>Telefone:</strong> ${s.telefone}</p>
+            <p><strong>E-mail:</strong> ${s.email}</p>
+            <p><strong>Endereço:</strong> ${s.endereco}</p>
+            <p><strong>Remédio:</strong> ${s.remedio}</p>
+            <p><strong>Data:</strong> ${s.dataEnvio}</p>
         `;
-        const btnAprovar = document.getElementById('btnAprovarDetalhes');
-        const btnRecusar = document.getElementById('btnRecusarDetalhes');
-        const btnReativar = document.getElementById('btnReativarDetalhes');
-        if (s.status === 'pendente') {
-            btnAprovar.onclick = () => { aprovarSolicitacao(s.id); };
-            btnRecusar.onclick = () => { recusarSolicitacao(s.id); };
-            btnAprovar.style.display = 'block';
-            btnRecusar.style.display = 'block';
-            btnReativar.style.display = 'none';
-        } else if (s.status === 'recusada') {
-            btnReativar.onclick = () => { reativarSolicitacao(s.id); };
-            btnAprovar.style.display = 'none';
-            btnRecusar.style.display = 'none';
-            btnReativar.style.display = 'block';
-        } else {
-            btnAprovar.style.display = 'none';
-            btnRecusar.style.display = 'none';
-            btnReativar.style.display = 'none';
-        }
+        const btnA = document.getElementById('btnAprovarDetalhes');
+        const btnR = document.getElementById('btnRecusarDetalhes');
+        btnA.onclick = () => aprovarSolicitacao(s.id);
+        btnR.onclick = () => recusarSolicitacao(s.id);
+        btnA.style.display = s.status === 'pendente' ? 'block' : 'none';
+        btnR.style.display = s.status === 'pendente' ? 'block' : 'none';
         document.getElementById('modalDetalhesSolicitacao').style.display = 'flex';
     }
-    
-    function abrirDetalhesAluno(id) {
-        const aluno = alunos.find(a => a.id === id);
-        if (!aluno) return;
+
+    // ALUNOS
+    function carregarAlunos() {
+        const salvos = localStorage.getItem('escolinha_alunos');
+        alunos = salvos ? JSON.parse(salvos) : [];
+        document.getElementById('totalAlunos').innerText = alunos.length;
+        filtrarAlunos();
+    }
+
+    function filtrarAlunos() {
+        const turma = document.getElementById('filtroTurmaAlunos').value;
+        const busca = document.getElementById('buscaAluno').value.toLowerCase();
+        let filtrados = alunos.filter(a => {
+            if (turma !== 'todas' && a.turma !== turma) return false;
+            if (busca && !a.nome.toLowerCase().includes(busca)) return false;
+            return true;
+        });
+        renderizarAlunos(filtrados);
+    }
+
+    function renderizarAlunos(lista) {
+        const tbody = document.getElementById('corpoTabelaAlunos');
+        if (lista.length === 0) {
+            tbody.innerHTML = ' <td colspan="7">Nenhum aluno encontrado.    ';
+            return;
+        }
+        tbody.innerHTML = lista.map(a => {
+            const idade = a.dataNasc ? Math.floor((new Date() - new Date(a.dataNasc)) / (31536000000)) : '-';
+            return `
+                <tr onclick="verDetalhesAluno(${a.id})">
+                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">    <td><strong>${a.nome}</strong>    <td>${idade}    <td>${a.turma}    <td>${a.responsavel}    <td>${a.telefone}    <td>
+                        <button class="btn-editar" onclick="editarAluno(${a.id}); event.stopPropagation()">✏️</button>
+                        <button class="btn-excluir" onclick="excluirAluno(${a.id}); event.stopPropagation()">🗑️</button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    function selecionarTodosAlunos() {
+        const chk = document.getElementById('selecionarTodosAlunos').checked;
+        document.querySelectorAll('.sel-aluno').forEach(cb => cb.checked = chk);
+    }
+
+    function excluirSelecionadosAlunos() {
+        const ids = Array.from(document.querySelectorAll('.sel-aluno:checked')).map(cb => parseInt(cb.value));
+        if (ids.length === 0) { alert('Selecione pelo menos um!'); return; }
+        if (confirm(`Excluir ${ids.length} aluno(s)?`)) {
+            alunos = alunos.filter(a => !ids.includes(a.id));
+            localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
+            carregarAlunos();
+        }
+    }
+
+    function abrirModalCadastroAluno() {
+        document.getElementById('modalAlunoTitulo').innerText = 'CADASTRAR ALUNO';
+        document.getElementById('alunoId').value = '';
+        document.getElementById('formAluno').reset();
+        document.getElementById('modalAluno').style.display = 'flex';
+    }
+
+    function editarAluno(id) {
+        const a = alunos.find(a => a.id === id);
+        if (!a) return;
         alunoSelecionadoId = id;
+        document.getElementById('modalAlunoTitulo').innerText = 'EDITAR ALUNO';
+        document.getElementById('alunoId').value = a.id;
+        document.getElementById('nomeAluno').value = a.nome || '';
+        document.getElementById('dataNascAluno').value = a.dataNasc || '';
+        document.getElementById('turmaAluno').value = a.turma || 'Futebol';
+        document.getElementById('responsavelAluno').value = a.responsavel || '';
+        document.getElementById('telefoneAluno').value = a.telefone || '';
+        document.getElementById('telefone2Aluno').value = a.telefone2 || '';
+        document.getElementById('enderecoAluno').value = a.endereco || '';
+        document.getElementById('bairroAluno').value = a.bairro || '';
+        document.getElementById('modalAluno').style.display = 'flex';
+    }
+
+    function excluirAluno(id) {
+        if (confirm('Excluir este aluno?')) {
+            alunos = alunos.filter(a => a.id !== id);
+            localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
+            carregarAlunos();
+        }
+    }
+
+    function verDetalhesAluno(id) {
+        const a = alunos.find(a => a.id === id);
+        if (!a) return;
+        alunoSelecionadoId = id;
+        const idade = a.dataNasc ? Math.floor((new Date() - new Date(a.dataNasc)) / 31536000000) : '-';
         document.getElementById('detalhesAlunoConteudo').innerHTML = `
-            <div style="display:flex; gap:20px; flex-wrap:wrap;">
-                <div>${aluno.fotoUrl ? `<img src="${aluno.fotoUrl}" style="width:150px; border-radius:15px;">` : '📸 Sem foto'}</div>
-                <div>
-                    <p><strong>Nome:</strong> ${aluno.nome}</p>
-                    <p><strong>Data nasc.:</strong> ${formatarData(aluno.dataNasc)}</p>
-                    <p><strong>Turma:</strong> ${aluno.turma}</p>
-                    <p><strong>Responsável:</strong> ${aluno.responsavel}</p>
-                    <p><strong>Telefone:</strong> ${aluno.telefone}</p>
-                    <p><strong>Endereço:</strong> ${aluno.endereco || '-'}</p>
-                    <p><strong>Remédio:</strong> ${aluno.remedio || 'Não'}</p>
-                </div>
-            </div>
+            <p><strong>Nome:</strong> ${a.nome}</p>
+            <p><strong>Data Nasc.:</strong> ${a.dataNasc || '-'}</p>
+            <p><strong>Idade:</strong> ${idade} anos</p>
+            <p><strong>Turma:</strong> ${a.turma}</p>
+            <p><strong>Responsável:</strong> ${a.responsavel}</p>
+            <p><strong>Telefone:</strong> ${a.telefone}</p>
+            <p><strong>Endereço:</strong> ${a.endereco || '-'}</p>
         `;
         document.getElementById('modalDetalhesAluno').style.display = 'flex';
     }
-    
-    function editarDoDetalhes() {
+
+    function editarAlunoModal() {
         fecharModalDetalhesAluno();
         if (alunoSelecionadoId) editarAluno(alunoSelecionadoId);
     }
-    
-    function abrirModalCadastro() {
-        document.getElementById('modalAluno').style.display = 'flex';
-    }
-    
-    function editarAluno(id) {
-        const aluno = alunos.find(a => a.id == id);
-        if (!aluno) return;
-        alunoSelecionadoId = id;
-        document.getElementById('modalTitulo').innerText = 'EDITAR ALUNO';
-        document.getElementById('alunoId').value = aluno.id;
-        document.getElementById('nome').value = aluno.nome || '';
-        document.getElementById('dataNasc').value = aluno.dataNasc || '';
-        document.getElementById('sexo').value = aluno.sexo || 'Masculino';
-        document.getElementById('turma').value = aluno.turma || 'Futebol';
-        document.getElementById('peso').value = aluno.peso || '';
-        document.getElementById('altura').value = aluno.altura || '';
-        document.getElementById('responsavel').value = aluno.responsavel || '';
-        document.getElementById('telefone').value = aluno.telefone || '';
-        document.getElementById('telefone2').value = aluno.telefone2 || '';
-        document.getElementById('endereco').value = aluno.endereco || '';
-        document.getElementById('numeroCasa').value = aluno.numeroCasa || '';
-        document.getElementById('bairro').value = aluno.bairro || '';
-        document.getElementById('escola').value = aluno.escola || '';
-        document.getElementById('serie').value = aluno.serie || '';
-        document.getElementById('remedio').value = aluno.remedio || '';
-        document.getElementById('fotoUrl').value = aluno.fotoUrl || '';
-        if (aluno.fotoUrl) {
-            document.getElementById('preview').src = aluno.fotoUrl;
-            document.getElementById('preview').style.display = 'block';
+
+    function excluirAlunoModal() {
+        if (alunoSelecionadoId && confirm('Excluir?')) {
+            excluirAluno(alunoSelecionadoId);
+            fecharModalDetalhesAluno();
         }
-        document.getElementById('btnExcluir').style.display = 'block';
-        document.getElementById('modalAluno').style.display = 'flex';
     }
-    
+
     document.getElementById('formAluno').addEventListener('submit', function(e) {
         e.preventDefault();
         const id = document.getElementById('alunoId').value;
         const aluno = {
             id: id ? parseInt(id) : Date.now(),
-            nome: document.getElementById('nome').value,
-            dataNasc: document.getElementById('dataNasc').value,
-            sexo: document.getElementById('sexo').value,
-            turma: document.getElementById('turma').value,
-            peso: document.getElementById('peso').value,
-            altura: document.getElementById('altura').value,
-            responsavel: document.getElementById('responsavel').value,
-            telefone: document.getElementById('telefone').value,
-            telefone2: document.getElementById('telefone2').value,
-            endereco: document.getElementById('endereco').value,
-            numeroCasa: document.getElementById('numeroCasa').value,
-            bairro: document.getElementById('bairro').value,
-            escola: document.getElementById('escola').value,
-            serie: document.getElementById('serie').value,
-            remedio: document.getElementById('remedio').value,
-            fotoUrl: document.getElementById('fotoUrl').value
+            nome: document.getElementById('nomeAluno').value,
+            dataNasc: document.getElementById('dataNascAluno').value,
+            turma: document.getElementById('turmaAluno').value,
+            responsavel: document.getElementById('responsavelAluno').value,
+            telefone: document.getElementById('telefoneAluno').value,
+            telefone2: document.getElementById('telefone2Aluno').value,
+            endereco: document.getElementById('enderecoAluno').value,
+            bairro: document.getElementById('bairroAluno').value
         };
         if (id) {
-            const index = alunos.findIndex(a => a.id == id);
-            if (index !== -1) alunos[index] = aluno;
+            const idx = alunos.findIndex(a => a.id == id);
+            if (idx !== -1) alunos[idx] = aluno;
         } else {
             alunos.push(aluno);
         }
         localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-        carregarDados();
-        fecharModal();
+        carregarAlunos();
+        fecharModalAluno();
     });
-    
-    function excluirAlunoUnico() {
-        if (confirm('Tem certeza que deseja excluir este aluno permanentemente?')) {
-            const id = parseInt(document.getElementById('alunoId').value);
-            alunos = alunos.filter(a => a.id !== id);
-            localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-            carregarDados();
-            fecharModal();
-        }
-    }
-    
-    function ordenarAlunos() {
-        if (ordemAtual === 'id') {
-            alunos.sort((a, b) => a.nome.localeCompare(b.nome));
-            ordemAtual = 'nome';
-            document.querySelector('.btn-ordenar').innerHTML = '📋 Ordenar por ID';
-        } else {
-            alunos.sort((a, b) => a.id - b.id);
-            ordemAtual = 'id';
-            document.querySelector('.btn-ordenar').innerHTML = '📋 Ordenar por Nome';
-        }
-        localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-        carregarDados();
-    }
-    
-    function abrirFotoGrande(url) {
-        const modal = document.createElement('div');
-        modal.style.position = 'fixed';
-        modal.style.top = '0';
-        modal.style.left = '0';
-        modal.style.width = '100%';
-        modal.style.height = '100%';
-        modal.style.background = 'rgba(0,0,0,0.9)';
-        modal.style.zIndex = '2000';
-        modal.style.display = 'flex';
-        modal.style.justifyContent = 'center';
-        modal.style.alignItems = 'center';
-        modal.style.cursor = 'pointer';
-        modal.innerHTML = `<img src="${url}" style="max-width:90%; max-height:90%; object-fit:contain; border-radius:10px;">`;
-        modal.onclick = () => modal.remove();
-        document.body.appendChild(modal);
-    }
-    
-    function abrirTab(tab) {
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('ativo'));
-        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('ativo'));
-        if (tab === 'alunos') {
-            document.querySelector('.tab-btn:first-child').classList.add('ativo');
-            document.getElementById('tabAlunos').classList.add('ativo');
-        } else {
-            document.querySelector('.tab-btn:last-child').classList.add('ativo');
-            document.getElementById('tabSolicitacoes').classList.add('ativo');
-        }
-    }
-    
-    function selecionarTodosAlunos() {
-        const checkboxes = document.querySelectorAll('#corpoTabelaAlunos .selecionar-aluno');
-        const selecionarTodos = document.getElementById('selecionarTodosAlunos').checked;
-        checkboxes.forEach(cb => cb.checked = selecionarTodos);
-    }
-    
-    function selecionarTodosSolicitacoes() {
-        const checkboxes = document.querySelectorAll('#corpoTabelaSolicitacoes .selecionar-solicitacao');
-        const selecionarTodos = document.getElementById('selecionarTodosSolicitacoes').checked;
-        checkboxes.forEach(cb => cb.checked = selecionarTodos);
-    }
-    
-    function abrirConfirmacaoMultipla(tipo) {
-        let selecionados = [];
-        if (tipo === 'alunos') {
-            selecionados = Array.from(document.querySelectorAll('#corpoTabelaAlunos .selecionar-aluno:checked')).map(cb => parseInt(cb.value));
-        } else {
-            selecionados = Array.from(document.querySelectorAll('#corpoTabelaSolicitacoes .selecionar-solicitacao:checked')).map(cb => parseInt(cb.value));
-        }
-        if (selecionados.length === 0) { alert('Selecione pelo menos um item!'); return; }
-        if (confirm(`Excluir ${selecionados.length} item(s) permanentemente?`)) {
-            if (tipo === 'alunos') {
-                alunos = alunos.filter(a => !selecionados.includes(a.id));
-                localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-            } else {
-                solicitacoes = solicitacoes.filter(s => !selecionados.includes(s.id));
-                localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-            }
-            carregarDados();
-            alert(`✅ ${selecionados.length} item(s) excluído(s)!`);
-        }
-    }
-    
-    function fecharModal() { document.getElementById('modalAluno').style.display = 'none'; }
-    function fecharModalDetalhesAluno() { document.getElementById('modalDetalhesAluno').style.display = 'none'; }
+
     function fecharModalDetalhesSolicitacao() { document.getElementById('modalDetalhesSolicitacao').style.display = 'none'; }
-    function fecharModalConfirmacao() { document.getElementById('modalConfirmacao').style.display = 'none'; }
-    function fecharModalAlerta() { document.getElementById('modalAlerta').style.display = 'none'; }
-    
-    document.getElementById('fileInput').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                document.getElementById('preview').src = event.target.result;
-                document.getElementById('preview').style.display = 'block';
-                document.getElementById('fotoUrl').value = event.target.result;
-            };
-            reader.readAsDataURL(file);
+    function fecharModalAluno() { document.getElementById('modalAluno').style.display = 'none'; }
+    function fecharModalDetalhesAluno() { document.getElementById('modalDetalhesAluno').style.display = 'none'; }
+
+    document.getElementById('filtroStatus').addEventListener('change', filtrarSolicitacoes);
+    document.getElementById('buscaSolicitacao').addEventListener('input', filtrarSolicitacoes);
+    document.getElementById('filtroTurmaAlunos').addEventListener('change', filtrarAlunos);
+    document.getElementById('buscaAluno').addEventListener('input', filtrarAlunos);
+
+    function abrirTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('ativo'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('ativo'));
+        if (tab === 'solicitacoes') {
+            document.querySelectorAll('.tab-btn')[0].classList.add('ativo');
+            document.getElementById('tabSolicitacoes').classList.add('ativo');
+        } else {
+            document.querySelectorAll('.tab-btn')[1].classList.add('ativo');
+            document.getElementById('tabAlunos').classList.add('ativo');
+            carregarAlunos();
         }
-    });
-    
-    document.getElementById('filtroTurma').addEventListener('change', () => atualizarTabelaAlunos());
-    document.getElementById('buscaNome').addEventListener('input', () => atualizarTabelaAlunos());
-    document.getElementById('filtroStatus').addEventListener('change', () => atualizarTabelaSolicitacoes());
-    document.getElementById('buscaSolicitacao').addEventListener('input', () => atualizarTabelaSolicitacoes());
-    document.getElementById('btnConfirmarExclusao').onclick = () => {
-        if (modoExclusao === 'alunos') {
-            alunos = alunos.filter(a => !idsParaExcluir.includes(a.id));
-            localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-        } else if (modoExclusao === 'solicitacoes') {
-            solicitacoes = solicitacoes.filter(s => !idsParaExcluir.includes(s.id));
-            localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-        }
-        carregarDados();
-        fecharModalConfirmacao();
-        alert(`✅ ${idsParaExcluir.length} item(s) excluído(s)!`);
-        modoExclusao = null;
-        idsParaExcluir = [];
-    };
-    
+    }
+
+    function iniciarAtualizacao() {
+        if (intervalo) clearInterval(intervalo);
+        intervalo = setInterval(() => { atualizarSolicitacoes(); }, 10000);
+    }
+
     function verificarSenha() {
         const senha = document.getElementById('senhaInput').value;
         const nome = document.getElementById('nomeUsuario').value.trim();
         if (!nome) { document.getElementById('erroLogin').innerText = 'Digite seu nome!'; return; }
-        if (senha === SENHA_CORRETA) {
-            nomeUsuario = nome;
+        if (senha === SENHA) {
             document.getElementById('telaLogin').style.display = 'none';
             document.getElementById('painelInterno').style.display = 'block';
-            mostrarBoasVindas(nomeUsuario);
-            carregarVisitas();
-            carregarDados();
+            document.getElementById('welcomeMessage').innerHTML = `👋 Bem-vindo, <strong>${nome}</strong>!`;
+            atualizarSolicitacoes();
+            carregarAlunos();
+            iniciarAtualizacao();
+            const visitas = JSON.parse(localStorage.getItem('visitas_site') || '{"totalGeral":0}');
+            document.getElementById('totalVisitas').innerText = visitas.totalGeral;
         } else {
             document.getElementById('erroLogin').innerText = 'Senha incorreta!';
         }
     }
-    
+
     function logout() {
+        if (intervalo) clearInterval(intervalo);
         document.getElementById('telaLogin').style.display = 'flex';
         document.getElementById('painelInterno').style.display = 'none';
         document.getElementById('senhaInput').value = '';
-        document.getElementById('nomeUsuario').value = '';
-        document.getElementById('erroLogin').innerText = '';
-        document.getElementById('welcomeMessage').style.display = 'none';
-        document.getElementById('aniversarioMessage').style.display = 'none';
-        if (timeoutWelcome) clearTimeout(timeoutWelcome);
     }
 </script>
 
