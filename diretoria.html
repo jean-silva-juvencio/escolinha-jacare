@@ -6,9 +6,7 @@
     <title>Diretoria | Escolinha do Jacaré</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@700;800&display=swap" rel="stylesheet">
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
     <style>
         :root {
@@ -124,60 +122,8 @@
         }
         .login-card button:hover { background: var(--azul-escuro); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,68,171,0.3); }
         .erro { color: #ff4444; margin-top: 15px; font-size: 0.85rem; background: rgba(255,68,68,0.1); padding: 10px; border-radius: 50px; }
-        
         .info-acesso { margin-top: 20px; font-size: 0.7rem; color: #999; border-top: 1px solid #eee; padding-top: 15px; }
 
-        /* MODAL RECUPERAÇÃO (removido) */
-        /* MODAL ADMIN */
-        .modal-admin {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(3px);
-        }
-        
-        .modal-admin-content {
-            background: white;
-            border-radius: 30px;
-            width: 90%;
-            max-width: 500px;
-            padding: 30px;
-            animation: fadeInUp 0.3s ease;
-        }
-        
-        .modal-admin-content h2 {
-            font-family: 'Montserrat';
-            color: var(--azul-escuro);
-            margin-bottom: 20px;
-        }
-        
-        .modal-admin-content input, .modal-admin-content select {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-        }
-        
-        .modal-admin-content button {
-            background: var(--azul-premium);
-            color: white;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 50px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
-        /* PAINEL DE ANÁLISE */
         .painel {
             display: none;
             max-width: 1400px;
@@ -311,6 +257,54 @@
             transform: scale(1.05);
             filter: brightness(1.05);
         }
+        
+        .modal-admin {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+        
+        .modal-admin-content {
+            background: white;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            animation: fadeInUp 0.3s ease;
+        }
+        
+        .modal-admin-content h2 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            margin-bottom: 20px;
+        }
+        
+        .modal-admin-content input, .modal-admin-content select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+        }
+        
+        .modal-admin-content button {
+            background: var(--azul-premium);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 50px;
+            font-weight: 800;
+            cursor: pointer;
+        }
 
         footer {
             background: var(--azul-escuro);
@@ -328,6 +322,16 @@
                 flex-direction: column;
                 text-align: center;
             }
+        }
+        
+        .atualizando {
+            text-align: center;
+            color: #666;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            padding: 5px;
+            background: #f0f0f0;
+            border-radius: 20px;
         }
     </style>
 </head>
@@ -354,33 +358,16 @@
     </div>
 </div>
 
-<!-- MODAL ADMIN (TROCAR SENHA) -->
-<div id="modalAdmin" class="modal-admin">
-    <div class="modal-admin-content">
-        <span class="fechar-modal" onclick="fecharModalAdmin()">&times;</span>
-        <h2>⚙️ GERENCIAR USUÁRIOS</h2>
-        <div id="listaUsuariosAdmin"></div>
-        <hr style="margin: 20px 0;">
-        <h3>Trocar senha</h3>
-        <select id="usuarioSelecionado">
-            <option value="">Selecione um usuário</option>
-        </select>
-        <input type="password" id="novaSenha" placeholder="Nova senha">
-        <button onclick="trocarSenha()">ALTERAR SENHA</button>
-        <div id="msgAdmin" style="margin-top: 15px; color: #666;"></div>
-    </div>
-</div>
-
 <!-- PAINEL DE ANÁLISE -->
 <div id="painelAnalise" class="painel">
     <div class="header-painel">
         <h1>📊 ANÁLISE DE DADOS | ESCOLINHA DO JACARÉ</h1>
         <div style="display: flex; gap: 10px; align-items: center;">
             <div class="info-usuario" id="infoUsuario"></div>
-            <button class="btn-admin" onclick="abrirModalAdmin()">⚙️ ADMIN</button>
             <button class="btn-admin" onclick="logout()">🚪 SAIR</button>
         </div>
     </div>
+    <div id="atualizandoMsg" class="atualizando">🔄 Atualizando dados da planilha...</div>
 
     <div class="cards-container">
         <div class="card-analise">
@@ -444,8 +431,6 @@
 </footer>
 
 <script>
-    // CONFIGURAÇÃO DO EMAILJS (removido - não será mais usado)
-    
     // USUÁRIOS FIXOS (3 pessoas)
     const USUARIOS = [
         { email: "diretor.jean@escolinha.com", nome: "Jean Silva", senha: "Clash454647*", isAdmin: true },
@@ -459,92 +444,113 @@
     let visitasData = { registros: [], totalGeral: 0 };
     
     let graficoTurmas, graficoAniversario, graficoSub, graficoBairro, graficoVisitas, graficoSolicitacoes;
+    let intervaloAtualizacao = null;
     
-    // FUNÇÕES DE LOGIN
-    function verificarLogin() {
-        const email = document.getElementById('emailLogin').value.trim();
-        const senha = document.getElementById('senhaLogin').value;
-        
-        const usuario = USUARIOS.find(u => u.email === email && u.senha === senha);
-        
-        if (usuario) {
-            usuarioLogado = usuario;
-            document.getElementById('telaLogin').style.display = 'none';
-            document.getElementById('painelAnalise').style.display = 'block';
-            document.getElementById('infoUsuario').innerHTML = `👤 ${usuario.nome}`;
-            carregarDados();
-        } else {
-            document.getElementById('erroLogin').innerText = 'E-mail ou senha incorretos!';
+    const PLANILHA_ID = '1blMplaMjl7D6-FQM89rIzfa3kZbqMqqdjX3UDJWbvFw';
+    
+    // BUSCAR DADOS DA PLANILHA
+    async function buscarDadosPlanilha() {
+        try {
+            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv`;
+            const response = await fetch(url);
+            const texto = await response.text();
+            const linhas = texto.split('\n');
+            
+            const novasSolicitacoes = [];
+            
+            for (let i = 1; i < linhas.length; i++) {
+                const linha = linhas[i].trim();
+                if (!linha) continue;
+                
+                // Parse CSV
+                const valores = [];
+                let atual = '';
+                let dentroAspas = false;
+                for (let c of linha) {
+                    if (c === '"') {
+                        dentroAspas = !dentroAspas;
+                    } else if (c === ',' && !dentroAspas) {
+                        valores.push(atual);
+                        atual = '';
+                    } else {
+                        atual += c;
+                    }
+                }
+                valores.push(atual);
+                
+                const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
+                
+                if (valores.length >= 13 && limpar(valores[2])) {
+                    novasSolicitacoes.push({
+                        id: Date.now() + i,
+                        protocolo: limpar(valores[0]),
+                        dataEnvio: limpar(valores[1]),
+                        nomeAluno: limpar(valores[2]),
+                        idade: parseInt(limpar(valores[3])) || 0,
+                        turma: limpar(valores[4]),
+                        categoria: limpar(valores[5]),
+                        responsavel: limpar(valores[6]),
+                        telefone: limpar(valores[7]),
+                        email: limpar(valores[8]),
+                        endereco: limpar(valores[9]),
+                        bairro: limpar(valores[9]) ? limpar(valores[9]).split('-')[1]?.trim() || 'Centro' : 'Centro',
+                        moradores: limpar(valores[10]),
+                        remedio: limpar(valores[11]),
+                        origem: limpar(valores[12]),
+                        status: 'pendente',
+                        dataNasc: '',
+                        nome: limpar(valores[2])
+                    });
+                }
+            }
+            
+            // Inverter para mostrar mais recentes primeiro
+            return novasSolicitacoes.reverse();
+            
+        } catch (error) {
+            console.error('Erro ao buscar planilha:', error);
+            return [];
         }
     }
     
-    function logout() {
-        usuarioLogado = null;
-        document.getElementById('telaLogin').style.display = 'flex';
-        document.getElementById('painelAnalise').style.display = 'none';
-        document.getElementById('emailLogin').value = '';
-        document.getElementById('senhaLogin').value = '';
-        document.getElementById('erroLogin').innerText = '';
-    }
-    
-    // ADMIN (trocar senha)
-    function abrirModalAdmin() {
-        if (!usuarioLogado || !usuarioLogado.isAdmin) {
-            alert('Apenas o administrador pode acessar esta área!');
-            return;
-        }
+    // CARREGAR TODOS OS DADOS
+    async function carregarTodosDados() {
+        const msgDiv = document.getElementById('atualizandoMsg');
+        msgDiv.style.display = 'block';
+        msgDiv.innerHTML = '🔄 Atualizando dados da planilha...';
         
-        const select = document.getElementById('usuarioSelecionado');
-        select.innerHTML = '<option value="">Selecione um usuário</option>';
-        USUARIOS.forEach(u => {
-            if (u.email !== usuarioLogado.email) {
-                select.innerHTML += `<option value="${u.email}">${u.nome} (${u.email})</option>`;
+        // Buscar solicitações da planilha
+        const novasSolicitacoes = await buscarDadosPlanilha();
+        
+        // Mesclar com solicitações existentes (manter status)
+        const solicitacoesMap = new Map();
+        solicitacoes.forEach(s => solicitacoesMap.set(s.protocolo + s.nomeAluno, s));
+        novasSolicitacoes.forEach(n => {
+            const chave = n.protocolo + n.nomeAluno;
+            if (!solicitacoesMap.has(chave)) {
+                solicitacoesMap.set(chave, n);
             }
         });
+        solicitacoes = Array.from(solicitacoesMap.values());
+        localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
         
-        document.getElementById('modalAdmin').style.display = 'flex';
-    }
-    
-    function fecharModalAdmin() {
-        document.getElementById('modalAdmin').style.display = 'none';
-        document.getElementById('usuarioSelecionado').value = '';
-        document.getElementById('novaSenha').value = '';
-        document.getElementById('msgAdmin').innerHTML = '';
-    }
-    
-    function trocarSenha() {
-        const email = document.getElementById('usuarioSelecionado').value;
-        const novaSenha = document.getElementById('novaSenha').value;
-        
-        if (!email || !novaSenha) {
-            document.getElementById('msgAdmin').innerHTML = '<span style="color: red;">Preencha todos os campos!</span>';
-            return;
-        }
-        
-        const usuario = USUARIOS.find(u => u.email === email);
-        if (usuario) {
-            usuario.senha = novaSenha;
-            document.getElementById('msgAdmin').innerHTML = '<span style="color: green;">✅ Senha alterada com sucesso!</span>';
-            setTimeout(fecharModalAdmin, 2000);
-        }
-    }
-    
-    // FUNÇÕES DE DADOS
-    function carregarDados() {
+        // Carregar alunos do localStorage (aprovados)
         const alunosSalvos = localStorage.getItem('escolinha_alunos');
         if (alunosSalvos) alunos = JSON.parse(alunosSalvos);
         else alunos = [];
         
-        const solicitacoesSalvas = localStorage.getItem('solicitacoes_prematricula');
-        if (solicitacoesSalvas) solicitacoes = JSON.parse(solicitacoesSalvas);
-        else solicitacoes = [];
-        
+        // Carregar visitas
         const visitasSalvas = localStorage.getItem('visitas_site');
         if (visitasSalvas) visitasData = JSON.parse(visitasSalvas);
         else visitasData = { registros: [], totalGeral: 0 };
         
         atualizarCards();
         atualizarGraficos();
+        
+        msgDiv.innerHTML = '✅ Dados atualizados com sucesso!';
+        setTimeout(() => {
+            msgDiv.style.display = 'none';
+        }, 2000);
     }
     
     function atualizarCards() {
@@ -552,12 +558,34 @@
         const totalSolicitacoes = solicitacoes.length;
         const totalVisitas = visitasData.totalGeral || 0;
         const aprovadas = solicitacoes.filter(s => s.status === 'aprovada').length;
+        const pendentes = solicitacoes.filter(s => s.status === 'pendente').length;
         const taxaAprovacao = totalSolicitacoes > 0 ? Math.round((aprovadas / totalSolicitacoes) * 100) : 0;
         
         document.getElementById('totalAlunos').innerText = totalAlunos;
         document.getElementById('totalSolicitacoes').innerText = totalSolicitacoes;
         document.getElementById('totalVisitas').innerText = totalVisitas;
         document.getElementById('taxaAprovacao').innerText = `${taxaAprovacao}%`;
+    }
+    
+    function calcularIdade(dataNasc) {
+        if (!dataNasc) return null;
+        const hoje = new Date();
+        const nasc = new Date(dataNasc);
+        let idade = hoje.getFullYear() - nasc.getFullYear();
+        const m = hoje.getMonth() - nasc.getMonth();
+        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
+        return idade;
+    }
+    
+    function getCategoriaPorIdade(idade) {
+        if (idade <= 7) return 'Sub-7';
+        if (idade <= 9) return 'Sub-9';
+        if (idade <= 11) return 'Sub-11';
+        if (idade <= 13) return 'Sub-13';
+        if (idade <= 15) return 'Sub-15';
+        if (idade <= 17) return 'Sub-17';
+        if (idade <= 20) return 'Sub-20';
+        return 'Sub-30';
     }
     
     function atualizarGraficos() {
@@ -571,24 +599,27 @@
             options: { responsive: true, maintainAspectRatio: true }
         });
         
-        // 2. Aniversariantes por Mês
+        // 2. Aniversariantes por Mês (dos alunos)
         const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
         const aniversarios = meses.map((_, i) => alunos.filter(a => {
             if (!a.dataNasc) return false;
             const nasc = new Date(a.dataNasc);
             return nasc.getMonth() === i;
         }).length);
-        const aniversariosLabels = meses.map((mes, i) => `${mes} (${aniversarios[i]})`);
         if (graficoAniversario) graficoAniversario.destroy();
         graficoAniversario = new Chart(document.getElementById('graficoAniversario'), {
             type: 'bar',
-            data: { labels: aniversariosLabels, datasets: [{ label: 'Aniversariantes', data: aniversarios, backgroundColor: '#ff9800', borderRadius: 8 }] },
+            data: { labels: meses.map((m, i) => `${m} (${aniversarios[i]})`), datasets: [{ label: 'Aniversariantes', data: aniversarios, backgroundColor: '#ff9800', borderRadius: 8 }] },
             options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { rotation: 45 } } } }
         });
         
         // 3. Alunos por Faixa Etária (Sub)
         const subCategorias = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Sub-20', 'Sub-30'];
-        const subCount = subCategorias.map(cat => alunos.filter(a => a.categoria === cat).length);
+        const subCount = subCategorias.map(cat => alunos.filter(a => {
+            if (!a.dataNasc) return false;
+            const idade = calcularIdade(a.dataNasc);
+            return getCategoriaPorIdade(idade) === cat;
+        }).length);
         if (graficoSub) graficoSub.destroy();
         graficoSub = new Chart(document.getElementById('graficoSub'), {
             type: 'bar',
@@ -598,7 +629,11 @@
         
         // 4. Alunos por Bairro
         const bairrosMap = new Map();
-        alunos.forEach(a => { if (a.bairro && a.bairro.trim() !== '') { bairrosMap.set(a.bairro.trim(), (bairrosMap.get(a.bairro.trim()) || 0) + 1); } });
+        alunos.forEach(a => { 
+            if (a.bairro && a.bairro.trim() !== '') { 
+                bairrosMap.set(a.bairro.trim(), (bairrosMap.get(a.bairro.trim()) || 0) + 1); 
+            } 
+        });
         const bairrosOrdenados = Array.from(bairrosMap.entries()).sort((a, b) => b[1] - a[1]);
         const bairrosLabels = bairrosOrdenados.map(item => `${item[0]} (${item[1]})`);
         const bairrosCount = bairrosOrdenados.map(item => item[1]);
@@ -609,7 +644,7 @@
             options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false } } }
         });
         
-        // 5. Visitas
+        // 5. Visitas (últimos 30 dias)
         const ultimos30Dias = [];
         const labelsVisitas = [];
         const hoje = new Date();
@@ -639,30 +674,20 @@
         });
     }
     
-    function calcularIdade(dataNasc) {
-        if (!dataNasc) return '-';
-        const hoje = new Date();
-        const nasc = new Date(dataNasc);
-        let idade = hoje.getFullYear() - nasc.getFullYear();
-        const m = hoje.getMonth() - nasc.getMonth();
-        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
-        return idade;
-    }
-    
     function exportarDados() {
         const dados = [];
         alunos.forEach(a => {
             dados.push({
-                Tipo: 'Aluno', Nome: a.nome, Turma: a.turma, 'Sub-Categoria': a.categoria || '',
-                Bairro: a.bairro || '', 'Data Nascimento': a.dataNasc || '', Idade: calcularIdade(a.dataNasc),
+                Tipo: 'Aluno', Nome: a.nome, Turma: a.turma,
+                Bairro: a.bairro || '', 'Data Nascimento': a.dataNasc || '',
                 Responsavel: a.responsavel || '', Telefone: a.telefone || '', Endereco: a.endereco || ''
             });
         });
         solicitacoes.forEach(s => {
             dados.push({
-                Tipo: 'Solicitação', Nome: s.aluno?.nome || '', Turma: s.aluno?.turma || '',
-                'Data Envio': s.dataEnvio ? new Date(s.dataEnvio).toLocaleDateString('pt-BR') : '',
-                Status: s.status || '', Responsavel: s.responsavel?.nome || '', Telefone: s.responsavel?.telefone || ''
+                Tipo: 'Solicitação', Nome: s.nomeAluno || '', Turma: s.turma || '',
+                'Data Envio': s.dataEnvio || '', Status: s.status || '',
+                Responsavel: s.responsavel || '', Telefone: s.telefone || ''
             });
         });
         visitasData.registros.forEach(v => {
@@ -693,6 +718,54 @@
         URL.revokeObjectURL(url);
         alert('✅ Dados exportados com sucesso!');
     }
+    
+    // INICIAR ATUALIZAÇÃO AUTOMÁTICA (a cada 30 segundos)
+    function iniciarAtualizacaoAutomatica() {
+        if (intervaloAtualizacao) clearInterval(intervaloAtualizacao);
+        intervaloAtualizacao = setInterval(() => {
+            carregarTodosDados();
+        }, 30000);
+    }
+    
+    // LOGIN
+    function verificarLogin() {
+        const email = document.getElementById('emailLogin').value.trim();
+        const senha = document.getElementById('senhaLogin').value;
+        
+        const usuario = USUARIOS.find(u => u.email === email && u.senha === senha);
+        
+        if (usuario) {
+            usuarioLogado = usuario;
+            document.getElementById('telaLogin').style.display = 'none';
+            document.getElementById('painelAnalise').style.display = 'block';
+            document.getElementById('infoUsuario').innerHTML = `👤 ${usuario.nome}`;
+            carregarTodosDados();
+            iniciarAtualizacaoAutomatica();
+        } else {
+            document.getElementById('erroLogin').innerText = 'E-mail ou senha incorretos!';
+        }
+    }
+    
+    function logout() {
+        if (intervaloAtualizacao) clearInterval(intervaloAtualizacao);
+        usuarioLogado = null;
+        document.getElementById('telaLogin').style.display = 'flex';
+        document.getElementById('painelAnalise').style.display = 'none';
+        document.getElementById('emailLogin').value = '';
+        document.getElementById('senhaLogin').value = '';
+        document.getElementById('erroLogin').innerText = '';
+    }
+    
+    // SCROLL SUAVE
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
 </script>
 
 </body>
