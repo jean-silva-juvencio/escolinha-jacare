@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Pré-Matrícula | Escolinha do Jacaré</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@700;800&display=swap" rel="stylesheet">
@@ -23,15 +23,18 @@
             font-family: 'Open Sans', sans-serif; 
             background: linear-gradient(135deg, #f0f7ff 0%, #e0ecf9 100%);
             min-height: 100vh;
+            padding: 100px 20px 50px;
         }
 
         header { 
             background: #fff; 
             padding: 15px 0; 
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 100;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
         }
 
         .header-container {
@@ -49,7 +52,7 @@
             text-decoration: none;
             font-family: 'Montserrat';
             font-weight: 900;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             background: linear-gradient(45deg, var(--azul-escuro), var(--azul-claro));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -70,18 +73,14 @@
             transform: scale(1.05);
         }
 
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 0 20px;
-        }
-
-        .form-card {
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
             background: white;
-            border-radius: 40px;
-            padding: 40px;
+            border-radius: 30px;
+            padding: 30px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            animation: fadeInUp 0.5s ease;
+            animation: fadeInUp 0.6s ease;
         }
 
         @keyframes fadeInUp {
@@ -89,23 +88,23 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .form-card h1 {
+        .form-container h1 {
             font-family: 'Montserrat';
             color: var(--azul-escuro);
-            font-size: 2rem;
-            margin-bottom: 10px;
             text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
         }
 
-        .form-card .subtitulo {
+        .form-container p {
             text-align: center;
             color: #666;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-size: 0.9rem;
         }
 
         .form-grupo {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .form-grupo label {
@@ -128,6 +127,8 @@
             font-size: 1rem;
             transition: all 0.3s;
             font-family: 'Open Sans', sans-serif;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
         .form-grupo input:focus, .form-grupo select:focus, .form-grupo textarea:focus {
@@ -151,7 +152,7 @@
         .form-linha {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 15px;
         }
 
         .upload-area {
@@ -175,8 +176,8 @@
         }
 
         .preview-foto {
-            max-width: 150px;
-            max-height: 150px;
+            max-width: 100px;
+            max-height: 100px;
             border-radius: 50%;
             object-fit: cover;
             margin-top: 15px;
@@ -246,7 +247,7 @@
             background: linear-gradient(135deg, var(--laranja-destaque), #f57c00);
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 16px 30px;
             border-radius: 60px;
             font-weight: 800;
             font-size: 1.2rem;
@@ -258,17 +259,23 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .btn-enviar:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 25px rgba(255,152,0,0.3);
+        .btn-enviar:active {
+            transform: scale(0.98);
+        }
+
+        .btn-enviar.disabled, .btn-enviar:disabled {
+            opacity: 0.6;
+            transform: none;
+            cursor: not-allowed;
         }
 
         .mensagem-sucesso {
             background: linear-gradient(135deg, var(--verde-sucesso), #45a049);
             color: white;
-            padding: 35px;
+            padding: 30px;
             border-radius: 30px;
             text-align: center;
             animation: fadeInUp 0.5s ease;
@@ -277,24 +284,17 @@
         .mensagem-sucesso h2 {
             font-family: 'Montserrat';
             margin-bottom: 15px;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
 
         .mensagem-sucesso .protocolo {
             background: rgba(255,255,255,0.2);
             display: inline-block;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 50px;
-            margin: 20px 0;
+            margin: 15px 0;
             font-weight: 800;
-            font-size: 1.1rem;
-        }
-
-        .mensagem-sucesso .aviso {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.3);
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
         .hidden {
@@ -305,15 +305,31 @@
             background: var(--azul-escuro);
             color: white;
             text-align: center;
-            padding: 30px;
-            margin-top: 50px;
+            padding: 25px;
+            margin-top: 40px;
+            border-radius: 20px;
         }
 
         @media (max-width: 768px) {
-            .form-card { padding: 25px; }
-            .form-linha { grid-template-columns: 1fr; gap: 15px; }
-            .form-card h1 { font-size: 1.5rem; }
-            .mensagem-sucesso h2 { font-size: 1.3rem; }
+            body {
+                padding-top: 110px;
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            .form-container {
+                padding: 20px;
+            }
+            .form-linha {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .form-container h1 {
+                font-size: 1.5rem;
+            }
+            .btn-enviar {
+                font-size: 1rem;
+                padding: 14px 20px;
+            }
         }
     </style>
 </head>
@@ -322,19 +338,15 @@
 <header>
     <div class="header-container">
         <a href="index.html" class="logo-text">🐊 ESCOLINHA DO JACARÉ</a>
-        <a href="index.html" class="btn-voltar">← VOLTAR AO INÍCIO</a>
+        <a href="index.html" class="btn-voltar">← VOLTAR</a>
     </div>
 </header>
 
-<div class="container">
-    <!-- FORMULÁRIO -->
-    <div id="formularioContainer" class="form-card">
+<div class="form-container">
+    <div id="formularioContainer">
         <h1>📝 PRÉ-MATRÍCULA</h1>
-        <div class="subtitulo">
-            Preencha todos os campos <strong>obrigatórios (*)</strong> para enviar sua solicitação.<br>
-            Após o envio, aguarde o contato da diretoria.
-        </div>
-
+        <p>Preencha os dados abaixo para solicitar sua matrícula</p>
+        
         <form id="formPrematricula">
             <!-- FOTO DO ALUNO -->
             <div class="form-grupo">
@@ -482,26 +494,24 @@
 
             <!-- DECLARAÇÃO -->
             <div class="checkbox-group">
-                <input type="checkbox" id="declaracao" required>
+                <input type="checkbox" id="declaracao">
                 <label for="declaracao">Declaro que as informações acima são verdadeiras e estou ciente que após análise, a matrícula será confirmada mediante apresentação dos documentos originais. <span class="obrigatorio">*</span></label>
             </div>
             <div class="mensagem-erro" id="erroDeclaracao" style="margin-left: 30px;">Você precisa confirmar esta declaração</div>
 
-            <button type="submit" class="btn-enviar">📨 ENVIAR SOLICITAÇÃO</button>
+            <button type="button" class="btn-enviar" onclick="enviarCadastro()">
+                ✅ ENVIAR SOLICITAÇÃO
+            </button>
         </form>
     </div>
 
     <!-- MENSAGEM DE SUCESSO -->
     <div id="mensagemSucesso" class="mensagem-sucesso hidden">
-        <h2>✅ SOLICITAÇÃO ENVIADA COM SUCESSO!</h2>
+        <h2>✅ SOLICITAÇÃO ENVIADA!</h2>
         <p>Recebemos sua pré-matrícula com sucesso!</p>
         <div id="protocoloDiv" class="protocolo"></div>
         <p><strong>Aguarde o contato da diretoria.</strong></p>
-        <p>Entre em contato em até <strong>48 horas</strong> para saber se foi aprovado.</p>
-        <div class="aviso">
-            📍 Quadra da Unidos do Alvorada - Aos sábados, 8h às 12h
-        </div>
-        <div style="margin-top: 25px;">
+        <div style="margin-top: 20px;">
             <a href="index.html" class="btn-voltar" style="background: white; color: var(--azul-escuro);">← VOLTAR AO INÍCIO</a>
         </div>
     </div>
@@ -520,10 +530,12 @@
     let fotoSelecionada = false;
     let fotoDataUrl = '';
 
+    // Elementos
     const uploadArea = document.getElementById('uploadArea');
     const fotoInput = document.getElementById('fotoInput');
     const previewFoto = document.getElementById('previewFoto');
 
+    // Upload da foto
     fotoInput.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
@@ -566,14 +578,13 @@
     });
 
     function calcularIdade() {
-        const dataNascStr = document.getElementById('dataNasc').value;
-        if (!dataNascStr) return null;
-        
-        const dataNasc = new Date(dataNascStr);
+        const dataNasc = document.getElementById('dataNasc').value;
+        if (!dataNasc) return null;
         const hoje = new Date();
-        let idade = hoje.getFullYear() - dataNasc.getFullYear();
-        const m = hoje.getMonth() - dataNasc.getMonth();
-        if (m < 0 || (m === 0 && hoje.getDate() < dataNasc.getDate())) idade--;
+        const nasc = new Date(dataNasc);
+        let idade = hoje.getFullYear() - nasc.getFullYear();
+        const m = hoje.getMonth() - nasc.getMonth();
+        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
         return idade;
     }
 
@@ -630,107 +641,83 @@
         });
     });
 
-    // FUNÇÃO PARA ENVIAR PARA PLANILHA
-    async function enviarParaPlanilha(dados) {
-        try {
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(dados)
-            });
-            console.log('✅ Dados enviados para planilha com sucesso!');
-        } catch (error) {
-            console.log('❌ Erro ao enviar para planilha:', error);
-        }
-    }
-
-    document.getElementById('formPrematricula').addEventListener('submit', function(e) {
-        e.preventDefault();
+    // FUNÇÃO PRINCIPAL DE ENVIO
+    async function enviarCadastro() {
+        // Pegar valores
+        const nomeAluno = document.getElementById('nomeAluno').value.trim();
+        const dataNasc = document.getElementById('dataNasc').value;
+        const turma = document.getElementById('turma').value;
+        const responsavel = document.getElementById('responsavel').value.trim();
+        const telefone = document.getElementById('telefone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const endereco = document.getElementById('endereco').value.trim();
+        const numero = document.getElementById('numero').value.trim();
+        const bairro = document.getElementById('bairro').value.trim();
+        const moradores = document.getElementById('moradores').value.trim();
+        const remedioSelecionado = document.querySelector('input[name="remedio"]:checked').value;
+        const remedioDesc = remedioSelecionado === 'Sim' ? document.getElementById('remedioDesc').value : '';
+        const origem = document.getElementById('origem').value;
+        const declaracao = document.getElementById('declaracao').checked;
         
+        // Validar campos
         let isValid = true;
-        
-        document.querySelectorAll('.mensagem-erro').forEach(el => el.style.display = 'none');
-        document.querySelectorAll('input, select').forEach(el => el.classList.remove('erro'));
         
         if (!fotoSelecionada) {
             document.getElementById('erroFoto').style.display = 'block';
             isValid = false;
         }
-        
-        const nome = document.getElementById('nomeAluno').value.trim();
-        if (!nome) {
+        if (!nomeAluno) {
             document.getElementById('erroNome').style.display = 'block';
             document.getElementById('nomeAluno').classList.add('erro');
             isValid = false;
         }
-        
-        const dataNascStr = document.getElementById('dataNasc').value;
-        if (!dataNascStr) {
+        if (!dataNasc) {
             document.getElementById('erroData').style.display = 'block';
             document.getElementById('dataNasc').classList.add('erro');
             isValid = false;
         }
-        
-        const turma = document.getElementById('turma').value;
         if (!turma) {
             document.getElementById('erroTurma').style.display = 'block';
             document.getElementById('turma').classList.add('erro');
             isValid = false;
         }
-        
-        const responsavel = document.getElementById('responsavel').value.trim();
         if (!responsavel) {
             document.getElementById('erroResponsavel').style.display = 'block';
             document.getElementById('responsavel').classList.add('erro');
             isValid = false;
         }
-        
-        const telefone = document.getElementById('telefone').value.trim();
         const numeros = telefone.replace(/\D/g, '');
         if (numeros.length < 10 || numeros.length > 11) {
             document.getElementById('erroTelefone').style.display = 'block';
             document.getElementById('telefone').classList.add('erro');
             isValid = false;
         }
-        
-        const email = document.getElementById('email').value.trim();
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             document.getElementById('erroEmail').style.display = 'block';
             document.getElementById('email').classList.add('erro');
             isValid = false;
         }
-        
-        const endereco = document.getElementById('endereco').value.trim();
         if (!endereco) {
             document.getElementById('erroEndereco').style.display = 'block';
             document.getElementById('endereco').classList.add('erro');
             isValid = false;
         }
-        
-        const numero = document.getElementById('numero').value.trim();
         if (!numero) {
             document.getElementById('erroNumero').style.display = 'block';
             document.getElementById('numero').classList.add('erro');
             isValid = false;
         }
-        
-        const bairro = document.getElementById('bairro').value.trim();
         if (!bairro) {
             document.getElementById('erroBairro').style.display = 'block';
             document.getElementById('bairro').classList.add('erro');
             isValid = false;
         }
-        
-        const moradores = document.getElementById('moradores').value.trim();
         if (!moradores || parseInt(moradores) < 1) {
             document.getElementById('erroMoradores').style.display = 'block';
             document.getElementById('moradores').classList.add('erro');
             isValid = false;
         }
-        
-        const declaracao = document.getElementById('declaracao').checked;
         if (!declaracao) {
             document.getElementById('erroDeclaracao').style.display = 'block';
             isValid = false;
@@ -741,72 +728,83 @@
             return;
         }
         
-        const remedio = document.querySelector('input[name="remedio"]:checked').value;
-        const remedioDesc = remedio === 'Sim' ? document.getElementById('remedioDesc').value : '';
-        const idade = calcularIdade();
+        // Desabilitar botão para evitar múltiplos envios
+        const btn = document.querySelector('.btn-enviar');
+        const textoOriginal = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '⏳ ENVIANDO...';
         
-        const solicitacao = {
-            id: Date.now(),
-            protocolo: `JAC-${Date.now()}`,
-            dataEnvio: new Date().toISOString(),
-            status: 'pendente',
-            foto: fotoDataUrl,
-            aluno: {
-                nome: nome,
-                dataNasc: dataNascStr,
+        try {
+            const idade = calcularIdade();
+            const protocolo = `JAC-${Date.now()}`;
+            const dataEnvio = new Date().toLocaleString('pt-BR');
+            const enderecoCompleto = `${endereco}, ${numero} - ${bairro}`;
+            
+            // Dados para salvar
+            const dados = {
+                protocolo: protocolo,
+                dataEnvio: dataEnvio,
+                nomeAluno: nomeAluno,
                 idade: idade,
                 turma: turma,
                 categoria: document.getElementById('categoriaEspecifica').value,
-                escola: document.getElementById('escola').value,
-                serie: document.getElementById('serie').value
-            },
-            responsavel: {
-                nome: responsavel,
+                responsavel: responsavel,
                 telefone: telefone,
-                email: email
-            },
-            endereco: {
-                rua: endereco,
-                numero: numero,
-                bairro: bairro,
-                cep: document.getElementById('cep').value
-            },
-            moradores: parseInt(moradores),
-            remedio: remedio === 'Sim' ? `Sim - ${remedioDesc}` : 'Não',
-            origem: document.getElementById('origem').value
-        };
-        
-        // Salvar no localStorage
-        const solicitacoes = JSON.parse(localStorage.getItem('solicitacoes_prematricula') || '[]');
-        solicitacoes.push(solicitacao);
-        localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-        
-        // Enviar para planilha
-        const dadosPlanilha = {
-            protocolo: solicitacao.protocolo,
-            dataEnvio: new Date().toLocaleString('pt-BR'),
-            nomeAluno: solicitacao.aluno.nome,
-            idade: solicitacao.aluno.idade,
-            turma: solicitacao.aluno.turma,
-            categoria: solicitacao.aluno.categoria,
-            responsavel: solicitacao.responsavel.nome,
-            telefone: solicitacao.responsavel.telefone,
-            email: solicitacao.responsavel.email,
-            endereco: `${solicitacao.endereco.rua}, ${solicitacao.endereco.numero} - ${solicitacao.endereco.bairro}`,
-            moradores: solicitacao.moradores,
-            remedio: solicitacao.remedio,
-            origem: solicitacao.origem
-        };
-        
-        enviarParaPlanilha(dadosPlanilha);
-        
-        document.getElementById('protocoloDiv').innerHTML = `🔑 PROTOCOLO: ${solicitacao.protocolo}`;
-        document.getElementById('formularioContainer').classList.add('hidden');
-        document.getElementById('mensagemSucesso').classList.remove('hidden');
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-
+                email: email,
+                endereco: enderecoCompleto,
+                moradores: moradores,
+                remedio: remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não',
+                origem: origem
+            };
+            
+            // Salvar no localStorage
+            const solicitacoes = JSON.parse(localStorage.getItem('solicitacoes_prematricula') || '[]');
+            solicitacoes.push({
+                id: Date.now(),
+                protocolo: protocolo,
+                dataEnvio: new Date().toISOString(),
+                status: 'pendente',
+                foto: fotoDataUrl,
+                aluno: { nome: nomeAluno, dataNasc: dataNasc, idade: idade, turma: turma, categoria: dados.categoria, escola: document.getElementById('escola').value, serie: document.getElementById('serie').value },
+                responsavel: { nome: responsavel, telefone: telefone, email: email },
+                endereco: { rua: endereco, numero: numero, bairro: bairro, cep: document.getElementById('cep').value },
+                moradores: parseInt(moradores),
+                remedio: dados.remedio,
+                origem: origem
+            });
+            localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+            
+            // Enviar para planilha
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dados)
+                });
+                console.log('✅ Enviado para planilha');
+            } catch (e) {
+                console.log('Erro ao enviar para planilha:', e);
+            }
+            
+            // Mostrar mensagem de sucesso
+            document.getElementById('protocoloDiv').innerHTML = `🔑 PROTOCOLO: ${protocolo}`;
+            document.getElementById('formularioContainer').classList.add('hidden');
+            document.getElementById('mensagemSucesso').classList.remove('hidden');
+            
+            // Scroll para o topo
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Ocorreu um erro ao enviar. Tente novamente.');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = textoOriginal;
+        }
+    }
+    
+    // Inicializar
     mostrarSubCategoria();
 </script>
 
