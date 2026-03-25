@@ -346,113 +346,6 @@
         .btn-editar { background: #ff9800; color: white; }
         .btn-excluir { background: #ff4444; color: white; }
 
-        /* MODAL DE CONFIRMAÇÃO */
-        .modal-confirmacao {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(3px);
-            animation: fadeIn 0.2s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .confirmacao-content {
-            background: white;
-            border-radius: 30px;
-            width: 90%;
-            max-width: 450px;
-            padding: 30px;
-            text-align: center;
-            animation: slideUp 0.3s ease;
-        }
-        
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        .confirmacao-content .icone-alerta {
-            font-size: 4rem;
-            margin-bottom: 15px;
-            animation: pulseAlert 0.5s ease;
-        }
-        
-        @keyframes pulseAlert {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        .confirmacao-content h3 {
-            font-family: 'Montserrat';
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .confirmacao-content p {
-            color: #666;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-        }
-        
-        .confirmacao-content .nome-aluno {
-            font-weight: 800;
-            color: var(--azul-escuro);
-            background: #f0f7ff;
-            padding: 8px 15px;
-            border-radius: 50px;
-            display: inline-block;
-            margin-bottom: 20px;
-        }
-        
-        .confirmacao-botoes {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-        
-        .btn-cancelar {
-            background: #ccc;
-            color: #333;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-cancelar:hover {
-            background: #bbb;
-            transform: scale(1.02);
-        }
-        
-        .btn-confirmar {
-            background: #ff4444;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-confirmar:hover {
-            background: #cc0000;
-            transform: scale(1.02);
-        }
-
         .modal {
             display: none;
             position: fixed;
@@ -601,10 +494,10 @@
         <div class="tabela-container">
               <table>
                 <thead>
-                     <tr>
+                      <tr>
                         <th class="checkbox-col"><input type="checkbox" id="selecionarTodosSolicitacoes" onchange="selecionarTodosSolicitacoes()"></th>
                         <th>Nome</th><th>Turma</th><th>Idade</th><th>Data Nasc</th><th>Responsável</th><th>Telefone</th><th>Data</th><th>Status</th><th>Ações</th>
-                     </tr>
+                      </tr>
                 </thead>
                 <tbody id="corpoTabelaSolicitacoes"></tbody>
               </table>
@@ -639,26 +532,13 @@
         <div class="tabela-container">
              <table>
                 <thead>
-                     <tr>
+                      <tr>
                         <th class="checkbox-col"><input type="checkbox" id="selecionarTodosAlunos" onchange="selecionarTodosAlunos()"></th>
                         <th>Nome</th><th>Idade</th><th>Data Nasc</th><th>Turma</th><th>Responsável</th><th>Telefone</th><th>Ações</th>
-                     </tr>
+                      </tr>
                 </thead>
                 <tbody id="corpoTabelaAlunos"></tbody>
              </table>
-        </div>
-    </div>
-</div>
-
-<!-- MODAL DE CONFIRMAÇÃO -->
-<div id="modalConfirmacao" class="modal-confirmacao">
-    <div class="confirmacao-content">
-        <div class="icone-alerta">⚠️</div>
-        <h3>Confirmar ação</h3>
-        <p id="confirmacaoMensagem"></p>
-        <div class="confirmacao-botoes">
-            <button class="btn-cancelar" onclick="fecharModalConfirmacao()">CANCELAR</button>
-            <button class="btn-confirmar" id="btnConfirmarAcao">SIM, CONFIRMAR</button>
         </div>
     </div>
 </div>
@@ -721,13 +601,10 @@
     let alunos = [];
     let alunoSelecionadoId = null;
     let intervalo = null;
-    let acaoPendente = null;
-    let dadosPendentes = null;
 
     const PLANILHA_ID = '1frhkgQae4ugAZjLOvrGsw0yyqupVh-MNWGP70TCniLU';
     const SCRIPT_URL_ATUALIZAR = 'https://script.google.com/macros/s/AKfycbzOaro8zchjdIAPT-8BeMtbrV84dfVS2hffrL2F14Q0GdDxv_yjL03F0LOmVCDNz0H0/exec';
 
-    // Atualizar STATUS na planilha
     async function atualizarStatusNaPlanilha(protocolo, novoStatus) {
         try {
             await fetch(SCRIPT_URL_ATUALIZAR, {
@@ -743,7 +620,6 @@
         }
     }
 
-    // Buscar solicitações da planilha
     async function buscarSolicitacoesDaPlanilha() {
         try {
             const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=solicitaçoes`;
@@ -854,86 +730,93 @@
                 <td onclick="verSolicitacao(${s.id})"><span class="status-badge status-pendente">🟡 Pendente</span></td>
                 <td>
                     <button class="btn-ver" onclick="verSolicitacao(${s.id})">👁️</button>
-                    <button class="btn-aprovar" onclick="abrirConfirmacao('aprovar', '${s.protocolo}', ${s.id}, '${s.nomeAluno}')">✅</button>
-                    <button class="btn-recusar" onclick="abrirConfirmacao('recusar', '${s.protocolo}', ${s.id}, '${s.nomeAluno}')">❌</button>
+                    <button class="btn-aprovar" onclick="aprovarSolicitacao('${s.protocolo}', ${s.id}, this)">✅</button>
+                    <button class="btn-recusar" onclick="recusarSolicitacao('${s.protocolo}', ${s.id}, this)">❌</button>
                 </td>
             </tr>
         `).join('');
     }
 
-    function abrirConfirmacao(acao, protocolo, id, nomeAluno) {
-        const modal = document.getElementById('modalConfirmacao');
-        const msg = document.getElementById('confirmacaoMensagem');
-        const btnConfirmar = document.getElementById('btnConfirmarAcao');
-        
-        if (acao === 'aprovar') {
-            msg.innerHTML = `Tem certeza que deseja <strong>APROVAR</strong> a matrícula de <span class="nome-aluno">${nomeAluno}</span>?`;
-            btnConfirmar.style.background = '#4caf50';
-            btnConfirmar.innerHTML = '✅ SIM, APROVAR';
-        } else {
-            msg.innerHTML = `Tem certeza que deseja <strong>RECUSAR</strong> a matrícula de <span class="nome-aluno">${nomeAluno}</span>? Esta ação não poderá ser desfeita.`;
-            btnConfirmar.style.background = '#ff4444';
-            btnConfirmar.innerHTML = '❌ SIM, RECUSAR';
+    async function aprovarSolicitacao(protocolo, id, btn) {
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '⏳';
         }
         
-        acaoPendente = { acao, protocolo, id, nomeAluno };
-        btnConfirmar.onclick = () => executarAcao();
-        modal.style.display = 'flex';
-    }
-    
-    function fecharModalConfirmacao() {
-        document.getElementById('modalConfirmacao').style.display = 'none';
-        acaoPendente = null;
-    }
-    
-    async function executarAcao() {
-        if (!acaoPendente) return;
-        
-        const { acao, protocolo, id, nomeAluno } = acaoPendente;
-        const novoStatus = acao === 'aprovar' ? 'aprovado' : 'recusado';
-        
-        // Desabilitar botões
-        const btns = document.querySelectorAll('.btn-aprovar, .btn-recusar');
-        btns.forEach(btn => btn.disabled = true);
-        
-        fecharModalConfirmacao();
-        
-        const atualizado = await atualizarStatusNaPlanilha(protocolo, novoStatus);
-        
-        if (atualizado) {
-            // Remover da lista local
-            solicitacoes = solicitacoes.filter(sol => sol.id !== id);
-            localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+        const s = solicitacoes.find(s => s.id === id);
+        if (s && confirm(`Aprovar ${s.nomeAluno}?`)) {
+            const atualizado = await atualizarStatusNaPlanilha(protocolo, 'aprovado');
             
-            if (acao === 'aprovar') {
-                // Adicionar aos alunos
-                const s = solicitacoes.find(s => s.id === id);
+            if (atualizado) {
+                // Remover da lista local
+                solicitacoes = solicitacoes.filter(sol => sol.id !== id);
+                localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+                
+                // Adicionar aos alunos com TODOS os dados
                 alunos.push({
                     id: Date.now(),
-                    nome: nomeAluno,
-                    dataNasc: s?.dataNasc || '',
-                    turma: s?.turma || '',
-                    categoria: s?.categoria || '',
-                    bairro: s?.bairro || '',
-                    responsavel: s?.responsavel || '',
-                    telefone: s?.telefone || '',
-                    endereco: s?.endereco || ''
+                    nome: s.nomeAluno,
+                    dataNasc: s.dataNasc,
+                    idade: s.idade,
+                    turma: s.turma,
+                    categoria: s.categoria,
+                    bairro: s.bairro,
+                    responsavel: s.responsavel,
+                    telefone: s.telefone,
+                    email: s.email,
+                    endereco: s.endereco,
+                    remedio: s.remedio,
+                    origem: s.origem
                 });
                 localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-                alert(`✅ ${nomeAluno} aprovado!`);
+                
+                atualizarStatsSolicitacoes();
+                filtrarSolicitacoes();
+                carregarAlunos();
+                fecharModalDetalhesSolicitacao();
+                
+                alert(`✅ ${s.nomeAluno} aprovado!`);
             } else {
-                alert(`❌ ${nomeAluno} recusado.`);
+                alert('❌ Erro ao atualizar a planilha. Tente novamente.');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '✅';
+                }
             }
-            
-            atualizarStatsSolicitacoes();
-            filtrarSolicitacoes();
-            carregarAlunos();
-            fecharModalDetalhesSolicitacao();
-        } else {
-            alert('❌ Erro ao atualizar a planilha. Tente novamente.');
+        } else if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '✅';
+        }
+    }
+
+    async function recusarSolicitacao(protocolo, id, btn) {
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '⏳';
         }
         
-        btns.forEach(btn => btn.disabled = false);
+        const s = solicitacoes.find(s => s.id === id);
+        if (s && confirm(`Recusar ${s.nomeAluno}?`)) {
+            const atualizado = await atualizarStatusNaPlanilha(protocolo, 'recusada');
+            
+            if (atualizado) {
+                solicitacoes = solicitacoes.filter(sol => sol.id !== id);
+                localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+                atualizarStatsSolicitacoes();
+                filtrarSolicitacoes();
+                fecharModalDetalhesSolicitacao();
+                alert(`❌ ${s.nomeAluno} recusado.`);
+            } else {
+                alert('❌ Erro ao atualizar a planilha. Tente novamente.');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '❌';
+                }
+            }
+        } else if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '❌';
+        }
     }
 
     function verSolicitacao(id) {
@@ -945,6 +828,7 @@
             <p><strong>Data Nasc.:</strong> ${formatarData(s.dataNasc)}</p>
             <p><strong>Idade:</strong> ${s.idade} anos</p>
             <p><strong>Turma:</strong> ${s.turma}</p>
+            <p><strong>Categoria:</strong> ${s.categoria || '-'}</p>
             <p><strong>Responsável:</strong> ${s.responsavel}</p>
             <p><strong>Telefone:</strong> ${s.telefone}</p>
             <p><strong>E-mail:</strong> ${s.email}</p>
@@ -955,8 +839,8 @@
         `;
         const btnA = document.getElementById('btnAprovarDetalhes');
         const btnR = document.getElementById('btnRecusarDetalhes');
-        btnA.onclick = () => abrirConfirmacao('aprovar', s.protocolo, s.id, s.nomeAluno);
-        btnR.onclick = () => abrirConfirmacao('recusar', s.protocolo, s.id, s.nomeAluno);
+        btnA.onclick = () => aprovarSolicitacao(s.protocolo, s.id, btnA);
+        btnR.onclick = () => recusarSolicitacao(s.protocolo, s.id, btnR);
         document.getElementById('modalDetalhesSolicitacao').style.display = 'flex';
     }
 
@@ -1005,10 +889,11 @@
             const idade = a.dataNasc ? Math.floor((new Date() - new Date(a.dataNasc)) / (31536000000)) : '-';
             return `
                 <tr onclick="verDetalhesAluno(${a.id})">
-                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">       <td><strong>${a.nome}</strong>       <td>${idade}       <td>${formatarData(a.dataNasc)}       <td>${a.turma}       <td>${a.responsavel}       <td>${a.telefone}       <tr>
+                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">        <td><strong>${a.nome}</strong>        <td>${idade}        <td>${formatarData(a.dataNasc)}        <td>${a.turma}        <td>${a.responsavel}        <td>${a.telefone}        <td>
                         <button class="btn-editar" onclick="editarAluno(${a.id}); event.stopPropagation()">✏️</button>
                         <button class="btn-excluir" onclick="excluirAluno(${a.id}); event.stopPropagation()">🗑️</button>
-                     </tr>
+                    </td>
+                </tr>
             `;
         }).join('');
     }
@@ -1070,10 +955,13 @@
             <p><strong>Data Nasc.:</strong> ${formatarData(a.dataNasc)}</p>
             <p><strong>Idade:</strong> ${idade} anos</p>
             <p><strong>Turma:</strong> ${a.turma}</p>
+            <p><strong>Categoria:</strong> ${a.categoria || '-'}</p>
             <p><strong>Responsável:</strong> ${a.responsavel}</p>
             <p><strong>Telefone:</strong> ${a.telefone}</p>
+            <p><strong>E-mail:</strong> ${a.email || '-'}</p>
             <p><strong>Endereço:</strong> ${a.endereco || '-'}</p>
             <p><strong>Bairro:</strong> ${a.bairro || '-'}</p>
+            <p><strong>Remédio:</strong> ${a.remedio || '-'}</p>
         `;
         document.getElementById('modalDetalhesAluno').style.display = 'flex';
     }
