@@ -440,7 +440,7 @@
                     </div>
 
                     <div class="observacao">
-                        <i>ℹ️</i> Categoria Sub-25: para alunos com mais de 17 anos. Consulte disponibilidade.
+                        <i>ℹ️</i> Categorias: Sub-5 a Sub-17 (conforme idade), Sub-25 para maiores de 17 anos.
                     </div>
 
                     <div class="form-linha">
@@ -620,6 +620,7 @@
         const nomeAluno = document.getElementById('nomeAluno').value.trim();
         const dataNasc = document.getElementById('dataNasc').value;
         const turma = document.getElementById('turma').value;
+        const categoriaEspecial = document.getElementById('categoriaEspecial').value;
         const responsavel = document.getElementById('responsavel').value.trim();
         const telefone = document.getElementById('telefone').value.trim();
         const email = document.getElementById('email').value.trim();
@@ -631,7 +632,6 @@
         const remedioDesc = remedioSelecionado === 'Sim' ? document.getElementById('remedioDesc').value : '';
         const origem = document.getElementById('origem').value;
         const declaracao = document.getElementById('declaracao').checked;
-        const categoriaEspecial = document.getElementById('categoriaEspecial').value;
         const escola = document.getElementById('escola').value;
         const serie = document.getElementById('serie').value;
 
@@ -677,17 +677,17 @@
                 nomeAluno: nomeAluno,
                 dataNasc: dataNasc,        // DATA NASCIMENTO (coluna D)
                 idade: idade,               // IDADE (coluna E)
-                turma: turma,
-                categoria: categoriaEspecial,
-                responsavel: responsavel,
-                telefone: telefone,
-                email: email,
-                endereco: enderecoCompleto,
-                bairro: bairro,
-                moradores: moradores,
-                remedio: remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não',
-                origem: origem,
-                status: 'pendente'
+                turma: turma,               // TURMA (coluna F)
+                categoria: categoriaEspecial, // CATEGORIA (coluna G)
+                responsavel: responsavel,   // RESPONSÁVEL (coluna H)
+                telefone: telefone,         // TELEFONE (coluna I)
+                email: email,               // E-MAIL (coluna J)
+                endereco: enderecoCompleto, // ENDEREÇO (coluna K)
+                bairro: bairro,             // BAIRRO (coluna L)
+                moradores: moradores,       // MORADORES (coluna M)
+                remedio: remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não', // REMÉDIO (coluna N)
+                origem: origem,             // ORIGEM (coluna O)
+                status: 'pendente'          // STATUS (coluna P)
             };
 
             // Salvar no localStorage
