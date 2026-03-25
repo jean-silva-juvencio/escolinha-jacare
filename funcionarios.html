@@ -346,6 +346,113 @@
         .btn-editar { background: #ff9800; color: white; }
         .btn-excluir { background: #ff4444; color: white; }
 
+        /* MODAL DE CONFIRMAÇÃO */
+        .modal-confirmacao {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+            animation: fadeIn 0.2s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .confirmacao-content {
+            background: white;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 450px;
+            padding: 30px;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .confirmacao-content .icone-alerta {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: pulseAlert 0.5s ease;
+        }
+        
+        @keyframes pulseAlert {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .confirmacao-content h3 {
+            font-family: 'Montserrat';
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .confirmacao-content p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .confirmacao-content .nome-aluno {
+            font-weight: 800;
+            color: var(--azul-escuro);
+            background: #f0f7ff;
+            padding: 8px 15px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .confirmacao-botoes {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .btn-cancelar {
+            background: #ccc;
+            color: #333;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-cancelar:hover {
+            background: #bbb;
+            transform: scale(1.02);
+        }
+        
+        .btn-confirmar {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-confirmar:hover {
+            background: #cc0000;
+            transform: scale(1.02);
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -492,15 +599,15 @@
         </div>
         
         <div class="tabela-container">
-            <table>
+              <table>
                 <thead>
-                    <tr>
+                     <tr>
                         <th class="checkbox-col"><input type="checkbox" id="selecionarTodosSolicitacoes" onchange="selecionarTodosSolicitacoes()"></th>
-                        <th>Nome</th><th>Turma</th><th>Categoria</th><th>Idade</th><th>Data Nasc</th><th>Responsável</th><th>Telefone</th><th>Data</th><th>Status</th><th>Ações</th>
-                    </tr>
+                        <th>Nome</th><th>Turma</th><th>Idade</th><th>Data Nasc</th><th>Responsável</th><th>Telefone</th><th>Data</th><th>Status</th><th>Ações</th>
+                     </tr>
                 </thead>
                 <tbody id="corpoTabelaSolicitacoes"></tbody>
-            </table>
+              </table>
         </div>
     </div>
     
@@ -530,15 +637,28 @@
         </div>
         
         <div class="tabela-container">
-            <table>
+             <table>
                 <thead>
-                    <tr>
+                     <tr>
                         <th class="checkbox-col"><input type="checkbox" id="selecionarTodosAlunos" onchange="selecionarTodosAlunos()"></th>
-                        <th>Nome</th><th>Idade</th><th>Data Nasc</th><th>Turma</th><th>Categoria</th><th>Responsável</th><th>Telefone</th><th>Ações</th>
-                    </tr>
+                        <th>Nome</th><th>Idade</th><th>Data Nasc</th><th>Turma</th><th>Responsável</th><th>Telefone</th><th>Ações</th>
+                     </tr>
                 </thead>
                 <tbody id="corpoTabelaAlunos"></tbody>
-            </table>
+             </table>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DE CONFIRMAÇÃO -->
+<div id="modalConfirmacao" class="modal-confirmacao">
+    <div class="confirmacao-content">
+        <div class="icone-alerta">⚠️</div>
+        <h3>Confirmar ação</h3>
+        <p id="confirmacaoMensagem"></p>
+        <div class="confirmacao-botoes">
+            <button class="btn-cancelar" onclick="fecharModalConfirmacao()">CANCELAR</button>
+            <button class="btn-confirmar" id="btnConfirmarAcao">SIM, CONFIRMAR</button>
         </div>
     </div>
 </div>
@@ -568,11 +688,11 @@
             </div>
             <div class="form-linha">
                 <div class="form-grupo"><label>Turma *</label><select id="turmaAluno"><option>Futebol</option><option>Taekwondo</option><option>Ginástica</option><option>Tênis de Mesa</option><option>Judô</option></select></div>
-                <div class="form-grupo"><label>Categoria</label><input type="text" id="categoriaAluno" placeholder="Sub-5, Sub-7, etc"></div>
+                <div class="form-grupo"><label>Responsável *</label><input type="text" id="responsavelAluno" required></div>
             </div>
             <div class="form-linha">
-                <div class="form-grupo"><label>Responsável *</label><input type="text" id="responsavelAluno" required></div>
                 <div class="form-grupo"><label>Telefone *</label><input type="text" id="telefoneAluno" required></div>
+                <div class="form-grupo"><label>Telefone 2</label><input type="text" id="telefone2Aluno"></div>
             </div>
             <div class="form-linha">
                 <div class="form-grupo"><label>Endereço</label><input type="text" id="enderecoAluno"></div>
@@ -601,10 +721,13 @@
     let alunos = [];
     let alunoSelecionadoId = null;
     let intervalo = null;
+    let acaoPendente = null;
+    let dadosPendentes = null;
 
     const PLANILHA_ID = '1frhkgQae4ugAZjLOvrGsw0yyqupVh-MNWGP70TCniLU';
-    const SCRIPT_URL_ATUALIZAR = 'https://script.google.com/macros/s/AKfycbzOA7QvHVH2LNLdoZzqqaIy-axTmaApPP7euy9wIysPiaOqOHmWrGXqWpe-A2SJWxum/exec';
+    const SCRIPT_URL_ATUALIZAR = 'https://script.google.com/macros/s/AKfycbzOaro8zchjdIAPT-8BeMtbrV84dfVS2hffrL2F14Q0GdDxv_yjL03F0LOmVCDNz0H0/exec';
 
+    // Atualizar STATUS na planilha
     async function atualizarStatusNaPlanilha(protocolo, novoStatus) {
         try {
             await fetch(SCRIPT_URL_ATUALIZAR, {
@@ -620,6 +743,7 @@
         }
     }
 
+    // Buscar solicitações da planilha
     async function buscarSolicitacoesDaPlanilha() {
         try {
             const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=solicitaçoes`;
@@ -627,8 +751,7 @@
             const texto = await response.text();
             const linhas = texto.split('\n');
             
-            const mapaProtocolos = new Map();
-            
+            const novas = [];
             for (let i = 1; i < linhas.length; i++) {
                 const linha = linhas[i].trim();
                 if (!linha) continue;
@@ -646,14 +769,12 @@
                 const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
                 
                 if (valores.length >= 16 && limpar(valores[2])) {
-                    const protocolo = limpar(valores[0]);
                     const status = limpar(valores[15]) || 'pendente';
                     
-                    // Usar protocolo como chave única para evitar duplicação
-                    if (!mapaProtocolos.has(protocolo)) {
-                        mapaProtocolos.set(protocolo, {
+                    if (status === 'pendente') {
+                        novas.push({
                             id: Date.now() + i,
-                            protocolo: protocolo,
+                            protocolo: limpar(valores[0]),
                             dataEnvio: limpar(valores[1]),
                             nomeAluno: limpar(valores[2]),
                             dataNasc: limpar(valores[3]),
@@ -673,10 +794,7 @@
                     }
                 }
             }
-            
-            // Retornar apenas pendentes
-            const pendentes = Array.from(mapaProtocolos.values()).filter(s => s.status === 'pendente');
-            return pendentes.reverse();
+            return novas.reverse();
         } catch (error) {
             console.error('Erro:', error);
             return [];
@@ -720,7 +838,7 @@
     function renderizarSolicitacoes(lista) {
         const tbody = document.getElementById('corpoTabelaSolicitacoes');
         if (lista.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="11">Nenhuma solicitação pendente.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="10" class="sem-solicitacoes">Nenhuma solicitação pendente.</td></tr>';
             return;
         }
         tbody.innerHTML = lista.map(s => `
@@ -728,7 +846,6 @@
                 <td class="checkbox-col"><input type="checkbox" class="sel-solic" value="${s.id}"></td>
                 <td onclick="verSolicitacao(${s.id})"><strong>${s.nomeAluno}</strong></td>
                 <td onclick="verSolicitacao(${s.id})">${s.turma}</td>
-                <td onclick="verSolicitacao(${s.id})">${s.categoria || '-'}</td>
                 <td onclick="verSolicitacao(${s.id})">${s.idade}</td>
                 <td onclick="verSolicitacao(${s.id})">${formatarData(s.dataNasc)}</td>
                 <td onclick="verSolicitacao(${s.id})">${s.responsavel}</td>
@@ -737,92 +854,86 @@
                 <td onclick="verSolicitacao(${s.id})"><span class="status-badge status-pendente">🟡 Pendente</span></td>
                 <td>
                     <button class="btn-ver" onclick="verSolicitacao(${s.id})">👁️</button>
-                    <button class="btn-aprovar" id="btnAprovar_${s.id}" onclick="aprovarSolicitacao('${s.protocolo}', ${s.id}, this)">✅</button>
-                    <button class="btn-recusar" id="btnRecusar_${s.id}" onclick="recusarSolicitacao('${s.protocolo}', ${s.id}, this)">❌</button>
+                    <button class="btn-aprovar" onclick="abrirConfirmacao('aprovar', '${s.protocolo}', ${s.id}, '${s.nomeAluno}')">✅</button>
+                    <button class="btn-recusar" onclick="abrirConfirmacao('recusar', '${s.protocolo}', ${s.id}, '${s.nomeAluno}')">❌</button>
                 </td>
             </tr>
         `).join('');
     }
 
-    async function aprovarSolicitacao(protocolo, id, btn) {
-        if (btn) {
-            btn.disabled = true;
-            btn.innerHTML = '⏳';
+    function abrirConfirmacao(acao, protocolo, id, nomeAluno) {
+        const modal = document.getElementById('modalConfirmacao');
+        const msg = document.getElementById('confirmacaoMensagem');
+        const btnConfirmar = document.getElementById('btnConfirmarAcao');
+        
+        if (acao === 'aprovar') {
+            msg.innerHTML = `Tem certeza que deseja <strong>APROVAR</strong> a matrícula de <span class="nome-aluno">${nomeAluno}</span>?`;
+            btnConfirmar.style.background = '#4caf50';
+            btnConfirmar.innerHTML = '✅ SIM, APROVAR';
+        } else {
+            msg.innerHTML = `Tem certeza que deseja <strong>RECUSAR</strong> a matrícula de <span class="nome-aluno">${nomeAluno}</span>? Esta ação não poderá ser desfeita.`;
+            btnConfirmar.style.background = '#ff4444';
+            btnConfirmar.innerHTML = '❌ SIM, RECUSAR';
         }
         
-        const s = solicitacoes.find(s => s.id === id);
-        if (s && confirm(`Aprovar ${s.nomeAluno}?`)) {
-            const atualizado = await atualizarStatusNaPlanilha(protocolo, 'aprovado');
+        acaoPendente = { acao, protocolo, id, nomeAluno };
+        btnConfirmar.onclick = () => executarAcao();
+        modal.style.display = 'flex';
+    }
+    
+    function fecharModalConfirmacao() {
+        document.getElementById('modalConfirmacao').style.display = 'none';
+        acaoPendente = null;
+    }
+    
+    async function executarAcao() {
+        if (!acaoPendente) return;
+        
+        const { acao, protocolo, id, nomeAluno } = acaoPendente;
+        const novoStatus = acao === 'aprovar' ? 'aprovado' : 'recusado';
+        
+        // Desabilitar botões
+        const btns = document.querySelectorAll('.btn-aprovar, .btn-recusar');
+        btns.forEach(btn => btn.disabled = true);
+        
+        fecharModalConfirmacao();
+        
+        const atualizado = await atualizarStatusNaPlanilha(protocolo, novoStatus);
+        
+        if (atualizado) {
+            // Remover da lista local
+            solicitacoes = solicitacoes.filter(sol => sol.id !== id);
+            localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
             
-            if (atualizado) {
-                // Remover da lista local
-                solicitacoes = solicitacoes.filter(sol => sol.id !== id);
-                localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-                
+            if (acao === 'aprovar') {
                 // Adicionar aos alunos
+                const s = solicitacoes.find(s => s.id === id);
                 alunos.push({
                     id: Date.now(),
-                    nome: s.nomeAluno,
-                    dataNasc: s.dataNasc,
-                    turma: s.turma,
-                    categoria: s.categoria,
-                    bairro: s.bairro,
-                    responsavel: s.responsavel,
-                    telefone: s.telefone,
-                    endereco: s.endereco
+                    nome: nomeAluno,
+                    dataNasc: s?.dataNasc || '',
+                    turma: s?.turma || '',
+                    categoria: s?.categoria || '',
+                    bairro: s?.bairro || '',
+                    responsavel: s?.responsavel || '',
+                    telefone: s?.telefone || '',
+                    endereco: s?.endereco || ''
                 });
                 localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-                
-                atualizarStatsSolicitacoes();
-                filtrarSolicitacoes();
-                carregarAlunos();
-                fecharModalDetalhesSolicitacao();
-                
-                alert(`✅ ${s.nomeAluno} aprovado!`);
+                alert(`✅ ${nomeAluno} aprovado!`);
             } else {
-                alert('❌ Erro ao atualizar a planilha. Tente novamente.');
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = '✅';
-                }
+                alert(`❌ ${nomeAluno} recusado.`);
             }
-        } else if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = '✅';
-        }
-    }
-
-    async function recusarSolicitacao(protocolo, id, btn) {
-        if (btn) {
-            btn.disabled = true;
-            btn.innerHTML = '⏳';
+            
+            atualizarStatsSolicitacoes();
+            filtrarSolicitacoes();
+            carregarAlunos();
+            fecharModalDetalhesSolicitacao();
+        } else {
+            alert('❌ Erro ao atualizar a planilha. Tente novamente.');
         }
         
-        const s = solicitacoes.find(s => s.id === id);
-        if (s && confirm(`Recusar ${s.nomeAluno}?`)) {
-            const atualizado = await atualizarStatusNaPlanilha(protocolo, 'recusada');
-            
-            if (atualizado) {
-                // Remover da lista local
-                solicitacoes = solicitacoes.filter(sol => sol.id !== id);
-                localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-                
-                atualizarStatsSolicitacoes();
-                filtrarSolicitacoes();
-                fecharModalDetalhesSolicitacao();
-                
-                alert(`❌ ${s.nomeAluno} recusado.`);
-            } else {
-                alert('❌ Erro ao atualizar a planilha. Tente novamente.');
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = '❌';
-                }
-            }
-        } else if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = '❌';
-        }
+        btns.forEach(btn => btn.disabled = false);
     }
 
     function verSolicitacao(id) {
@@ -834,7 +945,6 @@
             <p><strong>Data Nasc.:</strong> ${formatarData(s.dataNasc)}</p>
             <p><strong>Idade:</strong> ${s.idade} anos</p>
             <p><strong>Turma:</strong> ${s.turma}</p>
-            <p><strong>Categoria:</strong> ${s.categoria || '-'}</p>
             <p><strong>Responsável:</strong> ${s.responsavel}</p>
             <p><strong>Telefone:</strong> ${s.telefone}</p>
             <p><strong>E-mail:</strong> ${s.email}</p>
@@ -845,8 +955,8 @@
         `;
         const btnA = document.getElementById('btnAprovarDetalhes');
         const btnR = document.getElementById('btnRecusarDetalhes');
-        btnA.onclick = () => aprovarSolicitacao(s.protocolo, s.id, btnA);
-        btnR.onclick = () => recusarSolicitacao(s.protocolo, s.id, btnR);
+        btnA.onclick = () => abrirConfirmacao('aprovar', s.protocolo, s.id, s.nomeAluno);
+        btnR.onclick = () => abrirConfirmacao('recusar', s.protocolo, s.id, s.nomeAluno);
         document.getElementById('modalDetalhesSolicitacao').style.display = 'flex';
     }
 
@@ -888,18 +998,17 @@
     function renderizarAlunos(lista) {
         const tbody = document.getElementById('corpoTabelaAlunos');
         if (lista.length === 0) {
-            tbody.innerHTML = ' <td colspan="9">Nenhum aluno encontrado.    ';
+            tbody.innerHTML = ' <td colspan="8">Nenhum aluno encontrado.    ';
             return;
         }
         tbody.innerHTML = lista.map(a => {
             const idade = a.dataNasc ? Math.floor((new Date() - new Date(a.dataNasc)) / (31536000000)) : '-';
             return `
                 <tr onclick="verDetalhesAluno(${a.id})">
-                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">       <td><strong>${a.nome}</strong>       <td>${idade}       <td>${formatarData(a.dataNasc)}       <td>${a.turma}       <td>${a.categoria || '-'}       <td>${a.responsavel}       <td>${a.telefone}       <td>
+                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">       <td><strong>${a.nome}</strong>       <td>${idade}       <td>${formatarData(a.dataNasc)}       <td>${a.turma}       <td>${a.responsavel}       <td>${a.telefone}       <tr>
                         <button class="btn-editar" onclick="editarAluno(${a.id}); event.stopPropagation()">✏️</button>
                         <button class="btn-excluir" onclick="excluirAluno(${a.id}); event.stopPropagation()">🗑️</button>
-                    </td>
-                </tr>
+                     </tr>
             `;
         }).join('');
     }
@@ -935,7 +1044,6 @@
         document.getElementById('nomeAluno').value = a.nome || '';
         document.getElementById('dataNascAluno').value = a.dataNasc || '';
         document.getElementById('turmaAluno').value = a.turma || 'Futebol';
-        document.getElementById('categoriaAluno').value = a.categoria || '';
         document.getElementById('responsavelAluno').value = a.responsavel || '';
         document.getElementById('telefoneAluno').value = a.telefone || '';
         document.getElementById('telefone2Aluno').value = a.telefone2 || '';
@@ -962,7 +1070,6 @@
             <p><strong>Data Nasc.:</strong> ${formatarData(a.dataNasc)}</p>
             <p><strong>Idade:</strong> ${idade} anos</p>
             <p><strong>Turma:</strong> ${a.turma}</p>
-            <p><strong>Categoria:</strong> ${a.categoria || '-'}</p>
             <p><strong>Responsável:</strong> ${a.responsavel}</p>
             <p><strong>Telefone:</strong> ${a.telefone}</p>
             <p><strong>Endereço:</strong> ${a.endereco || '-'}</p>
@@ -991,7 +1098,6 @@
             nome: document.getElementById('nomeAluno').value,
             dataNasc: document.getElementById('dataNascAluno').value,
             turma: document.getElementById('turmaAluno').value,
-            categoria: document.getElementById('categoriaAluno').value,
             responsavel: document.getElementById('responsavelAluno').value,
             telefone: document.getElementById('telefoneAluno').value,
             telefone2: document.getElementById('telefone2Aluno').value,
