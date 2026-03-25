@@ -492,15 +492,15 @@
         </div>
         
         <div class="tabela-container">
-            <table>
+             <table>
                 <thead>
-                    <tr>
+                     <tr>
                         <th class="checkbox-col"><input type="checkbox" id="selecionarTodosSolicitacoes" onchange="selecionarTodosSolicitacoes()"></th>
                         <th>Nome</th><th>Turma</th><th>Idade</th><th>Responsável</th><th>Telefone</th><th>Data</th><th>Status</th><th>Ações</th>
-                    </tr>
+                     </tr>
                 </thead>
                 <tbody id="corpoTabelaSolicitacoes"></tbody>
-            </table>
+             </table>
         </div>
     </div>
     
@@ -530,15 +530,15 @@
         </div>
         
         <div class="tabela-container">
-            <table>
+             <table>
                 <thead>
-                    <tr>
+                     <tr>
                         <th class="checkbox-col"><input type="checkbox" id="selecionarTodosAlunos" onchange="selecionarTodosAlunos()"></th>
                         <th>Nome</th><th>Idade</th><th>Turma</th><th>Responsável</th><th>Telefone</th><th>Ações</th>
-                    </tr>
+                     </tr>
                 </thead>
                 <tbody id="corpoTabelaAlunos"></tbody>
-            </table>
+             </table>
         </div>
     </div>
 </div>
@@ -602,23 +602,48 @@
     let alunoSelecionadoId = null;
     let intervalo = null;
 
-    const PLANILHA_ID = '1blMplaMjl7D6-FQM89rIzfa3kZbqMqqdjX3UDJWbvFw';
+    // CONFIGURAÇÃO DA PLANILHA
+    const PLANILHA_ID = '1frhkgQae4ugAZjLOvrGsw0yyqupVh-MNWGP70TCniLU';
+    const NOME_ABA = 'solicitaçoes';
+    const COLUNA_STATUS = 'O'; // 15ª coluna
+    
+    // URL DO GOOGLE APPS SCRIPT (ATUALIZADA)
+    const SCRIPT_URL_ATUALIZAR = 'https://script.google.com/macros/s/AKfycbzOA7QvHVH2LNLdoZzqqaIy-axTmaApPP7euy9wIysPiaOqOHmWrGXqWpe-A2SJWxum/exec';
 
-    // BUSCAR TODOS OS DADOS DA PLANILHA CORRETAMENTE
+    // Função para atualizar STATUS na planilha
+    async function atualizarStatusNaPlanilha(protocolo, novoStatus) {
+        try {
+            const response = await fetch(SCRIPT_URL_ATUALIZAR, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    protocolo: protocolo,
+                    status: novoStatus,
+                    acao: 'atualizar_status'
+                })
+            });
+            console.log(`✅ Status atualizado para ${novoStatus} - Protocolo: ${protocolo}`);
+            return true;
+        } catch (error) {
+            console.error('Erro ao atualizar status na planilha:', error);
+            return false;
+        }
+    }
+
+    // BUSCAR TODOS OS DADOS DA PLANILHA
     async function buscarSolicitacoesDaPlanilha() {
         try {
-            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv`;
+            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=${NOME_ABA}`;
             const response = await fetch(url);
             const texto = await response.text();
             const linhas = texto.split('\n');
             
             const novas = [];
-            // Pular cabeçalho (linha 0)
             for (let i = 1; i < linhas.length; i++) {
                 const linha = linhas[i].trim();
                 if (!linha) continue;
                 
-                // Parse manual do CSV
                 const valores = [];
                 let atual = '';
                 let dentroAspas = false;
@@ -634,10 +659,12 @@
                 }
                 valores.push(atual);
                 
-                // Limpar aspas
-                const limpar = (v) => v.replace(/^"|"$/g, '').trim();
+                const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
                 
-                if (valores.length >= 13 && limpar(valores[2])) {
+                if (valores.length >= 15 && limpar(valores[2])) {
+                    // STATUS está na coluna O (índice 14)
+                    const statusAtual = limpar(valores[14]) || 'pendente';
+                    
                     novas.push({
                         id: Date.now() + i,
                         protocolo: limpar(valores[0]),
@@ -650,10 +677,11 @@
                         telefone: limpar(valores[7]),
                         email: limpar(valores[8]),
                         endereco: limpar(valores[9]),
-                        moradores: limpar(valores[10]),
-                        remedio: limpar(valores[11]),
-                        origem: limpar(valores[12]),
-                        status: 'pendente'
+                        bairro: limpar(valores[10]),
+                        moradores: limpar(valores[11]),
+                        remedio: limpar(valores[12]),
+                        origem: limpar(valores[13]),
+                        status: statusAtual
                     });
                 }
             }
@@ -668,14 +696,8 @@
         const pendentesAntes = solicitacoes.filter(s => s.status === 'pendente').length;
         const novas = await buscarSolicitacoesDaPlanilha();
         
-        // Mesclar mantendo status
-        const mapa = new Map();
-        solicitacoes.forEach(s => mapa.set(s.protocolo + s.nomeAluno, s));
-        novas.forEach(n => {
-            const chave = n.protocolo + n.nomeAluno;
-            if (!mapa.has(chave)) mapa.set(chave, n);
-        });
-        solicitacoes = Array.from(mapa.values());
+        // Substituir completamente (planilha é a fonte única)
+        solicitacoes = novas;
         localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
         
         atualizarStatsSolicitacoes();
@@ -709,7 +731,7 @@
     function renderizarSolicitacoes(lista) {
         const tbody = document.getElementById('corpoTabelaSolicitacoes');
         if (lista.length === 0) {
-            tbody.innerHTML = ' <td colspan="9">Nenhuma solicitação encontrada.    ';
+            tbody.innerHTML = '<tr><td colspan="9">Nenhuma solicitação encontrada.</td></tr>';
             return;
         }
         tbody.innerHTML = lista.map(s => {
@@ -730,8 +752,8 @@
                     <td>
                         <button class="btn-ver" onclick="verSolicitacao(${s.id})">👁️</button>
                         ${s.status === 'pendente' ? `
-                            <button class="btn-aprovar" onclick="aprovarSolicitacao(${s.id})">✅</button>
-                            <button class="btn-recusar" onclick="recusarSolicitacao(${s.id})">❌</button>
+                            <button class="btn-aprovar" onclick="aprovarSolicitacao('${s.protocolo}', ${s.id})">✅</button>
+                            <button class="btn-recusar" onclick="recusarSolicitacao('${s.protocolo}', ${s.id})">❌</button>
                         ` : ''}
                     </td>
                 </tr>
@@ -755,39 +777,53 @@
         }
     }
 
-    function aprovarSolicitacao(id) {
+    async function aprovarSolicitacao(protocolo, id) {
         const s = solicitacoes.find(s => s.id === id);
         if (s && confirm(`Aprovar ${s.nomeAluno}?`)) {
-            s.status = 'aprovada';
-            // Adicionar aos alunos
-            alunos.push({
-                id: Date.now(),
-                nome: s.nomeAluno,
-                dataNasc: '',
-                turma: s.turma,
-                responsavel: s.responsavel,
-                telefone: s.telefone,
-                endereco: s.endereco?.split(',')[0] || ''
-            });
-            localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-            localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-            atualizarStatsSolicitacoes();
-            filtrarSolicitacoes();
-            carregarAlunos();
-            fecharModalDetalhesSolicitacao();
-            alert(`✅ ${s.nomeAluno} aprovado!`);
+            // Atualizar na planilha primeiro
+            const atualizado = await atualizarStatusNaPlanilha(protocolo, 'aprovada');
+            
+            if (atualizado) {
+                s.status = 'aprovada';
+                // Adicionar aos alunos
+                alunos.push({
+                    id: Date.now(),
+                    nome: s.nomeAluno,
+                    dataNasc: '',
+                    turma: s.turma,
+                    responsavel: s.responsavel,
+                    telefone: s.telefone,
+                    endereco: s.endereco?.split(',')[0] || '',
+                    bairro: s.bairro || ''
+                });
+                localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
+                localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+                atualizarStatsSolicitacoes();
+                filtrarSolicitacoes();
+                carregarAlunos();
+                fecharModalDetalhesSolicitacao();
+                alert(`✅ ${s.nomeAluno} aprovado! Status salvo na planilha.`);
+            } else {
+                alert('❌ Erro ao atualizar a planilha. Tente novamente.');
+            }
         }
     }
 
-    function recusarSolicitacao(id) {
+    async function recusarSolicitacao(protocolo, id) {
         const s = solicitacoes.find(s => s.id === id);
         if (s && confirm(`Recusar ${s.nomeAluno}?`)) {
-            s.status = 'recusada';
-            localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-            atualizarStatsSolicitacoes();
-            filtrarSolicitacoes();
-            fecharModalDetalhesSolicitacao();
-            alert(`❌ ${s.nomeAluno} recusado.`);
+            const atualizado = await atualizarStatusNaPlanilha(protocolo, 'recusada');
+            
+            if (atualizado) {
+                s.status = 'recusada';
+                localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+                atualizarStatsSolicitacoes();
+                filtrarSolicitacoes();
+                fecharModalDetalhesSolicitacao();
+                alert(`❌ ${s.nomeAluno} recusado. Status salvo na planilha.`);
+            } else {
+                alert('❌ Erro ao atualizar a planilha. Tente novamente.');
+            }
         }
     }
 
@@ -803,13 +839,14 @@
             <p><strong>Telefone:</strong> ${s.telefone}</p>
             <p><strong>E-mail:</strong> ${s.email}</p>
             <p><strong>Endereço:</strong> ${s.endereco}</p>
+            <p><strong>Bairro:</strong> ${s.bairro}</p>
             <p><strong>Remédio:</strong> ${s.remedio}</p>
             <p><strong>Data:</strong> ${s.dataEnvio}</p>
         `;
         const btnA = document.getElementById('btnAprovarDetalhes');
         const btnR = document.getElementById('btnRecusarDetalhes');
-        btnA.onclick = () => aprovarSolicitacao(s.id);
-        btnR.onclick = () => recusarSolicitacao(s.id);
+        btnA.onclick = () => aprovarSolicitacao(s.protocolo, s.id);
+        btnR.onclick = () => recusarSolicitacao(s.protocolo, s.id);
         btnA.style.display = s.status === 'pendente' ? 'block' : 'none';
         btnR.style.display = s.status === 'pendente' ? 'block' : 'none';
         document.getElementById('modalDetalhesSolicitacao').style.display = 'flex';
@@ -844,11 +881,10 @@
             const idade = a.dataNasc ? Math.floor((new Date() - new Date(a.dataNasc)) / (31536000000)) : '-';
             return `
                 <tr onclick="verDetalhesAluno(${a.id})">
-                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">    <td><strong>${a.nome}</strong>    <td>${idade}    <td>${a.turma}    <td>${a.responsavel}    <td>${a.telefone}    <td>
+                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">     <td><strong>${a.nome}</strong>     <td>${idade}     <td>${a.turma}     <td>${a.responsavel}     <td>${a.telefone}     <td>
                         <button class="btn-editar" onclick="editarAluno(${a.id}); event.stopPropagation()">✏️</button>
                         <button class="btn-excluir" onclick="excluirAluno(${a.id}); event.stopPropagation()">🗑️</button>
-                    </td>
-                </tr>
+                     </tr>
             `;
         }).join('');
     }
@@ -913,6 +949,7 @@
             <p><strong>Responsável:</strong> ${a.responsavel}</p>
             <p><strong>Telefone:</strong> ${a.telefone}</p>
             <p><strong>Endereço:</strong> ${a.endereco || '-'}</p>
+            <p><strong>Bairro:</strong> ${a.bairro || '-'}</p>
         `;
         document.getElementById('modalDetalhesAluno').style.display = 'flex';
     }
@@ -978,7 +1015,7 @@
 
     function iniciarAtualizacao() {
         if (intervalo) clearInterval(intervalo);
-        intervalo = setInterval(() => { atualizarSolicitacoes(); }, 10000);
+        intervalo = setInterval(() => { atualizarSolicitacoes(); }, 30000);
     }
 
     function verificarSenha() {
