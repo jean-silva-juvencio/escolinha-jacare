@@ -401,11 +401,6 @@
             <div class="label">Total de Alunos</div>
         </div>
         <div class="card-analise">
-            <div class="icone">📋</div>
-            <div class="valor" id="totalSolicitacoes">0</div>
-            <div class="label">Solicitações Pendentes</div>
-        </div>
-        <div class="card-analise">
             <div class="icone">👁️</div>
             <div class="valor" id="totalVisitas">0</div>
             <div class="label">Visitas ao Site</div>
@@ -424,10 +419,6 @@
         <div class="grafico-card">
             <h3>📊 Alunos por Faixa Etária (Sub)</h3>
             <canvas id="graficoSub"></canvas>
-        </div>
-        <div class="grafico-card">
-            <h3>👁️ Visitas ao Site (Últimos 30 dias)</h3>
-            <canvas id="graficoVisitas"></canvas>
         </div>
     </div>
 
@@ -460,7 +451,6 @@
     
     let usuarioLogado = null;
     let alunos = [];
-    let solicitacoes = [];
     let visitasData = { registros: [], totalGeral: 0 };
     let graficos = {};
     let mesSelecionado = new Date().getMonth();
@@ -485,14 +475,6 @@
             alunos = [];
         }
         
-        // Carregar solicitações
-        const solicitacoesSalvas = localStorage.getItem('solicitacoes_prematricula');
-        if (solicitacoesSalvas) {
-            solicitacoes = JSON.parse(solicitacoesSalvas);
-        } else {
-            solicitacoes = [];
-        }
-        
         // Carregar visitas
         const visitasSalvas = localStorage.getItem('visitas_site');
         if (visitasSalvas) {
@@ -501,12 +483,8 @@
             visitasData = { registros: [], totalGeral: 0 };
         }
         
-        // Calcular total de pendentes
-        const pendentes = solicitacoes.filter(s => s.status === 'pendente').length;
-        
         // Atualizar cards
         document.getElementById('totalAlunos').innerText = alunos.length;
-        document.getElementById('totalSolicitacoes').innerText = pendentes;
         document.getElementById('totalVisitas').innerText = visitasData.totalGeral;
         
         // Atualizar gráficos e aniversariantes
@@ -528,8 +506,12 @@
 
     function formatarData(dataNasc) {
         if (!dataNasc) return '-';
-        const d = new Date(dataNasc);
-        return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`;
+        try {
+            const d = new Date(dataNasc);
+            return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;
+        } catch {
+            return dataNasc;
+        }
     }
 
     function atualizarAniversariantes() {
@@ -632,25 +614,6 @@
             data: { labels: subs, datasets: [{ label: 'Alunos', data: subCount, backgroundColor: '#00aaff', borderRadius: 8 }] },
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
         });
-        
-        // Visitas
-        const dias = [];
-        const labels = [];
-        const hoje = new Date();
-        for (let i = 29; i >= 0; i--) {
-            const d = new Date(hoje);
-            d.setDate(hoje.getDate() - i);
-            labels.push(`${d.getDate()}/${d.getMonth()+1}`);
-            const visita = visitasData.registros.find(v => v.data === `${d.getDate()}/${d.getMonth()+1}/${d.getFullYear()}`);
-            dias.push(visita ? visita.quantidade : 0);
-        }
-        
-        if (graficos.visitas) graficos.visitas.destroy();
-        graficos.visitas = new Chart(document.getElementById('graficoVisitas'), {
-            type: 'bar',
-            data: { labels: labels, datasets: [{ label: 'Visitas', data: dias, backgroundColor: '#003399', borderRadius: 6 }] },
-            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
-        });
     }
 
     function atualizarDados() {
@@ -663,7 +626,6 @@
         btn.innerHTML = '🔄 ATUALIZAR';
         btn.disabled = false;
         
-        // Feedback visual
         btn.style.background = 'rgba(255,255,255,0.4)';
         setTimeout(() => { btn.style.background = ''; }, 500);
     }
