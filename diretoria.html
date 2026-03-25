@@ -204,7 +204,6 @@
             padding: 20px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s;
         }
 
         .card-analise .valor {
@@ -386,7 +385,7 @@
         <h1>📊 ANÁLISE DE DADOS | ESCOLINHA DO JACARÉ</h1>
         <div style="display: flex; gap: 10px; align-items: center;">
             <div class="info-usuario" id="infoUsuario"></div>
-            <button class="btn-atualizar" onclick="atualizarAgora()">🔄 ATUALIZAR AGORA</button>
+            <button class="btn-atualizar" onclick="atualizarDados()">🔄 ATUALIZAR</button>
             <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
         </div>
     </div>
@@ -400,6 +399,11 @@
             <div class="icone">👥</div>
             <div class="valor" id="totalAlunos">0</div>
             <div class="label">Total de Alunos</div>
+        </div>
+        <div class="card-analise">
+            <div class="icone">📋</div>
+            <div class="valor" id="totalSolicitacoes">0</div>
+            <div class="label">Solicitações Pendentes</div>
         </div>
         <div class="card-analise">
             <div class="icone">👁️</div>
@@ -456,13 +460,12 @@
     
     let usuarioLogado = null;
     let alunos = [];
+    let solicitacoes = [];
     let visitasData = { registros: [], totalGeral: 0 };
     let graficos = {};
-    let intervaloAtualizacao = null;
     let mesSelecionado = new Date().getMonth();
     let ultimaAtualizacao = new Date();
 
-    const PLANILHA_ID = '1frhkgQae4ugAZjLOvrGsw0yyqupVh-MNWGP70TCniLU';
     const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
     function atualizarTimestamp() {
@@ -472,78 +475,46 @@
         document.getElementById('ultimaAtualizacao').innerHTML = `🕐 Última atualização: ${texto}`;
     }
 
-    async function buscarDadosPlanilha() {
-        try {
-            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=solicitaçoes`;
-            const response = await fetch(url);
-            const texto = await response.text();
-            const linhas = texto.split('\n');
-            
-            const alunosAprovados = [];
-            
-            for (let i = 1; i < linhas.length; i++) {
-                const linha = linhas[i].trim();
-                if (!linha) continue;
-                
-                const partes = [];
-                let atual = '';
-                let aspas = false;
-                for (let c of linha) {
-                    if (c === '"') aspas = !aspas;
-                    else if (c === ',' && !aspas) { partes.push(atual); atual = ''; }
-                    else atual += c;
-                }
-                partes.push(atual);
-                
-                const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
-                
-                if (partes.length >= 15 && limpar(partes[2])) {
-                    const status = limpar(partes[14]) || 'pendente';
-                    if (status === 'aprovado') {
-                        alunosAprovados.push({
-                            id: i,
-                            nome: limpar(partes[2]),
-                            dataNasc: limpar(partes[3]),
-                            turma: limpar(partes[4]),
-                            bairro: limpar(partes[10])
-                        });
-                    }
-                }
-            }
-            
-            return { alunos: alunosAprovados };
-        } catch (error) {
-            console.error('Erro:', error);
-            return { alunos: [] };
+    // CARREGAR DADOS DO LOCALSTORAGE (salvos pelo FUNCIONARIOS)
+    function carregarDadosLocalStorage() {
+        // Carregar alunos aprovados
+        const alunosSalvos = localStorage.getItem('escolinha_alunos');
+        if (alunosSalvos) {
+            alunos = JSON.parse(alunosSalvos);
+        } else {
+            alunos = [];
         }
-    }
-
-    async function buscarVisitas() {
-        try {
-            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=visitas`;
-            const response = await fetch(url);
-            const texto = await response.text();
-            const linhas = texto.split('\n');
-            
-            let total = 0;
-            const registros = [];
-            
-            for (let i = 1; i < linhas.length; i++) {
-                const linha = linhas[i].trim();
-                if (!linha) continue;
-                const partes = linha.split(',');
-                if (partes.length >= 2) {
-                    const data = partes[0].replace(/"/g, '');
-                    const qtde = parseInt(partes[1].replace(/"/g, '')) || 0;
-                    registros.push({ data, quantidade: qtde });
-                    total += qtde;
-                }
-            }
-            
-            return { registros: registros.reverse(), totalGeral: total };
-        } catch (error) {
-            return { registros: [], totalGeral: 0 };
+        
+        // Carregar solicitações
+        const solicitacoesSalvas = localStorage.getItem('solicitacoes_prematricula');
+        if (solicitacoesSalvas) {
+            solicitacoes = JSON.parse(solicitacoesSalvas);
+        } else {
+            solicitacoes = [];
         }
+        
+        // Carregar visitas
+        const visitasSalvas = localStorage.getItem('visitas_site');
+        if (visitasSalvas) {
+            visitasData = JSON.parse(visitasSalvas);
+        } else {
+            visitasData = { registros: [], totalGeral: 0 };
+        }
+        
+        // Calcular total de pendentes
+        const pendentes = solicitacoes.filter(s => s.status === 'pendente').length;
+        
+        // Atualizar cards
+        document.getElementById('totalAlunos').innerText = alunos.length;
+        document.getElementById('totalSolicitacoes').innerText = pendentes;
+        document.getElementById('totalVisitas').innerText = visitasData.totalGeral;
+        
+        // Atualizar gráficos e aniversariantes
+        atualizarGraficos();
+        atualizarAniversariantes();
+        
+        ultimaAtualizacao = new Date();
+        atualizarTimestamp();
     }
 
     function calcularIdade(dataNasc) {
@@ -616,12 +587,8 @@
         atualizarAniversariantes();
     }
 
-    function atualizarCards() {
-        document.getElementById('totalAlunos').innerText = alunos.length;
-        document.getElementById('totalVisitas').innerText = visitasData.totalGeral;
-    }
-
     function atualizarGraficos() {
+        // Alunos por Turma
         const turmas = ['Futebol', 'Taekwondo', 'Ginástica', 'Tênis de Mesa', 'Judô'];
         const turmasCount = turmas.map(t => alunos.filter(a => a.turma === t).length);
         
@@ -632,6 +599,7 @@
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
         });
         
+        // Alunos por Bairro
         const bairrosMap = new Map();
         alunos.forEach(a => { if (a.bairro) bairrosMap.set(a.bairro, (bairrosMap.get(a.bairro) || 0) + 1); });
         const bairros = Array.from(bairrosMap.entries()).sort((a,b) => b[1]-a[1]);
@@ -643,6 +611,7 @@
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
         });
         
+        // Alunos por Faixa Etária
         const subs = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Sub-20', 'Sub-30'];
         const subCount = [0,0,0,0,0,0,0,0];
         alunos.forEach(a => {
@@ -664,6 +633,7 @@
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
         });
         
+        // Visitas
         const dias = [];
         const labels = [];
         const hoje = new Date();
@@ -683,29 +653,19 @@
         });
     }
 
-    async function carregarTodosDados() {
-        const msg = document.getElementById('ultimaAtualizacao');
-        msg.innerHTML = '🕐 Atualizando...';
-        
-        const { alunos: novosAlunos } = await buscarDadosPlanilha();
-        alunos = novosAlunos;
-        visitasData = await buscarVisitas();
-        
-        atualizarCards();
-        atualizarGraficos();
-        atualizarAniversariantes();
-        
-        ultimaAtualizacao = new Date();
-        atualizarTimestamp();
-    }
-    
-    async function atualizarAgora() {
+    function atualizarDados() {
         const btn = document.querySelector('.btn-atualizar');
         btn.innerHTML = '🔄 ATUALIZANDO...';
         btn.disabled = true;
-        await carregarTodosDados();
-        btn.innerHTML = '🔄 ATUALIZAR AGORA';
+        
+        carregarDadosLocalStorage();
+        
+        btn.innerHTML = '🔄 ATUALIZAR';
         btn.disabled = false;
+        
+        // Feedback visual
+        btn.style.background = 'rgba(255,255,255,0.4)';
+        setTimeout(() => { btn.style.background = ''; }, 500);
     }
 
     function exportarDados() {
@@ -723,11 +683,6 @@
         alert('✅ Dados exportados com sucesso!');
     }
 
-    function iniciarAtualizacao() {
-        if (intervaloAtualizacao) clearInterval(intervaloAtualizacao);
-        intervaloAtualizacao = setInterval(carregarTodosDados, 10000);
-    }
-
     function verificarLogin() {
         const email = document.getElementById('emailLogin').value.trim();
         const senha = document.getElementById('senhaLogin').value;
@@ -739,22 +694,34 @@
             document.getElementById('painelAnalise').style.display = 'block';
             document.getElementById('infoUsuario').innerHTML = `👤 ${usuario.nome}`;
             criarBotoesMeses();
-            carregarTodosDados();
-            iniciarAtualizacao();
+            carregarDadosLocalStorage();
+            
+            // Atualizar automaticamente a cada 10 segundos
+            setInterval(() => {
+                if (document.getElementById('painelAnalise').style.display === 'block') {
+                    carregarDadosLocalStorage();
+                }
+            }, 10000);
         } else {
             document.getElementById('erroLogin').innerText = 'E-mail ou senha incorretos!';
         }
     }
 
     function logout() {
-        if (intervaloAtualizacao) clearInterval(intervaloAtualizacao);
         document.getElementById('telaLogin').style.display = 'flex';
         document.getElementById('painelAnalise').style.display = 'none';
+        document.getElementById('emailLogin').value = '';
+        document.getElementById('senhaLogin').value = '';
+        document.getElementById('erroLogin').innerText = '';
     }
     
+    // Atualizar timestamp a cada segundo
     setInterval(() => {
-        if (document.getElementById('painelAnalise').style.display === 'block') atualizarTimestamp();
+        if (document.getElementById('painelAnalise').style.display === 'block') {
+            atualizarTimestamp();
+        }
     }, 1000);
 </script>
+
 </body>
 </html>
