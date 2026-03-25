@@ -602,39 +602,29 @@
     let alunoSelecionadoId = null;
     let intervalo = null;
 
-    // CONFIGURAÇÃO DA PLANILHA
     const PLANILHA_ID = '1frhkgQae4ugAZjLOvrGsw0yyqupVh-MNWGP70TCniLU';
-    const NOME_ABA = 'solicitaçoes';
-    const COLUNA_STATUS = 'O'; // 15ª coluna
-    
-    // URL DO GOOGLE APPS SCRIPT (ATUALIZADA)
     const SCRIPT_URL_ATUALIZAR = 'https://script.google.com/macros/s/AKfycbzOA7QvHVH2LNLdoZzqqaIy-axTmaApPP7euy9wIysPiaOqOHmWrGXqWpe-A2SJWxum/exec';
 
-    // Função para atualizar STATUS na planilha
+    // Atualizar STATUS na planilha
     async function atualizarStatusNaPlanilha(protocolo, novoStatus) {
         try {
-            const response = await fetch(SCRIPT_URL_ATUALIZAR, {
+            await fetch(SCRIPT_URL_ATUALIZAR, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    protocolo: protocolo,
-                    status: novoStatus,
-                    acao: 'atualizar_status'
-                })
+                body: JSON.stringify({ protocolo, status: novoStatus, acao: 'atualizar_status' })
             });
-            console.log(`✅ Status atualizado para ${novoStatus} - Protocolo: ${protocolo}`);
             return true;
         } catch (error) {
-            console.error('Erro ao atualizar status na planilha:', error);
+            console.error('Erro:', error);
             return false;
         }
     }
 
-    // BUSCAR TODOS OS DADOS DA PLANILHA
+    // Buscar solicitações da planilha
     async function buscarSolicitacoesDaPlanilha() {
         try {
-            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=${NOME_ABA}`;
+            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=solicitaçoes`;
             const response = await fetch(url);
             const texto = await response.text();
             const linhas = texto.split('\n');
@@ -648,41 +638,36 @@
                 let atual = '';
                 let dentroAspas = false;
                 for (let c of linha) {
-                    if (c === '"') {
-                        dentroAspas = !dentroAspas;
-                    } else if (c === ',' && !dentroAspas) {
-                        valores.push(atual);
-                        atual = '';
-                    } else {
-                        atual += c;
-                    }
+                    if (c === '"') dentroAspas = !dentroAspas;
+                    else if (c === ',' && !dentroAspas) { valores.push(atual); atual = ''; }
+                    else atual += c;
                 }
                 valores.push(atual);
                 
                 const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
                 
                 if (valores.length >= 15 && limpar(valores[2])) {
-                    // STATUS está na coluna O (índice 14)
                     const statusAtual = limpar(valores[14]) || 'pendente';
-                    
-                    novas.push({
-                        id: Date.now() + i,
-                        protocolo: limpar(valores[0]),
-                        dataEnvio: limpar(valores[1]),
-                        nomeAluno: limpar(valores[2]),
-                        idade: limpar(valores[3]),
-                        turma: limpar(valores[4]),
-                        categoria: limpar(valores[5]),
-                        responsavel: limpar(valores[6]),
-                        telefone: limpar(valores[7]),
-                        email: limpar(valores[8]),
-                        endereco: limpar(valores[9]),
-                        bairro: limpar(valores[10]),
-                        moradores: limpar(valores[11]),
-                        remedio: limpar(valores[12]),
-                        origem: limpar(valores[13]),
-                        status: statusAtual
-                    });
+                    if (statusAtual === 'pendente') {
+                        novas.push({
+                            id: Date.now() + i,
+                            protocolo: limpar(valores[0]),
+                            dataEnvio: limpar(valores[1]),
+                            nomeAluno: limpar(valores[2]),
+                            idade: limpar(valores[3]),
+                            turma: limpar(valores[4]),
+                            categoria: limpar(valores[5]),
+                            responsavel: limpar(valores[6]),
+                            telefone: limpar(valores[7]),
+                            email: limpar(valores[8]),
+                            endereco: limpar(valores[9]),
+                            bairro: limpar(valores[10]),
+                            moradores: limpar(valores[11]),
+                            remedio: limpar(valores[12]),
+                            origem: limpar(valores[13]),
+                            status: statusAtual
+                        });
+                    }
                 }
             }
             return novas.reverse();
@@ -693,27 +678,15 @@
     }
 
     async function atualizarSolicitacoes() {
-        const pendentesAntes = solicitacoes.filter(s => s.status === 'pendente').length;
         const novas = await buscarSolicitacoesDaPlanilha();
-        
-        // Substituir completamente (planilha é a fonte única)
         solicitacoes = novas;
         localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-        
         atualizarStatsSolicitacoes();
         filtrarSolicitacoes();
-        
-        const pendentesAgora = solicitacoes.filter(s => s.status === 'pendente').length;
-        if (pendentesAgora > pendentesAntes) {
-            const alerta = document.getElementById('novaSolicitacaoAlerta');
-            alerta.innerHTML = `📢 ${pendentesAgora - pendentesAntes} nova(s) solicitação(ões)! 🎉`;
-            alerta.style.display = 'block';
-            setTimeout(() => alerta.style.display = 'none', 5000);
-        }
     }
 
     function atualizarStatsSolicitacoes() {
-        document.getElementById('totalPendentes').innerText = solicitacoes.filter(s => s.status === 'pendente').length;
+        document.getElementById('totalPendentes').innerText = solicitacoes.length;
         document.getElementById('totalSolicitacoes').innerText = solicitacoes.length;
     }
 
@@ -731,99 +704,109 @@
     function renderizarSolicitacoes(lista) {
         const tbody = document.getElementById('corpoTabelaSolicitacoes');
         if (lista.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="9">Nenhuma solicitação encontrada.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="9">Nenhuma solicitação pendente.</td></tr>';
             return;
         }
-        tbody.innerHTML = lista.map(s => {
-            let classe = '', texto = '';
-            if (s.status === 'pendente') { classe = 'status-pendente'; texto = '🟡 Pendente'; }
-            else if (s.status === 'aprovada') { classe = 'status-aprovada'; texto = '🟢 Aprovada'; }
-            else { classe = 'status-recusada'; texto = '🔴 Recusada'; }
-            return `
-                <tr>
-                    <td class="checkbox-col"><input type="checkbox" class="sel-solic" value="${s.id}"></td>
-                    <td onclick="verSolicitacao(${s.id})"><strong>${s.nomeAluno}</strong></td>
-                    <td onclick="verSolicitacao(${s.id})">${s.turma}${s.categoria ? ` - ${s.categoria}` : ''}</td>
-                    <td onclick="verSolicitacao(${s.id})">${s.idade}</td>
-                    <td onclick="verSolicitacao(${s.id})">${s.responsavel}</td>
-                    <td onclick="verSolicitacao(${s.id})">${s.telefone}</td>
-                    <td onclick="verSolicitacao(${s.id})">${s.dataEnvio}</td>
-                    <td onclick="verSolicitacao(${s.id})"><span class="status-badge ${classe}">${texto}</span></td>
-                    <td>
-                        <button class="btn-ver" onclick="verSolicitacao(${s.id})">👁️</button>
-                        ${s.status === 'pendente' ? `
-                            <button class="btn-aprovar" onclick="aprovarSolicitacao('${s.protocolo}', ${s.id})">✅</button>
-                            <button class="btn-recusar" onclick="recusarSolicitacao('${s.protocolo}', ${s.id})">❌</button>
-                        ` : ''}
-                    </td>
-                </tr>
-            `;
-        }).join('');
+        tbody.innerHTML = lista.map(s => `
+            <tr>
+                <td class="checkbox-col"><input type="checkbox" class="sel-solic" value="${s.id}"></td>
+                <td onclick="verSolicitacao(${s.id})"><strong>${s.nomeAluno}</strong></td>
+                <td onclick="verSolicitacao(${s.id})">${s.turma}${s.categoria ? ` - ${s.categoria}` : ''}</td>
+                <td onclick="verSolicitacao(${s.id})">${s.idade}</td>
+                <td onclick="verSolicitacao(${s.id})">${s.responsavel}</td>
+                <td onclick="verSolicitacao(${s.id})">${s.telefone}</td>
+                <td onclick="verSolicitacao(${s.id})">${s.dataEnvio}</td>
+                <td onclick="verSolicitacao(${s.id})"><span class="status-badge status-pendente">🟡 Pendente</span></td>
+                <td>
+                    <button class="btn-ver" onclick="verSolicitacao(${s.id})">👁️</button>
+                    <button class="btn-aprovar" id="btnAprovar_${s.id}" onclick="aprovarSolicitacao('${s.protocolo}', ${s.id}, this)">✅</button>
+                    <button class="btn-recusar" id="btnRecusar_${s.id}" onclick="recusarSolicitacao('${s.protocolo}', ${s.id}, this)">❌</button>
+                </td>
+            </tr>
+        `).join('');
     }
 
-    function selecionarTodosSolicitacoes() {
-        const chk = document.getElementById('selecionarTodosSolicitacoes').checked;
-        document.querySelectorAll('.sel-solic').forEach(cb => cb.checked = chk);
-    }
-
-    function excluirSelecionadosSolicitacoes() {
-        const ids = Array.from(document.querySelectorAll('.sel-solic:checked')).map(cb => parseInt(cb.value));
-        if (ids.length === 0) { alert('Selecione pelo menos uma!'); return; }
-        if (confirm(`Excluir ${ids.length} solicitação(ões)?`)) {
-            solicitacoes = solicitacoes.filter(s => !ids.includes(s.id));
-            localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-            atualizarStatsSolicitacoes();
-            filtrarSolicitacoes();
+    async function aprovarSolicitacao(protocolo, id, btn) {
+        // Desabilitar botão para evitar duplicação
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '⏳';
         }
-    }
-
-    async function aprovarSolicitacao(protocolo, id) {
+        
         const s = solicitacoes.find(s => s.id === id);
         if (s && confirm(`Aprovar ${s.nomeAluno}?`)) {
-            // Atualizar na planilha primeiro
-            const atualizado = await atualizarStatusNaPlanilha(protocolo, 'aprovada');
+            const atualizado = await atualizarStatusNaPlanilha(protocolo, 'aprovado');
             
             if (atualizado) {
-                s.status = 'aprovada';
+                // Remover da lista local
+                solicitacoes = solicitacoes.filter(sol => sol.id !== id);
+                localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+                
                 // Adicionar aos alunos
                 alunos.push({
                     id: Date.now(),
                     nome: s.nomeAluno,
                     dataNasc: '',
                     turma: s.turma,
+                    bairro: s.bairro,
                     responsavel: s.responsavel,
                     telefone: s.telefone,
-                    endereco: s.endereco?.split(',')[0] || '',
-                    bairro: s.bairro || ''
+                    endereco: s.endereco
                 });
                 localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-                localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+                
+                // Atualizar listas
                 atualizarStatsSolicitacoes();
                 filtrarSolicitacoes();
                 carregarAlunos();
                 fecharModalDetalhesSolicitacao();
-                alert(`✅ ${s.nomeAluno} aprovado! Status salvo na planilha.`);
+                
+                alert(`✅ ${s.nomeAluno} aprovado!`);
             } else {
                 alert('❌ Erro ao atualizar a planilha. Tente novamente.');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '✅';
+                }
             }
+        } else if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '✅';
         }
     }
 
-    async function recusarSolicitacao(protocolo, id) {
+    async function recusarSolicitacao(protocolo, id, btn) {
+        // Desabilitar botão para evitar duplicação
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '⏳';
+        }
+        
         const s = solicitacoes.find(s => s.id === id);
         if (s && confirm(`Recusar ${s.nomeAluno}?`)) {
             const atualizado = await atualizarStatusNaPlanilha(protocolo, 'recusada');
             
             if (atualizado) {
-                s.status = 'recusada';
+                // Remover da lista local
+                solicitacoes = solicitacoes.filter(sol => sol.id !== id);
                 localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+                
+                // Atualizar listas
                 atualizarStatsSolicitacoes();
                 filtrarSolicitacoes();
                 fecharModalDetalhesSolicitacao();
-                alert(`❌ ${s.nomeAluno} recusado. Status salvo na planilha.`);
+                
+                alert(`❌ ${s.nomeAluno} recusado.`);
             } else {
                 alert('❌ Erro ao atualizar a planilha. Tente novamente.');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '❌';
+                }
             }
+        } else if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '❌';
         }
     }
 
@@ -845,11 +828,33 @@
         `;
         const btnA = document.getElementById('btnAprovarDetalhes');
         const btnR = document.getElementById('btnRecusarDetalhes');
-        btnA.onclick = () => aprovarSolicitacao(s.protocolo, s.id);
-        btnR.onclick = () => recusarSolicitacao(s.protocolo, s.id);
-        btnA.style.display = s.status === 'pendente' ? 'block' : 'none';
-        btnR.style.display = s.status === 'pendente' ? 'block' : 'none';
+        btnA.onclick = () => {
+            const btnModal = btnA;
+            btnA.disabled = true;
+            aprovarSolicitacao(s.protocolo, s.id, btnModal);
+        };
+        btnR.onclick = () => {
+            const btnModal = btnR;
+            btnR.disabled = true;
+            recusarSolicitacao(s.protocolo, s.id, btnModal);
+        };
         document.getElementById('modalDetalhesSolicitacao').style.display = 'flex';
+    }
+
+    function selecionarTodosSolicitacoes() {
+        const chk = document.getElementById('selecionarTodosSolicitacoes').checked;
+        document.querySelectorAll('.sel-solic').forEach(cb => cb.checked = chk);
+    }
+
+    function excluirSelecionadosSolicitacoes() {
+        const ids = Array.from(document.querySelectorAll('.sel-solic:checked')).map(cb => parseInt(cb.value));
+        if (ids.length === 0) { alert('Selecione pelo menos uma!'); return; }
+        if (confirm(`Excluir ${ids.length} solicitação(ões)?`)) {
+            solicitacoes = solicitacoes.filter(s => !ids.includes(s.id));
+            localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+            atualizarStatsSolicitacoes();
+            filtrarSolicitacoes();
+        }
     }
 
     // ALUNOS
@@ -881,10 +886,10 @@
             const idade = a.dataNasc ? Math.floor((new Date() - new Date(a.dataNasc)) / (31536000000)) : '-';
             return `
                 <tr onclick="verDetalhesAluno(${a.id})">
-                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">     <td><strong>${a.nome}</strong>     <td>${idade}     <td>${a.turma}     <td>${a.responsavel}     <td>${a.telefone}     <td>
+                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">      <td><strong>${a.nome}</strong>      <td>${idade}      <td>${a.turma}      <td>${a.responsavel}      <td>${a.telefone}      <td>
                         <button class="btn-editar" onclick="editarAluno(${a.id}); event.stopPropagation()">✏️</button>
                         <button class="btn-excluir" onclick="excluirAluno(${a.id}); event.stopPropagation()">🗑️</button>
-                     </tr>
+                      </tr>
             `;
         }).join('');
     }
