@@ -263,6 +263,30 @@
             margin-bottom: 20px;
         }
 
+        .animacao-aniversario {
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 60px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 700;
+            animation: pulseAniversario 1.5s ease-in-out infinite;
+            display: none;
+        }
+
+        @keyframes pulseAniversario {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.9;
+            }
+            50% {
+                transform: scale(1.02);
+                opacity: 1;
+                box-shadow: 0 0 15px rgba(255,152,0,0.5);
+            }
+        }
+
         .meses-botoes {
             display: flex;
             flex-wrap: wrap;
@@ -323,6 +347,7 @@
             text-align: center;
             font-weight: 700;
             display: none;
+            animation: pulseAniversario 1.5s ease-in-out infinite;
         }
 
         .botoes-acao {
@@ -385,7 +410,7 @@
         <h1>📊 ANÁLISE DE DADOS | ESCOLINHA DO JACARÉ</h1>
         <div style="display: flex; gap: 10px; align-items: center;">
             <div class="info-usuario" id="infoUsuario"></div>
-            <button class="btn-atualizar" onclick="atualizarDados()">🔄 ATUALIZAR</button>
+            <button class="btn-atualizar" onclick="carregarTodosDados()">🔄 ATUALIZAR</button>
             <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
         </div>
     </div>
@@ -399,11 +424,6 @@
             <div class="icone">👥</div>
             <div class="valor" id="totalAlunos">0</div>
             <div class="label">Total de Alunos</div>
-        </div>
-        <div class="card-analise">
-            <div class="icone">👁️</div>
-            <div class="valor" id="totalVisitas">0</div>
-            <div class="label">Visitas ao Site</div>
         </div>
     </div>
 
@@ -423,6 +443,7 @@
     </div>
 
     <div class="aniversariantes-section">
+        <div id="animacaoAniversario" class="animacao-aniversario"></div>
         <h2>🎂 ANIVERSARIANTES</h2>
         <div class="meses-botoes" id="mesesBotoes"></div>
         <div id="aniversariantesLista" class="aniversariantes-lista">
@@ -451,11 +472,11 @@
     
     let usuarioLogado = null;
     let alunos = [];
-    let visitasData = { registros: [], totalGeral: 0 };
     let graficos = {};
     let mesSelecionado = new Date().getMonth();
     let ultimaAtualizacao = new Date();
 
+    const PLANILHA_ID = '1frhkgQae4ugAZjLOvrGsw0yyqupVh-MNWGP70TCniLU';
     const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
     function atualizarTimestamp() {
@@ -465,34 +486,55 @@
         document.getElementById('ultimaAtualizacao').innerHTML = `🕐 Última atualização: ${texto}`;
     }
 
-    // CARREGAR DADOS DO LOCALSTORAGE (salvos pelo FUNCIONARIOS)
-    function carregarDadosLocalStorage() {
-        // Carregar alunos aprovados
-        const alunosSalvos = localStorage.getItem('escolinha_alunos');
-        if (alunosSalvos) {
-            alunos = JSON.parse(alunosSalvos);
-        } else {
-            alunos = [];
+    // BUSCAR DADOS DA PLANILHA
+    async function buscarDadosPlanilha() {
+        try {
+            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=solicitaçoes`;
+            const response = await fetch(url);
+            const texto = await response.text();
+            const linhas = texto.split('\n');
+            
+            const alunosAprovados = [];
+            
+            for (let i = 1; i < linhas.length; i++) {
+                const linha = linhas[i].trim();
+                if (!linha) continue;
+                
+                const valores = [];
+                let atual = '';
+                let dentroAspas = false;
+                for (let c of linha) {
+                    if (c === '"') dentroAspas = !dentroAspas;
+                    else if (c === ',' && !dentroAspas) { valores.push(atual); atual = ''; }
+                    else atual += c;
+                }
+                valores.push(atual);
+                
+                const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
+                
+                if (valores.length >= 16 && limpar(valores[2])) {
+                    const status = limpar(valores[15]) || 'pendente';
+                    
+                    if (status === 'aprovado') {
+                        alunosAprovados.push({
+                            id: Date.now() + i,
+                            nome: limpar(valores[2]),
+                            dataNasc: limpar(valores[3]),
+                            turma: limpar(valores[5]),
+                            categoria: limpar(valores[6]),
+                            bairro: limpar(valores[11]),
+                            responsavel: limpar(valores[7]),
+                            telefone: limpar(valores[8])
+                        });
+                    }
+                }
+            }
+            
+            return alunosAprovados;
+        } catch (error) {
+            console.error('Erro ao buscar planilha:', error);
+            return [];
         }
-        
-        // Carregar visitas
-        const visitasSalvas = localStorage.getItem('visitas_site');
-        if (visitasSalvas) {
-            visitasData = JSON.parse(visitasSalvas);
-        } else {
-            visitasData = { registros: [], totalGeral: 0 };
-        }
-        
-        // Atualizar cards
-        document.getElementById('totalAlunos').innerText = alunos.length;
-        document.getElementById('totalVisitas').innerText = visitasData.totalGeral;
-        
-        // Atualizar gráficos e aniversariantes
-        atualizarGraficos();
-        atualizarAniversariantes();
-        
-        ultimaAtualizacao = new Date();
-        atualizarTimestamp();
     }
 
     function calcularIdade(dataNasc) {
@@ -511,6 +553,21 @@
             return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;
         } catch {
             return dataNasc;
+        }
+    }
+
+    function atualizarAnimacaoAniversario() {
+        const aniversariantesMes = alunos.filter(a => {
+            if (!a.dataNasc) return false;
+            return new Date(a.dataNasc).getMonth() === mesSelecionado;
+        });
+        
+        const animacaoDiv = document.getElementById('animacaoAniversario');
+        if (aniversariantesMes.length > 0) {
+            animacaoDiv.innerHTML = `🎉 Este mês (${MESES[mesSelecionado]}) tem ${aniversariantesMes.length} aniversariante(s)! 🎉`;
+            animacaoDiv.style.display = 'block';
+        } else {
+            animacaoDiv.style.display = 'none';
         }
     }
 
@@ -537,6 +594,8 @@
                 `).join('')}
             `;
         }
+        
+        atualizarAnimacaoAniversario();
         
         const hoje = new Date();
         const aniversariantesHoje = alunos.filter(a => {
@@ -567,6 +626,10 @@
         mesSelecionado = mes;
         criarBotoesMeses();
         atualizarAniversariantes();
+    }
+
+    function atualizarCards() {
+        document.getElementById('totalAlunos').innerText = alunos.length;
     }
 
     function atualizarGraficos() {
@@ -616,25 +679,35 @@
         });
     }
 
-    function atualizarDados() {
+    async function carregarTodosDados() {
         const btn = document.querySelector('.btn-atualizar');
-        btn.innerHTML = '🔄 ATUALIZANDO...';
-        btn.disabled = true;
+        if (btn) {
+            btn.innerHTML = '🔄 ATUALIZANDO...';
+            btn.disabled = true;
+        }
         
-        carregarDadosLocalStorage();
+        alunos = await buscarDadosPlanilha();
         
-        btn.innerHTML = '🔄 ATUALIZAR';
-        btn.disabled = false;
+        atualizarCards();
+        atualizarGraficos();
+        atualizarAniversariantes();
         
-        btn.style.background = 'rgba(255,255,255,0.4)';
-        setTimeout(() => { btn.style.background = ''; }, 500);
+        ultimaAtualizacao = new Date();
+        atualizarTimestamp();
+        
+        if (btn) {
+            btn.innerHTML = '🔄 ATUALIZAR';
+            btn.disabled = false;
+            btn.style.background = 'rgba(255,255,255,0.4)';
+            setTimeout(() => { btn.style.background = ''; }, 500);
+        }
     }
 
     function exportarDados() {
         if (alunos.length === 0) { alert('Não há dados para exportar!'); return; }
-        const csv = ['Nome,Turma,Bairro,Data Nascimento'];
+        const csv = ['Nome,Turma,Categoria,Bairro,Data Nascimento'];
         alunos.forEach(a => {
-            csv.push(`"${a.nome}",${a.turma},${a.bairro || ''},${a.dataNasc || ''}`);
+            csv.push(`"${a.nome}",${a.turma},${a.categoria || ''},${a.bairro || ''},${a.dataNasc || ''}`);
         });
         const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
         const link = document.createElement('a');
@@ -656,14 +729,13 @@
             document.getElementById('painelAnalise').style.display = 'block';
             document.getElementById('infoUsuario').innerHTML = `👤 ${usuario.nome}`;
             criarBotoesMeses();
-            carregarDadosLocalStorage();
+            carregarTodosDados();
             
-            // Atualizar automaticamente a cada 10 segundos
             setInterval(() => {
                 if (document.getElementById('painelAnalise').style.display === 'block') {
-                    carregarDadosLocalStorage();
+                    atualizarTimestamp();
                 }
-            }, 10000);
+            }, 1000);
         } else {
             document.getElementById('erroLogin').innerText = 'E-mail ou senha incorretos!';
         }
@@ -676,13 +748,6 @@
         document.getElementById('senhaLogin').value = '';
         document.getElementById('erroLogin').innerText = '';
     }
-    
-    // Atualizar timestamp a cada segundo
-    setInterval(() => {
-        if (document.getElementById('painelAnalise').style.display === 'block') {
-            atualizarTimestamp();
-        }
-    }, 1000);
 </script>
 
 </body>
