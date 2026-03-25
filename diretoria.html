@@ -15,6 +15,7 @@
             --azul-claro: #00aaff;
             --verde-whatsapp: #25d366;
             --laranja-destaque: #ff9800;
+            --rosa-aniversario: #ff69b4;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -75,8 +76,6 @@
             align-items: center;
             min-height: calc(100vh - 100px);
             background: linear-gradient(135deg, var(--azul-escuro), var(--azul-premium));
-            position: relative;
-            overflow: hidden;
         }
         
         .login-card {
@@ -104,10 +103,10 @@
             border: 2px solid #e0e0e0;
             border-radius: 60px;
             font-size: 1rem;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             outline: none;
         }
-        .login-card input:focus { border-color: var(--azul-claro); box-shadow: 0 0 0 3px rgba(0,170,255,0.1); }
+        .login-card input:focus { border-color: var(--azul-claro); }
         .login-card button {
             background: var(--azul-premium);
             color: white;
@@ -118,10 +117,9 @@
             font-weight: 800;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s;
         }
-        .login-card button:hover { background: var(--azul-escuro); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,68,171,0.3); }
-        .erro { color: #ff4444; margin-top: 15px; font-size: 0.85rem; background: rgba(255,68,68,0.1); padding: 10px; border-radius: 50px; }
+        .login-card button:hover { background: var(--azul-escuro); transform: translateY(-2px); }
+        .erro { color: #ff4444; margin-top: 15px; font-size: 0.85rem; }
         .info-acesso { margin-top: 20px; font-size: 0.7rem; color: #999; border-top: 1px solid #eee; padding-top: 15px; }
 
         .painel {
@@ -136,7 +134,7 @@
             color: white;
             padding: 20px;
             border-radius: 20px;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -156,7 +154,30 @@
             font-size: 0.8rem;
         }
         
-        .btn-admin {
+        .btn-atualizar {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn-atualizar:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.02);
+        }
+        
+        .btn-atualizar:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-sair {
             background: rgba(255,255,255,0.2);
             border: 1px solid rgba(255,255,255,0.5);
             color: white;
@@ -167,8 +188,18 @@
             transition: all 0.3s;
         }
         
-        .btn-admin:hover {
+        .btn-sair:hover {
             background: rgba(255,255,255,0.3);
+        }
+
+        .info-atualizacao {
+            text-align: right;
+            font-size: 0.75rem;
+            color: #ccc;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
         }
 
         .cards-container {
@@ -235,6 +266,141 @@
             width: 100% !important;
         }
 
+        /* SEÇÃO ANIVERSARIANTES */
+        .aniversariantes-section {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .aniversariantes-section h2 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .meses-botoes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+
+        .btn-mes {
+            background: #f0f0f0;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .btn-mes:hover {
+            background: var(--azul-claro);
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .btn-mes.ativo {
+            background: var(--azul-premium);
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,68,171,0.3);
+        }
+
+        .btn-mes.hoje {
+            background: var(--rosa-aniversario);
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .aniversariantes-lista {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 200px;
+        }
+
+        .aniversariantes-lista h3 {
+            color: var(--azul-escuro);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--azul-claro);
+        }
+
+        .lista-nomes {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .item-aniversario {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: 12px;
+            border-left: 5px solid var(--rosa-aniversario);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+        }
+
+        .item-aniversario:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+        }
+
+        .item-aniversario .emoji {
+            font-size: 1.8rem;
+        }
+
+        .item-aniversario .info {
+            flex: 1;
+        }
+
+        .item-aniversario .nome {
+            font-weight: 800;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .item-aniversario .detalhes {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .sem-aniversariantes {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 1rem;
+        }
+
+        .alerta-aniversario-hoje {
+            background: linear-gradient(135deg, #ff9800, #ff5722);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 60px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+
         .botoes-acao {
             display: flex;
             gap: 15px;
@@ -257,54 +423,6 @@
             transform: scale(1.05);
             filter: brightness(1.05);
         }
-        
-        .modal-admin {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(3px);
-        }
-        
-        .modal-admin-content {
-            background: white;
-            border-radius: 30px;
-            width: 90%;
-            max-width: 500px;
-            padding: 30px;
-            animation: fadeInUp 0.3s ease;
-        }
-        
-        .modal-admin-content h2 {
-            font-family: 'Montserrat';
-            color: var(--azul-escuro);
-            margin-bottom: 20px;
-        }
-        
-        .modal-admin-content input, .modal-admin-content select {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-        }
-        
-        .modal-admin-content button {
-            background: var(--azul-premium);
-            color: white;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 50px;
-            font-weight: 800;
-            cursor: pointer;
-        }
 
         footer {
             background: var(--azul-escuro);
@@ -322,16 +440,13 @@
                 flex-direction: column;
                 text-align: center;
             }
-        }
-        
-        .atualizando {
-            text-align: center;
-            color: #666;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-            padding: 5px;
-            background: #f0f0f0;
-            border-radius: 20px;
+            .btn-mes {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            .info-atualizacao {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -364,10 +479,16 @@
         <h1>📊 ANÁLISE DE DADOS | ESCOLINHA DO JACARÉ</h1>
         <div style="display: flex; gap: 10px; align-items: center;">
             <div class="info-usuario" id="infoUsuario"></div>
-            <button class="btn-admin" onclick="logout()">🚪 SAIR</button>
+            <button class="btn-atualizar" onclick="atualizarAgora()">
+                🔄 ATUALIZAR AGORA
+            </button>
+            <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
         </div>
     </div>
-    <div id="atualizandoMsg" class="atualizando">🔄 Atualizando dados da planilha...</div>
+    
+    <div class="info-atualizacao">
+        <span id="ultimaAtualizacao">🕐 Última atualização: agora</span>
+    </div>
 
     <div class="cards-container">
         <div class="card-analise">
@@ -376,19 +497,9 @@
             <div class="label">Total de Alunos</div>
         </div>
         <div class="card-analise">
-            <div class="icone">📋</div>
-            <div class="valor" id="totalSolicitacoes">0</div>
-            <div class="label">Solicitações Recebidas</div>
-        </div>
-        <div class="card-analise">
             <div class="icone">👁️</div>
             <div class="valor" id="totalVisitas">0</div>
             <div class="label">Visitas ao Site</div>
-        </div>
-        <div class="card-analise">
-            <div class="icone">✅</div>
-            <div class="valor" id="taxaAprovacao">0%</div>
-            <div class="label">Taxa de Aprovação</div>
         </div>
     </div>
 
@@ -398,25 +509,27 @@
             <canvas id="graficoTurmas"></canvas>
         </div>
         <div class="grafico-card">
-            <h3>🎂 Aniversariantes por Mês</h3>
-            <canvas id="graficoAniversario"></canvas>
+            <h3>🏘️ Alunos por Bairro</h3>
+            <canvas id="graficoBairro"></canvas>
         </div>
         <div class="grafico-card">
             <h3>📊 Alunos por Faixa Etária (Sub)</h3>
             <canvas id="graficoSub"></canvas>
         </div>
         <div class="grafico-card">
-            <h3>🏘️ Alunos por Bairro</h3>
-            <canvas id="graficoBairro"></canvas>
-        </div>
-        <div class="grafico-card">
             <h3>👁️ Visitas ao Site (Últimos 30 dias)</h3>
             <canvas id="graficoVisitas"></canvas>
         </div>
-        <div class="grafico-card">
-            <h3>📋 Status das Solicitações</h3>
-            <canvas id="graficoSolicitacoes"></canvas>
+    </div>
+
+    <!-- SEÇÃO ANIVERSARIANTES -->
+    <div class="aniversariantes-section">
+        <h2>🎂 ANIVERSARIANTES</h2>
+        <div class="meses-botoes" id="mesesBotoes"></div>
+        <div id="aniversariantesLista" class="aniversariantes-lista">
+            <div class="sem-aniversariantes">Selecione um mês para ver os aniversariantes</div>
         </div>
+        <div id="alertaHoje" class="alerta-aniversario-hoje" style="display: none;"></div>
     </div>
 
     <div class="botoes-acao">
@@ -431,7 +544,7 @@
 </footer>
 
 <script>
-    // USUÁRIOS FIXOS (3 pessoas)
+    // USUÁRIOS FIXOS
     const USUARIOS = [
         { email: "diretor.jean@escolinha.com", nome: "Jean Silva", senha: "Clash454647*", isAdmin: true },
         { email: "diretor.jacare@escolinha.com", nome: "jacaré", senha: "jacare1998", isAdmin: false },
@@ -440,29 +553,50 @@
     
     let usuarioLogado = null;
     let alunos = [];
-    let solicitacoes = [];
     let visitasData = { registros: [], totalGeral: 0 };
-    
-    let graficoTurmas, graficoAniversario, graficoSub, graficoBairro, graficoVisitas, graficoSolicitacoes;
+    let graficoTurmas, graficoBairro, graficoSub, graficoVisitas;
     let intervaloAtualizacao = null;
-    
-    const PLANILHA_ID = '1blMplaMjl7D6-FQM89rIzfa3kZbqMqqdjX3UDJWbvFw';
-    
+    let mesSelecionado = new Date().getMonth();
+    let ultimaAtualizacao = new Date();
+
+    const PLANILHA_ID = '1frhkgQae4ugAZjLOvrGsw0yyqupVh-MNWGP70TCniLU';
+    const NOME_ABA = 'solicitaçoes';
+    const NOME_ABA_VISITAS = 'visitas';
+
+    const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+    // ATUALIZAR TIMESTAMP
+    function atualizarTimestamp() {
+        const agora = new Date();
+        const diffSegundos = Math.floor((agora - ultimaAtualizacao) / 1000);
+        
+        let texto = '';
+        if (diffSegundos < 60) {
+            texto = `há ${diffSegundos} segundos`;
+        } else if (diffSegundos < 3600) {
+            const minutos = Math.floor(diffSegundos / 60);
+            texto = `há ${minutos} minuto${minutos > 1 ? 's' : ''}`;
+        } else {
+            texto = agora.toLocaleTimeString();
+        }
+        
+        document.getElementById('ultimaAtualizacao').innerHTML = `🕐 Última atualização: ${texto}`;
+    }
+
     // BUSCAR DADOS DA PLANILHA
     async function buscarDadosPlanilha() {
         try {
-            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv`;
+            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=${NOME_ABA}`;
             const response = await fetch(url);
             const texto = await response.text();
             const linhas = texto.split('\n');
             
-            const novasSolicitacoes = [];
+            const alunosAprovados = [];
             
             for (let i = 1; i < linhas.length; i++) {
                 const linha = linhas[i].trim();
                 if (!linha) continue;
                 
-                // Parse CSV
                 const valores = [];
                 let atual = '';
                 let dentroAspas = false;
@@ -480,93 +614,62 @@
                 
                 const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
                 
-                if (valores.length >= 13 && limpar(valores[2])) {
-                    novasSolicitacoes.push({
-                        id: Date.now() + i,
-                        protocolo: limpar(valores[0]),
-                        dataEnvio: limpar(valores[1]),
-                        nomeAluno: limpar(valores[2]),
-                        idade: parseInt(limpar(valores[3])) || 0,
-                        turma: limpar(valores[4]),
-                        categoria: limpar(valores[5]),
-                        responsavel: limpar(valores[6]),
-                        telefone: limpar(valores[7]),
-                        email: limpar(valores[8]),
-                        endereco: limpar(valores[9]),
-                        bairro: limpar(valores[9]) ? limpar(valores[9]).split('-')[1]?.trim() || 'Centro' : 'Centro',
-                        moradores: limpar(valores[10]),
-                        remedio: limpar(valores[11]),
-                        origem: limpar(valores[12]),
-                        status: 'pendente',
-                        dataNasc: '',
-                        nome: limpar(valores[2])
-                    });
+                if (valores.length >= 15 && limpar(valores[2])) {
+                    const status = limpar(valores[14]) || 'pendente';
+                    const dataNasc = limpar(valores[3]) || '';
+                    
+                    if (status === 'aprovado') {
+                        alunosAprovados.push({
+                            id: Date.now() + i,
+                            nome: limpar(valores[2]),
+                            dataNasc: dataNasc,
+                            turma: limpar(valores[4]),
+                            bairro: limpar(valores[10]),
+                            responsavel: limpar(valores[6]),
+                            telefone: limpar(valores[7])
+                        });
+                    }
                 }
             }
             
-            // Inverter para mostrar mais recentes primeiro
-            return novasSolicitacoes.reverse();
-            
+            return { alunos: alunosAprovados };
         } catch (error) {
             console.error('Erro ao buscar planilha:', error);
-            return [];
+            return { alunos: [] };
         }
     }
-    
-    // CARREGAR TODOS OS DADOS
-    async function carregarTodosDados() {
-        const msgDiv = document.getElementById('atualizandoMsg');
-        msgDiv.style.display = 'block';
-        msgDiv.innerHTML = '🔄 Atualizando dados da planilha...';
-        
-        // Buscar solicitações da planilha
-        const novasSolicitacoes = await buscarDadosPlanilha();
-        
-        // Mesclar com solicitações existentes (manter status)
-        const solicitacoesMap = new Map();
-        solicitacoes.forEach(s => solicitacoesMap.set(s.protocolo + s.nomeAluno, s));
-        novasSolicitacoes.forEach(n => {
-            const chave = n.protocolo + n.nomeAluno;
-            if (!solicitacoesMap.has(chave)) {
-                solicitacoesMap.set(chave, n);
+
+    // BUSCAR VISITAS
+    async function buscarVisitas() {
+        try {
+            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=${NOME_ABA_VISITAS}`;
+            const response = await fetch(url);
+            const texto = await response.text();
+            const linhas = texto.split('\n');
+            
+            let total = 0;
+            const registros = [];
+            
+            for (let i = 1; i < linhas.length; i++) {
+                const linha = linhas[i].trim();
+                if (!linha) continue;
+                const partes = linha.split(',');
+                if (partes.length >= 2) {
+                    const data = partes[0].replace(/"/g, '');
+                    const qtde = parseInt(partes[1].replace(/"/g, '')) || 0;
+                    registros.push({ data: data, quantidade: qtde });
+                    total += qtde;
+                }
             }
-        });
-        solicitacoes = Array.from(solicitacoesMap.values());
-        localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-        
-        // Carregar alunos do localStorage (aprovados)
-        const alunosSalvos = localStorage.getItem('escolinha_alunos');
-        if (alunosSalvos) alunos = JSON.parse(alunosSalvos);
-        else alunos = [];
-        
-        // Carregar visitas
-        const visitasSalvas = localStorage.getItem('visitas_site');
-        if (visitasSalvas) visitasData = JSON.parse(visitasSalvas);
-        else visitasData = { registros: [], totalGeral: 0 };
-        
-        atualizarCards();
-        atualizarGraficos();
-        
-        msgDiv.innerHTML = '✅ Dados atualizados com sucesso!';
-        setTimeout(() => {
-            msgDiv.style.display = 'none';
-        }, 2000);
+            
+            return { registros: registros.reverse(), totalGeral: total };
+        } catch (error) {
+            console.log('Erro ao buscar visitas:', error);
+            return { registros: [], totalGeral: 0 };
+        }
     }
-    
-    function atualizarCards() {
-        const totalAlunos = alunos.length;
-        const totalSolicitacoes = solicitacoes.length;
-        const totalVisitas = visitasData.totalGeral || 0;
-        const aprovadas = solicitacoes.filter(s => s.status === 'aprovada').length;
-        const pendentes = solicitacoes.filter(s => s.status === 'pendente').length;
-        const taxaAprovacao = totalSolicitacoes > 0 ? Math.round((aprovadas / totalSolicitacoes) * 100) : 0;
-        
-        document.getElementById('totalAlunos').innerText = totalAlunos;
-        document.getElementById('totalSolicitacoes').innerText = totalSolicitacoes;
-        document.getElementById('totalVisitas').innerText = totalVisitas;
-        document.getElementById('taxaAprovacao').innerText = `${taxaAprovacao}%`;
-    }
-    
+
+    // CALCULAR IDADE
     function calcularIdade(dataNasc) {
         if (!dataNasc) return null;
         const hoje = new Date();
@@ -576,75 +679,229 @@
         if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
         return idade;
     }
-    
-    function getCategoriaPorIdade(idade) {
-        if (idade <= 7) return 'Sub-7';
-        if (idade <= 9) return 'Sub-9';
-        if (idade <= 11) return 'Sub-11';
-        if (idade <= 13) return 'Sub-13';
-        if (idade <= 15) return 'Sub-15';
-        if (idade <= 17) return 'Sub-17';
-        if (idade <= 20) return 'Sub-20';
-        return 'Sub-30';
+
+    // FORMATAR DATA
+    function formatarData(dataNasc) {
+        if (!dataNasc) return '-';
+        try {
+            const data = new Date(dataNasc);
+            return `${data.getDate().toString().padStart(2, '0')}/${(data.getMonth() + 1).toString().padStart(2, '0')}/${data.getFullYear()}`;
+        } catch {
+            return dataNasc;
+        }
     }
-    
+
+    // ATUALIZAR ANIVERSARIANTES
+    function atualizarAniversariantes() {
+        const aniversariantesPorMes = MESES.map((_, mes) => 
+            alunos.filter(a => {
+                if (!a.dataNasc) return false;
+                const data = new Date(a.dataNasc);
+                return data.getMonth() === mes;
+            })
+        );
+        
+        const aniversariantes = aniversariantesPorMes[mesSelecionado];
+        const listaDiv = document.getElementById('aniversariantesLista');
+        
+        if (aniversariantes.length === 0) {
+            listaDiv.innerHTML = '<div class="sem-aniversariantes">🎂 Nenhum aniversariante neste mês</div>';
+        } else {
+            listaDiv.innerHTML = `
+                <h3>📅 ${MESES[mesSelecionado]} - ${aniversariantes.length} aniversariante(s)</h3>
+                <div class="lista-nomes">
+                    ${aniversariantes.map(a => {
+                        const idade = calcularIdade(a.dataNasc);
+                        const dataFormatada = formatarData(a.dataNasc);
+                        return `
+                            <div class="item-aniversario">
+                                <div class="emoji">🎈</div>
+                                <div class="info">
+                                    <div class="nome">${a.nome}</div>
+                                    <div class="detalhes">${idade} anos • ${dataFormatada} • ${a.turma}</div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+        
+        // Verificar aniversariante hoje
+        const hoje = new Date();
+        const aniversariantesHoje = alunos.filter(a => {
+            if (!a.dataNasc) return false;
+            const data = new Date(a.dataNasc);
+            return data.getDate() === hoje.getDate() && data.getMonth() === hoje.getMonth();
+        });
+        
+        const alertaDiv = document.getElementById('alertaHoje');
+        if (aniversariantesHoje.length > 0) {
+            alertaDiv.innerHTML = `🎉 Hoje é aniversário de ${aniversariantesHoje.map(a => a.nome).join(', ')}! 🎂🎈`;
+            alertaDiv.style.display = 'block';
+        } else {
+            alertaDiv.style.display = 'none';
+        }
+    }
+
+    // CRIAR BOTÕES DOS MESES
+    function criarBotoesMeses() {
+        const container = document.getElementById('mesesBotoes');
+        const hoje = new Date();
+        const mesAtual = hoje.getMonth();
+        
+        container.innerHTML = MESES.map((mes, idx) => `
+            <button class="btn-mes ${mesSelecionado === idx ? 'ativo' : ''} ${mesAtual === idx ? 'hoje' : ''}" 
+                    onclick="selecionarMes(${idx})">
+                ${mes.substring(0, 3)}
+            </button>
+        `).join('');
+    }
+
+    function selecionarMes(mes) {
+        mesSelecionado = mes;
+        criarBotoesMeses();
+        atualizarAniversariantes();
+    }
+
+    // ATUALIZAR CARDS
+    function atualizarCards() {
+        const totalAlunos = alunos.length;
+        const totalVisitas = visitasData.totalGeral || 0;
+        
+        document.getElementById('totalAlunos').innerText = totalAlunos;
+        document.getElementById('totalVisitas').innerText = totalVisitas;
+    }
+
+    // ATUALIZAR GRÁFICOS (HORIZONTAIS)
     function atualizarGraficos() {
-        // 1. Alunos por Turma
+        // Alunos por Turma
         const turmas = ['Futebol', 'Taekwondo', 'Ginástica', 'Tênis de Mesa', 'Judô'];
         const turmasCount = turmas.map(t => alunos.filter(a => a.turma === t).length);
         if (graficoTurmas) graficoTurmas.destroy();
         graficoTurmas = new Chart(document.getElementById('graficoTurmas'), {
             type: 'bar',
-            data: { labels: turmas, datasets: [{ label: 'Alunos', data: turmasCount, backgroundColor: '#0047AB', borderRadius: 10 }] },
-            options: { responsive: true, maintainAspectRatio: true }
+            data: { 
+                labels: turmas, 
+                datasets: [{ 
+                    label: 'Alunos', 
+                    data: turmasCount, 
+                    backgroundColor: '#0047AB', 
+                    borderRadius: 8,
+                    barPercentage: 0.7,
+                    categoryPercentage: 0.8
+                }] 
+            },
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: true, 
+                indexAxis: 'y',
+                plugins: { 
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} alunos` } }
+                },
+                scales: {
+                    x: { 
+                        title: { display: true, text: 'Quantidade de Alunos' },
+                        grid: { color: '#e0e0e0' }
+                    },
+                    y: { 
+                        title: { display: true, text: 'Turma' },
+                        grid: { display: false }
+                    }
+                }
+            }
         });
         
-        // 2. Aniversariantes por Mês (dos alunos)
-        const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-        const aniversarios = meses.map((_, i) => alunos.filter(a => {
-            if (!a.dataNasc) return false;
-            const nasc = new Date(a.dataNasc);
-            return nasc.getMonth() === i;
-        }).length);
-        if (graficoAniversario) graficoAniversario.destroy();
-        graficoAniversario = new Chart(document.getElementById('graficoAniversario'), {
-            type: 'bar',
-            data: { labels: meses.map((m, i) => `${m} (${aniversarios[i]})`), datasets: [{ label: 'Aniversariantes', data: aniversarios, backgroundColor: '#ff9800', borderRadius: 8 }] },
-            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { x: { ticks: { rotation: 45 } } } }
-        });
-        
-        // 3. Alunos por Faixa Etária (Sub)
-        const subCategorias = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Sub-20', 'Sub-30'];
-        const subCount = subCategorias.map(cat => alunos.filter(a => {
-            if (!a.dataNasc) return false;
-            const idade = calcularIdade(a.dataNasc);
-            return getCategoriaPorIdade(idade) === cat;
-        }).length);
-        if (graficoSub) graficoSub.destroy();
-        graficoSub = new Chart(document.getElementById('graficoSub'), {
-            type: 'bar',
-            data: { labels: subCategorias, datasets: [{ label: 'Alunos', data: subCount, backgroundColor: '#00aaff', borderRadius: 10 }] },
-            options: { responsive: true, maintainAspectRatio: true }
-        });
-        
-        // 4. Alunos por Bairro
+        // Alunos por Bairro
         const bairrosMap = new Map();
-        alunos.forEach(a => { 
-            if (a.bairro && a.bairro.trim() !== '') { 
-                bairrosMap.set(a.bairro.trim(), (bairrosMap.get(a.bairro.trim()) || 0) + 1); 
-            } 
-        });
+        alunos.forEach(a => { if (a.bairro && a.bairro.trim()) bairrosMap.set(a.bairro.trim(), (bairrosMap.get(a.bairro.trim()) || 0) + 1); });
         const bairrosOrdenados = Array.from(bairrosMap.entries()).sort((a, b) => b[1] - a[1]);
-        const bairrosLabels = bairrosOrdenados.map(item => `${item[0]} (${item[1]})`);
-        const bairrosCount = bairrosOrdenados.map(item => item[1]);
         if (graficoBairro) graficoBairro.destroy();
         graficoBairro = new Chart(document.getElementById('graficoBairro'), {
             type: 'bar',
-            data: { labels: bairrosLabels, datasets: [{ label: 'Alunos', data: bairrosCount, backgroundColor: '#ff9800', borderRadius: 8 }] },
-            options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false } } }
+            data: { 
+                labels: bairrosOrdenados.map(item => item[0]), 
+                datasets: [{ 
+                    label: 'Alunos', 
+                    data: bairrosOrdenados.map(item => item[1]), 
+                    backgroundColor: '#ff9800', 
+                    borderRadius: 8,
+                    barPercentage: 0.7
+                }] 
+            },
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: true, 
+                indexAxis: 'y',
+                plugins: { 
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} alunos` } }
+                },
+                scales: {
+                    x: { 
+                        title: { display: true, text: 'Quantidade de Alunos' },
+                        grid: { color: '#e0e0e0' }
+                    },
+                    y: { 
+                        title: { display: true, text: 'Bairro' },
+                        grid: { display: false }
+                    }
+                }
+            }
         });
         
-        // 5. Visitas (últimos 30 dias)
+        // Alunos por Faixa Etária
+        const subCategorias = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Sub-20', 'Sub-30'];
+        const subCount = subCategorias.map(() => 0);
+        alunos.forEach(a => {
+            if (a.dataNasc) {
+                const idade = calcularIdade(a.dataNasc);
+                if (idade <= 7) subCount[0]++;
+                else if (idade <= 9) subCount[1]++;
+                else if (idade <= 11) subCount[2]++;
+                else if (idade <= 13) subCount[3]++;
+                else if (idade <= 15) subCount[4]++;
+                else if (idade <= 17) subCount[5]++;
+                else if (idade <= 20) subCount[6]++;
+                else subCount[7]++;
+            }
+        });
+        if (graficoSub) graficoSub.destroy();
+        graficoSub = new Chart(document.getElementById('graficoSub'), {
+            type: 'bar',
+            data: { 
+                labels: subCategorias, 
+                datasets: [{ 
+                    label: 'Alunos', 
+                    data: subCount, 
+                    backgroundColor: '#00aaff', 
+                    borderRadius: 8,
+                    barPercentage: 0.7
+                }] 
+            },
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: true, 
+                indexAxis: 'y',
+                plugins: { 
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} alunos` } }
+                },
+                scales: {
+                    x: { 
+                        title: { display: true, text: 'Quantidade de Alunos' },
+                        grid: { color: '#e0e0e0' }
+                    },
+                    y: { 
+                        title: { display: true, text: 'Categoria' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+        
+        // Visitas
         const ultimos30Dias = [];
         const labelsVisitas = [];
         const hoje = new Date();
@@ -652,46 +909,79 @@
             const data = new Date(hoje);
             data.setDate(hoje.getDate() - i);
             labelsVisitas.push(`${data.getDate()}/${data.getMonth()+1}`);
-            const visita = visitasData.registros.find(r => new Date(r.data).toDateString() === data.toDateString());
+            const visita = visitasData.registros.find(r => r.data === `${data.getDate()}/${data.getMonth()+1}/${data.getFullYear()}`);
             ultimos30Dias.push(visita ? visita.quantidade : 0);
         }
         if (graficoVisitas) graficoVisitas.destroy();
         graficoVisitas = new Chart(document.getElementById('graficoVisitas'), {
-            type: 'line',
-            data: { labels: labelsVisitas, datasets: [{ label: 'Visitas', data: ultimos30Dias, borderColor: '#003399', backgroundColor: 'rgba(0,51,153,0.1)', fill: true, tension: 0.3 }] },
-            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
-        });
-        
-        // 6. Status das Solicitações
-        const pendentes = solicitacoes.filter(s => s.status === 'pendente').length;
-        const aprovadas = solicitacoes.filter(s => s.status === 'aprovada').length;
-        const recusadas = solicitacoes.filter(s => s.status === 'recusada').length;
-        if (graficoSolicitacoes) graficoSolicitacoes.destroy();
-        graficoSolicitacoes = new Chart(document.getElementById('graficoSolicitacoes'), {
-            type: 'pie',
-            data: { labels: ['🟡 Pendentes', '🟢 Aprovadas', '🔴 Recusadas'], datasets: [{ data: [pendentes, aprovadas, recusadas], backgroundColor: ['#ff9800', '#4caf50', '#f44336'] }] },
-            options: { responsive: true, maintainAspectRatio: true }
+            type: 'bar',
+            data: { 
+                labels: labelsVisitas, 
+                datasets: [{ 
+                    label: 'Visitas', 
+                    data: ultimos30Dias, 
+                    backgroundColor: '#003399', 
+                    borderRadius: 6,
+                    barPercentage: 0.6
+                }] 
+            },
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: true, 
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { 
+                        title: { display: true, text: 'Dia' },
+                        ticks: { maxRotation: 45, minRotation: 45 }
+                    },
+                    y: { 
+                        title: { display: true, text: 'Visitas' },
+                        beginAtZero: true
+                    }
+                }
+            }
         });
     }
+
+    // CARREGAR TODOS OS DADOS
+    async function carregarTodosDados() {
+        const { alunos: novosAlunos } = await buscarDadosPlanilha();
+        alunos = novosAlunos;
+        
+        visitasData = await buscarVisitas();
+        
+        atualizarCards();
+        atualizarGraficos();
+        atualizarAniversariantes();
+        
+        ultimaAtualizacao = new Date();
+        atualizarTimestamp();
+    }
     
+    // ATUALIZAR AGORA (botão)
+    async function atualizarAgora() {
+        const btn = document.querySelector('.btn-atualizar');
+        const textoOriginal = btn.innerHTML;
+        btn.innerHTML = '🔄 ATUALIZANDO...';
+        btn.disabled = true;
+        
+        await carregarTodosDados();
+        
+        btn.innerHTML = textoOriginal;
+        btn.disabled = false;
+        
+        // Feedback visual
+        btn.style.background = 'rgba(255,255,255,0.4)';
+        setTimeout(() => {
+            btn.style.background = '';
+        }, 500);
+    }
+
+    // EXPORTAR DADOS
     function exportarDados() {
         const dados = [];
         alunos.forEach(a => {
-            dados.push({
-                Tipo: 'Aluno', Nome: a.nome, Turma: a.turma,
-                Bairro: a.bairro || '', 'Data Nascimento': a.dataNasc || '',
-                Responsavel: a.responsavel || '', Telefone: a.telefone || '', Endereco: a.endereco || ''
-            });
-        });
-        solicitacoes.forEach(s => {
-            dados.push({
-                Tipo: 'Solicitação', Nome: s.nomeAluno || '', Turma: s.turma || '',
-                'Data Envio': s.dataEnvio || '', Status: s.status || '',
-                Responsavel: s.responsavel || '', Telefone: s.telefone || ''
-            });
-        });
-        visitasData.registros.forEach(v => {
-            dados.push({ Tipo: 'Visita', Data: new Date(v.data).toLocaleDateString('pt-BR'), Quantidade: v.quantidade });
+            dados.push({ Tipo: 'Aluno', Nome: a.nome, Turma: a.turma, Bairro: a.bairro, 'Data Nascimento': a.dataNasc, Responsavel: a.responsavel, Telefone: a.telefone });
         });
         
         if (dados.length === 0) { alert('Não há dados para exportar!'); return; }
@@ -718,15 +1008,15 @@
         URL.revokeObjectURL(url);
         alert('✅ Dados exportados com sucesso!');
     }
-    
-    // INICIAR ATUALIZAÇÃO AUTOMÁTICA (a cada 30 segundos)
-    function iniciarAtualizacaoAutomatica() {
+
+    // INICIAR ATUALIZAÇÃO AUTOMÁTICA (5 segundos)
+    function iniciarAtualizacao() {
         if (intervaloAtualizacao) clearInterval(intervaloAtualizacao);
-        intervaloAtualizacao = setInterval(() => {
+        intervaloAtualizacao = setInterval(() => { 
             carregarTodosDados();
-        }, 30000);
+        }, 5000); // 5 segundos
     }
-    
+
     // LOGIN
     function verificarLogin() {
         const email = document.getElementById('emailLogin').value.trim();
@@ -739,13 +1029,14 @@
             document.getElementById('telaLogin').style.display = 'none';
             document.getElementById('painelAnalise').style.display = 'block';
             document.getElementById('infoUsuario').innerHTML = `👤 ${usuario.nome}`;
+            criarBotoesMeses();
             carregarTodosDados();
-            iniciarAtualizacaoAutomatica();
+            iniciarAtualizacao();
         } else {
             document.getElementById('erroLogin').innerText = 'E-mail ou senha incorretos!';
         }
     }
-    
+
     function logout() {
         if (intervaloAtualizacao) clearInterval(intervaloAtualizacao);
         usuarioLogado = null;
@@ -756,16 +1047,12 @@
         document.getElementById('erroLogin').innerText = '';
     }
     
-    // SCROLL SUAVE
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-    });
+    // Atualizar timestamp a cada segundo
+    setInterval(() => {
+        if (document.getElementById('painelAnalise').style.display === 'block') {
+            atualizarTimestamp();
+        }
+    }, 1000);
 </script>
 
 </body>
