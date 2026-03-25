@@ -33,34 +33,6 @@
             padding: 110px 16px 50px;
         }
 
-        /* ANIMAÇÕES */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* HEADER */
         header {
             background: #fff;
             padding: 12px 0;
@@ -108,7 +80,6 @@
             transform: scale(0.95);
         }
 
-        /* FORMULÁRIO */
         .form-container {
             max-width: 600px;
             margin: 0 auto;
@@ -137,7 +108,6 @@
             font-size: 0.85rem;
         }
 
-        /* SEÇÕES */
         .secao {
             margin-bottom: 28px;
             border-bottom: 1px solid #eee;
@@ -171,7 +141,6 @@
             font-size: 0.9rem;
         }
 
-        /* CAMPOS */
         .form-grupo {
             margin-bottom: 16px;
         }
@@ -199,8 +168,6 @@
             transition: all 0.3s;
             font-family: 'Open Sans', sans-serif;
             background: white;
-            -webkit-appearance: none;
-            appearance: none;
         }
 
         .form-grupo input:focus,
@@ -253,12 +220,6 @@
             gap: 8px;
         }
 
-        .observacao i {
-            color: var(--laranja-destaque);
-            font-size: 1rem;
-        }
-
-        /* RADIO E CHECKBOX */
         .radio-group {
             display: flex;
             gap: 20px;
@@ -295,7 +256,6 @@
             font-size: 0.85rem;
         }
 
-        /* BOTÃO ENVIAR */
         .btn-enviar {
             background: linear-gradient(135deg, var(--laranja-destaque), #f57c00);
             color: white;
@@ -320,7 +280,6 @@
             animation: none;
         }
 
-        .btn-enviar.disabled,
         .btn-enviar:disabled {
             opacity: 0.6;
             transform: none;
@@ -328,7 +287,22 @@
             animation: none;
         }
 
-        /* MENSAGEM DE SUCESSO */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .mensagem-sucesso {
             background: linear-gradient(135deg, var(--verde-sucesso), #45a049);
             color: white;
@@ -357,6 +331,11 @@
         .mensagem-sucesso .emoji-animado {
             font-size: 3rem;
             animation: bounce 0.5s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
         }
 
         .hidden {
@@ -390,9 +369,6 @@
             .btn-enviar {
                 font-size: 1rem;
                 padding: 14px 16px;
-            }
-            .secao-titulo {
-                font-size: 1rem;
             }
         }
     </style>
@@ -607,7 +583,6 @@
     // URL DO GOOGLE APPS SCRIPT (RECEBER CADASTROS)
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgSMc1mt8dB6RGASWCTLzOaJZcwST84--Vn2pILgMlUPntF1uxjkCCXA8Vgn86bS6E/exec';
 
-    // CALCULAR IDADE
     function calcularIdade() {
         const dataNasc = document.getElementById('dataNasc').value;
         if (!dataNasc) return null;
@@ -633,7 +608,6 @@
     document.getElementById('dataNasc').addEventListener('change', mostrarIdade);
     document.getElementById('dataNasc').addEventListener('input', mostrarIdade);
 
-    // MOSTRAR CAMPO DE REMÉDIO
     document.querySelectorAll('input[name="remedio"]').forEach(radio => {
         radio.addEventListener('change', function() {
             const descField = document.getElementById('remedioDesc');
@@ -641,42 +615,7 @@
         });
     });
 
-    // VALIDAÇÃO EM TEMPO REAL
-    function validarCampo(id, validacao) {
-        const campo = document.getElementById(id);
-        const erroDiv = document.getElementById(`erro${id.charAt(0).toUpperCase() + id.slice(1)}`);
-        if (campo && erroDiv) {
-            campo.addEventListener('input', function() {
-                if (validacao(this.value)) {
-                    this.classList.remove('erro');
-                    erroDiv.style.display = 'none';
-                } else {
-                    this.classList.add('erro');
-                    erroDiv.style.display = 'block';
-                }
-            });
-        }
-    }
-
-    validarCampo('nomeAluno', v => v.trim().length > 0);
-    validarCampo('responsavel', v => v.trim().length > 0);
-    validarCampo('endereco', v => v.trim().length > 0);
-    validarCampo('numero', v => v.trim().length > 0);
-    validarCampo('bairro', v => v.trim().length > 0);
-    validarCampo('moradores', v => v.trim().length > 0 && parseInt(v) >= 1);
-
-    function mostrarErro(erroId, campoId) {
-        const erroDiv = document.getElementById(erroId);
-        if (erroDiv) erroDiv.style.display = 'block';
-        if (campoId) {
-            const campo = document.getElementById(campoId);
-            if (campo) campo.classList.add('erro');
-        }
-    }
-
-    // FUNÇÃO PRINCIPAL DE ENVIO
     async function enviarCadastro() {
-        // Pegar valores
         const nomeAluno = document.getElementById('nomeAluno').value.trim();
         const dataNasc = document.getElementById('dataNasc').value;
         const turma = document.getElementById('turma').value;
@@ -697,7 +636,6 @@
 
         let isValid = true;
 
-        // Validação
         if (!nomeAluno) { mostrarErro('erroNome', 'nomeAluno'); isValid = false; }
         if (!dataNasc) { mostrarErro('erroData', 'dataNasc'); isValid = false; }
         if (!turma) { mostrarErro('erroTurma', 'turma'); isValid = false; }
@@ -720,7 +658,6 @@
             return;
         }
 
-        // Botão loading
         const btn = document.querySelector('.btn-enviar');
         const textoOriginal = btn.innerHTML;
         btn.disabled = true;
@@ -732,11 +669,13 @@
             const dataEnvio = new Date().toLocaleString('pt-BR');
             const enderecoCompleto = `${endereco}, ${numero} - ${bairro}`;
 
+            // Dados para enviar à planilha (colunas na ordem correta)
             const dados = {
                 protocolo: protocolo,
                 dataEnvio: dataEnvio,
                 nomeAluno: nomeAluno,
-                idade: idade,
+                dataNasc: dataNasc,        // DATA NASCIMENTO (coluna D)
+                idade: idade,               // IDADE (coluna E)
                 turma: turma,
                 categoria: categoriaEspecial,
                 responsavel: responsavel,
@@ -747,8 +686,7 @@
                 moradores: moradores,
                 remedio: remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não',
                 origem: origem,
-                escola: escola,
-                serie: serie
+                status: 'pendente'
             };
 
             // Salvar no localStorage
@@ -758,7 +696,15 @@
                 protocolo: protocolo,
                 dataEnvio: new Date().toISOString(),
                 status: 'pendente',
-                aluno: { nome: nomeAluno, dataNasc: dataNasc, idade: idade, turma: turma, categoria: categoriaEspecial, escola: escola, serie: serie },
+                aluno: {
+                    nome: nomeAluno,
+                    dataNasc: dataNasc,
+                    idade: idade,
+                    turma: turma,
+                    categoria: categoriaEspecial,
+                    escola: escola,
+                    serie: serie
+                },
                 responsavel: { nome: responsavel, telefone: telefone, email: email },
                 endereco: { rua: endereco, numero: numero, bairro: bairro },
                 moradores: parseInt(moradores),
@@ -775,12 +721,11 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(dados)
                 });
-                console.log('✅ Dados enviados para a planilha com sucesso!');
+                console.log('✅ Dados enviados para a planilha!');
             } catch (e) {
-                console.log('⚠️ Erro ao enviar para planilha (dados salvos localmente):', e);
+                console.log('⚠️ Erro ao enviar para planilha:', e);
             }
 
-            // Mostrar mensagem de sucesso
             document.getElementById('protocoloDiv').innerHTML = `🔑 PROTOCOLO: ${protocolo}`;
             document.getElementById('formularioContainer').classList.add('hidden');
             document.getElementById('mensagemSucesso').classList.remove('hidden');
@@ -792,6 +737,15 @@
         } finally {
             btn.disabled = false;
             btn.innerHTML = textoOriginal;
+        }
+    }
+
+    function mostrarErro(erroId, campoId) {
+        const erroDiv = document.getElementById(erroId);
+        if (erroDiv) erroDiv.style.display = 'block';
+        if (campoId) {
+            const campo = document.getElementById(campoId);
+            if (campo) campo.classList.add('erro');
         }
     }
 </script>
