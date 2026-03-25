@@ -496,7 +496,7 @@
                 <thead>
                      <tr>
                         <th class="checkbox-col"><input type="checkbox" id="selecionarTodosSolicitacoes" onchange="selecionarTodosSolicitacoes()"></th>
-                        <th>Nome</th><th>Turma</th><th>Idade</th><th>Responsável</th><th>Telefone</th><th>Data</th><th>Status</th><th>Ações</th>
+                        <th>Nome</th><th>Turma</th><th>Idade</th><th>Data Nasc</th><th>Responsável</th><th>Telefone</th><th>Data</th><th>Status</th><th>Ações</th>
                      </tr>
                 </thead>
                 <tbody id="corpoTabelaSolicitacoes"></tbody>
@@ -534,7 +534,7 @@
                 <thead>
                      <tr>
                         <th class="checkbox-col"><input type="checkbox" id="selecionarTodosAlunos" onchange="selecionarTodosAlunos()"></th>
-                        <th>Nome</th><th>Idade</th><th>Turma</th><th>Responsável</th><th>Telefone</th><th>Ações</th>
+                        <th>Nome</th><th>Idade</th><th>Data Nasc</th><th>Turma</th><th>Responsável</th><th>Telefone</th><th>Ações</th>
                      </tr>
                 </thead>
                 <tbody id="corpoTabelaAlunos"></tbody>
@@ -621,7 +621,7 @@
         }
     }
 
-    // Buscar solicitações da planilha
+    // Buscar solicitações da planilha (incluindo data de nascimento)
     async function buscarSolicitacoesDaPlanilha() {
         try {
             const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=solicitaçoes`;
@@ -646,26 +646,29 @@
                 
                 const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
                 
-                if (valores.length >= 15 && limpar(valores[2])) {
-                    const statusAtual = limpar(valores[14]) || 'pendente';
-                    if (statusAtual === 'pendente') {
+                if (valores.length >= 16 && limpar(valores[2])) {
+                    const status = limpar(valores[15]) || 'pendente'; // STATUS na coluna P (índice 15)
+                    
+                    // Só mostra pendentes
+                    if (status === 'pendente') {
                         novas.push({
                             id: Date.now() + i,
                             protocolo: limpar(valores[0]),
                             dataEnvio: limpar(valores[1]),
                             nomeAluno: limpar(valores[2]),
-                            idade: limpar(valores[3]),
-                            turma: limpar(valores[4]),
-                            categoria: limpar(valores[5]),
-                            responsavel: limpar(valores[6]),
-                            telefone: limpar(valores[7]),
-                            email: limpar(valores[8]),
-                            endereco: limpar(valores[9]),
-                            bairro: limpar(valores[10]),
-                            moradores: limpar(valores[11]),
-                            remedio: limpar(valores[12]),
-                            origem: limpar(valores[13]),
-                            status: statusAtual
+                            dataNasc: limpar(valores[3]),      // DATA NASCIMENTO (coluna D)
+                            idade: limpar(valores[4]),         // IDADE (coluna E)
+                            turma: limpar(valores[5]),
+                            categoria: limpar(valores[6]),
+                            responsavel: limpar(valores[7]),
+                            telefone: limpar(valores[8]),
+                            email: limpar(valores[9]),
+                            endereco: limpar(valores[10]),
+                            bairro: limpar(valores[11]),
+                            moradores: limpar(valores[12]),
+                            remedio: limpar(valores[13]),
+                            origem: limpar(valores[14]),
+                            status: status
                         });
                     }
                 }
@@ -701,10 +704,20 @@
         renderizarSolicitacoes(filtradas);
     }
 
+    function formatarData(dataNasc) {
+        if (!dataNasc) return '-';
+        try {
+            const d = new Date(dataNasc);
+            return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;
+        } catch {
+            return dataNasc;
+        }
+    }
+
     function renderizarSolicitacoes(lista) {
         const tbody = document.getElementById('corpoTabelaSolicitacoes');
         if (lista.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="9">Nenhuma solicitação pendente.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="10">Nenhuma solicitação pendente.</td></tr>';
             return;
         }
         tbody.innerHTML = lista.map(s => `
@@ -713,6 +726,7 @@
                 <td onclick="verSolicitacao(${s.id})"><strong>${s.nomeAluno}</strong></td>
                 <td onclick="verSolicitacao(${s.id})">${s.turma}${s.categoria ? ` - ${s.categoria}` : ''}</td>
                 <td onclick="verSolicitacao(${s.id})">${s.idade}</td>
+                <td onclick="verSolicitacao(${s.id})">${formatarData(s.dataNasc)}</td>
                 <td onclick="verSolicitacao(${s.id})">${s.responsavel}</td>
                 <td onclick="verSolicitacao(${s.id})">${s.telefone}</td>
                 <td onclick="verSolicitacao(${s.id})">${s.dataEnvio}</td>
@@ -727,7 +741,6 @@
     }
 
     async function aprovarSolicitacao(protocolo, id, btn) {
-        // Desabilitar botão para evitar duplicação
         if (btn) {
             btn.disabled = true;
             btn.innerHTML = '⏳';
@@ -746,7 +759,7 @@
                 alunos.push({
                     id: Date.now(),
                     nome: s.nomeAluno,
-                    dataNasc: '',
+                    dataNasc: s.dataNasc,
                     turma: s.turma,
                     bairro: s.bairro,
                     responsavel: s.responsavel,
@@ -776,7 +789,6 @@
     }
 
     async function recusarSolicitacao(protocolo, id, btn) {
-        // Desabilitar botão para evitar duplicação
         if (btn) {
             btn.disabled = true;
             btn.innerHTML = '⏳';
@@ -816,6 +828,7 @@
         document.getElementById('detalhesSolicitacaoConteudo').innerHTML = `
             <p><strong>Protocolo:</strong> ${s.protocolo}</p>
             <p><strong>Aluno:</strong> ${s.nomeAluno}</p>
+            <p><strong>Data Nasc.:</strong> ${formatarData(s.dataNasc)}</p>
             <p><strong>Idade:</strong> ${s.idade} anos</p>
             <p><strong>Turma:</strong> ${s.turma} ${s.categoria ? `- ${s.categoria}` : ''}</p>
             <p><strong>Responsável:</strong> ${s.responsavel}</p>
@@ -824,7 +837,7 @@
             <p><strong>Endereço:</strong> ${s.endereco}</p>
             <p><strong>Bairro:</strong> ${s.bairro}</p>
             <p><strong>Remédio:</strong> ${s.remedio}</p>
-            <p><strong>Data:</strong> ${s.dataEnvio}</p>
+            <p><strong>Data Envio:</strong> ${s.dataEnvio}</p>
         `;
         const btnA = document.getElementById('btnAprovarDetalhes');
         const btnR = document.getElementById('btnRecusarDetalhes');
@@ -879,17 +892,17 @@
     function renderizarAlunos(lista) {
         const tbody = document.getElementById('corpoTabelaAlunos');
         if (lista.length === 0) {
-            tbody.innerHTML = ' <td colspan="7">Nenhum aluno encontrado.    ';
+            tbody.innerHTML = ' <td colspan="8">Nenhum aluno encontrado.    ';
             return;
         }
         tbody.innerHTML = lista.map(a => {
             const idade = a.dataNasc ? Math.floor((new Date() - new Date(a.dataNasc)) / (31536000000)) : '-';
             return `
                 <tr onclick="verDetalhesAluno(${a.id})">
-                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">      <td><strong>${a.nome}</strong>      <td>${idade}      <td>${a.turma}      <td>${a.responsavel}      <td>${a.telefone}      <td>
+                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">      <td><strong>${a.nome}</strong><td>${idade}<td>${formatarData(a.dataNasc)}<td>${a.turma}<td>${a.responsavel}<td>${a.telefone}<td>
                         <button class="btn-editar" onclick="editarAluno(${a.id}); event.stopPropagation()">✏️</button>
                         <button class="btn-excluir" onclick="excluirAluno(${a.id}); event.stopPropagation()">🗑️</button>
-                      </tr>
+                    </tr>
             `;
         }).join('');
     }
@@ -948,7 +961,7 @@
         const idade = a.dataNasc ? Math.floor((new Date() - new Date(a.dataNasc)) / 31536000000) : '-';
         document.getElementById('detalhesAlunoConteudo').innerHTML = `
             <p><strong>Nome:</strong> ${a.nome}</p>
-            <p><strong>Data Nasc.:</strong> ${a.dataNasc || '-'}</p>
+            <p><strong>Data Nasc.:</strong> ${formatarData(a.dataNasc)}</p>
             <p><strong>Idade:</strong> ${idade} anos</p>
             <p><strong>Turma:</strong> ${a.turma}</p>
             <p><strong>Responsável:</strong> ${a.responsavel}</p>
