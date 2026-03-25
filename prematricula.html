@@ -582,7 +582,7 @@
 
 <script>
     // URL DO GOOGLE APPS SCRIPT (RECEBER CADASTROS)
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgSMc1mt8dB6RGASWCTLzOaJZcwST84--Vn2pILgMlUPntF1uxjkCCXA8Vgn86bS6E/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdvGKeJ4XP3dsF4GcNVieQ_6C39rBLkU1pHxlY1L5o-CasbZhJZC5Sng97sLKi4-Dv/exec';
 
     function calcularIdade() {
         const dataNasc = document.getElementById('dataNasc').value;
@@ -670,24 +670,23 @@
             const dataEnvio = new Date().toLocaleString('pt-BR');
             const enderecoCompleto = `${endereco}, ${numero} - ${bairro}`;
 
-            // Dados para enviar à planilha (colunas na ordem correta)
             const dados = {
                 protocolo: protocolo,
                 dataEnvio: dataEnvio,
                 nomeAluno: nomeAluno,
-                dataNasc: dataNasc,        // D - DATA NASC
-                idade: idade,               // E - IDADE
-                turma: turma,               // F - TURMA
-                categoria: categoriaEspecial, // G - CATEGORIA
-                responsavel: responsavel,   // H - RESPONSÁVEL
-                telefone: telefone,         // I - TELEFONE
-                email: email,               // J - E-MAIL
-                endereco: enderecoCompleto, // K - ENDEREÇO
-                bairro: bairro,             // L - BAIRRO
-                moradores: moradores,       // M - MORADORES
-                remedio: remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não', // N - REMÉDIO
-                origem: origem,             // O - ORIGEM
-                status: 'pendente'          // P - STATUS
+                dataNasc: dataNasc,
+                idade: idade,
+                turma: turma,
+                categoria: categoriaEspecial,
+                responsavel: responsavel,
+                telefone: telefone,
+                email: email,
+                endereco: enderecoCompleto,
+                bairro: bairro,
+                moradores: moradores,
+                remedio: remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não',
+                origem: origem,
+                status: 'pendente'
             };
 
             // Salvar no localStorage
