@@ -152,7 +152,143 @@
             box-shadow: 0 5px 15px rgba(255,152,0,0.4);
         }
         
-        /* CONTEÚDO PRINCIPAL (MANTIDO) */
+        /* CONTADOR DE ALUNOS */
+        .contador-alunos {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0 20px;
+        }
+
+        .card-contador {
+            background: linear-gradient(135deg, var(--azul-premium), var(--azul-escuro));
+            border-radius: 30px;
+            padding: 25px 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: pulseContador 2s ease-in-out infinite;
+            min-width: 280px;
+        }
+
+        @keyframes pulseContador {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(0,68,171,0.3); }
+            50% { transform: scale(1.02); box-shadow: 0 15px 40px rgba(0,68,171,0.5); }
+        }
+
+        .card-contador .icone-contador {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .card-contador .numero-contador {
+            font-size: 3.5rem;
+            font-weight: 800;
+            font-family: 'Montserrat';
+            color: white;
+            line-height: 1;
+        }
+
+        .card-contador .label-contador {
+            font-size: 1rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.9);
+            margin-top: 8px;
+        }
+
+        .card-contador .detalhe-contador {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.7);
+            margin-top: 8px;
+        }
+        
+        /* CATEGORIAS OTIMIZADAS PARA CELULAR */
+        .categorias-container {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 30px;
+            margin: 30px auto;
+            max-width: 1200px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .categorias-container h2 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .grid-categorias {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .cat-item {
+            background: #f8f9fa;
+            padding: 25px 15px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--azul-escuro);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 2px solid rgba(0,170,255,0.2);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        /* Efeito ao tocar no celular (active) */
+        .cat-item:active {
+            transform: scale(0.97);
+            background: linear-gradient(135deg, #e8f0ff, #f0f7ff);
+            border-color: var(--azul-claro);
+            box-shadow: 0 2px 5px rgba(0,68,171,0.2);
+        }
+        
+        /* Efeito ao tocar no ícone */
+        .cat-item:active .emoji-cat {
+            animation: tapBounce 0.2s ease;
+        }
+        
+        @keyframes tapBounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+        
+        .cat-item .emoji-cat {
+            font-size: 1.8rem;
+            transition: transform 0.2s ease;
+            display: inline-block;
+        }
+        
+        /* Efeito hover só para desktop (não interfere no celular) */
+        @media (hover: hover) {
+            .cat-item:hover {
+                transform: translateY(-5px);
+                background: #ffffff;
+                box-shadow: 0 15px 30px rgba(0,68,171,0.15);
+                border-color: var(--azul-claro);
+            }
+            
+            .cat-item:hover .emoji-cat {
+                animation: desktopHover 0.3s ease;
+            }
+            
+            @keyframes desktopHover {
+                0% { transform: translateY(0); }
+                50% { transform: translateY(-5px); }
+                100% { transform: translateY(0); }
+            }
+        }
+        
+        /* CONTEÚDO PRINCIPAL */
         header { 
             background: #fff; 
             padding: 15px 0; 
@@ -310,25 +446,6 @@
         }
         .card h2 { font-family: 'Montserrat'; color: var(--azul-escuro); margin-bottom: 15px; font-size: 2rem; }
 
-        .categorias-container {
-            background: white;
-            padding: 40px 20px;
-            border-radius: 30px;
-            margin: 30px auto;
-            max-width: 1200px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-        .categorias-container h2 { font-family: 'Montserrat'; color: var(--azul-escuro); font-size: 2rem; margin-bottom: 30px; }
-
-        .grid-categorias { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; }
-        .cat-item { 
-            background: #f8f9fa; padding: 30px 20px; border-radius: 15px; font-weight: 800; font-size: 1.3rem;
-            color: var(--azul-escuro); display: flex; align-items: center; justify-content: center;
-            border: 2px solid rgba(0,170,255,0.2);
-            transition: all 0.3s ease;
-        }
-        .cat-item:hover { transform: scale(1.05); border-color: var(--azul-claro); }
-
         .info-idades {
             font-size: 1.2rem;
             color: #555;
@@ -398,12 +515,23 @@
 
         @media (max-width: 768px) {
             .hero { margin-top: 135px; }
-            .grid-categorias { gap: 15px; }
-            .cat-item { padding: 20px; font-size: 1.1rem; }
+            .grid-categorias { gap: 12px; }
+            .cat-item { padding: 18px 12px; font-size: 1rem; gap: 8px; }
+            .cat-item .emoji-cat { font-size: 1.5rem; }
             .logo-text { font-size: 1.5rem; }
             .seta { width: 40px; height: 40px; font-size: 1.5rem; }
             .mapa-container { height: 300px; }
             .btn-prematricula { font-size: 1rem; padding: 14px 25px; }
+            .card-contador { padding: 18px 25px; min-width: auto; }
+            .card-contador .numero-contador { font-size: 2.5rem; }
+            .card-contador .icone-contador { font-size: 2rem; }
+            .categorias-container h2 { font-size: 1.6rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .grid-categorias { gap: 10px; }
+            .cat-item { padding: 14px 10px; font-size: 0.9rem; }
+            .cat-item .emoji-cat { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -436,7 +564,7 @@
     </div>
 </div>
 
-<!-- CONTEÚDO PRINCIPAL (MANTIDO IGUAL) -->
+<!-- CONTEÚDO PRINCIPAL -->
 <header>
     <div class="brand-container">
         <a href="#" class="logo-text">ESCOLINHA DO JACARÉ</a>
@@ -479,6 +607,16 @@
     </div>
 </section>
 
+<!-- CONTADOR DE ALUNOS -->
+<div class="contador-alunos">
+    <div class="card-contador">
+        <div class="icone-contador">👥</div>
+        <div class="numero-contador" id="totalAlunosContador">0</div>
+        <div class="label-contador">ALUNOS MATRICULADOS</div>
+        <div class="detalhe-contador">Faça parte desse time!</div>
+    </div>
+</div>
+
 <div style="text-align: center; margin: 20px 0;">
     <a href="prematricula.html" class="btn-prematricula">
         📝 PRÉ-MATRÍCULA ONLINE
@@ -489,10 +627,22 @@
 <div class="categorias-container" id="atividades">
     <h2>🏆 CATEGORIAS</h2>
     <div class="grid-categorias">
-        <div class="cat-item"><span class="emoji">⚽</span> FUTEBOL</div>
-        <div class="cat-item"><span class="emoji">🥋</span> TAEKWONDO</div>
-        <div class="cat-item"><span class="emoji">🏓</span> TÊNIS DE MESA</div>
-        <div class="cat-item"><span class="emoji">🤸</span> GINÁSTICA</div>
+        <div class="cat-item">
+            <span class="emoji-cat">⚽</span>
+            <span>FUTEBOL</span>
+        </div>
+        <div class="cat-item">
+            <span class="emoji-cat">🥋</span>
+            <span>TAEKWONDO</span>
+        </div>
+        <div class="cat-item">
+            <span class="emoji-cat">🏓</span>
+            <span>TÊNIS DE MESA</span>
+        </div>
+        <div class="cat-item">
+            <span class="emoji-cat">🤸</span>
+            <span>GINÁSTICA</span>
+        </div>
     </div>
     <div class="info-idades">
         📋 <strong>Categorias oficiais:</strong> Sub-07 • Sub-09 • Sub-11 • Sub-13 • Sub-15<br>
@@ -569,7 +719,6 @@
     // SPLASH SCREEN + WELCOME
     const SCRIPT_URL_VISITAS = 'https://script.google.com/macros/s/AKfycbxaaHcEtRBwKcTpUxvZT0v_zUM4vbJfqWx2OlE3LG8UqK1_AGV-ozTi4LN0rSuLDjIx/exec';
     
-    // Registrar visita (sem mostrar contador)
     async function registrarVisita() {
         try {
             await fetch(SCRIPT_URL_VISITAS, {
@@ -587,18 +736,71 @@
         localStorage.setItem('welcome_visto', 'true');
     }
 
+    // CONTADOR DE ALUNOS - LER DA PLANILHA
+    const PLANILHA_ID = '1frhkgQae4ugAZjLOvrGsw0yyqupVh-MNWGP70TCniLU';
+    const NOME_ABA = 'solicitaçoes';
+
+    async function buscarTotalAlunosAprovados() {
+        try {
+            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=${NOME_ABA}`;
+            const response = await fetch(url);
+            const texto = await response.text();
+            const linhas = texto.split('\n');
+            
+            let totalAprovados = 0;
+            
+            for (let i = 1; i < linhas.length; i++) {
+                const linha = linhas[i].trim();
+                if (!linha) continue;
+                
+                const valores = [];
+                let atual = '';
+                let dentroAspas = false;
+                for (let c of linha) {
+                    if (c === '"') dentroAspas = !dentroAspas;
+                    else if (c === ',' && !dentroAspas) { valores.push(atual); atual = ''; }
+                    else atual += c;
+                }
+                valores.push(atual);
+                
+                const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
+                
+                if (valores.length >= 16 && limpar(valores[2])) {
+                    const status = limpar(valores[15]) || 'pendente';
+                    if (status === 'aprovado') {
+                        totalAprovados++;
+                    }
+                }
+            }
+            
+            const contadorElement = document.getElementById('totalAlunosContador');
+            if (contadorElement) {
+                contadorElement.innerText = totalAprovados;
+            }
+            
+            return totalAprovados;
+        } catch (error) {
+            console.error('Erro ao buscar total de alunos:', error);
+            return 0;
+        }
+    }
+
+    function iniciarContadorAutomatico() {
+        buscarTotalAlunosAprovados();
+        setInterval(() => {
+            buscarTotalAlunosAprovados();
+        }, 30000);
+    }
+
     // Controle de exibição
     window.addEventListener('load', function() {
         const splash = document.getElementById('splashScreen');
         const modal = document.getElementById('modalWelcome');
         
-        // Esconder splash após 2 segundos
         setTimeout(() => {
             splash.style.opacity = '0';
             setTimeout(() => {
                 splash.style.display = 'none';
-                
-                // Mostrar modal de boas-vindas se nunca viu
                 const jaViu = localStorage.getItem('welcome_visto');
                 if (!jaViu) {
                     modal.style.display = 'flex';
@@ -606,8 +808,8 @@
             }, 500);
         }, 2000);
         
-        // Registrar visita
         registrarVisita();
+        iniciarContadorAutomatico();
     });
 </script>
 
