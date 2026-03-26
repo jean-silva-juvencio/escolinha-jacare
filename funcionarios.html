@@ -492,15 +492,15 @@
         </div>
         
         <div class="tabela-container">
-              <table>
+             <table
                 <thead>
-                      <tr>
+                     <tr
                         <th class="checkbox-col"><input type="checkbox" id="selecionarTodosSolicitacoes" onchange="selecionarTodosSolicitacoes()"></th>
-                        <th>Nome</th><th>Turma</th><th>Idade</th><th>Data Nasc</th><th>Responsável</th><th>Telefone</th><th>Data</th><th>Status</th><th>Ações</th>
-                      </tr>
+                        <th>Nome</th><th>RG</th><th>Turma</th><th>Idade</th><th>Data Nasc</th><th>Responsável</th><th>Telefone</th><th>Data</th><th>Status</th><th>Ações</th>
+                     </tr
                 </thead>
                 <tbody id="corpoTabelaSolicitacoes"></tbody>
-              </table>
+             </table
         </div>
     </div>
     
@@ -530,15 +530,15 @@
         </div>
         
         <div class="tabela-container">
-             <table>
+             <table
                 <thead>
-                      <tr>
+                     <tr
                         <th class="checkbox-col"><input type="checkbox" id="selecionarTodosAlunos" onchange="selecionarTodosAlunos()"></th>
                         <th>Nome</th><th>Idade</th><th>Data Nasc</th><th>Turma</th><th>Responsável</th><th>Telefone</th><th>Ações</th>
-                      </tr>
+                     </tr
                 </thead>
                 <tbody id="corpoTabelaAlunos"></tbody>
-             </table>
+             </table
         </div>
     </div>
 </div>
@@ -603,7 +603,7 @@
     let intervalo = null;
 
     const PLANILHA_ID = '1frhkgQae4ugAZjLOvrGsw0yyqupVh-MNWGP70TCniLU';
-    const SCRIPT_URL_ATUALIZAR = 'https://script.google.com/macros/s/AKfycbzOaro8zchjdIAPT-8BeMtbrV84dfVS2hffrL2F14Q0GdDxv_yjL03F0LOmVCDNz0H0/exec';
+    const SCRIPT_URL_ATUALIZAR = 'https://script.google.com/macros/s/AKfycbzaCnCPkN1bREs8LjCYmR5T5tfIyAXbsX9OIFc0hzTpSub6rIRn9ehQBFYtUAPtjQQ/exec';
 
     async function atualizarStatusNaPlanilha(protocolo, novoStatus) {
         try {
@@ -644,8 +644,9 @@
                 
                 const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
                 
-                if (valores.length >= 16 && limpar(valores[2])) {
-                    const status = limpar(valores[15]) || 'pendente';
+                if (valores.length >= 17 && limpar(valores[2])) {
+                    const status = limpar(valores[16]) || 'pendente'; // STATUS na coluna Q (índice 16)
+                    const rg = limpar(valores[15]); // RG na coluna P (índice 15)
                     
                     if (status === 'pendente') {
                         novas.push({
@@ -665,6 +666,7 @@
                             moradores: limpar(valores[12]),
                             remedio: limpar(valores[13]),
                             origem: limpar(valores[14]),
+                            rg: rg,
                             status: status
                         });
                     }
@@ -714,13 +716,14 @@
     function renderizarSolicitacoes(lista) {
         const tbody = document.getElementById('corpoTabelaSolicitacoes');
         if (lista.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="10" class="sem-solicitacoes">Nenhuma solicitação pendente.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="11" class="sem-solicitacoes">Nenhuma solicitação pendente.</td></tr>';
             return;
         }
         tbody.innerHTML = lista.map(s => `
             <tr>
                 <td class="checkbox-col"><input type="checkbox" class="sel-solic" value="${s.id}"></td>
                 <td onclick="verSolicitacao(${s.id})"><strong>${s.nomeAluno}</strong></td>
+                <td onclick="verSolicitacao(${s.id})">${s.rg || '-'}</td>
                 <td onclick="verSolicitacao(${s.id})">${s.turma}</td>
                 <td onclick="verSolicitacao(${s.id})">${s.idade}</td>
                 <td onclick="verSolicitacao(${s.id})">${formatarData(s.dataNasc)}</td>
@@ -766,7 +769,8 @@
                     email: s.email,
                     endereco: s.endereco,
                     remedio: s.remedio,
-                    origem: s.origem
+                    origem: s.origem,
+                    rg: s.rg
                 });
                 localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
                 
@@ -825,6 +829,7 @@
         document.getElementById('detalhesSolicitacaoConteudo').innerHTML = `
             <p><strong>Protocolo:</strong> ${s.protocolo}</p>
             <p><strong>Aluno:</strong> ${s.nomeAluno}</p>
+            <p><strong>RG do Responsável:</strong> ${s.rg || '-'}</p>
             <p><strong>Data Nasc.:</strong> ${formatarData(s.dataNasc)}</p>
             <p><strong>Idade:</strong> ${s.idade} anos</p>
             <p><strong>Turma:</strong> ${s.turma}</p>
@@ -892,8 +897,7 @@
                     <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">        <td><strong>${a.nome}</strong>        <td>${idade}        <td>${formatarData(a.dataNasc)}        <td>${a.turma}        <td>${a.responsavel}        <td>${a.telefone}        <td>
                         <button class="btn-editar" onclick="editarAluno(${a.id}); event.stopPropagation()">✏️</button>
                         <button class="btn-excluir" onclick="excluirAluno(${a.id}); event.stopPropagation()">🗑️</button>
-                    </td>
-                </tr>
+                    </tr
             `;
         }).join('');
     }
@@ -962,6 +966,7 @@
             <p><strong>Endereço:</strong> ${a.endereco || '-'}</p>
             <p><strong>Bairro:</strong> ${a.bairro || '-'}</p>
             <p><strong>Remédio:</strong> ${a.remedio || '-'}</p>
+            <p><strong>RG do Responsável:</strong> ${a.rg || '-'}</p>
         `;
         document.getElementById('modalDetalhesAluno').style.display = 'flex';
     }
