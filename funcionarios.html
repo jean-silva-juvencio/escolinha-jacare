@@ -478,8 +478,8 @@
         <div class="toolbar">
             <div class="filtros">
                 <select id="filtroStatus">
-                    <option value="pendente" selected>🟡 Pendentes</option>
-                    <option value="todas">Todas</option>
+                    <option value="todas" selected>Todas</option>
+                    <option value="pendente">🟡 Pendentes</option>
                     <option value="aprovada">🟢 Aprovadas</option>
                     <option value="recusada">🔴 Recusadas</option>
                 </select>
@@ -628,8 +628,7 @@
             const texto = await response.text();
             const linhas = texto.split('\n');
             
-            const pendentes = [];
-            const aprovados = [];
+            const todos = [];
             
             for (let i = 1; i < linhas.length; i++) {
                 const linha = linhas[i].trim();
@@ -651,7 +650,7 @@
                     const status = limpar(valores[16]) || 'pendente';
                     const rg = limpar(valores[15]);
                     
-                    const aluno = {
+                    todos.push({
                         id: Date.now() + i,
                         protocolo: limpar(valores[0]),
                         dataEnvio: limpar(valores[1]),
@@ -670,27 +669,22 @@
                         origem: limpar(valores[14]),
                         rg: rg,
                         status: status
-                    };
-                    
-                    if (status === 'pendente') {
-                        pendentes.push(aluno);
-                    } else if (status === 'aprovado') {
-                        aprovados.push(aluno);
-                    }
+                    });
                 }
             }
             
-            return { pendentes: pendentes.reverse(), aprovados: aprovados.reverse() };
+            return todos.reverse();
         } catch (error) {
             console.error('Erro:', error);
-            return { pendentes: [], aprovados: [] };
+            return [];
         }
     }
 
     async function atualizarSolicitacoes() {
-        const dados = await buscarTodosDadosPlanilha();
-        solicitacoes = dados.pendentes;
-        alunos = dados.aprovados;
+        const todos = await buscarTodosDadosPlanilha();
+        solicitacoes = todos;
+        // Filtrar aprovados para a aba ALUNOS
+        alunos = todos.filter(a => a.status === 'aprovado');
         localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
         localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
         atualizarStatsSolicitacoes();
@@ -699,7 +693,8 @@
     }
 
     function atualizarStatsSolicitacoes() {
-        document.getElementById('totalPendentes').innerText = solicitacoes.length;
+        const pendentes = solicitacoes.filter(s => s.status === 'pendente').length;
+        document.getElementById('totalPendentes').innerText = pendentes;
         document.getElementById('totalSolicitacoes').innerText = solicitacoes.length;
     }
 
@@ -727,28 +722,36 @@
     function renderizarSolicitacoes(lista) {
         const tbody = document.getElementById('corpoTabelaSolicitacoes');
         if (lista.length === 0) {
-            tbody.innerHTML = ' <td colspan="11" class="sem-solicitacoes">Nenhuma solicitação pendente.    ';
+            tbody.innerHTML = ' <td colspan="11" class="sem-solicitacoes">Nenhuma solicitação encontrada.    ';
             return;
         }
-        tbody.innerHTML = lista.map(s => `
-             <tr
-                <td class="checkbox-col"><input type="checkbox" class="sel-solic" value="${s.id}"> </td
-                <td onclick="verSolicitacao(${s.id})"><strong>${s.nomeAluno}</strong> </td
-                <td onclick="verSolicitacao(${s.id})">${s.rg || '-'} </td
-                <td onclick="verSolicitacao(${s.id})">${s.turma} </td
-                <td onclick="verSolicitacao(${s.id})">${s.idade} </td
-                <td onclick="verSolicitacao(${s.id})">${formatarData(s.dataNasc)} </td
-                <td onclick="verSolicitacao(${s.id})">${s.responsavel} </td
-                <td onclick="verSolicitacao(${s.id})">${s.telefone} </td
-                <td onclick="verSolicitacao(${s.id})">${s.dataEnvio} </td
-                <td onclick="verSolicitacao(${s.id})"><span class="status-badge status-pendente">🟡 Pendente</span> </td
-                <td
-                    <button class="btn-ver" onclick="verSolicitacao(${s.id})">👁️</button>
-                    <button class="btn-aprovar" onclick="aprovarSolicitacao('${s.protocolo}', ${s.id}, this)">✅</button>
-                    <button class="btn-recusar" onclick="recusarSolicitacao('${s.protocolo}', ${s.id}, this)">❌</button>
-                 </td
-             </tr
-        `).join('');
+        tbody.innerHTML = lista.map(s => {
+            let classe = '', texto = '';
+            if (s.status === 'pendente') { classe = 'status-pendente'; texto = '🟡 Pendente'; }
+            else if (s.status === 'aprovada') { classe = 'status-aprovada'; texto = '🟢 Aprovada'; }
+            else { classe = 'status-recusada'; texto = '🔴 Recusada'; }
+            return `
+                 <tr
+                    <td class="checkbox-col"><input type="checkbox" class="sel-solic" value="${s.id}"> </td
+                    <td onclick="verSolicitacao(${s.id})"><strong>${s.nomeAluno}</strong> </td
+                    <td onclick="verSolicitacao(${s.id})">${s.rg || '-'} </td
+                    <td onclick="verSolicitacao(${s.id})">${s.turma} </td
+                    <td onclick="verSolicitacao(${s.id})">${s.idade} </td
+                    <td onclick="verSolicitacao(${s.id})">${formatarData(s.dataNasc)} </td
+                    <td onclick="verSolicitacao(${s.id})">${s.responsavel} </td
+                    <td onclick="verSolicitacao(${s.id})">${s.telefone} </td
+                    <td onclick="verSolicitacao(${s.id})">${s.dataEnvio} </td
+                    <td onclick="verSolicitacao(${s.id})"><span class="status-badge ${classe}">${texto}</span> </td
+                    <td
+                        <button class="btn-ver" onclick="verSolicitacao(${s.id})">👁️</button>
+                        ${s.status === 'pendente' ? `
+                            <button class="btn-aprovar" onclick="aprovarSolicitacao('${s.protocolo}', ${s.id}, this)">✅</button>
+                            <button class="btn-recusar" onclick="recusarSolicitacao('${s.protocolo}', ${s.id}, this)">❌</button>
+                        ` : ''}
+                     </td
+                 </tr
+            `;
+        }).join('');
     }
 
     async function aprovarSolicitacao(protocolo, id, btn) {
@@ -762,12 +765,10 @@
             const atualizado = await atualizarStatusNaPlanilha(protocolo, 'aprovado');
             
             if (atualizado) {
-                // Remover da lista local
-                solicitacoes = solicitacoes.filter(sol => sol.id !== id);
                 // Recarregar todos os dados da planilha
-                const dados = await buscarTodosDadosPlanilha();
-                solicitacoes = dados.pendentes;
-                alunos = dados.aprovados;
+                const todos = await buscarTodosDadosPlanilha();
+                solicitacoes = todos;
+                alunos = todos.filter(a => a.status === 'aprovado');
                 localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
                 localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
                 
@@ -801,10 +802,9 @@
             const atualizado = await atualizarStatusNaPlanilha(protocolo, 'recusada');
             
             if (atualizado) {
-                solicitacoes = solicitacoes.filter(sol => sol.id !== id);
-                const dados = await buscarTodosDadosPlanilha();
-                solicitacoes = dados.pendentes;
-                alunos = dados.aprovados;
+                const todos = await buscarTodosDadosPlanilha();
+                solicitacoes = todos;
+                alunos = todos.filter(a => a.status === 'aprovado');
                 localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
                 localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
                 atualizarStatsSolicitacoes();
@@ -867,7 +867,7 @@
         }
     }
 
-    // ALUNOS (lê da variável global, que vem da planilha)
+    // ALUNOS
     function carregarAlunos() {
         document.getElementById('totalAlunos').innerText = alunos.length;
         filtrarAlunos();
@@ -894,7 +894,13 @@
             const idade = a.dataNasc ? Math.floor((new Date() - new Date(a.dataNasc)) / (31536000000)) : '-';
             return `
                 <tr onclick="verDetalhesAluno(${a.id})">
-                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">         <td><strong>${a.nomeAluno}</strong>         <td>${idade}         <td>${formatarData(a.dataNasc)}         <td>${a.turma}         <td>${a.responsavel}         <td>${a.telefone}         <td
+                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">          <td><strong>${a.nomeAluno}</strong></td
+                    <td>${idade}</td
+                    <td>${formatarData(a.dataNasc)}</td
+                    <td>${a.turma}</td
+                    <td>${a.responsavel}</td
+                    <td>${a.telefone}</td
+                    <td
                         <button class="btn-editar" onclick="editarAluno(${a.id}); event.stopPropagation()">✏️</button>
                         <button class="btn-excluir" onclick="excluirAluno(${a.id}); event.stopPropagation()">🗑️</button>
                      </td
