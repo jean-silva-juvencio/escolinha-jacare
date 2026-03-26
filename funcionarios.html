@@ -478,8 +478,8 @@
         <div class="toolbar">
             <div class="filtros">
                 <select id="filtroStatus">
-                    <option value="todas" selected>Todas</option>
-                    <option value="pendente">🟡 Pendentes</option>
+                    <option value="pendente" selected>🟡 Pendentes</option>
+                    <option value="todas">Todas</option>
                     <option value="aprovada">🟢 Aprovadas</option>
                     <option value="recusada">🔴 Recusadas</option>
                 </select>
@@ -620,16 +620,14 @@
         }
     }
 
-    // BUSCAR TODOS OS DADOS DA PLANILHA (incluindo aprovados)
-    async function buscarTodosDadosPlanilha() {
+    async function buscarSolicitacoesDaPlanilha() {
         try {
             const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=solicitaçoes`;
             const response = await fetch(url);
             const texto = await response.text();
             const linhas = texto.split('\n');
             
-            const todos = [];
-            
+            const novas = [];
             for (let i = 1; i < linhas.length; i++) {
                 const linha = linhas[i].trim();
                 if (!linha) continue;
@@ -647,33 +645,59 @@
                 const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
                 
                 if (valores.length >= 17 && limpar(valores[2])) {
-                    const status = limpar(valores[16]) || 'pendente';
-                    const rg = limpar(valores[15]);
+                    const status = limpar(valores[16]) || 'pendente'; // STATUS na coluna Q (índice 16)
+                    const rg = limpar(valores[15]); // RG na coluna P (índice 15)
                     
-                    todos.push({
-                        id: Date.now() + i,
-                        protocolo: limpar(valores[0]),
-                        dataEnvio: limpar(valores[1]),
-                        nomeAluno: limpar(valores[2]),
-                        dataNasc: limpar(valores[3]),
-                        idade: limpar(valores[4]),
-                        turma: limpar(valores[5]),
-                        categoria: limpar(valores[6]),
-                        responsavel: limpar(valores[7]),
-                        telefone: limpar(valores[8]),
-                        email: limpar(valores[9]),
-                        endereco: limpar(valores[10]),
-                        bairro: limpar(valores[11]),
-                        moradores: limpar(valores[12]),
-                        remedio: limpar(valores[13]),
-                        origem: limpar(valores[14]),
-                        rg: rg,
-                        status: status
-                    });
+                    // SÓ PEGAR PENDENTES PARA A LISTA DE SOLICITAÇÕES
+                    if (status === 'pendente') {
+                        novas.push({
+                            id: Date.now() + i,
+                            protocolo: limpar(valores[0]),
+                            dataEnvio: limpar(valores[1]),
+                            nomeAluno: limpar(valores[2]),
+                            dataNasc: limpar(valores[3]),
+                            idade: limpar(valores[4]),
+                            turma: limpar(valores[5]),
+                            categoria: limpar(valores[6]),
+                            responsavel: limpar(valores[7]),
+                            telefone: limpar(valores[8]),
+                            email: limpar(valores[9]),
+                            endereco: limpar(valores[10]),
+                            bairro: limpar(valores[11]),
+                            moradores: limpar(valores[12]),
+                            remedio: limpar(valores[13]),
+                            origem: limpar(valores[14]),
+                            rg: rg,
+                            status: status
+                        });
+                    }
+                    
+                    // PEGAR APROVADOS PARA A LISTA DE ALUNOS
+                    if (status === 'aprovado') {
+                        alunos.push({
+                            id: Date.now() + i,
+                            protocolo: limpar(valores[0]),
+                            dataEnvio: limpar(valores[1]),
+                            nomeAluno: limpar(valores[2]),
+                            dataNasc: limpar(valores[3]),
+                            idade: limpar(valores[4]),
+                            turma: limpar(valores[5]),
+                            categoria: limpar(valores[6]),
+                            responsavel: limpar(valores[7]),
+                            telefone: limpar(valores[8]),
+                            email: limpar(valores[9]),
+                            endereco: limpar(valores[10]),
+                            bairro: limpar(valores[11]),
+                            moradores: limpar(valores[12]),
+                            remedio: limpar(valores[13]),
+                            origem: limpar(valores[14]),
+                            rg: rg,
+                            status: status
+                        });
+                    }
                 }
             }
-            
-            return todos.reverse();
+            return novas.reverse();
         } catch (error) {
             console.error('Erro:', error);
             return [];
@@ -681,20 +705,21 @@
     }
 
     async function atualizarSolicitacoes() {
-        const todos = await buscarTodosDadosPlanilha();
-        solicitacoes = todos;
-        // Filtrar aprovados para a aba ALUNOS
-        alunos = todos.filter(a => a.status === 'aprovado');
+        // Limpar arrays antes de preencher
+        alunos = [];
+        const novas = await buscarSolicitacoesDaPlanilha();
+        solicitacoes = novas;
+        
         localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
         localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
+        
         atualizarStatsSolicitacoes();
         filtrarSolicitacoes();
         carregarAlunos();
     }
 
     function atualizarStatsSolicitacoes() {
-        const pendentes = solicitacoes.filter(s => s.status === 'pendente').length;
-        document.getElementById('totalPendentes').innerText = pendentes;
+        document.getElementById('totalPendentes').innerText = solicitacoes.length;
         document.getElementById('totalSolicitacoes').innerText = solicitacoes.length;
     }
 
@@ -722,36 +747,28 @@
     function renderizarSolicitacoes(lista) {
         const tbody = document.getElementById('corpoTabelaSolicitacoes');
         if (lista.length === 0) {
-            tbody.innerHTML = ' <td colspan="11" class="sem-solicitacoes">Nenhuma solicitação encontrada.    ';
+            tbody.innerHTML = ' <td colspan="11" class="sem-solicitacoes">Nenhuma solicitação pendente.    ';
             return;
         }
-        tbody.innerHTML = lista.map(s => {
-            let classe = '', texto = '';
-            if (s.status === 'pendente') { classe = 'status-pendente'; texto = '🟡 Pendente'; }
-            else if (s.status === 'aprovada') { classe = 'status-aprovada'; texto = '🟢 Aprovada'; }
-            else { classe = 'status-recusada'; texto = '🔴 Recusada'; }
-            return `
-                 <tr
-                    <td class="checkbox-col"><input type="checkbox" class="sel-solic" value="${s.id}"> </td
-                    <td onclick="verSolicitacao(${s.id})"><strong>${s.nomeAluno}</strong> </td
-                    <td onclick="verSolicitacao(${s.id})">${s.rg || '-'} </td
-                    <td onclick="verSolicitacao(${s.id})">${s.turma} </td
-                    <td onclick="verSolicitacao(${s.id})">${s.idade} </td
-                    <td onclick="verSolicitacao(${s.id})">${formatarData(s.dataNasc)} </td
-                    <td onclick="verSolicitacao(${s.id})">${s.responsavel} </td
-                    <td onclick="verSolicitacao(${s.id})">${s.telefone} </td
-                    <td onclick="verSolicitacao(${s.id})">${s.dataEnvio} </td
-                    <td onclick="verSolicitacao(${s.id})"><span class="status-badge ${classe}">${texto}</span> </td
-                    <td
-                        <button class="btn-ver" onclick="verSolicitacao(${s.id})">👁️</button>
-                        ${s.status === 'pendente' ? `
-                            <button class="btn-aprovar" onclick="aprovarSolicitacao('${s.protocolo}', ${s.id}, this)">✅</button>
-                            <button class="btn-recusar" onclick="recusarSolicitacao('${s.protocolo}', ${s.id}, this)">❌</button>
-                        ` : ''}
-                     </td
-                 </tr
-            `;
-        }).join('');
+        tbody.innerHTML = lista.map(s => `
+             <tr
+                <td class="checkbox-col"><input type="checkbox" class="sel-solic" value="${s.id}"> </td
+                <td onclick="verSolicitacao(${s.id})"><strong>${s.nomeAluno}</strong> </td
+                <td onclick="verSolicitacao(${s.id})">${s.rg || '-'} </td
+                <td onclick="verSolicitacao(${s.id})">${s.turma} </td
+                <td onclick="verSolicitacao(${s.id})">${s.idade} </td
+                <td onclick="verSolicitacao(${s.id})">${formatarData(s.dataNasc)} </td
+                <td onclick="verSolicitacao(${s.id})">${s.responsavel} </td
+                <td onclick="verSolicitacao(${s.id})">${s.telefone} </td
+                <td onclick="verSolicitacao(${s.id})">${s.dataEnvio} </td
+                <td onclick="verSolicitacao(${s.id})"><span class="status-badge status-pendente">🟡 Pendente</span> </td
+                <td
+                    <button class="btn-ver" onclick="verSolicitacao(${s.id})">👁️</button>
+                    <button class="btn-aprovar" onclick="aprovarSolicitacao('${s.protocolo}', ${s.id}, this)">✅</button>
+                    <button class="btn-recusar" onclick="recusarSolicitacao('${s.protocolo}', ${s.id}, this)">❌</button>
+                 </td
+             </tr
+        `).join('');
     }
 
     async function aprovarSolicitacao(protocolo, id, btn) {
@@ -765,18 +782,9 @@
             const atualizado = await atualizarStatusNaPlanilha(protocolo, 'aprovado');
             
             if (atualizado) {
-                // Recarregar todos os dados da planilha
-                const todos = await buscarTodosDadosPlanilha();
-                solicitacoes = todos;
-                alunos = todos.filter(a => a.status === 'aprovado');
-                localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-                localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-                
-                atualizarStatsSolicitacoes();
-                filtrarSolicitacoes();
-                carregarAlunos();
+                // Recarregar dados
+                await atualizarSolicitacoes();
                 fecharModalDetalhesSolicitacao();
-                
                 alert(`✅ ${s.nomeAluno} aprovado!`);
             } else {
                 alert('❌ Erro ao atualizar a planilha. Tente novamente.');
@@ -802,14 +810,7 @@
             const atualizado = await atualizarStatusNaPlanilha(protocolo, 'recusada');
             
             if (atualizado) {
-                const todos = await buscarTodosDadosPlanilha();
-                solicitacoes = todos;
-                alunos = todos.filter(a => a.status === 'aprovado');
-                localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-                localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-                atualizarStatsSolicitacoes();
-                filtrarSolicitacoes();
-                carregarAlunos();
+                await atualizarSolicitacoes();
                 fecharModalDetalhesSolicitacao();
                 alert(`❌ ${s.nomeAluno} recusado.`);
             } else {
@@ -894,7 +895,7 @@
             const idade = a.dataNasc ? Math.floor((new Date() - new Date(a.dataNasc)) / (31536000000)) : '-';
             return `
                 <tr onclick="verDetalhesAluno(${a.id})">
-                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">          <td><strong>${a.nomeAluno}</strong></td
+                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">            <td><strong>${a.nomeAluno}</strong></td
                     <td>${idade}</td
                     <td>${formatarData(a.dataNasc)}</td
                     <td>${a.turma}</td
