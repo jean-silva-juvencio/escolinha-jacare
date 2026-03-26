@@ -620,8 +620,8 @@
         }
     }
 
-    // BUSCAR DADOS DA PLANILHA (MESMA LÓGICA DA DIRETORIA)
-    async function buscarSolicitacoesDaPlanilha() {
+    // BUSCAR DADOS DA PLANILHA (PENDENTES E APROVADOS)
+    async function buscarTodosDadosPlanilha() {
         try {
             const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=solicitaçoes`;
             const response = await fetch(url);
@@ -652,7 +652,7 @@
                     const status = limpar(valores[16]) || 'pendente';
                     const rg = limpar(valores[15]);
                     
-                    const dadosSolicitacao = {
+                    const dadosAluno = {
                         id: Date.now() + i,
                         protocolo: limpar(valores[0]),
                         dataEnvio: limpar(valores[1]),
@@ -674,9 +674,9 @@
                     };
                     
                     if (status === 'pendente') {
-                        pendentes.push(dadosSolicitacao);
+                        pendentes.push(dadosAluno);
                     } else if (status === 'aprovado') {
-                        aprovados.push(dadosSolicitacao);
+                        aprovados.push(dadosAluno);
                     }
                 }
             }
@@ -689,7 +689,7 @@
     }
 
     async function atualizarSolicitacoes() {
-        const dados = await buscarSolicitacoesDaPlanilha();
+        const dados = await buscarTodosDadosPlanilha();
         solicitacoes = dados.pendentes;
         alunos = dados.aprovados;
         
@@ -850,7 +850,7 @@
         }
     }
 
-    // ALUNOS
+    // ALUNOS (lê da variável global, que vem da planilha)
     function carregarAlunos() {
         document.getElementById('totalAlunos').innerText = alunos.length;
         filtrarAlunos();
@@ -877,17 +877,17 @@
             const idade = a.dataNasc ? Math.floor((new Date() - new Date(a.dataNasc)) / (31536000000)) : '-';
             return `
                 <tr onclick="verDetalhesAluno(${a.id})">
-                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">              <td><strong>${a.nomeAluno}</strong></td
-                    <td>${idade}</td
-                    <td>${formatarData(a.dataNasc)}</td
-                    <td>${a.turma}</td
-                    <td>${a.responsavel}</td
-                    <td>${a.telefone}</td
-                    <td
+                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">               <td><strong>${a.nomeAluno}</strong></td>
+                    <td>${idade}</td>
+                    <td>${formatarData(a.dataNasc)}</td>
+                    <td>${a.turma}</td>
+                    <td>${a.responsavel}</td>
+                    <td>${a.telefone}</td>
+                    <td>
                         <button class="btn-editar" onclick="editarAluno(${a.id}); event.stopPropagation()">✏️</button>
                         <button class="btn-excluir" onclick="excluirAluno(${a.id}); event.stopPropagation()">🗑️</button>
-                     </td
-                </tr
+                    </td>
+                </tr>
             `;
         }).join('');
     }
