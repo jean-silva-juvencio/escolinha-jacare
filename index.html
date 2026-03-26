@@ -736,7 +736,7 @@
         localStorage.setItem('welcome_visto', 'true');
     }
 
-    // CONTADOR DE ALUNOS - LER DA PLANILHA
+    // CONTADOR DE ALUNOS - LER DA PLANILHA (CORRIGIDO - COLUNA Q = STATUS)
     const PLANILHA_ID = '1frhkgQae4ugAZjLOvrGsw0yyqupVh-MNWGP70TCniLU';
     const NOME_ABA = 'solicitaçoes';
 
@@ -765,8 +765,9 @@
                 
                 const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
                 
-                if (valores.length >= 16 && limpar(valores[2])) {
-                    const status = limpar(valores[15]) || 'pendente';
+                // STATUS agora na coluna Q (índice 16) - planilha tem 17 colunas (A a Q)
+                if (valores.length >= 17 && limpar(valores[2])) {
+                    const status = limpar(valores[16]) || 'pendente';
                     if (status === 'aprovado') {
                         totalAprovados++;
                     }
