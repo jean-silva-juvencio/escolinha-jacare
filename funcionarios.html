@@ -620,8 +620,8 @@
         }
     }
 
-    // BUSCAR DADOS DA PLANILHA (PENDENTES E APROVADOS)
-    async function buscarTodosDadosPlanilha() {
+    // FUNÇÃO IDÊNTICA AO TESTE QUE FUNCIONOU
+    async function buscarDadosPlanilha() {
         try {
             const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=solicitaçoes`;
             const response = await fetch(url);
@@ -631,26 +631,34 @@
             const pendentes = [];
             const aprovados = [];
             
+            // Pular cabeçalho (linha 0)
             for (let i = 1; i < linhas.length; i++) {
                 const linha = linhas[i].trim();
                 if (!linha) continue;
                 
+                // Parse CSV simples
                 const valores = [];
                 let atual = '';
                 let dentroAspas = false;
                 for (let c of linha) {
-                    if (c === '"') dentroAspas = !dentroAspas;
-                    else if (c === ',' && !dentroAspas) { valores.push(atual); atual = ''; }
-                    else atual += c;
+                    if (c === '"') {
+                        dentroAspas = !dentroAspas;
+                    } else if (c === ',' && !dentroAspas) {
+                        valores.push(atual);
+                        atual = '';
+                    } else {
+                        atual += c;
+                    }
                 }
                 valores.push(atual);
                 
+                // Limpar aspas
                 const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
                 
-                // STATUS na coluna Q (índice 16)
+                // Pega os dados
                 if (valores.length >= 17 && limpar(valores[2])) {
-                    const status = limpar(valores[16]) || 'pendente';
-                    const rg = limpar(valores[15]);
+                    const status = limpar(valores[16]) || 'pendente'; // STATUS na coluna 17 (índice 16)
+                    const rg = limpar(valores[15]); // RG na coluna 16 (índice 15)
                     
                     const dadosAluno = {
                         id: Date.now() + i,
@@ -681,6 +689,7 @@
                 }
             }
             
+            // Inverter para mostrar mais recentes primeiro
             return { pendentes: pendentes.reverse(), aprovados: aprovados.reverse() };
         } catch (error) {
             console.error('Erro ao buscar planilha:', error);
@@ -689,7 +698,7 @@
     }
 
     async function atualizarSolicitacoes() {
-        const dados = await buscarTodosDadosPlanilha();
+        const dados = await buscarDadosPlanilha();
         solicitacoes = dados.pendentes;
         alunos = dados.aprovados;
         
@@ -850,7 +859,7 @@
         }
     }
 
-    // ALUNOS (lê da variável global, que vem da planilha)
+    // ALUNOS
     function carregarAlunos() {
         document.getElementById('totalAlunos').innerText = alunos.length;
         filtrarAlunos();
@@ -877,17 +886,17 @@
             const idade = a.dataNasc ? Math.floor((new Date() - new Date(a.dataNasc)) / (31536000000)) : '-';
             return `
                 <tr onclick="verDetalhesAluno(${a.id})">
-                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">               <td><strong>${a.nomeAluno}</strong></td>
-                    <td>${idade}</td>
-                    <td>${formatarData(a.dataNasc)}</td>
-                    <td>${a.turma}</td>
-                    <td>${a.responsavel}</td>
-                    <td>${a.telefone}</td>
-                    <td>
+                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">                 <td><strong>${a.nomeAluno}</strong></td
+                    <td>${idade}</td
+                    <td>${formatarData(a.dataNasc)}</td
+                    <td>${a.turma}</td
+                    <td>${a.responsavel}</td
+                    <td>${a.telefone}</td
+                    <td
                         <button class="btn-editar" onclick="editarAluno(${a.id}); event.stopPropagation()">✏️</button>
                         <button class="btn-excluir" onclick="excluirAluno(${a.id}); event.stopPropagation()">🗑️</button>
-                    </td>
-                </tr>
+                     </td
+                </tr
             `;
         }).join('');
     }
