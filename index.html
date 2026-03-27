@@ -152,54 +152,6 @@
             box-shadow: 0 5px 15px rgba(255,152,0,0.4);
         }
         
-        /* CONTADOR DE ALUNOS */
-        .contador-alunos {
-            display: flex;
-            justify-content: center;
-            margin: 30px 0 20px;
-        }
-
-        .card-contador {
-            background: linear-gradient(135deg, var(--azul-premium), var(--azul-escuro));
-            border-radius: 30px;
-            padding: 25px 40px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: pulseContador 2s ease-in-out infinite;
-            min-width: 280px;
-        }
-
-        @keyframes pulseContador {
-            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(0,68,171,0.3); }
-            50% { transform: scale(1.02); box-shadow: 0 15px 40px rgba(0,68,171,0.5); }
-        }
-
-        .card-contador .icone-contador {
-            font-size: 3rem;
-            margin-bottom: 10px;
-        }
-
-        .card-contador .numero-contador {
-            font-size: 3.5rem;
-            font-weight: 800;
-            font-family: 'Montserrat';
-            color: white;
-            line-height: 1;
-        }
-
-        .card-contador .label-contador {
-            font-size: 1rem;
-            font-weight: 600;
-            color: rgba(255,255,255,0.9);
-            margin-top: 8px;
-        }
-
-        .card-contador .detalhe-contador {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.7);
-            margin-top: 8px;
-        }
-        
         /* CATEGORIAS OTIMIZADAS PARA CELULAR */
         .categorias-container {
             background: white;
@@ -243,7 +195,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
         
-        /* Efeito ao tocar no celular (active) */
         .cat-item:active {
             transform: scale(0.97);
             background: linear-gradient(135deg, #e8f0ff, #f0f7ff);
@@ -251,7 +202,6 @@
             box-shadow: 0 2px 5px rgba(0,68,171,0.2);
         }
         
-        /* Efeito ao tocar no ícone */
         .cat-item:active .emoji-cat {
             animation: tapBounce 0.2s ease;
         }
@@ -268,7 +218,6 @@
             display: inline-block;
         }
         
-        /* Efeito hover só para desktop (não interfere no celular) */
         @media (hover: hover) {
             .cat-item:hover {
                 transform: translateY(-5px);
@@ -481,6 +430,141 @@
         
         .btn-prematricula:hover { transform: scale(1.05); }
 
+        /* Horário de Funcionamento */
+        .horario-card {
+            text-align: center;
+            margin: 30px auto;
+            max-width: 400px;
+        }
+        .horario-content {
+            background: linear-gradient(135deg, #0047AB, #003399);
+            color: white;
+            padding: 25px 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s;
+        }
+        .horario-content:hover {
+            transform: translateY(-5px);
+        }
+        .horario-icone {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .horario-content h3 {
+            font-family: 'Montserrat';
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+        .horario-dia {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .horario-hora {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 8px 0;
+        }
+        .horario-detalhe {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        /* ========== NOVAS FUNCIONALIDADES ========== */
+        
+        /* Botão Voltar ao Topo */
+        .btn-topo {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0047AB, #003399);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+        }
+        .btn-topo.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .btn-topo:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, #003399, #002277);
+        }
+
+        /* Indicador de Carregamento */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(3px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        .loader-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 5px solid #fff;
+            border-top: 5px solid #ff9800;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Toast de Confirmação */
+        .toast-confirm {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+        }
+        .toast-confirm.show {
+            transform: translateX(0);
+        }
+        .toast-confirm.success {
+            border-left: 4px solid #25d366;
+        }
+        .toast-confirm .toast-icon {
+            font-size: 1.2rem;
+        }
+
         .patrocinadores {
             background: white;
             padding: 40px 20px;
@@ -522,10 +606,9 @@
             .seta { width: 40px; height: 40px; font-size: 1.5rem; }
             .mapa-container { height: 300px; }
             .btn-prematricula { font-size: 1rem; padding: 14px 25px; }
-            .card-contador { padding: 18px 25px; min-width: auto; }
-            .card-contador .numero-contador { font-size: 2.5rem; }
-            .card-contador .icone-contador { font-size: 2rem; }
             .categorias-container h2 { font-size: 1.6rem; }
+            .horario-hora { font-size: 1.4rem; }
+            .btn-topo { bottom: 20px; right: 20px; width: 45px; height: 45px; font-size: 1.2rem; }
         }
         
         @media (max-width: 480px) {
@@ -564,6 +647,17 @@
     </div>
 </div>
 
+<!-- INDICADOR DE CARREGAMENTO -->
+<div id="loaderOverlay" class="loader-overlay">
+    <div class="loader"></div>
+</div>
+
+<!-- TOAST DE CONFIRMAÇÃO -->
+<div id="toastConfirm" class="toast-confirm success">
+    <span class="toast-icon">✅</span>
+    <span id="toastMessage">Mensagem</span>
+</div>
+
 <!-- CONTEÚDO PRINCIPAL -->
 <header>
     <div class="brand-container">
@@ -574,9 +668,9 @@
             <li><a href="diretoria.html" class="link-txt">DIRETORIA</a></li>
             <li><a href="funcionarios.html" class="link-txt">FUNCIONÁRIOS</a></li>
             <li><a href="galerias.html" class="link-txt">GALERIA DE FOTOS</a></li>
-            <li><a href="#" class="link-insta">INSTAGRAM</a></li>
-            <li><a href="#" class="link-face">FACEBOOK</a></li>
-            <li><a href="https://wa.me/5592999999999" class="link-contato">CONTATOS</a></li>
+            <li><a href="#" class="link-insta" id="linkInstagram">INSTAGRAM</a></li>
+            <li><a href="#" class="link-face" id="linkFacebook">FACEBOOK</a></li>
+            <li><a href="https://wa.me/5592999999999" class="link-contato" id="linkWhatsapp">CONTATOS</a></li>
         </ul>
     </div>
 </header>
@@ -584,10 +678,10 @@
 <div class="hero">
     <div class="slides-container">
         <div class="slides" id="slider">
-            <div class="slide" style="background-image: url('imagem1.jpg');"><div class="overlay"></div></div>
-            <div class="slide" style="background-image: url('imagem2.jpg');"><div class="overlay"></div></div>
-            <div class="slide" style="background-image: url('imagem3.jpg');"><div class="overlay"></div></div>
-            <div class="slide" style="background-image: url('./pascoa.jpg');"><div class="overlay"></div></div>
+            <div class="slide" style="background-image: url('imagem1.jpg');"></div>
+            <div class="slide" style="background-image: url('imagem2.jpg');"></div>
+            <div class="slide" style="background-image: url('imagem3.jpg');"></div>
+            <div class="slide" style="background-image: url('./pascoa.jpg');"></div>
         </div>
         <div class="seta seta-esquerda" onclick="mudarSlide(-1)">❮</div>
         <div class="seta seta-direita" onclick="mudarSlide(1)">❯</div>
@@ -607,21 +701,23 @@
     </div>
 </section>
 
-<!-- CONTADOR DE ALUNOS -->
-<div class="contador-alunos">
-    <div class="card-contador">
-        <div class="icone-contador">👥</div>
-        <div class="numero-contador" id="totalAlunosContador">0</div>
-        <div class="label-contador">ALUNOS MATRICULADOS</div>
-        <div class="detalhe-contador">Faça parte desse time!</div>
-    </div>
-</div>
-
+<!-- BOTÃO PRÉ-MATRÍCULA -->
 <div style="text-align: center; margin: 20px 0;">
-    <a href="prematricula.html" class="btn-prematricula">
+    <a href="prematricula.html" class="btn-prematricula" id="btnPrematricula">
         📝 PRÉ-MATRÍCULA ONLINE
     </a>
     <p style="color: #666; margin-top: 10px; font-size: 0.9rem;">Faça sua solicitação de matrícula de forma rápida e segura</p>
+</div>
+
+<!-- HORÁRIO DE FUNCIONAMENTO -->
+<div class="horario-card">
+    <div class="horario-content">
+        <div class="horario-icone">🕐</div>
+        <h3>HORÁRIO DE ATENDIMENTO</h3>
+        <div class="horario-dia">📅 Sábado</div>
+        <div class="horario-hora">7:30 às 12:00</div>
+        <div class="horario-detalhe">📍 Atendimento presencial para matrículas e informações</div>
+    </div>
 </div>
 
 <div class="categorias-container" id="atividades">
@@ -656,16 +752,16 @@
         <div class="patrocinador-item"><img src="./dubom.png" alt="Dubom"></div>
         <div class="patrocinador-item"><img src="./sao-jose.png" alt="São José"></div>
     </div>
-    <div class="chamada-patrocinio">
+    <div class="chamada-patrocinio" style="text-align: center; margin-top: 20px;">
         📢 <strong>Sua marca pode estar aqui!</strong><br>
         Seja um patrocinador da Escolinha do Jacaré.<br>
-        <a href="https://wa.me/5592999999999">📱 Fale conosco</a>
+        <a href="https://wa.me/5592999999999" style="color: var(--azul-premium);">📱 Fale conosco</a>
     </div>
 </div>
 
 <section id="localizacao">
     <div class="loc-card">
-        <h2> VENHA NOS CONHECER </h2>
+        <h2>📍 VENHA NOS CONHECER</h2>
         <div class="mapa-container">
             <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.123456789!2d-60.0445!3d-3.0911!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMDUnMjguMCJTIDYwwrAwMic0MC4yIlc!5e0!3m2!1spt-BR!2sbr!4v1234567890"
@@ -673,7 +769,7 @@
                 loading="lazy">
             </iframe>
         </div>
-        <div class="endereco-info">
+        <div class="endereco-info" style="text-align: center;">
             <p><strong>Unidos do Alvorada</strong></p>
             <p>R. São Bernardo, 88 - Alvorada I, Manaus</p>
         </div>
@@ -689,8 +785,11 @@
     <div class="rights">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</div>
 </footer>
 
+<!-- BOTÃO VOLTAR AO TOPO -->
+<button id="btnTopo" class="btn-topo" title="Voltar ao topo">⬆️</button>
+
 <script>
-    // SLIDER
+    // ========== SLIDER ==========
     let slideIndex = 0;
     const slides = document.getElementById('slider');
     const totalSlides = 4;
@@ -716,7 +815,7 @@
 
     setInterval(() => { mudarSlide(1); }, 5000);
 
-    // SPLASH SCREEN + WELCOME
+    // ========== SPLASH SCREEN + WELCOME ==========
     const SCRIPT_URL_VISITAS = 'https://script.google.com/macros/s/AKfycbxaaHcEtRBwKcTpUxvZT0v_zUM4vbJfqWx2OlE3LG8UqK1_AGV-ozTi4LN0rSuLDjIx/exec';
     
     async function registrarVisita() {
@@ -736,64 +835,97 @@
         localStorage.setItem('welcome_visto', 'true');
     }
 
-    // CONTADOR DE ALUNOS - LER DA PLANILHA (CORRIGIDO - COLUNA Q = STATUS)
-    const PLANILHA_ID = '1frhkgQae4ugAZjLOvrGsw0yyqupVh-MNWGP70TCniLU';
-    const NOME_ABA = 'solicitaçoes';
-
-    async function buscarTotalAlunosAprovados() {
-        try {
-            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=${NOME_ABA}`;
-            const response = await fetch(url);
-            const texto = await response.text();
-            const linhas = texto.split('\n');
-            
-            let totalAprovados = 0;
-            
-            for (let i = 1; i < linhas.length; i++) {
-                const linha = linhas[i].trim();
-                if (!linha) continue;
-                
-                const valores = [];
-                let atual = '';
-                let dentroAspas = false;
-                for (let c of linha) {
-                    if (c === '"') dentroAspas = !dentroAspas;
-                    else if (c === ',' && !dentroAspas) { valores.push(atual); atual = ''; }
-                    else atual += c;
-                }
-                valores.push(atual);
-                
-                const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
-                
-                // STATUS agora na coluna Q (índice 16) - planilha tem 17 colunas (A a Q)
-                if (valores.length >= 17 && limpar(valores[2])) {
-                    const status = limpar(valores[16]) || 'pendente';
-                    if (status === 'aprovado') {
-                        totalAprovados++;
-                    }
-                }
-            }
-            
-            const contadorElement = document.getElementById('totalAlunosContador');
-            if (contadorElement) {
-                contadorElement.innerText = totalAprovados;
-            }
-            
-            return totalAprovados;
-        } catch (error) {
-            console.error('Erro ao buscar total de alunos:', error);
-            return 0;
+    // ========== BOTÃO VOLTAR AO TOPO ==========
+    const btnTopo = document.getElementById('btnTopo');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            btnTopo.classList.add('visible');
+        } else {
+            btnTopo.classList.remove('visible');
         }
+    });
+    
+    btnTopo.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ========== INDICADOR DE CARREGAMENTO ==========
+    const loader = document.getElementById('loaderOverlay');
+    
+    function mostrarLoader() {
+        loader.classList.add('active');
+    }
+    
+    function esconderLoader() {
+        setTimeout(() => {
+            loader.classList.remove('active');
+        }, 500);
+    }
+    
+    // Mostrar loader ao clicar no botão de pré-matrícula
+    const btnPrematricula = document.getElementById('btnPrematricula');
+    if (btnPrematricula) {
+        btnPrematricula.addEventListener('click', (e) => {
+            mostrarLoader();
+            setTimeout(() => {
+                esconderLoader();
+            }, 2000);
+        });
     }
 
-    function iniciarContadorAutomatico() {
-        buscarTotalAlunosAprovados();
-        setInterval(() => {
-            buscarTotalAlunosAprovados();
-        }, 30000);
+    // ========== TOAST DE CONFIRMAÇÃO ==========
+    const toast = document.getElementById('toastConfirm');
+    const toastMessage = document.getElementById('toastMessage');
+    
+    function mostrarToast(mensagem, tipo = 'success') {
+        toastMessage.innerText = mensagem;
+        toast.classList.remove('success');
+        toast.classList.add(tipo);
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
     }
 
-    // Controle de exibição
+    // ========== MENSAGEM DE CONFIRMAÇÃO NO CONTATO ==========
+    // WhatsApp
+    const linkWhatsapp = document.getElementById('linkWhatsapp');
+    if (linkWhatsapp) {
+        linkWhatsapp.addEventListener('click', (e) => {
+            e.preventDefault();
+            mostrarToast('📱 Abrindo WhatsApp...', 'success');
+            setTimeout(() => {
+                window.open('https://wa.me/5592999999999?text=Olá! Gostaria de mais informações sobre a Escolinha do Jacaré.', '_blank');
+            }, 500);
+        });
+    }
+    
+    // Instagram
+    const linkInstagram = document.getElementById('linkInstagram');
+    if (linkInstagram) {
+        linkInstagram.addEventListener('click', (e) => {
+            e.preventDefault();
+            mostrarToast('📸 Abrindo Instagram...', 'success');
+            setTimeout(() => {
+                window.open('https://instagram.com/escolinhadojacare', '_blank');
+            }, 500);
+        });
+    }
+    
+    // Facebook
+    const linkFacebook = document.getElementById('linkFacebook');
+    if (linkFacebook) {
+        linkFacebook.addEventListener('click', (e) => {
+            e.preventDefault();
+            mostrarToast('📘 Abrindo Facebook...', 'success');
+            setTimeout(() => {
+                window.open('https://facebook.com/escolinhadojacare', '_blank');
+            }, 500);
+        });
+    }
+
+    // ========== INICIALIZAÇÃO ==========
     window.addEventListener('load', function() {
         const splash = document.getElementById('splashScreen');
         const modal = document.getElementById('modalWelcome');
@@ -810,7 +942,6 @@
         }, 2000);
         
         registrarVisita();
-        iniciarContadorAutomatico();
     });
 </script>
 
