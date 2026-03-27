@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Área Restrita | Escolinha do Jacaré</title>
+    <title>Diretoria | Escolinha do Jacaré</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
     <style>
         :root {
             --azul-escuro: #003399;
             --azul-premium: #0047AB;
             --azul-claro: #00aaff;
-            --verde-whatsapp: #25d366; 
+            --verde-whatsapp: #25d366;
             --laranja-destaque: #ff9800;
+            --rosa-aniversario: #ff69b4;
+            --cinza-claro: #f8fafc;
+            --cinza-borda: #e2e8f0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,9 +29,9 @@
         }
 
         .nav-bar {
-            background: var(--azul-escuro);
-            padding: 15px 25px;
+            background: white;
             border-radius: 60px;
+            padding: 12px 24px;
             margin: 20px auto 0;
             max-width: 1200px;
             display: flex;
@@ -34,38 +39,39 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        
+        .logo-text {
+            text-decoration: none;
+            font-family: 'Montserrat';
+            font-weight: 900;
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, var(--azul-escuro), var(--azul-claro));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
         .nav-links {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
         }
-        
-        .nav-links a {
+        .nav-link {
             text-decoration: none;
-            font-weight: 800;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
             font-size: 0.85rem;
-            text-transform: uppercase;
-            padding: 8px 18px;
-            border-radius: 50px;
-            transition: all 0.3s;
-            background: transparent;
+            transition: all 0.2s;
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+        .nav-link:hover {
+            transform: translateY(-2px);
+            background: #e2e8f0;
+        }
+        .nav-link.ativo {
+            background: var(--azul-premium);
             color: white;
-            border: 2px solid white;
-        }
-        
-        .nav-links a:hover {
-            background: white;
-            color: var(--azul-escuro);
-            transform: scale(1.05);
-        }
-        
-        .nav-links a.ativo {
-            background: white;
-            color: var(--azul-escuro);
-            border: 2px solid white;
         }
 
         .login-container {
@@ -81,7 +87,7 @@
             border-radius: 40px;
             padding: 50px 40px;
             width: 90%;
-            max-width: 420px;
+            max-width: 450px;
             text-align: center;
             box-shadow: 0 25px 50px rgba(0,0,0,0.2);
             animation: fadeInUp 0.6s ease;
@@ -126,225 +132,262 @@
             margin: 0 auto;
             padding: 20px;
         }
-        
-        .stats-visitas {
+
+        .header-painel {
             background: linear-gradient(135deg, var(--azul-premium), var(--azul-escuro));
+            color: white;
+            padding: 20px;
             border-radius: 20px;
-            padding: 20px 25px;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
-        }
-        
-        .contador-visitas {
-            display: flex;
-            align-items: center;
             gap: 15px;
         }
-        
-        .contador-visitas .icone {
-            font-size: 2.5rem;
-            background: rgba(255,255,255,0.2);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        .header-painel h1 {
+            font-family: 'Montserrat';
+            font-size: 1.5rem;
         }
         
-        .contador-visitas .numero {
+        .info-usuario {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+        
+        .btn-atualizar, .btn-planilha, .btn-exportar-imagem {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+        }
+        
+        .btn-atualizar:hover, .btn-planilha:hover, .btn-exportar-imagem:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.02);
+        }
+        
+        .btn-sair {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .info-atualizacao {
+            text-align: right;
+            font-size: 0.75rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card-analise {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .card-analise:hover {
+            transform: translateY(-5px);
+        }
+        .card-analise .valor {
             font-size: 2.5rem;
             font-weight: 800;
             font-family: 'Montserrat';
+            color: var(--azul-escuro);
         }
-        
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            background: white;
-            padding: 10px;
-            border-radius: 60px;
+        .card-analise .label {
+            color: #666;
+            margin-top: 5px;
+            font-size: 0.8rem;
         }
-        
-        .tab-btn {
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 800;
-            cursor: pointer;
-            background: #f0f0f0;
-            color: #333;
-            border: none;
-            font-size: 1rem;
-            flex: 1;
+        .card-analise .icone {
+            font-size: 2rem;
+            margin-bottom: 10px;
         }
-        
-        .tab-btn.ativo {
-            background: var(--azul-premium);
-            color: white;
+        .card-analise .detalhe {
+            font-size: 0.7rem;
+            color: #999;
+            margin-top: 8px;
         }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.ativo {
-            display: block;
-        }
-        
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .stat-card {
+
+        .filtros-container {
             background: white;
             border-radius: 20px;
-            padding: 15px;
-            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-        
-        .stat-card.pendente {
-            background: linear-gradient(135deg, var(--laranja-destaque), #f57c00);
-            color: white;
+        .filtro-group {
+            flex: 1;
+            min-width: 150px;
         }
-        
-        .stat-card.total {
-            background: linear-gradient(135deg, var(--azul-premium), var(--azul-escuro));
-            color: white;
+        .filtro-group label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
         }
-        
-        .stat-card .numero {
-            font-size: 2rem;
-            font-weight: 800;
+        .filtro-group select, .filtro-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--cinza-borda);
+            border-radius: 12px;
+            font-size: 0.85rem;
         }
-        
-        .welcome-message {
-            background: linear-gradient(135deg, var(--azul-premium), var(--azul-escuro));
-            color: white;
-            padding: 15px 25px;
-            border-radius: 60px;
+
+        .graficos-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .grafico-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .grafico-card.full-width {
+            grid-column: span 2;
+        }
+        .grafico-card h3 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
             margin-bottom: 15px;
             text-align: center;
+            font-size: 1.1rem;
         }
-        
-        .nova-solicitacao-alerta {
-            background: linear-gradient(135deg, #ff9800, #f57c00);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 60px;
-            margin-bottom: 15px;
-            text-align: center;
-            display: none;
-            font-weight: bold;
+        canvas {
+            max-height: 300px;
+            width: 100% !important;
         }
-        
-        .toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
+
+        .ultimos-alunos-section {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .ultimos-alunos-section h2 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
             margin-bottom: 20px;
-            background: white;
-            padding: 15px 20px;
-            border-radius: 20px;
         }
-        
-        .filtros {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .filtros select, .filtros input {
-            padding: 10px 15px;
-            border: 2px solid #ddd;
-            border-radius: 50px;
-        }
-        
-        .btn-group {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .btn-novo, .btn-excluir-multiplos, .btn-sair {
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-        }
-        
-        .btn-novo { background: #25d366; color: white; }
-        .btn-excluir-multiplos { background: #ff4444; color: white; }
-        .btn-sair { background: #ff4444; color: white; }
-        
-        .tabela-container {
-            background: white;
-            border-radius: 20px;
-            overflow-x: auto;
-        }
-        
-        table {
+        .tabela-ultimos {
             width: 100%;
             border-collapse: collapse;
         }
-        
-        th, td {
-            padding: 12px 15px;
+        .tabela-ultimos th, .tabela-ultimos td {
+            padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--cinza-borda);
         }
-        
-        th {
+        .tabela-ultimos th {
+            background: var(--cinza-claro);
+            font-weight: 600;
+        }
+        .ver-mais {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .ver-mais button {
+            background: var(--azul-premium);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        .aniversariantes-section {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .aniversariantes-section h2 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            margin-bottom: 20px;
+        }
+        .meses-botoes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+        .btn-mes {
+            background: #f0f0f0;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .btn-mes.ativo {
             background: var(--azul-premium);
             color: white;
         }
-        
-        tr:hover {
-            background: #f5f5f5;
-            cursor: pointer;
+        .btn-mes.hoje {
+            background: var(--rosa-aniversario);
+            color: white;
         }
-        
-        .checkbox-col {
-            width: 40px;
+        .aniversariantes-lista {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 200px;
+        }
+        .item-aniversario {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: 12px;
+            border-left: 5px solid var(--rosa-aniversario);
+            margin-bottom: 8px;
+        }
+        .sem-aniversariantes {
             text-align: center;
+            padding: 40px;
+            color: #999;
         }
-        
-        .status-badge {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-        
-        .status-pendente { background: #ff9800; color: white; }
-        .status-aprovada { background: #4caf50; color: white; }
-        .status-recusada { background: #f44336; color: white; }
-        
-        .btn-aprovar, .btn-recusar, .btn-ver, .btn-editar, .btn-excluir {
-            padding: 5px 12px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            margin: 2px;
-        }
-        .btn-aprovar { background: #4caf50; color: white; }
-        .btn-recusar { background: #f44336; color: white; }
-        .btn-ver { background: var(--azul-premium); color: white; }
-        .btn-editar { background: #ff9800; color: white; }
-        .btn-excluir { background: #ff4444; color: white; }
 
         .modal {
             display: none;
@@ -358,705 +401,457 @@
             align-items: center;
             z-index: 1000;
         }
-        
         .modal-content {
             background: white;
-            border-radius: 30px;
-            width: 90%;
-            max-width: 700px;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 30px;
-            position: relative;
+            border-radius: 20px;
+            max-width: 90%;
+            width: 1000px;
+            max-height: 80vh;
+            overflow: auto;
+            padding: 20px;
         }
-        
-        .fechar-modal {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            font-size: 28px;
-            cursor: pointer;
-        }
-        
-        .form-grupo {
-            margin-bottom: 15px;
-        }
-        
-        .form-grupo label {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-        
-        .form-grupo input, .form-grupo select {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-        }
-        
-        .form-linha {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        
-        .btn-salvar {
-            background: var(--azul-premium);
+
+        footer {
+            background: var(--azul-escuro);
             color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 50px;
-            font-weight: 800;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
         }
 
         @media (max-width: 768px) {
-            .form-linha { grid-template-columns: 1fr; }
-            .tabs { flex-direction: column; border-radius: 20px; }
-            .toolbar { flex-direction: column; }
+            .graficos-container { grid-template-columns: 1fr; }
+            .grafico-card.full-width { grid-column: span 1; }
+            .header-painel { flex-direction: column; text-align: center; }
+            .filtros-container { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
 <div class="nav-bar">
+    <a href="index.html" class="logo-text">🐊 ESCOLINHA DO JACARÉ</a>
     <div class="nav-links">
-        <a href="index.html">🏠 INÍCIO</a>
-        <a href="galerias.html">📸 GALERIA</a>
-        <a href="funcionarios.html" class="ativo">🔒 FUNCIONÁRIOS</a>
+        <a href="index.html" class="nav-link">🏠 INÍCIO</a>
+        <a href="diretoria.html" class="nav-link ativo">📊 DIRETORIA</a>
+        <a href="funcionarios.html" class="nav-link">🔒 FUNCIONÁRIOS</a>
     </div>
 </div>
 
 <div id="telaLogin" class="login-container">
     <div class="login-card">
         <div class="icone">🔐</div>
-        <h1>ÁREA RESTRITA</h1>
-        <p>Acesso exclusivo para funcionários</p>
-        <input type="text" id="nomeUsuario" placeholder="Seu nome">
-        <input type="password" id="senhaInput" placeholder="Digite a senha">
-        <button onclick="verificarSenha()">ACESSAR</button>
+        <h1>ÁREA DA DIRETORIA</h1>
+        <p>Análise de dados da Escolinha do Jacaré</p>
+        <input type="email" id="emailLogin" placeholder="E-mail" required>
+        <input type="password" id="senhaLogin" placeholder="Senha">
+        <button onclick="verificarLogin()">ACESSAR</button>
         <div id="erroLogin" class="erro"></div>
-        <div class="info-acesso">🔒 Acesso autorizado apenas</div>
+        <div class="info-acesso">🔒 Acesso restrito a 3 diretores autorizados</div>
     </div>
 </div>
 
-<div id="painelInterno" class="painel">
-    <div id="welcomeMessage" class="welcome-message"></div>
-    <div id="novaSolicitacaoAlerta" class="nova-solicitacao-alerta"></div>
-    
-    <div class="stats-visitas">
-        <div class="contador-visitas">
-            <div class="icone">👁️</div>
-            <div>
-                <div class="numero" id="totalVisitas">0</div>
-                <div>VISITAS TOTAL</div>
-            </div>
+<div id="painelAnalise" class="painel">
+    <div class="header-painel">
+        <h1>📊 DASHBOARD | ESCOLINHA DO JACARÉ</h1>
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <div class="info-usuario" id="infoUsuario"></div>
+            <button class="btn-atualizar" onclick="atualizarDados()">🔄 ATUALIZAR</button>
+            <a href="https://docs.google.com/spreadsheets/d/1O48gLWV9zb_dtDFpz9MtIMLZ4Cx8jibtTjWlE922bAw/edit" target="_blank" class="btn-planilha">📊 VER PLANILHA</a>
+            <button class="btn-exportar-imagem" onclick="exportarComoImagem()">📸 EXPORTAR IMAGEM</button>
+            <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
         </div>
     </div>
     
-    <div class="tabs">
-        <button class="tab-btn ativo" onclick="abrirTab('solicitacoes')">📋 SOLICITAÇÕES</button>
-        <button class="tab-btn" onclick="abrirTab('alunos')">👥 ALUNOS</button>
+    <div class="info-atualizacao">
+        <span id="ultimaAtualizacao">🕐 Última atualização: carregando...</span>
     </div>
-    
-    <!-- ABA SOLICITAÇÕES -->
-    <div id="tabSolicitacoes" class="tab-content ativo">
-        <div class="stats-container">
-            <div class="stat-card pendente">
-                <div class="numero" id="totalPendentes">0</div>
-                <div>Pendentes</div>
-            </div>
-            <div class="stat-card total">
-                <div class="numero" id="totalSolicitacoes">0</div>
-                <div>Total Solicitações</div>
-            </div>
+
+    <div class="cards-container">
+        <div class="card-analise">
+            <div class="icone">👥</div>
+            <div class="valor" id="totalAlunos">0</div>
+            <div class="label">Total de Alunos</div>
+            <div class="detalhe" id="novosAlunosMes">+0 este mês</div>
         </div>
-        
-        <div class="toolbar">
-            <div class="filtros">
-                <select id="filtroStatus">
-                    <option value="pendente" selected>🟡 Pendentes</option>
-                    <option value="todas">Todas</option>
-                    <option value="aprovada">🟢 Aprovadas</option>
-                    <option value="recusada">🔴 Recusadas</option>
-                </select>
-                <input type="text" id="buscaSolicitacao" placeholder="Buscar por nome...">
-                <button class="btn-excluir-multiplos" onclick="excluirSelecionadosSolicitacoes()">🗑️ Excluir</button>
-            </div>
-            <div class="btn-group">
-                <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
-            </div>
+        <div class="card-analise">
+            <div class="icone">📊</div>
+            <div class="valor" id="mediaIdade">0</div>
+            <div class="label">Média de Idade</div>
+            <div class="detalhe">anos</div>
         </div>
-        
-        <div class="tabela-container">
-             <table
-                <thead>
-                     <tr
-                        <th class="checkbox-col"><input type="checkbox" id="selecionarTodosSolicitacoes" onchange="selecionarTodosSolicitacoes()"></th>
-                        <th>Nome</th><th>RG</th><th>Turma</th><th>Idade</th><th>Data Nasc</th><th>Responsável</th><th>Telefone</th><th>Data</th><th>Status</th><th>Ações</th>
-                     </tr
-                </thead>
-                <tbody id="corpoTabelaSolicitacoes"></tbody>
-             </table
+        <div class="card-analise">
+            <div class="icone">🏆</div>
+            <div class="valor" id="turmaMaisAlunos">-</div>
+            <div class="label">Turma com + Alunos</div>
+            <div class="detalhe" id="turmaPercentual">0% do total</div>
+        </div>
+        <div class="card-analise">
+            <div class="icone">🏘️</div>
+            <div class="valor" id="bairroMaisAlunos">-</div>
+            <div class="label">Bairro com + Alunos</div>
+            <div class="detalhe" id="bairroPercentual">0% do total</div>
         </div>
     </div>
-    
-    <!-- ABA ALUNOS -->
-    <div id="tabAlunos" class="tab-content">
-        <div class="stats-container">
-            <div class="stat-card total">
-                <div class="numero" id="totalAlunos">0</div>
-                <div>Total Alunos</div>
-            </div>
+
+    <div class="filtros-container">
+        <div class="filtro-group">
+            <label>⚽ FILTRAR POR TURMA</label>
+            <select id="filtroTurma">
+                <option value="">Todas</option>
+                <option value="Futebol">⚽ Futebol</option>
+                <option value="Taekwondo">🥋 Taekwondo</option>
+                <option value="Ginástica">🤸 Ginástica</option>
+                <option value="Tênis de Mesa">🏓 Tênis de Mesa</option>
+                <option value="Judô">🥋 Judô</option>
+            </select>
         </div>
-        
-        <div class="toolbar">
-            <div class="filtros">
-                <select id="filtroTurmaAlunos">
-                    <option value="todas">Todas</option>
-                    <option value="Futebol">⚽ Futebol</option>
-                    <option value="Taekwondo">🥋 Taekwondo</option>
-                    <option value="Ginástica">🤸 Ginástica</option>
-                    <option value="Tênis de Mesa">🏓 Tênis de Mesa</option>
-                    <option value="Judô">🥋 Judô</option>
-                </select>
-                <input type="text" id="buscaAluno" placeholder="Buscar...">
-                <button class="btn-novo" onclick="abrirModalCadastroAluno()">➕ NOVO</button>
-                <button class="btn-excluir-multiplos" onclick="excluirSelecionadosAlunos()">🗑️ Excluir</button>
-            </div>
+        <div class="filtro-group">
+            <label>🔍 BUSCAR ALUNO</label>
+            <input type="text" id="buscaAlunoGlobal" placeholder="Nome do aluno...">
         </div>
-        
-        <div class="tabela-container">
-             <table
-                <thead>
-                     <tr
-                        <th class="checkbox-col"><input type="checkbox" id="selecionarTodosAlunos" onchange="selecionarTodosAlunos()"></th>
-                        <th>Nome</th><th>Idade</th><th>Data Nasc</th><th>Turma</th><th>Responsável</th><th>Telefone</th><th>Ações</th>
-                     </tr
-                </thead>
-                <tbody id="corpoTabelaAlunos"></tbody>
-             </table
+    </div>
+
+    <div class="graficos-container">
+        <div class="grafico-card">
+            <h3>⚽ Alunos por Turma</h3>
+            <canvas id="graficoTurmas"></canvas>
         </div>
+        <div class="grafico-card">
+            <h3>🥧 Distribuição por Turma (%)</h3>
+            <canvas id="graficoPizza"></canvas>
+        </div>
+        <div class="grafico-card">
+            <h3>🏘️ Alunos por Bairro</h3>
+            <canvas id="graficoBairro"></canvas>
+        </div>
+        <div class="grafico-card">
+            <h3>📈 Evolução Mensal de Matrículas</h3>
+            <canvas id="graficoEvolucao"></canvas>
+        </div>
+        <div class="grafico-card full-width">
+            <h3>📊 Alunos por Faixa Etária (Sub)</h3>
+            <canvas id="graficoSub"></canvas>
+        </div>
+    </div>
+
+    <div class="ultimos-alunos-section">
+        <h2>🆕 ÚLTIMOS ALUNOS APROVADOS</h2>
+        <div style="overflow-x: auto;">
+            <table class="tabela-ultimos">
+                <thead><tr><th>Nome</th><th>Turma</th><th>Idade</th><th>Responsável</th><th>Data Matrícula</th></thead>
+                <tbody id="listaUltimosAlunos"></tbody>
+            </table>
+        </div>
+        <div class="ver-mais"><button onclick="verTodosAlunos()">📋 VER TODOS OS ALUNOS</button></div>
+    </div>
+
+    <div class="aniversariantes-section">
+        <h2>🎂 ANIVERSARIANTES</h2>
+        <div class="meses-botoes" id="mesesBotoes"></div>
+        <div id="aniversariantesLista" class="aniversariantes-lista"><div class="sem-aniversariantes">Selecione um mês</div></div>
     </div>
 </div>
 
-<!-- MODAIS -->
-<div id="modalDetalhesSolicitacao" class="modal">
+<div id="modalTodosAlunos" class="modal">
     <div class="modal-content">
-        <span class="fechar-modal" onclick="fecharModalDetalhesSolicitacao()">&times;</span>
-        <h2>📋 DETALHES</h2>
-        <div id="detalhesSolicitacaoConteudo"></div>
-        <div style="display: flex; gap: 10px; margin-top: 20px;">
-            <button id="btnAprovarDetalhes" class="btn-aprovar" style="flex:1;">✅ APROVAR</button>
-            <button id="btnRecusarDetalhes" class="btn-recusar" style="flex:1;">❌ RECUSAR</button>
+        <h3>📋 TODOS OS ALUNOS</h3>
+        <div style="overflow-x: auto;">
+            <table class="tabela-ultimos">
+                <thead><tr><th>Nome</th><th>Turma</th><th>Idade</th><th>Responsável</th><th>Telefone</th><th>Bairro</th></tr></thead>
+                <tbody id="listaTodosAlunos"></tbody>
+            </table>
         </div>
+        <div style="text-align:right; margin-top:15px;"><button onclick="fecharModal()" style="padding:8px 20px; background:#0047AB; color:white; border:none; border-radius:30px;">FECHAR</button></div>
     </div>
 </div>
 
-<div id="modalAluno" class="modal">
-    <div class="modal-content">
-        <span class="fechar-modal" onclick="fecharModalAluno()">&times;</span>
-        <h2 id="modalAlunoTitulo">CADASTRAR ALUNO</h2>
-        <form id="formAluno">
-            <input type="hidden" id="alunoId">
-            <div class="form-linha">
-                <div class="form-grupo"><label>Nome *</label><input type="text" id="nomeAluno" required></div>
-                <div class="form-grupo"><label>Data Nasc.</label><input type="date" id="dataNascAluno"></div>
-            </div>
-            <div class="form-linha">
-                <div class="form-grupo"><label>Turma *</label><select id="turmaAluno"><option>Futebol</option><option>Taekwondo</option><option>Ginástica</option><option>Tênis de Mesa</option><option>Judô</option></select></div>
-                <div class="form-grupo"><label>Responsável *</label><input type="text" id="responsavelAluno" required></div>
-            </div>
-            <div class="form-linha">
-                <div class="form-grupo"><label>Telefone *</label><input type="text" id="telefoneAluno" required></div>
-                <div class="form-grupo"><label>Telefone 2</label><input type="text" id="telefone2Aluno"></div>
-            </div>
-            <div class="form-linha">
-                <div class="form-grupo"><label>Endereço</label><input type="text" id="enderecoAluno"></div>
-                <div class="form-grupo"><label>Bairro</label><input type="text" id="bairroAluno"></div>
-            </div>
-            <button type="submit" class="btn-salvar">SALVAR</button>
-        </form>
-    </div>
-</div>
-
-<div id="modalDetalhesAluno" class="modal">
-    <div class="modal-content">
-        <span class="fechar-modal" onclick="fecharModalDetalhesAluno()">&times;</span>
-        <h2>📄 FICHA DO ALUNO</h2>
-        <div id="detalhesAlunoConteudo"></div>
-        <div style="display: flex; gap: 10px; margin-top: 20px;">
-            <button class="btn-editar" onclick="editarAlunoModal()">✏️ EDITAR</button>
-            <button class="btn-excluir" onclick="excluirAlunoModal()">🗑️ EXCLUIR</button>
-        </div>
-    </div>
-</div>
+<footer>
+    ESCOLINHA DO JACARÉ - ALVORADA<br>
+    Manaus/AM - Brasil<br>
+    © 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte
+</footer>
 
 <script>
-    const SENHA = 'jacare123';
-    let solicitacoes = [];
+    const USUARIOS = [
+        { email: "diretor.jean@escolinha.com", nome: "Jean Silva", senha: "Clash454647*" },
+        { email: "diretor.jacare@escolinha.com", nome: "jacaré", senha: "jacare1998" },
+        { email: "diretor.max@escolinha.com", nome: "max", senha: "max1998" }
+    ];
+    
+    let usuarioLogado = null;
     let alunos = [];
-    let alunoSelecionadoId = null;
-    let intervalo = null;
+    let alunosFiltrados = [];
+    let graficos = {};
+    let mesSelecionado = new Date().getMonth();
+    let ultimaAtualizacao = new Date();
 
-    const PLANILHA_ID = '1frhkgQae4ugAZjLOvrGsw0yyqupVh-MNWGP70TCniLU';
-    const SCRIPT_URL_ATUALIZAR = 'https://script.google.com/macros/s/AKfycbzaCnCPkN1bREs8LjCYmR5T5tfIyAXbsX9OIFc0hzTpSub6rIRn9ehQBFYtUAPtjQQ/exec';
+    const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    const TURMAS = ['Futebol', 'Taekwondo', 'Ginástica', 'Tênis de Mesa', 'Judô'];
+    const SUBS = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Sub-20', 'Sub-30'];
+    
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwaZza83Xacfp6mgSPcK-SbJUwMzVrM8MJwj6SVoXihwL2HxYD-KlBpjGsSYmyM-MSP3A/exec';
 
-    async function atualizarStatusNaPlanilha(protocolo, novoStatus) {
+    function atualizarTimestamp() {
+        const diff = Math.floor((new Date() - ultimaAtualizacao) / 1000);
+        document.getElementById('ultimaAtualizacao').innerHTML = `🕐 Última atualização: ${diff < 60 ? `há ${diff} segundos` : `há ${Math.floor(diff / 60)} minutos`}`;
+    }
+
+    // Função para padronizar texto (primeira letra maiúscula)
+    function capitalizar(str) {
+        if (!str || str === 'Não informada' || str === 'Não informado') return 'Não informada';
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
+    async function carregarDadosDaPlanilha() {
         try {
-            await fetch(SCRIPT_URL_ATUALIZAR, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ protocolo, status: novoStatus, acao: 'atualizar_status' })
-            });
-            return true;
+            const response = await fetch(SCRIPT_URL);
+            const dados = await response.json();
+            
+            alunos = dados.filter(item => item.status === 'aprovado').map(item => ({
+                nome: item.nomeAluno || 'Não informado',
+                dataNasc: item.dataNasc || '',
+                idade: parseInt(item.idade) || 0,
+                turma: capitalizar(item.turma),
+                bairro: item.bairro ? capitalizar(item.bairro) : 'Não informado',
+                responsavel: item.responsavel || 'Não informado',
+                telefone: item.telefone || '',
+                dataMatricula: item.dataEnvio || new Date().toISOString()
+            }));
+            
+            console.log('✅ Dados carregados:', alunos.length, 'alunos');
+            console.log('Turmas:', [...new Set(alunos.map(a => a.turma))]);
+            
+            aplicarFiltros();
+            atualizarCards();
+            atualizarTodosGraficos();
+            atualizarUltimosAlunos();
+            atualizarAniversariantes();
+            
+            ultimaAtualizacao = new Date();
+            atualizarTimestamp();
         } catch (error) {
             console.error('Erro:', error);
-            return false;
+            alert('Erro ao carregar dados da planilha');
         }
     }
 
-    // FUNÇÃO IDÊNTICA AO TESTE QUE FUNCIONOU
-    async function buscarDadosPlanilha() {
-        try {
-            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=solicitaçoes`;
-            const response = await fetch(url);
-            const texto = await response.text();
-            const linhas = texto.split('\n');
-            
-            const pendentes = [];
-            const aprovados = [];
-            
-            // Pular cabeçalho (linha 0)
-            for (let i = 1; i < linhas.length; i++) {
-                const linha = linhas[i].trim();
-                if (!linha) continue;
-                
-                // Parse CSV simples
-                const valores = [];
-                let atual = '';
-                let dentroAspas = false;
-                for (let c of linha) {
-                    if (c === '"') {
-                        dentroAspas = !dentroAspas;
-                    } else if (c === ',' && !dentroAspas) {
-                        valores.push(atual);
-                        atual = '';
-                    } else {
-                        atual += c;
-                    }
-                }
-                valores.push(atual);
-                
-                // Limpar aspas
-                const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
-                
-                // Pega os dados
-                if (valores.length >= 17 && limpar(valores[2])) {
-                    const status = limpar(valores[16]) || 'pendente'; // STATUS na coluna 17 (índice 16)
-                    const rg = limpar(valores[15]); // RG na coluna 16 (índice 15)
-                    
-                    const dadosAluno = {
-                        id: Date.now() + i,
-                        protocolo: limpar(valores[0]),
-                        dataEnvio: limpar(valores[1]),
-                        nomeAluno: limpar(valores[2]),
-                        dataNasc: limpar(valores[3]),
-                        idade: limpar(valores[4]),
-                        turma: limpar(valores[5]),
-                        categoria: limpar(valores[6]),
-                        responsavel: limpar(valores[7]),
-                        telefone: limpar(valores[8]),
-                        email: limpar(valores[9]),
-                        endereco: limpar(valores[10]),
-                        bairro: limpar(valores[11]),
-                        moradores: limpar(valores[12]),
-                        remedio: limpar(valores[13]),
-                        origem: limpar(valores[14]),
-                        rg: rg,
-                        status: status
-                    };
-                    
-                    if (status === 'pendente') {
-                        pendentes.push(dadosAluno);
-                    } else if (status === 'aprovado') {
-                        aprovados.push(dadosAluno);
-                    }
-                }
-            }
-            
-            // Inverter para mostrar mais recentes primeiro
-            return { pendentes: pendentes.reverse(), aprovados: aprovados.reverse() };
-        } catch (error) {
-            console.error('Erro ao buscar planilha:', error);
-            return { pendentes: [], aprovados: [] };
-        }
-    }
-
-    async function atualizarSolicitacoes() {
-        const dados = await buscarDadosPlanilha();
-        solicitacoes = dados.pendentes;
-        alunos = dados.aprovados;
+    function aplicarFiltros() {
+        const turmaFiltro = document.getElementById('filtroTurma').value;
+        const busca = document.getElementById('buscaAlunoGlobal').value.toLowerCase();
         
-        localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-        localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-        
-        atualizarStatsSolicitacoes();
-        filtrarSolicitacoes();
-        carregarAlunos();
-    }
-
-    function atualizarStatsSolicitacoes() {
-        document.getElementById('totalPendentes').innerText = solicitacoes.length;
-        document.getElementById('totalSolicitacoes').innerText = solicitacoes.length;
-    }
-
-    function filtrarSolicitacoes() {
-        const status = document.getElementById('filtroStatus').value;
-        const busca = document.getElementById('buscaSolicitacao').value.toLowerCase();
-        let filtradas = solicitacoes.filter(s => {
-            if (status !== 'todas' && s.status !== status) return false;
-            if (busca && !s.nomeAluno.toLowerCase().includes(busca)) return false;
+        alunosFiltrados = alunos.filter(a => {
+            if (turmaFiltro && a.turma !== turmaFiltro) return false;
+            if (busca && !a.nome.toLowerCase().includes(busca)) return false;
             return true;
         });
-        renderizarSolicitacoes(filtradas);
+        
+        console.log('Filtro aplicado:', turmaFiltro || 'Todas', '→', alunosFiltrados.length, 'alunos');
     }
+
+    function atualizarCards() {
+        const total = alunos.length;
+        document.getElementById('totalAlunos').innerText = total;
+        
+        const somaIdade = alunos.reduce((s, a) => s + a.idade, 0);
+        document.getElementById('mediaIdade').innerText = total ? (somaIdade / total).toFixed(1) : 0;
+        
+        const turmasCount = {};
+        alunos.forEach(a => turmasCount[a.turma] = (turmasCount[a.turma] || 0) + 1);
+        let turmaMais = { nome: '-', count: 0 };
+        for (const [nome, count] of Object.entries(turmasCount)) if (count > turmaMais.count) turmaMais = { nome, count };
+        document.getElementById('turmaMaisAlunos').innerText = turmaMais.nome;
+        document.getElementById('turmaPercentual').innerHTML = total ? `${((turmaMais.count / total) * 100).toFixed(1)}% do total` : '0%';
+        
+        const bairrosCount = {};
+        alunos.forEach(a => { if(a.bairro && a.bairro !== 'Não informado') bairrosCount[a.bairro] = (bairrosCount[a.bairro] || 0) + 1; });
+        let bairroMais = { nome: '-', count: 0 };
+        for (const [nome, count] of Object.entries(bairrosCount)) if (count > bairroMais.count) bairroMais = { nome, count };
+        document.getElementById('bairroMaisAlunos').innerText = bairroMais.nome;
+        document.getElementById('bairroPercentual').innerHTML = total ? `${((bairroMais.count / total) * 100).toFixed(1)}% do total` : '0%';
+        
+        const mesAtual = new Date().getMonth();
+        const novosMes = alunos.filter(a => a.dataMatricula && new Date(a.dataMatricula).getMonth() === mesAtual).length;
+        document.getElementById('novosAlunosMes').innerHTML = `+${novosMes} este mês`;
+    }
+
+    function atualizarTodosGraficos() {
+        const dados = alunosFiltrados;
+        
+        // Gráfico de barras por turma
+        const turmasCount = TURMAS.map(t => dados.filter(a => a.turma === t).length);
+        if (graficos.turmas) graficos.turmas.destroy();
+        graficos.turmas = new Chart(document.getElementById('graficoTurmas'), {
+            type: 'bar',
+            data: { labels: TURMAS, datasets: [{ label: 'Alunos', data: turmasCount, backgroundColor: '#0047AB', borderRadius: 8 }] },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
+        });
+        
+        // Gráfico de pizza
+        if (graficos.pizza) graficos.pizza.destroy();
+        graficos.pizza = new Chart(document.getElementById('graficoPizza'), {
+            type: 'pie',
+            data: { labels: TURMAS, datasets: [{ data: turmasCount, backgroundColor: ['#0047AB', '#00aaff', '#ff9800', '#25d366', '#ff69b4'] }] },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
+        });
+        
+        // Gráfico de bairros
+        const bairrosMap = new Map();
+        dados.forEach(a => { if(a.bairro && a.bairro !== 'Não informado') bairrosMap.set(a.bairro, (bairrosMap.get(a.bairro) || 0) + 1); });
+        const bairros = Array.from(bairrosMap.entries()).sort((a,b) => b[1]-a[1]).slice(0, 8);
+        if (graficos.bairro) graficos.bairro.destroy();
+        graficos.bairro = new Chart(document.getElementById('graficoBairro'), {
+            type: 'bar',
+            data: { labels: bairros.map(b => b[0]), datasets: [{ label: 'Alunos', data: bairros.map(b => b[1]), backgroundColor: '#ff9800', borderRadius: 8 }] },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
+        });
+        
+        // Evolução mensal
+        const matriculasPorMes = new Array(12).fill(0);
+        dados.forEach(a => {
+            if (a.dataMatricula) {
+                const mes = new Date(a.dataMatricula).getMonth();
+                matriculasPorMes[mes]++;
+            }
+        });
+        if (graficos.evolucao) graficos.evolucao.destroy();
+        graficos.evolucao = new Chart(document.getElementById('graficoEvolucao'), {
+            type: 'line',
+            data: { labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], 
+                    datasets: [{ label: 'Matrículas', data: matriculasPorMes, borderColor: '#0047AB', backgroundColor: 'rgba(0,71,171,0.1)', fill: true, tension: 0.3 }] },
+            options: { responsive: true, maintainAspectRatio: true }
+        });
+        
+        // Faixa etária
+        const subCount = [0,0,0,0,0,0,0,0];
+        dados.forEach(a => {
+            const idade = a.idade;
+            if (!idade) return;
+            if (idade <= 7) subCount[0]++;
+            else if (idade <= 9) subCount[1]++;
+            else if (idade <= 11) subCount[2]++;
+            else if (idade <= 13) subCount[3]++;
+            else if (idade <= 15) subCount[4]++;
+            else if (idade <= 17) subCount[5]++;
+            else if (idade <= 20) subCount[6]++;
+            else subCount[7]++;
+        });
+        if (graficos.sub) graficos.sub.destroy();
+        graficos.sub = new Chart(document.getElementById('graficoSub'), {
+            type: 'bar',
+            data: { labels: SUBS, datasets: [{ label: 'Alunos', data: subCount, backgroundColor: '#00aaff', borderRadius: 8 }] },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
+        });
+    }
+
+    function atualizarUltimosAlunos() {
+        const ultimos = [...alunos].sort((a,b) => new Date(b.dataMatricula) - new Date(a.dataMatricula)).slice(0, 10);
+        document.getElementById('listaUltimosAlunos').innerHTML = ultimos.map(a => `
+            <tr><td><strong>${a.nome}</strong></td><td>${a.turma}</td><td>${a.idade} anos</td><td>${a.responsavel}</td><td>${a.dataMatricula ? new Date(a.dataMatricula).toLocaleDateString('pt-BR') : '-'}</td></tr>
+        `).join('');
+    }
+
+    function verTodosAlunos() {
+        document.getElementById('listaTodosAlunos').innerHTML = alunos.map(a => `
+            <tr><td><strong>${a.nome}</strong></td><td>${a.turma}</td><td>${a.idade} anos</td><td>${a.responsavel}</td><td>${a.telefone}</td><td>${a.bairro}</td></tr>
+        `).join('');
+        document.getElementById('modalTodosAlunos').style.display = 'flex';
+    }
+
+    function fecharModal() { document.getElementById('modalTodosAlunos').style.display = 'none'; }
 
     function formatarData(dataNasc) {
         if (!dataNasc) return '-';
         try {
             const d = new Date(dataNasc);
-            return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}`;
-        } catch {
-            return dataNasc;
+            return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`;
+        } catch { return dataNasc; }
+    }
+
+    function atualizarAniversariantes() {
+        const aniversariantes = alunos.filter(a => a.dataNasc && new Date(a.dataNasc).getMonth() === mesSelecionado);
+        const listaDiv = document.getElementById('aniversariantesLista');
+        if (!aniversariantes.length) {
+            listaDiv.innerHTML = '<div class="sem-aniversariantes">🎂 Nenhum aniversariante neste mês</div>';
+        } else {
+            listaDiv.innerHTML = aniversariantes.map(a => `
+                <div class="item-aniversario"><div class="emoji">🎈</div><div><strong>${a.nome}</strong><br>${a.idade} anos • ${formatarData(a.dataNasc)} • ${a.turma}</div></div>
+            `).join('');
         }
     }
 
-    function renderizarSolicitacoes(lista) {
-        const tbody = document.getElementById('corpoTabelaSolicitacoes');
-        if (lista.length === 0) {
-            tbody.innerHTML = ' <td colspan="11" class="sem-solicitacoes">Nenhuma solicitação pendente.    ';
-            return;
-        }
-        tbody.innerHTML = lista.map(s => `
-             <tr
-                <td class="checkbox-col"><input type="checkbox" class="sel-solic" value="${s.id}"> </td
-                <td onclick="verSolicitacao(${s.id})"><strong>${s.nomeAluno}</strong> </td
-                <td onclick="verSolicitacao(${s.id})">${s.rg || '-'} </td
-                <td onclick="verSolicitacao(${s.id})">${s.turma} </td
-                <td onclick="verSolicitacao(${s.id})">${s.idade} </td
-                <td onclick="verSolicitacao(${s.id})">${formatarData(s.dataNasc)} </td
-                <td onclick="verSolicitacao(${s.id})">${s.responsavel} </td
-                <td onclick="verSolicitacao(${s.id})">${s.telefone} </td
-                <td onclick="verSolicitacao(${s.id})">${s.dataEnvio} </td
-                <td onclick="verSolicitacao(${s.id})"><span class="status-badge status-pendente">🟡 Pendente</span> </td
-                <td
-                    <button class="btn-ver" onclick="verSolicitacao(${s.id})">👁️</button>
-                    <button class="btn-aprovar" onclick="aprovarSolicitacao('${s.protocolo}', ${s.id}, this)">✅</button>
-                    <button class="btn-recusar" onclick="recusarSolicitacao('${s.protocolo}', ${s.id}, this)">❌</button>
-                 </td
-             </tr
+    function criarBotoesMeses() {
+        const hoje = new Date();
+        document.getElementById('mesesBotoes').innerHTML = MESES.map((mes, idx) => `
+            <button class="btn-mes ${mesSelecionado === idx ? 'ativo' : ''} ${hoje.getMonth() === idx ? 'hoje' : ''}" onclick="selecionarMes(${idx})">${mes.substring(0,3)}</button>
         `).join('');
     }
 
-    async function aprovarSolicitacao(protocolo, id, btn) {
-        if (btn) {
-            btn.disabled = true;
-            btn.innerHTML = '⏳';
-        }
-        
-        const s = solicitacoes.find(s => s.id === id);
-        if (s && confirm(`Aprovar ${s.nomeAluno}?`)) {
-            const atualizado = await atualizarStatusNaPlanilha(protocolo, 'aprovado');
-            
-            if (atualizado) {
-                await atualizarSolicitacoes();
-                fecharModalDetalhesSolicitacao();
-                alert(`✅ ${s.nomeAluno} aprovado!`);
-            } else {
-                alert('❌ Erro ao atualizar a planilha. Tente novamente.');
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = '✅';
-                }
-            }
-        } else if (btn) {
+    function selecionarMes(mes) { mesSelecionado = mes; criarBotoesMeses(); atualizarAniversariantes(); }
+
+    function atualizarDados() {
+        const btn = document.querySelector('.btn-atualizar');
+        btn.innerHTML = '🔄 ATUALIZANDO...';
+        btn.disabled = true;
+        carregarDadosDaPlanilha().finally(() => {
+            btn.innerHTML = '🔄 ATUALIZAR';
             btn.disabled = false;
-            btn.innerHTML = '✅';
-        }
-    }
-
-    async function recusarSolicitacao(protocolo, id, btn) {
-        if (btn) {
-            btn.disabled = true;
-            btn.innerHTML = '⏳';
-        }
-        
-        const s = solicitacoes.find(s => s.id === id);
-        if (s && confirm(`Recusar ${s.nomeAluno}?`)) {
-            const atualizado = await atualizarStatusNaPlanilha(protocolo, 'recusada');
-            
-            if (atualizado) {
-                await atualizarSolicitacoes();
-                fecharModalDetalhesSolicitacao();
-                alert(`❌ ${s.nomeAluno} recusado.`);
-            } else {
-                alert('❌ Erro ao atualizar a planilha. Tente novamente.');
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerHTML = '❌';
-                }
-            }
-        } else if (btn) {
-            btn.disabled = false;
-            btn.innerHTML = '❌';
-        }
-    }
-
-    function verSolicitacao(id) {
-        const s = solicitacoes.find(s => s.id === id);
-        if (!s) return;
-        document.getElementById('detalhesSolicitacaoConteudo').innerHTML = `
-            <p><strong>Protocolo:</strong> ${s.protocolo}</p>
-            <p><strong>Aluno:</strong> ${s.nomeAluno}</p>
-            <p><strong>RG do Responsável:</strong> ${s.rg || '-'}</p>
-            <p><strong>Data Nasc.:</strong> ${formatarData(s.dataNasc)}</p>
-            <p><strong>Idade:</strong> ${s.idade} anos</p>
-            <p><strong>Turma:</strong> ${s.turma}</p>
-            <p><strong>Categoria:</strong> ${s.categoria || '-'}</p>
-            <p><strong>Responsável:</strong> ${s.responsavel}</p>
-            <p><strong>Telefone:</strong> ${s.telefone}</p>
-            <p><strong>E-mail:</strong> ${s.email}</p>
-            <p><strong>Endereço:</strong> ${s.endereco}</p>
-            <p><strong>Bairro:</strong> ${s.bairro}</p>
-            <p><strong>Remédio:</strong> ${s.remedio}</p>
-            <p><strong>Data Envio:</strong> ${s.dataEnvio}</p>
-        `;
-        const btnA = document.getElementById('btnAprovarDetalhes');
-        const btnR = document.getElementById('btnRecusarDetalhes');
-        btnA.onclick = () => aprovarSolicitacao(s.protocolo, s.id, btnA);
-        btnR.onclick = () => recusarSolicitacao(s.protocolo, s.id, btnR);
-        document.getElementById('modalDetalhesSolicitacao').style.display = 'flex';
-    }
-
-    function selecionarTodosSolicitacoes() {
-        const chk = document.getElementById('selecionarTodosSolicitacoes').checked;
-        document.querySelectorAll('.sel-solic').forEach(cb => cb.checked = chk);
-    }
-
-    function excluirSelecionadosSolicitacoes() {
-        const ids = Array.from(document.querySelectorAll('.sel-solic:checked')).map(cb => parseInt(cb.value));
-        if (ids.length === 0) { alert('Selecione pelo menos uma!'); return; }
-        if (confirm(`Excluir ${ids.length} solicitação(ões)?`)) {
-            solicitacoes = solicitacoes.filter(s => !ids.includes(s.id));
-            localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-            atualizarStatsSolicitacoes();
-            filtrarSolicitacoes();
-        }
-    }
-
-    // ALUNOS
-    function carregarAlunos() {
-        document.getElementById('totalAlunos').innerText = alunos.length;
-        filtrarAlunos();
-    }
-
-    function filtrarAlunos() {
-        const turma = document.getElementById('filtroTurmaAlunos').value;
-        const busca = document.getElementById('buscaAluno').value.toLowerCase();
-        let filtrados = alunos.filter(a => {
-            if (turma !== 'todas' && a.turma !== turma) return false;
-            if (busca && !a.nomeAluno.toLowerCase().includes(busca)) return false;
-            return true;
         });
-        renderizarAlunos(filtrados);
     }
 
-    function renderizarAlunos(lista) {
-        const tbody = document.getElementById('corpoTabelaAlunos');
-        if (lista.length === 0) {
-            tbody.innerHTML = ' <td colspan="8">Nenhum aluno encontrado.    ';
-            return;
-        }
-        tbody.innerHTML = lista.map(a => {
-            const idade = a.dataNasc ? Math.floor((new Date() - new Date(a.dataNasc)) / (31536000000)) : '-';
-            return `
-                <tr onclick="verDetalhesAluno(${a.id})">
-                    <td class="checkbox-col"><input type="checkbox" class="sel-aluno" value="${a.id}" onclick="event.stopPropagation()">                 <td><strong>${a.nomeAluno}</strong></td
-                    <td>${idade}</td
-                    <td>${formatarData(a.dataNasc)}</td
-                    <td>${a.turma}</td
-                    <td>${a.responsavel}</td
-                    <td>${a.telefone}</td
-                    <td
-                        <button class="btn-editar" onclick="editarAluno(${a.id}); event.stopPropagation()">✏️</button>
-                        <button class="btn-excluir" onclick="excluirAluno(${a.id}); event.stopPropagation()">🗑️</button>
-                     </td
-                </tr
-            `;
-        }).join('');
+    function exportarComoImagem() {
+        const btn = document.querySelector('.btn-exportar-imagem');
+        btn.innerHTML = '📸 GERANDO...';
+        btn.disabled = true;
+        html2canvas(document.getElementById('painelAnalise'), { scale: 2 }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `dashboard_${new Date().toISOString().slice(0,10)}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+            alert('✅ Dashboard salvo como imagem!');
+        }).catch(() => alert('Erro ao gerar imagem')).finally(() => {
+            btn.innerHTML = '📸 EXPORTAR IMAGEM';
+            btn.disabled = false;
+        });
     }
 
-    function selecionarTodosAlunos() {
-        const chk = document.getElementById('selecionarTodosAlunos').checked;
-        document.querySelectorAll('.sel-aluno').forEach(cb => cb.checked = chk);
-    }
-
-    function excluirSelecionadosAlunos() {
-        const ids = Array.from(document.querySelectorAll('.sel-aluno:checked')).map(cb => parseInt(cb.value));
-        if (ids.length === 0) { alert('Selecione pelo menos um!'); return; }
-        if (confirm(`Excluir ${ids.length} aluno(s)?`)) {
-            alunos = alunos.filter(a => !ids.includes(a.id));
-            localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-            carregarAlunos();
-        }
-    }
-
-    function abrirModalCadastroAluno() {
-        document.getElementById('modalAlunoTitulo').innerText = 'CADASTRAR ALUNO';
-        document.getElementById('alunoId').value = '';
-        document.getElementById('formAluno').reset();
-        document.getElementById('modalAluno').style.display = 'flex';
-    }
-
-    function editarAluno(id) {
-        const a = alunos.find(a => a.id === id);
-        if (!a) return;
-        alunoSelecionadoId = id;
-        document.getElementById('modalAlunoTitulo').innerText = 'EDITAR ALUNO';
-        document.getElementById('alunoId').value = a.id;
-        document.getElementById('nomeAluno').value = a.nomeAluno || '';
-        document.getElementById('dataNascAluno').value = a.dataNasc || '';
-        document.getElementById('turmaAluno').value = a.turma || 'Futebol';
-        document.getElementById('responsavelAluno').value = a.responsavel || '';
-        document.getElementById('telefoneAluno').value = a.telefone || '';
-        document.getElementById('telefone2Aluno').value = a.telefone2 || '';
-        document.getElementById('enderecoAluno').value = a.endereco || '';
-        document.getElementById('bairroAluno').value = a.bairro || '';
-        document.getElementById('modalAluno').style.display = 'flex';
-    }
-
-    function excluirAluno(id) {
-        if (confirm('Excluir este aluno?')) {
-            alunos = alunos.filter(a => a.id !== id);
-            localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-            carregarAlunos();
-        }
-    }
-
-    function verDetalhesAluno(id) {
-        const a = alunos.find(a => a.id === id);
-        if (!a) return;
-        alunoSelecionadoId = id;
-        const idade = a.dataNasc ? Math.floor((new Date() - new Date(a.dataNasc)) / 31536000000) : '-';
-        document.getElementById('detalhesAlunoConteudo').innerHTML = `
-            <p><strong>Nome:</strong> ${a.nomeAluno}</p>
-            <p><strong>Data Nasc.:</strong> ${formatarData(a.dataNasc)}</p>
-            <p><strong>Idade:</strong> ${idade} anos</p>
-            <p><strong>Turma:</strong> ${a.turma}</p>
-            <p><strong>Categoria:</strong> ${a.categoria || '-'}</p>
-            <p><strong>Responsável:</strong> ${a.responsavel}</p>
-            <p><strong>Telefone:</strong> ${a.telefone}</p>
-            <p><strong>E-mail:</strong> ${a.email || '-'}</p>
-            <p><strong>Endereço:</strong> ${a.endereco || '-'}</p>
-            <p><strong>Bairro:</strong> ${a.bairro || '-'}</p>
-            <p><strong>Remédio:</strong> ${a.remedio || '-'}</p>
-            <p><strong>RG do Responsável:</strong> ${a.rg || '-'}</p>
-        `;
-        document.getElementById('modalDetalhesAluno').style.display = 'flex';
-    }
-
-    function editarAlunoModal() {
-        fecharModalDetalhesAluno();
-        if (alunoSelecionadoId) editarAluno(alunoSelecionadoId);
-    }
-
-    function excluirAlunoModal() {
-        if (alunoSelecionadoId && confirm('Excluir?')) {
-            excluirAluno(alunoSelecionadoId);
-            fecharModalDetalhesAluno();
-        }
-    }
-
-    document.getElementById('formAluno').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const id = document.getElementById('alunoId').value;
-        const aluno = {
-            id: id ? parseInt(id) : Date.now(),
-            nomeAluno: document.getElementById('nomeAluno').value,
-            dataNasc: document.getElementById('dataNascAluno').value,
-            turma: document.getElementById('turmaAluno').value,
-            responsavel: document.getElementById('responsavelAluno').value,
-            telefone: document.getElementById('telefoneAluno').value,
-            telefone2: document.getElementById('telefone2Aluno').value,
-            endereco: document.getElementById('enderecoAluno').value,
-            bairro: document.getElementById('bairroAluno').value
-        };
-        if (id) {
-            const idx = alunos.findIndex(a => a.id == id);
-            if (idx !== -1) alunos[idx] = aluno;
-        } else {
-            alunos.push(aluno);
-        }
-        localStorage.setItem('escolinha_alunos', JSON.stringify(alunos));
-        carregarAlunos();
-        fecharModalAluno();
+    document.getElementById('filtroTurma').addEventListener('change', () => {
+        aplicarFiltros();
+        atualizarTodosGraficos();
+        atualizarUltimosAlunos();
+    });
+    document.getElementById('buscaAlunoGlobal').addEventListener('input', () => {
+        aplicarFiltros();
+        atualizarTodosGraficos();
+        atualizarUltimosAlunos();
     });
 
-    function fecharModalDetalhesSolicitacao() { document.getElementById('modalDetalhesSolicitacao').style.display = 'none'; }
-    function fecharModalAluno() { document.getElementById('modalAluno').style.display = 'none'; }
-    function fecharModalDetalhesAluno() { document.getElementById('modalDetalhesAluno').style.display = 'none'; }
-
-    document.getElementById('filtroStatus').addEventListener('change', filtrarSolicitacoes);
-    document.getElementById('buscaSolicitacao').addEventListener('input', filtrarSolicitacoes);
-    document.getElementById('filtroTurmaAlunos').addEventListener('change', filtrarAlunos);
-    document.getElementById('buscaAluno').addEventListener('input', filtrarAlunos);
-
-    function abrirTab(tab) {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('ativo'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('ativo'));
-        if (tab === 'solicitacoes') {
-            document.querySelectorAll('.tab-btn')[0].classList.add('ativo');
-            document.getElementById('tabSolicitacoes').classList.add('ativo');
-        } else {
-            document.querySelectorAll('.tab-btn')[1].classList.add('ativo');
-            document.getElementById('tabAlunos').classList.add('ativo');
-            carregarAlunos();
-        }
-    }
-
-    function iniciarAtualizacao() {
-        if (intervalo) clearInterval(intervalo);
-        intervalo = setInterval(() => { atualizarSolicitacoes(); }, 30000);
-    }
-
-    function verificarSenha() {
-        const senha = document.getElementById('senhaInput').value;
-        const nome = document.getElementById('nomeUsuario').value.trim();
-        if (!nome) { document.getElementById('erroLogin').innerText = 'Digite seu nome!'; return; }
-        if (senha === SENHA) {
+    function verificarLogin() {
+        const email = document.getElementById('emailLogin').value.trim();
+        const senha = document.getElementById('senhaLogin').value;
+        const usuario = USUARIOS.find(u => u.email === email && u.senha === senha);
+        if (usuario) {
+            usuarioLogado = usuario;
             document.getElementById('telaLogin').style.display = 'none';
-            document.getElementById('painelInterno').style.display = 'block';
-            document.getElementById('welcomeMessage').innerHTML = `👋 Bem-vindo, <strong>${nome}</strong>!`;
-            atualizarSolicitacoes();
-            iniciarAtualizacao();
-            const visitas = JSON.parse(localStorage.getItem('visitas_site') || '{"totalGeral":0}');
-            document.getElementById('totalVisitas').innerText = visitas.totalGeral;
+            document.getElementById('painelAnalise').style.display = 'block';
+            document.getElementById('infoUsuario').innerHTML = `👤 ${usuario.nome}`;
+            criarBotoesMeses();
+            carregarDadosDaPlanilha();
+            setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') carregarDadosDaPlanilha(); }, 60000);
         } else {
-            document.getElementById('erroLogin').innerText = 'Senha incorreta!';
+            document.getElementById('erroLogin').innerText = 'E-mail ou senha incorretos!';
         }
     }
 
     function logout() {
-        if (intervalo) clearInterval(intervalo);
         document.getElementById('telaLogin').style.display = 'flex';
-        document.getElementById('painelInterno').style.display = 'none';
-        document.getElementById('senhaInput').value = '';
+        document.getElementById('painelAnalise').style.display = 'none';
+        document.getElementById('emailLogin').value = '';
+        document.getElementById('senhaLogin').value = '';
+        document.getElementById('erroLogin').innerText = '';
     }
+
+    setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') atualizarTimestamp(); }, 1000);
 </script>
 
 </body>
