@@ -602,6 +602,26 @@
                         </div>
                     </div>
 
+                    <!-- CAMPO CATEGORIA ADICIONADO AQUI -->
+                    <div class="form-grupo">
+                        <label>🏆 Categoria / Sub <span class="obrigatorio">*</span></label>
+                        <select id="categoria" required>
+                            <option value="">Selecione a categoria</option>
+                            <option value="Sub-5">Sub-5 (até 5 anos)</option>
+                            <option value="Sub-7">Sub-7 (6 a 7 anos)</option>
+                            <option value="Sub-9">Sub-9 (8 a 9 anos)</option>
+                            <option value="Sub-11">Sub-11 (10 a 11 anos)</option>
+                            <option value="Sub-13">Sub-13 (12 a 13 anos)</option>
+                            <option value="Sub-15">Sub-15 (14 a 15 anos)</option>
+                            <option value="Sub-17">Sub-17 (16 a 17 anos)</option>
+                            <option value="Acima-17">Acima de 17 anos (consultar diretoria)</option>
+                        </select>
+                        <div class="mensagem-erro" id="erroCategoria">Campo obrigatório</div>
+                        <div class="observacao" style="margin-top: 8px;">
+                            💡 <strong>Dica:</strong> Acima de 17 anos, a matrícula será analisada pela diretoria.
+                        </div>
+                    </div>
+
                     <div class="form-linha-3">
                         <div class="form-grupo">
                             <label>Peso (kg) <span class="obrigatorio">*</span></label>
@@ -926,6 +946,7 @@
         });
     });
 
+    // Calcular idade
     function calcularIdade() {
         const dataNasc = document.getElementById('dataNasc').value;
         if (!dataNasc) return null;
@@ -937,12 +958,45 @@
         return idade;
     }
 
+    // Sugerir categoria automaticamente pela idade
+    function sugerirCategoriaPorIdade() {
+        const idade = calcularIdade();
+        const selectCategoria = document.getElementById('categoria');
+        
+        if (idade !== null && idade >= 0) {
+            let categoriaSugerida = '';
+            if (idade <= 5) categoriaSugerida = 'Sub-5';
+            else if (idade <= 7) categoriaSugerida = 'Sub-7';
+            else if (idade <= 9) categoriaSugerida = 'Sub-9';
+            else if (idade <= 11) categoriaSugerida = 'Sub-11';
+            else if (idade <= 13) categoriaSugerida = 'Sub-13';
+            else if (idade <= 15) categoriaSugerida = 'Sub-15';
+            else if (idade <= 17) categoriaSugerida = 'Sub-17';
+            else categoriaSugerida = 'Acima-17';
+            
+            // Verificar se já está selecionada
+            if (selectCategoria.value !== categoriaSugerida && selectCategoria.value !== '') {
+                // Mostrar sugestão sem alterar automaticamente
+                const infoIdade = document.getElementById('infoIdade');
+                infoIdade.innerHTML = `📊 Idade: ${idade} anos | Sugestão: <strong>${categoriaSugerida}</strong>`;
+                infoIdade.style.display = 'block';
+            } else if (selectCategoria.value === '') {
+                // Se não tem categoria selecionada, sugerir
+                selectCategoria.value = categoriaSugerida;
+                const infoIdade = document.getElementById('infoIdade');
+                infoIdade.innerHTML = `📊 Idade: ${idade} anos | Categoria sugerida: <strong>${categoriaSugerida}</strong>`;
+                infoIdade.style.display = 'block';
+            }
+        }
+    }
+
     function mostrarIdade() {
         const idade = calcularIdade();
         const infoDiv = document.getElementById('infoIdade');
         if (idade !== null && idade >= 0) {
             infoDiv.innerHTML = `📊 Idade calculada: <strong>${idade} anos</strong>`;
             infoDiv.style.display = 'block';
+            sugerirCategoriaPorIdade();
         } else {
             infoDiv.style.display = 'none';
         }
@@ -1044,6 +1098,7 @@
         const nomeAluno = document.getElementById('nomeAluno').value.trim();
         const dataNasc = document.getElementById('dataNasc').value;
         const sexo = document.querySelector('input[name="sexo"]:checked')?.value;
+        const categoria = document.getElementById('categoria').value;
         const peso = document.getElementById('peso').value;
         const altura = document.getElementById('altura').value;
         const calcado = document.getElementById('calcado').value;
@@ -1087,6 +1142,7 @@
         if (!nomeAluno) { mostrarErro('erroNome', 'nomeAluno'); isValid = false; }
         if (!dataNasc) { mostrarErro('erroData', 'dataNasc'); isValid = false; }
         if (!sexo) { mostrarErro('erroSexo', null); isValid = false; }
+        if (!categoria) { mostrarErro('erroCategoria', 'categoria'); isValid = false; }
         if (!peso) { mostrarErro('erroPeso', 'peso'); isValid = false; }
         if (!altura) { mostrarErro('erroAltura', 'altura'); isValid = false; }
         if (!calcado) { mostrarErro('erroCalcado', 'calcado'); isValid = false; }
@@ -1149,7 +1205,7 @@
                 dataNasc: dataNasc,
                 idade: idade,
                 turma: turma,
-                categoria: '',
+                categoria: categoria,  // <--- CAMPO CATEGORIA ADICIONADO
                 responsavel: responsavel,
                 telefone: telefone,
                 email: email,
