@@ -819,7 +819,7 @@
         }
         .modal-tabela {
             width: 100%;
-            min-width: 800px;
+            min-width: 1000px;
             border-collapse: collapse;
         }
         .modal-tabela th, .modal-tabela td {
@@ -986,6 +986,7 @@
             <div class="filtro-group"><label>👤 RESPONSÁVEL</label><input type="text" id="filtroResponsavel" placeholder="Nome do responsável..."></div>
             <div class="filtro-group"><label>📞 TELEFONE</label><input type="text" id="filtroTelefone" placeholder="Telefone..."></div>
             <div class="filtro-group"><label>⚽ TURMA</label><select id="filtroTurma"><option value="">Todas</option><option value="Futebol">Futebol</option><option value="Taekwondo">Taekwondo</option><option value="Ginástica">Ginástica</option><option value="Tênis de Mesa">Tênis de Mesa</option><option value="Judô">Judô</option></select></div>
+            <div class="filtro-group"><label>🏆 CATEGORIA</label><select id="filtroCategoria"><option value="">Todas</option><option value="Sub-5">Sub-5</option><option value="Sub-7">Sub-7</option><option value="Sub-9">Sub-9</option><option value="Sub-11">Sub-11</option><option value="Sub-13">Sub-13</option><option value="Sub-15">Sub-15</option><option value="Sub-17">Sub-17</option><option value="Acima-17">Acima-17</option></select></div>
             <div class="filtro-group"><label>🏘️ BAIRRO</label><input type="text" id="filtroBairro" placeholder="Bairro..."></div>
         </div>
         <div class="filtros-acoes"><button class="btn-limpar-filtros" onclick="limparFiltros()">🗑️ LIMPAR FILTROS</button></div>
@@ -994,6 +995,7 @@
     <div class="graficos-container">
         <div class="grafico-card"><h3>⚽ Alunos por Turma</h3><canvas id="graficoTurmas"></canvas></div>
         <div class="grafico-card"><h3>🥧 Distribuição por Turma (%)</h3><canvas id="graficoPizza"></canvas></div>
+        <div class="grafico-card"><h3>🏆 Alunos por Categoria</h3><canvas id="graficoCategoria"></canvas></div>
         <div class="grafico-card"><h3>🏘️ Alunos por Bairro</h3><canvas id="graficoBairro"></canvas></div>
         <div class="grafico-card"><h3>📈 Evolução Mensal de Matrículas</h3><canvas id="graficoEvolucao"></canvas></div>
         <div class="grafico-card"><h3>⚠️ Alunos com Deficiência</h3><canvas id="graficoDeficiencia"></canvas></div>
@@ -1014,7 +1016,21 @@
 
     <div class="ultimos-alunos-section">
         <h2>🆕 ÚLTIMOS ALUNOS APROVADOS</h2>
-        <div style="overflow-x: auto;"><table class="tabela-ultimos"><thead> 32<th>Nome</th><th>Turma</th><th>Idade</th><th>Responsável</th><th>Telefone</th> </thead><tbody id="listaUltimosAlunos"></tbody> </table></div>
+        <div style="overflow-x: auto;">
+            <table class="tabela-ultimos">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Turma</th>
+                        <th>Categoria</th>
+                        <th>Idade</th>
+                        <th>Responsável</th>
+                        <th>Telefone</th>
+                    </tr>
+                </thead>
+                <tbody id="listaUltimosAlunos"></tbody>
+            </table>
+        </div>
         <div class="ver-mais"><button onclick="abrirModalTodosAlunos()">📋 VER TODOS OS ALUNOS</button></div>
     </div>
 
@@ -1036,7 +1052,23 @@
 <div id="modalTodosAlunos" class="modal-todos">
     <div class="modal-content">
         <div class="modal-header"><h3>📋 TODOS OS ALUNOS</h3><span class="fechar-modal" onclick="fecharModalTodos()">&times;</span></div>
-        <div class="modal-tabela-container"><table class="modal-tabela"><thead> 32<th>Nome</th><th>Turma</th><th>Idade</th><th>Responsável</th><th>Telefone</th><th>Bairro</th><th>Data Matrícula</th> </thead><tbody id="listaTodosAlunosModal"></tbody> </table></div>
+        <div class="modal-tabela-container">
+            <table class="modal-tabela">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Turma</th>
+                        <th>Categoria</th>
+                        <th>Idade</th>
+                        <th>Responsável</th>
+                        <th>Telefone</th>
+                        <th>Bairro</th>
+                        <th>Data Matrícula</th>
+                    </tr>
+                </thead>
+                <tbody id="listaTodosAlunosModal"></tbody>
+            </table>
+        </div>
         <div style="text-align:right; margin-top:15px;"><button onclick="fecharModalTodos()" style="background: #0047AB; color: white; border: none; padding: 8px 20px; border-radius: 30px;">FECHAR</button></div>
     </div>
 </div>
@@ -1063,6 +1095,7 @@
 
     const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
     const TURMAS = ['Futebol', 'Taekwondo', 'Ginástica', 'Tênis de Mesa', 'Judô'];
+    const CATEGORIAS = ['Sub-5', 'Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Acima-17'];
     const SUBS = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Sub-20', 'Sub-30'];
     
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8zJwfYCHN7kOkjwFYaAICjqEPof_k6C6fDDSdC6mHg_e56PErVYFNB5isTCzCQklO/exec';
@@ -1130,6 +1163,7 @@
         const responsavel = document.getElementById('filtroResponsavel').value.toLowerCase();
         const telefone = document.getElementById('filtroTelefone').value.toLowerCase();
         const turma = document.getElementById('filtroTurma').value;
+        const categoria = document.getElementById('filtroCategoria').value;
         const bairro = document.getElementById('filtroBairro').value.toLowerCase();
         
         alunosFiltrados = alunos.filter(a => {
@@ -1137,6 +1171,7 @@
             if (responsavel && !a.responsavel.toLowerCase().includes(responsavel)) return false;
             if (telefone && !a.telefone.includes(telefone)) return false;
             if (turma && a.turma !== turma) return false;
+            if (categoria && a.categoria !== categoria) return false;
             if (bairro && !a.bairro.toLowerCase().includes(bairro)) return false;
             return true;
         });
@@ -1151,6 +1186,7 @@
         document.getElementById('filtroResponsavel').value = '';
         document.getElementById('filtroTelefone').value = '';
         document.getElementById('filtroTurma').value = '';
+        document.getElementById('filtroCategoria').value = '';
         document.getElementById('filtroBairro').value = '';
         aplicarFiltros();
     }
@@ -1165,6 +1201,7 @@
                 dataNasc: item.dataNasc || '',
                 idade: parseInt(item.idade) || 0,
                 turma: capitalizar(item.turma),
+                categoria: item.categoria || 'Não informada',
                 bairro: item.bairro ? capitalizar(item.bairro) : 'Não informado',
                 responsavel: item.responsavel || 'Não informado',
                 telefone: item.telefone || '',
@@ -1235,7 +1272,6 @@
         document.getElementById('percentRemedio').innerHTML = total ? `${((remedioCount / total) * 100).toFixed(1)}%` : '0%';
         document.getElementById('numerosRemedio').innerHTML = `${remedioCount} de ${total} alunos`;
         
-        // CORREÇÃO: Contar origens padronizando maiúsculas/minúsculas
         const origemCount = {};
         alunos.forEach(a => { 
             if(a.origem && a.origem.trim() !== '') {
@@ -1244,8 +1280,6 @@
                 origemCount[origemFormatada] = (origemCount[origemFormatada] || 0) + 1;
             }
         });
-        
-        console.log('Origens encontradas:', origemCount);
         
         let origemMais = { nome: '-', count: 0 };
         for (const [nome, count] of Object.entries(origemCount)) {
@@ -1269,60 +1303,28 @@
         });
         
         const totalTurmas = turmasCount.reduce((a, b) => a + b, 0);
-        const porcentagens = turmasCount.map(v => totalTurmas > 0 ? ((v / totalTurmas) * 100).toFixed(1) : 0);
-        
         if (graficos.pizza) graficos.pizza.destroy();
         graficos.pizza = new Chart(document.getElementById('graficoPizza'), {
             type: 'pie',
             data: { 
                 labels: TURMAS, 
-                datasets: [{ 
-                    data: turmasCount, 
-                    backgroundColor: ['#0047AB', '#00aaff', '#ff9800', '#25d366', '#ff69b4'],
-                    borderWidth: 2,
-                    borderColor: 'white'
-                }] 
+                datasets: [{ data: turmasCount, backgroundColor: ['#0047AB', '#00aaff', '#ff9800', '#25d366', '#ff69b4'], borderWidth: 2, borderColor: 'white' }] 
             },
             options: { 
-                responsive: true, 
-                maintainAspectRatio: true,
+                responsive: true, maintainAspectRatio: true,
                 plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: (ctx) => {
-                                const label = ctx.label || '';
-                                const value = ctx.raw || 0;
-                                const porcentagem = totalTurmas > 0 ? ((value / totalTurmas) * 100).toFixed(1) : 0;
-                                return `${label}: ${value} alunos (${porcentagem}%)`;
-                            }
-                        }
-                    },
+                    tooltip: { callbacks: { label: (ctx) => { const label = ctx.label || ''; const value = ctx.raw || 0; const porcentagem = totalTurmas > 0 ? ((value / totalTurmas) * 100).toFixed(1) : 0; return `${label}: ${value} alunos (${porcentagem}%)`; } } },
                     legend: { position: 'bottom', labels: { font: { size: 11 } } }
                 }
-            },
-            plugins: [{
-                afterDatasetsDraw: function(chart) {
-                    const ctx = chart.ctx;
-                    chart.data.datasets.forEach((dataset, i) => {
-                        const meta = chart.getDatasetMeta(i);
-                        if (!meta.hidden) {
-                            meta.data.forEach((element, index) => {
-                                const dataValue = dataset.data[index];
-                                const percentage = totalTurmas > 0 ? ((dataValue / totalTurmas) * 100).toFixed(1) : 0;
-                                if (percentage > 0) {
-                                    const position = element.tooltipPosition();
-                                    ctx.fillStyle = '#ffffff';
-                                    ctx.font = 'bold 12px "Open Sans"';
-                                    ctx.shadowBlur = 0;
-                                    ctx.textAlign = 'center';
-                                    ctx.textBaseline = 'middle';
-                                    ctx.fillText(`${percentage}%`, position.x, position.y);
-                                }
-                            });
-                        }
-                    });
-                }
-            }]
+            }
+        });
+        
+        const categoriasCount = CATEGORIAS.map(cat => dados.filter(a => a.categoria === cat).length);
+        if (graficos.categoria) graficos.categoria.destroy();
+        graficos.categoria = new Chart(document.getElementById('graficoCategoria'), {
+            type: 'bar',
+            data: { labels: CATEGORIAS, datasets: [{ label: 'Alunos', data: categoriasCount, backgroundColor: '#ff9800', borderRadius: 8 }] },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
         });
         
         const bairrosMap = new Map();
@@ -1369,7 +1371,6 @@
             options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
         });
         
-        // GRÁFICO DE ORIGEM CORRIGIDO
         const origemMap = new Map();
         dados.forEach(a => { 
             if (a.origem && a.origem.trim() !== '') {
@@ -1386,28 +1387,9 @@
         if (graficos.origem) graficos.origem.destroy();
         graficos.origem = new Chart(document.getElementById('graficoOrigem'), {
             type: 'bar',
-            data: { 
-                labels: origemLabels, 
-                datasets: [{ 
-                    label: 'Alunos (%)', 
-                    data: origemPercentuais, 
-                    backgroundColor: '#25d366', 
-                    borderRadius: 8 
-                }] 
-            },
-            options: { 
-                indexAxis: 'y', 
-                responsive: true, 
-                maintainAspectRatio: true, 
-                scales: { x: { title: { display: true, text: 'Percentual (%)' } } },
-                plugins: { 
-                    tooltip: { 
-                        callbacks: { 
-                            label: (ctx) => `${origemData[ctx.dataIndex]} alunos (${ctx.raw}%)` 
-                        } 
-                    } 
-                }
-            }
+            data: { labels: origemLabels, datasets: [{ label: 'Alunos (%)', data: origemPercentuais, backgroundColor: '#25d366', borderRadius: 8 }] },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, scales: { x: { title: { display: true, text: 'Percentual (%)' } } },
+                plugins: { tooltip: { callbacks: { label: (ctx) => `${origemData[ctx.dataIndex]} alunos (${ctx.raw}%)` } } } }
         });
         
         const subCount = [0,0,0,0,0,0,0,0];
@@ -1433,14 +1415,30 @@
     function atualizarUltimosAlunos() {
         const ultimos = [...alunos].sort((a,b) => new Date(b.dataMatricula) - new Date(a.dataMatricula)).slice(0, 10);
         document.getElementById('listaUltimosAlunos').innerHTML = ultimos.map(a => `
-            <tr onclick="abrirDetalhesAluno('${a.nome}')"> <td><strong>${a.nome}</strong></td><td>${a.turma}</td><td>${a.idade} anos</td><td>${a.responsavel}</td><td>${a.telefone}</td> </tr>
+            <tr onclick="abrirDetalhesAluno('${a.nome}')">
+                <td><strong>${a.nome}</strong></td>
+                <td>${a.turma}</td>
+                <td><span style="background: #f0f7ff; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem;">${a.categoria}</span></td>
+                <td>${a.idade} anos</td>
+                <td>${a.responsavel}</td>
+                <td>${a.telefone}</td>
+            </tr>
         `).join('');
     }
 
     function abrirModalTodosAlunos() {
         const tbody = document.getElementById('listaTodosAlunosModal');
         tbody.innerHTML = alunos.map(a => `
-            <tr onclick="abrirDetalhesAluno('${a.nome}')"> <td><strong>${a.nome}</strong></td><td>${a.turma}</td><td>${a.idade} anos</td><td>${a.responsavel}</td><td>${a.telefone}</td><td>${a.bairro}</td><td>${formatarDataSimples(a.dataMatricula)}</td> </tr>
+            <tr onclick="abrirDetalhesAluno('${a.nome}')">
+                <td><strong>${a.nome}</strong></td>
+                <td>${a.turma}</td>
+                <td><span style="background: #f0f7ff; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem;">${a.categoria}</span></td>
+                <td>${a.idade} anos</td>
+                <td>${a.responsavel}</td>
+                <td>${a.telefone}</td>
+                <td>${a.bairro}</td>
+                <td>${formatarDataSimples(a.dataMatricula)}</td>
+            </tr>
         `).join('');
         document.getElementById('modalTodosAlunos').style.display = 'flex';
     }
@@ -1460,6 +1458,7 @@
             <div class="detalhe-item"><div class="detalhe-label">🎂 Data Nasc</div><div class="detalhe-valor">${formatarDataSimples(aluno.dataNasc)}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">📊 Idade</div><div class="detalhe-valor">${aluno.idade || '-'} anos</div></div>
             <div class="detalhe-item"><div class="detalhe-label">⚽ Turma</div><div class="detalhe-valor">${aluno.turma || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">🏆 Categoria</div><div class="detalhe-valor"><strong>${aluno.categoria || '-'}</strong></div></div>
             <div class="detalhe-item"><div class="detalhe-label">👤 Responsável</div><div class="detalhe-valor">${aluno.responsavel || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">📞 Telefone</div><div class="detalhe-valor">${aluno.telefone || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">📧 Email</div><div class="detalhe-valor">${aluno.email || '-'}</div></div>
@@ -1501,7 +1500,7 @@
                         <div class="veterano-medalha ${medalhaClass}">${idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : '🏅'}</div>
                         <div class="veterano-info">
                             <div class="veterano-nome"><strong>${a.nome}</strong><span class="tempo-badge ${tempoBadge.class}">${tempoBadge.texto}</span></div>
-                            <div class="veterano-detalhes">${a.turma} • ${formatarTempoCasa(a.tempoMeses)} de casa • Matrícula: ${formatarDataSimples(a.dataMatricula)}</div>
+                            <div class="veterano-detalhes">${a.turma} • ${a.categoria} • ${formatarTempoCasa(a.tempoMeses)} de casa</div>
                         </div>
                     </div>
                 `;
@@ -1531,7 +1530,7 @@
             listaDiv.innerHTML = aniversariantes.map(a => `
                 <div class="item-aniversario" onclick="abrirDetalhesAluno('${a.nome}')">
                     <div class="emoji">🎈</div>
-                    <div><strong>${a.nome}</strong><br>${a.idade} anos • ${formatarDataSimples(a.dataNasc)} • ${a.turma}</div>
+                    <div><strong>${a.nome}</strong><br>${a.idade} anos • ${a.categoria} • ${formatarDataSimples(a.dataNasc)}</div>
                 </div>
             `).join('');
         }
@@ -1576,6 +1575,7 @@
     document.getElementById('filtroResponsavel').addEventListener('input', aplicarFiltros);
     document.getElementById('filtroTelefone').addEventListener('input', aplicarFiltros);
     document.getElementById('filtroTurma').addEventListener('change', aplicarFiltros);
+    document.getElementById('filtroCategoria').addEventListener('change', aplicarFiltros);
     document.getElementById('filtroBairro').addEventListener('input', aplicarFiltros);
 
     function verificarLogin() {
