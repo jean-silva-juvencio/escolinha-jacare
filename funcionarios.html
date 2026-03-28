@@ -3,11 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Escolinha do Jacaré | Unidos do Alvorada</title>
+    <title>Pré-Matrícula | Escolinha do Jacaré</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --azul-escuro: #003399;
+            --azul-premium: #0047AB;
+            --azul-claro: #00aaff;
+            --verde-whatsapp: #25d366;
+            --laranja-destaque: #ff9800;
+            --vermelho-erro: #ff4444;
+            --verde-sucesso: #4caf50;
+            --cinza-claro: #f8f9fa;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -19,13 +30,14 @@
             font-family: 'Open Sans', sans-serif;
             background: linear-gradient(135deg, #f0f7ff 0%, #e0ecf9 100%);
             min-height: 100vh;
+            padding: 110px 16px 50px;
             transition: background 0.3s ease, color 0.3s ease;
         }
 
         /* ========== TEMA ESCURO ========== */
         body.dark-mode {
             background: linear-gradient(135deg, #0f172a 0%, #1e1a3a 100%);
-            color: #ffffff;
+            color: #e2e8f0;
         }
 
         body.dark-mode .nav-bar {
@@ -39,99 +51,105 @@
             -webkit-text-fill-color: transparent;
         }
 
-        body.dark-mode .card,
-        body.dark-mode .categorias-container,
-        body.dark-mode .patrocinadores,
-        body.dark-mode .loc-card,
-        body.dark-mode .faq-section {
+        body.dark-mode .form-card {
             background: #1e293b;
-            color: #ffffff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        body.dark-mode .card h2,
-        body.dark-mode .categorias-container h2,
-        body.dark-mode .patrocinadores h2,
-        body.dark-mode .faq-section h2 {
+        body.dark-mode .form-card h1 {
             color: #60a5fa;
         }
 
-        body.dark-mode .info-idades,
-        body.dark-mode .observacao,
-        body.dark-mode .faq-item {
-            background: #0f172a;
-            color: #cbd5e1;
-            border-color: #334155;
+        body.dark-mode .form-card .subtitulo {
+            color: #94a3b8;
         }
 
-        body.dark-mode .faq-question {
-            background: #0f172a;
+        body.dark-mode .secao {
+            border-bottom-color: #334155;
+        }
+
+        body.dark-mode .secao-titulo {
+            color: #60a5fa;
+        }
+
+        body.dark-mode .form-grupo label {
             color: #e2e8f0;
         }
 
-        body.dark-mode .faq-answer {
+        body.dark-mode .form-grupo input,
+        body.dark-mode .form-grupo select {
             background: #0f172a;
-            color: #cbd5e1;
-        }
-
-        body.dark-mode .cat-item {
-            background: #0f172a;
-            color: #e2e8f0;
             border-color: #334155;
+            color: #e2e8f0;
         }
 
-        body.dark-mode .cat-item:active {
-            background: #334155;
+        body.dark-mode .form-grupo input:focus,
+        body.dark-mode .form-grupo select:focus {
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 3px rgba(96,165,250,0.1);
         }
 
-        body.dark-mode .btn-mapa,
-        body.dark-mode .btn-prematricula {
+        body.dark-mode .observacao {
+            background: #0f172a;
+            color: #94a3b8;
+        }
+
+        body.dark-mode .radio-group label {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .checkbox-group label {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .buscar-cep {
+            background: #3b82f6;
+        }
+
+        body.dark-mode .buscar-cep:active {
+            background: #2563eb;
+        }
+
+        body.dark-mode .btn-enviar {
             background: linear-gradient(135deg, #3b82f6, #1e40af);
+        }
+
+        body.dark-mode .info-idade {
+            background: #0f172a;
+            color: #60a5fa;
+        }
+
+        body.dark-mode .mensagem-erro {
+            color: #f87171;
+        }
+
+        body.dark-mode .toast {
+            background: #1e293b;
+            color: white;
+        }
+
+        body.dark-mode .mensagem-sucesso {
+            background: linear-gradient(135deg, #059669, #047857);
         }
 
         body.dark-mode footer {
             background: #0f172a;
-            color: #cbd5e1;
         }
 
-        body.dark-mode .chamada-patrocinio a {
-            color: #60a5fa;
-        }
-
-        body.dark-mode .horario-content {
-            background: linear-gradient(135deg, #1e40af, #1e3a8a);
-        }
-
-        body.dark-mode .clima-widget {
-            background: rgba(59,130,246,0.2);
-        }
-
-        body.dark-mode .faq-question:hover {
-            background: #1e293b;
-        }
-
-        /* ========== BARRA DE NAVEGAÇÃO ========== */
+        /* Barra de navegação */
         .nav-bar {
             background: white;
             border-radius: 60px;
-            padding: 12px 20px;
-            margin: 20px auto 0;
-            max-width: 1200px;
+            padding: 10px 20px;
+            margin: 0 auto 20px;
+            max-width: 800px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: relative;
-            z-index: 100;
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
             flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: background 0.3s;
         }
-
         .logo-text {
             text-decoration: none;
             font-family: 'Montserrat';
@@ -141,730 +159,361 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        /* Clima Widget */
-        .clima-widget {
+        .nav-links {
             display: flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(0,71,171,0.1);
-            padding: 6px 12px;
+            gap: 8px;
+        }
+        .nav-link {
+            text-decoration: none;
+            padding: 6px 14px;
             border-radius: 40px;
+            font-weight: 600;
             font-size: 0.75rem;
-            font-weight: 500;
+            background: #f1f5f9;
+            color: #1e293b;
+            transition: background 0.3s;
         }
-
-        body.dark-mode .clima-widget {
-            background: rgba(59,130,246,0.2);
+        body.dark-mode .nav-link {
+            background: #0f172a;
+            color: #e2e8f0;
         }
-
-        /* Botões do topo */
-        .acoes-topo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .nav-link:hover {
+            background: #e2e8f0;
         }
 
         .btn-tema {
-            width: 52px;
-            height: 52px;
-            background: #f1f5f9;
+            background: #0047AB;
+            color: white;
             border: none;
-            border-radius: 50%;
+            border-radius: 50px;
+            width: 45px;
+            height: 45px;
+            font-size: 1.2rem;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
         }
-
         body.dark-mode .btn-tema {
-            background: #334155;
+            background: #3b82f6;
         }
-
         .btn-tema:hover {
             transform: scale(1.05);
         }
 
-        .btn-tema.animar {
-            animation: girar 0.5s ease;
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            animation: fadeInUp 0.6s ease;
         }
 
-        @keyframes girar {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Botão Hamburguer */
-        .hamburger {
-            width: 52px;
-            height: 52px;
-            background: #0047AB;
-            border: none;
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger span {
-            width: 26px;
-            height: 3px;
+        .form-card {
             background: white;
-            border-radius: 3px;
-            transition: all 0.3s ease;
+            border-radius: 32px;
+            padding: 28px 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: background 0.3s;
         }
 
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 6px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -7px);
-        }
-
-        /* Menu Lateral */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -280px;
-            width: 280px;
-            height: 100%;
-            background: white;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-            z-index: 200;
-            transition: left 0.3s ease;
-            padding: 80px 20px 20px;
-        }
-
-        body.dark-mode .sidebar {
-            background: #1e293b;
-        }
-
-        .sidebar.open {
-            left: 0;
-        }
-
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 15px;
-            text-decoration: none;
-            color: #1e293b;
-            font-weight: 600;
-            border-radius: 12px;
-            transition: all 0.2s;
-            margin-bottom: 5px;
-        }
-
-        body.dark-mode .sidebar a {
-            color: #e2e8f0;
-        }
-
-        .sidebar a:hover {
-            background: #f1f5f9;
-        }
-
-        body.dark-mode .sidebar a:hover {
-            background: #334155;
-        }
-
-        .sidebar .divider {
-            height: 1px;
-            background: #e2e8f0;
-            margin: 15px 0;
-        }
-
-        body.dark-mode .sidebar .divider {
-            background: #334155;
-        }
-
-        /* Overlay */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 150;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* ========== BOTÃO VOLTAR AO TOPO ========== */
-        .btn-topo {
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            width: 55px;
-            height: 55px;
-            background: linear-gradient(135deg, #0047AB, #003399);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .btn-topo.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .btn-topo:hover {
-            transform: translateY(-3px);
-        }
-
-        body.dark-mode .btn-topo {
-            background: linear-gradient(135deg, #3b82f6, #1e40af);
-        }
-
-        /* ========== BOTÃO FLUTUANTE WHATSAPP ========== */
-        .btn-whatsapp {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 65px;
-            height: 65px;
-            background: linear-gradient(135deg, #25d366, #128C7E);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-            z-index: 998;
-            text-decoration: none;
-        }
-
-        .btn-whatsapp:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(37,211,102,0.3);
-        }
-
-        /* ========== FAQ ========== */
-        .faq-section {
-            background: white;
-            border-radius: 30px;
-            padding: 40px 20px;
-            margin: 30px auto;
-            max-width: 800px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        .faq-section h2 {
+        .form-card h1 {
             font-family: 'Montserrat';
             color: var(--azul-escuro);
-            font-size: 1.8rem;
-            margin-bottom: 30px;
             text-align: center;
-        }
-
-        .faq-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .faq-item {
-            background: #f8f9fa;
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-
-        .faq-question {
-            width: 100%;
-            padding: 18px 20px;
-            background: #f8f9fa;
-            border: none;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1rem;
-            color: #003399;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.2s;
-        }
-
-        .faq-question:hover {
-            background: #e9ecef;
-        }
-
-        .faq-question .icone {
-            font-size: 1.2rem;
-            transition: transform 0.3s;
-        }
-
-        .faq-item.active .faq-question .icone {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            padding: 0 20px;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-            color: #666;
-            line-height: 1.5;
-            font-size: 0.9rem;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 200px;
-            padding: 0 20px 18px 20px;
-        }
-
-        /* SPLASH SCREEN */
-        .splash-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #003399, #0047AB);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
-        
-        .splash-content {
-            text-align: center;
-            animation: pulseLogo 1s ease-in-out infinite;
-        }
-        
-        .splash-logo {
-            font-size: 5rem;
-            margin-bottom: 20px;
-            animation: bounce 1s ease-in-out infinite;
-        }
-        
-        .splash-content h1 {
-            font-family: 'Montserrat';
-            font-size: 2rem;
-            color: white;
-            letter-spacing: 2px;
-        }
-        
-        .splash-content p {
-            color: rgba(255,255,255,0.7);
-            margin-top: 20px;
-            font-size: 0.9rem;
-        }
-        
-        @keyframes pulseLogo {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.9; }
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        /* MODAL DE BOAS-VINDAS */
-        .modal-welcome {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(5px);
-        }
-        
-        .modal-welcome-content {
-            background: white;
-            border-radius: 30px;
-            max-width: 450px;
-            width: 90%;
-            padding: 35px;
-            text-align: center;
-            animation: fadeInUp 0.5s ease;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-        
-        body.dark-mode .modal-welcome-content {
-            background: #1e293b;
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .modal-welcome-content .emoji {
-            font-size: 4rem;
-            margin-bottom: 15px;
-        }
-        
-        .modal-welcome-content h2 {
-            font-family: 'Montserrat';
-            color: #003399;
-            margin-bottom: 15px;
-        }
-        
-        body.dark-mode .modal-welcome-content h2 {
-            color: #60a5fa;
-        }
-        
-        .modal-welcome-content p {
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        
-        body.dark-mode .modal-welcome-content p {
-            color: #cbd5e1;
-        }
-        
-        .modal-welcome-content .destaques {
-            background: #f0f7ff;
-            padding: 15px;
-            border-radius: 15px;
-            margin: 20px 0;
-            text-align: left;
-        }
-        
-        body.dark-mode .modal-welcome-content .destaques {
-            background: #0f172a;
-        }
-        
-        .modal-welcome-content .destaques li {
-            list-style: none;
-            padding: 8px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .btn-entendi {
-            background: linear-gradient(135deg, #ff9800, #f57c00);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-weight: 800;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-        }
-        
-        /* CATEGORIAS */
-        .categorias-container {
-            background: white;
-            padding: 40px 20px;
-            border-radius: 30px;
-            margin: 30px auto;
-            max-width: 1200px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-        
-        .categorias-container h2 {
-            font-family: 'Montserrat';
-            color: #003399;
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .grid-categorias {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .cat-item {
-            background: #f8f9fa;
-            padding: 18px;
-            border-radius: 20px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #003399;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            border: 2px solid rgba(0,170,255,0.2);
-            transition: all 0.2s ease;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-        
-        .cat-item:active {
-            transform: scale(0.98);
-            background: linear-gradient(135deg, #e8f0ff, #f0f7ff);
-        }
-        
-        .cat-item .emoji-cat {
             font-size: 1.6rem;
-        }
-        
-        .info-idades {
-            font-size: 1rem;
-            color: #555;
-            padding: 20px;
-            background: #f0f7ff;
-            border-radius: 15px;
-            margin-top: 20px;
-            border: 2px dashed #00aaff;
-            text-align: center;
+            margin-bottom: 8px;
         }
 
-        .btn-prematricula {
-            background: linear-gradient(135deg, #ff9800, #f57c00);
+        .form-card .subtitulo {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 0.85rem;
+        }
+
+        .secao {
+            margin-bottom: 28px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .secao:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .secao-titulo {
+            font-weight: 800;
+            color: var(--azul-escuro);
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+
+        .secao-titulo .numero {
+            background: var(--azul-premium);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .form-grupo {
+            margin-bottom: 16px;
+        }
+
+        .form-grupo label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #333;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .form-grupo label .obrigatorio {
+            color: var(--vermelho-erro);
+            margin-left: 3px;
+        }
+
+        .form-grupo input,
+        .form-grupo select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            font-family: 'Open Sans', sans-serif;
+            background: white;
+        }
+
+        .form-grupo input:focus,
+        .form-grupo select:focus {
+            outline: none;
+            border-color: var(--azul-claro);
+            box-shadow: 0 0 0 3px rgba(0,170,255,0.1);
+        }
+
+        .form-grupo input.erro,
+        .form-grupo select.erro {
+            border-color: var(--vermelho-erro);
+            animation: shake 0.3s ease;
+        }
+
+        .mensagem-erro {
+            color: var(--vermelho-erro);
+            font-size: 0.7rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-linha {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-linha-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .info-idade {
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 50px;
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: var(--azul-premium);
+            font-weight: 600;
+            display: none;
+            transition: background 0.3s;
+        }
+
+        .observacao {
+            background: var(--cinza-claro);
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 12px;
+            font-size: 0.75rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            padding: 8px 0;
+            flex-wrap: wrap;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 10px 0;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: normal;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .deficiencia-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .deficiencia-header label {
+            font-weight: 600;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .deficiencia-opcoes {
+            margin-left: 20px;
+            padding-left: 15px;
+            border-left: 2px solid #e0e0e0;
+        }
+
+        .deficiencia-opcoes.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .btn-enviar {
+            background: linear-gradient(135deg, var(--laranja-destaque), #f57c00);
             color: white;
             border: none;
-            padding: 16px 30px;
+            padding: 16px 20px;
             border-radius: 60px;
             font-weight: 800;
             font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s;
-            margin: 20px auto;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            animation: pulseBotao 2s infinite;
-        }
-        
-        @keyframes pulseBotao {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
-        
-        /* Horário */
-        .horario-card {
-            text-align: center;
-            margin: 30px auto;
-            max-width: 400px;
-        }
-        .horario-content {
-            background: linear-gradient(135deg, #0047AB, #003399);
-            color: white;
-            padding: 20px;
-            border-radius: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-        .horario-icone {
-            font-size: 2rem;
-            margin-bottom: 8px;
-        }
-        .horario-content h3 {
-            font-family: 'Montserrat';
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-        .horario-dia {
-            font-size: 1rem;
-            font-weight: bold;
-        }
-        .horario-hora {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin: 5px 0;
-        }
-
-        .patrocinadores {
-            background: white;
-            padding: 40px 20px;
-            border-radius: 30px;
-            margin: 30px auto;
-            max-width: 1200px;
-            text-align: center;
-        }
-        .patrocinadores h2 {
-            font-family: 'Montserrat';
-            color: #003399;
-            font-size: 1.6rem;
-            margin-bottom: 20px;
-        }
-        .patrocinadores-grid {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .loc-card {
-            background: #fff;
-            padding: 30px 20px;
-            border-radius: 30px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-            text-align: center;
-            border: 4px solid #00aaff;
-            margin: 20px;
-        }
-        .mapa-container {
             width: 100%;
-            height: 250px;
-            border-radius: 20px;
-            overflow: hidden;
-            margin: 15px 0;
-        }
-        .mapa-container iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-        .btn-mapa {
-            background: #0047AB;
-            color: white;
-            text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        footer {
-            background: #003399;
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 40px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-        }
-
-        section {
-            padding: 30px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-        .card h2 {
-            font-family: 'Montserrat';
-            color: #003399;
-            margin-bottom: 15px;
-            font-size: 1.6rem;
-        }
-
-        .hero {
             margin-top: 20px;
-            width: 100%;
-            background: #003399;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        
-        .slides-container {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-        }
-        
-        .slides {
-            display: flex;
-            width: 400%;
-            transition: 0.5s ease-in-out;
-        }
-        
-        .slide {
-            width: 25%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-color: #003399;
-            aspect-ratio: 16/9;
-        }
-        
-        .seta {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 35px;
-            height: 35px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            font-weight: bold;
+            gap: 10px;
+        }
+
+        .btn-enviar:active {
+            transform: scale(0.98);
+        }
+
+        .btn-enviar:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .buscar-cep {
+            background: var(--azul-premium);
             color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-weight: 700;
             cursor: pointer;
-            z-index: 10;
-        }
-        .seta-esquerda { left: 10px; }
-        .seta-direita { right: 10px; }
-
-        .indicadores {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-            z-index: 10;
-        }
-        .indicador {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-        }
-        .indicador.ativo {
-            background: #00aaff;
-            transform: scale(1.2);
+            margin-top: 8px;
+            width: 100%;
+            transition: all 0.2s;
         }
 
-        /* Toast */
+        .buscar-cep:active {
+            transform: scale(0.96);
+        }
+
+        .carregando-cep {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 5px;
+            display: none;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mensagem-sucesso {
+            background: linear-gradient(135deg, var(--verde-sucesso), #45a049);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 30px;
+            text-align: center;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .mensagem-sucesso h2 {
+            font-family: 'Montserrat';
+            margin-bottom: 12px;
+            font-size: 1.4rem;
+        }
+
+        .mensagem-sucesso .protocolo {
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 50px;
+            margin: 12px 0;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
         .toast {
             position: fixed;
-            bottom: 120px;
+            bottom: 30px;
             right: 30px;
             background: white;
             padding: 12px 20px;
@@ -872,500 +521,737 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             z-index: 1100;
-            transform: translateX(120%);
-            transition: transform 0.3s ease;
+            animation: slideIn 0.3s ease;
             font-weight: 500;
             font-size: 0.85rem;
         }
-        .toast.show {
-            transform: translateX(0);
-        }
-        body.dark-mode .toast {
-            background: #1e293b;
-            color: white;
+        .toast.success { border-left: 4px solid #4caf50; }
+        .toast.error { border-left: 4px solid #f44336; }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
-        @media (min-width: 768px) {
-            .grid-categorias {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-            .hero {
-                margin-top: 20px;
-            }
-            .logo-text {
-                font-size: 1.5rem;
-            }
+        footer {
+            background: var(--azul-escuro);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            transition: background 0.3s;
         }
-        
-        @media (max-width: 650px) {
-            .logo-area {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-            }
-            .clima-widget {
-                font-size: 0.7rem;
-                padding: 3px 10px;
-            }
-            .btn-whatsapp {
-                width: 55px;
-                height: 55px;
-                font-size: 1.8rem;
-                bottom: 20px;
-                right: 20px;
-            }
-            .btn-topo {
-                bottom: 90px;
-                right: 20px;
-                width: 45px;
-                height: 45px;
-                font-size: 1.2rem;
-            }
+
+        @media (max-width: 700px) {
+            .form-linha, .form-linha-3 { grid-template-columns: 1fr; }
+            .deficiencia-opcoes { margin-left: 10px; }
         }
     </style>
 </head>
 <body>
 
-<!-- SPLASH SCREEN -->
-<div id="splashScreen" class="splash-screen">
-    <div class="splash-content">
-        <div class="splash-logo">🐊</div>
-        <h1>ESCOLINHA DO JACARÉ</h1>
-        <p>Carregando...</p>
+<!-- Barra de navegação -->
+<div class="nav-bar">
+    <a href="index.html" class="logo-text">🐊 ESCOLINHA DO JACARÉ</a>
+    <div class="nav-links">
+        <a href="index.html" class="nav-link">🏠 INÍCIO</a>
+        <a href="diretoria.html" class="nav-link">📊 DIRETORIA</a>
+        <a href="funcionarios.html" class="nav-link">🔒 FUNCIONÁRIOS</a>
+        <button class="btn-tema" onclick="alternarTema()" style="margin-left: 8px;">🌞</button>
     </div>
 </div>
 
-<!-- MODAL DE BOAS-VINDAS -->
-<div id="modalWelcome" class="modal-welcome">
-    <div class="modal-welcome-content">
-        <div class="emoji">🐊👋</div>
-        <h2>Seja bem-vindo(a)!</h2>
-        <p>Na Escolinha do Jacaré, formamos campeões dentro e fora de campo!</p>
-        <div class="destaques">
-            <li>⚽ Futebol</li>
-            <li>🥋 Taekwondo</li>
-            <li>🤸 Ginástica</li>
-            <li>🏓 Tênis de Mesa</li>
-            <li>🥋 Judô</li>
+<div class="form-container">
+    <div id="formularioContainer">
+        <div class="form-card">
+            <h1>📝 PRÉ-MATRÍCULA</h1>
+            <div class="subtitulo">
+                Preencha todos os campos <strong>obrigatórios (*)</strong> para solicitar sua matrícula
+            </div>
+
+            <form id="formPrematricula">
+                <!-- SEÇÃO 1: DADOS DO ALUNO -->
+                <div class="secao">
+                    <div class="secao-titulo">
+                        <span class="numero">1</span> DADOS DO ALUNO
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Nome completo do aluno <span class="obrigatorio">*</span></label>
+                        <input type="text" id="nomeAluno" placeholder="Digite o nome completo">
+                        <div class="mensagem-erro" id="erroNome">Campo obrigatório</div>
+                    </div>
+
+                    <div class="form-linha">
+                        <div class="form-grupo">
+                            <label>Data de nascimento <span class="obrigatorio">*</span></label>
+                            <input type="date" id="dataNasc">
+                            <div class="mensagem-erro" id="erroData">Campo obrigatório</div>
+                            <div id="infoIdade" class="info-idade"></div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Sexo <span class="obrigatorio">*</span></label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="sexo" value="Masculino"> Masculino</label>
+                                <label><input type="radio" name="sexo" value="Feminino"> Feminino</label>
+                            </div>
+                            <div class="mensagem-erro" id="erroSexo">Selecione o sexo</div>
+                        </div>
+                    </div>
+
+                    <!-- CAMPO CATEGORIA ADICIONADO AQUI -->
+                    <div class="form-grupo">
+                        <label>🏆 Categoria / Sub <span class="obrigatorio">*</span></label>
+                        <select id="categoria" required>
+                            <option value="">Selecione a categoria</option>
+                            <option value="Sub-5">Sub-5 (até 5 anos)</option>
+                            <option value="Sub-7">Sub-7 (6 a 7 anos)</option>
+                            <option value="Sub-9">Sub-9 (8 a 9 anos)</option>
+                            <option value="Sub-11">Sub-11 (10 a 11 anos)</option>
+                            <option value="Sub-13">Sub-13 (12 a 13 anos)</option>
+                            <option value="Sub-15">Sub-15 (14 a 15 anos)</option>
+                            <option value="Sub-17">Sub-17 (16 a 17 anos)</option>
+                            <option value="Acima-17">Acima de 17 anos (consultar diretoria)</option>
+                        </select>
+                        <div class="mensagem-erro" id="erroCategoria">Campo obrigatório</div>
+                        <div class="observacao" style="margin-top: 8px;">
+                            💡 <strong>Dica:</strong> Acima de 17 anos, a matrícula será analisada pela diretoria.
+                        </div>
+                    </div>
+
+                    <div class="form-linha-3">
+                        <div class="form-grupo">
+                            <label>Peso (kg) <span class="obrigatorio">*</span></label>
+                            <input type="number" id="peso" step="0.1" placeholder="Ex: 35.5">
+                            <div class="mensagem-erro" id="erroPeso">Campo obrigatório</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Altura (cm) <span class="obrigatorio">*</span></label>
+                            <input type="number" id="altura" placeholder="Ex: 145">
+                            <div class="mensagem-erro" id="erroAltura">Campo obrigatório</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Nº Calçado <span class="obrigatorio">*</span></label>
+                            <select id="calcado">
+                                <option value="">Selecione</option>
+                                <option value="25">25</option><option value="26">26</option><option value="27">27</option>
+                                <option value="28">28</option><option value="29">29</option><option value="30">30</option>
+                                <option value="31">31</option><option value="32">32</option><option value="33">33</option>
+                                <option value="34">34</option><option value="35">35</option><option value="36">36</option>
+                                <option value="37">37</option><option value="38">38</option><option value="39">39</option>
+                                <option value="40">40</option><option value="41">41</option><option value="42">42</option>
+                                <option value="43">43</option><option value="44">44</option><option value="45">45</option>
+                            </select>
+                            <div class="mensagem-erro" id="erroCalcado">Campo obrigatório</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Tamanho Uniforme <span class="obrigatorio">*</span></label>
+                        <select id="uniforme">
+                            <option value="">Selecione</option>
+                            <option value="PP">PP</option><option value="P">P</option><option value="M">M</option>
+                            <option value="G">G</option><option value="GG">GG</option><option value="XG">XG</option>
+                            <option value="XXG">XXG</option>
+                        </select>
+                        <div class="mensagem-erro" id="erroUniforme">Campo obrigatório</div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Turma desejada <span class="obrigatorio">*</span></label>
+                        <select id="turma">
+                            <option value="">Selecione...</option>
+                            <option value="Futebol">⚽ Futebol</option>
+                            <option value="Taekwondo">🥋 Taekwondo</option>
+                            <option value="Ginástica">🤸 Ginástica</option>
+                            <option value="Tênis de Mesa">🏓 Tênis de Mesa</option>
+                            <option value="Judô">🥋 Judô</option>
+                        </select>
+                        <div class="mensagem-erro" id="erroTurma">Campo obrigatório</div>
+                    </div>
+
+                    <!-- DEFICIÊNCIA -->
+                    <div class="form-grupo">
+                        <div class="deficiencia-header">
+                            <label>Deficiência</label>
+                            <label><input type="checkbox" id="semDeficiencia"> Não possui deficiência</label>
+                        </div>
+                        <div id="deficienciaOpcoes" class="deficiencia-opcoes">
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" class="deficiencia-check" value="Visual"> Visual</label>
+                                <label><input type="checkbox" class="deficiencia-check" value="Auditiva"> Auditiva</label>
+                                <label><input type="checkbox" class="deficiencia-check" value="Física"> Física</label>
+                                <label><input type="checkbox" class="deficiencia-check" value="Mental"> Mental</label>
+                                <label><input type="checkbox" class="deficiencia-check" value="Motora"> Motora</label>
+                            </div>
+                            <div class="form-grupo">
+                                <label>Outra:</label>
+                                <input type="text" id="outraDeficiencia" placeholder="Especifique outra deficiência">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Faz uso de remédio controlado? <span class="obrigatorio">*</span></label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="remedio" value="Não" checked> Não</label>
+                            <label><input type="radio" name="remedio" value="Sim"> Sim</label>
+                        </div>
+                        <input type="text" id="remedioDesc" placeholder="Se sim, qual remédio?" style="margin-top: 10px; display: none;">
+                        <div class="mensagem-erro" id="erroRemedioDesc">Informe qual remédio</div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO 2: DADOS DO RESPONSÁVEL -->
+                <div class="secao">
+                    <div class="secao-titulo">
+                        <span class="numero">2</span> DADOS DO RESPONSÁVEL
+                    </div>
+
+                    <div class="form-linha">
+                        <div class="form-grupo">
+                            <label>RG do responsável <span class="obrigatorio">*</span></label>
+                            <input type="text" id="rgResponsavel" placeholder="Apenas números">
+                            <div class="mensagem-erro" id="erroRG">Campo obrigatório</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Nome do responsável <span class="obrigatorio">*</span></label>
+                            <input type="text" id="responsavel" placeholder="Nome completo">
+                            <div class="mensagem-erro" id="erroResponsavel">Campo obrigatório</div>
+                        </div>
+                    </div>
+
+                    <div class="form-linha">
+                        <div class="form-grupo">
+                            <label>Telefone (WhatsApp) <span class="obrigatorio">*</span></label>
+                            <input type="tel" id="telefone" placeholder="(92) 9xxxx-xxxx">
+                            <div class="mensagem-erro" id="erroTelefone">Digite um telefone válido</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>E-mail <span class="obrigatorio">*</span></label>
+                            <input type="email" id="email" placeholder="seuemail@exemplo.com">
+                            <div class="mensagem-erro" id="erroEmail">Digite um e-mail válido</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO 3: ENDEREÇO -->
+                <div class="secao">
+                    <div class="secao-titulo">
+                        <span class="numero">3</span> ENDEREÇO
+                    </div>
+
+                    <div class="form-linha">
+                        <div class="form-grupo">
+                            <label>CEP</label>
+                            <input type="text" id="cep" placeholder="Digite o CEP" maxlength="9">
+                            <button type="button" class="buscar-cep" onclick="buscarCEP()">🔍 BUSCAR ENDEREÇO</button>
+                            <div id="carregandoCEP" class="carregando-cep">🔍 Buscando...</div>
+                        </div>
+                    </div>
+
+                    <div class="form-linha-3">
+                        <div class="form-grupo">
+                            <label>Endereço <span class="obrigatorio">*</span></label>
+                            <input type="text" id="endereco" placeholder="Rua/Avenida">
+                            <div class="mensagem-erro" id="erroEndereco">Campo obrigatório</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Número <span class="obrigatorio">*</span></label>
+                            <input type="text" id="numero" placeholder="Número">
+                            <div class="mensagem-erro" id="erroNumero">Campo obrigatório</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Bairro <span class="obrigatorio">*</span></label>
+                            <input type="text" id="bairro" placeholder="Bairro">
+                            <div class="mensagem-erro" id="erroBairro">Campo obrigatório</div>
+                        </div>
+                    </div>
+
+                    <div class="form-linha">
+                        <div class="form-grupo">
+                            <label>Município <span class="obrigatorio">*</span></label>
+                            <input type="text" id="municipio" placeholder="Cidade">
+                            <div class="mensagem-erro" id="erroMunicipio">Campo obrigatório</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>UF <span class="obrigatorio">*</span></label>
+                            <select id="uf">
+                                <option value="">Selecione</option>
+                                <option value="AC">AC</option><option value="AL">AL</option><option value="AM">AM</option>
+                                <option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option>
+                                <option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option>
+                                <option value="MG">MG</option><option value="MS">MS</option><option value="MT">MT</option>
+                                <option value="PA">PA</option><option value="PB">PB</option><option value="PE">PE</option>
+                                <option value="PI">PI</option><option value="PR">PR</option><option value="RJ">RJ</option>
+                                <option value="RN">RN</option><option value="RO">RO</option><option value="RR">RR</option>
+                                <option value="RS">RS</option><option value="SC">SC</option><option value="SE">SE</option>
+                                <option value="SP">SP</option><option value="TO">TO</option>
+                            </select>
+                            <div class="mensagem-erro" id="erroUF">Campo obrigatório</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Quantas pessoas moram na sua casa? <span class="obrigatorio">*</span></label>
+                        <input type="number" id="moradores" min="1" max="20" placeholder="Número de moradores">
+                        <div class="mensagem-erro" id="erroMoradores">Campo obrigatório</div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO 4: ESCOLARIDADE -->
+                <div class="secao">
+                    <div class="secao-titulo">
+                        <span class="numero">4</span> ESCOLARIDADE
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Escola onde estuda <span class="obrigatorio">*</span></label>
+                        <input type="text" id="escola" placeholder="Nome da escola">
+                        <div class="mensagem-erro" id="erroEscola">Campo obrigatório</div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Série <span class="obrigatorio">*</span></label>
+                        <select id="serie">
+                            <option value="">Selecione...</option>
+                            <option value="1º Ano EF">1º Ano - Ensino Fundamental</option>
+                            <option value="2º Ano EF">2º Ano - Ensino Fundamental</option>
+                            <option value="3º Ano EF">3º Ano - Ensino Fundamental</option>
+                            <option value="4º Ano EF">4º Ano - Ensino Fundamental</option>
+                            <option value="5º Ano EF">5º Ano - Ensino Fundamental</option>
+                            <option value="6º Ano EF">6º Ano - Ensino Fundamental</option>
+                            <option value="7º Ano EF">7º Ano - Ensino Fundamental</option>
+                            <option value="8º Ano EF">8º Ano - Ensino Fundamental</option>
+                            <option value="9º Ano EF">9º Ano - Ensino Fundamental</option>
+                            <option value="1º Ano EM">1º Ano - Ensino Médio</option>
+                            <option value="2º Ano EM">2º Ano - Ensino Médio</option>
+                            <option value="3º Ano EM">3º Ano - Ensino Médio</option>
+                            <option value="Não estuda">Não estuda</option>
+                            <option value="Formado">Formado</option>
+                        </select>
+                        <div class="mensagem-erro" id="erroSerie">Campo obrigatório</div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO 5: INFORMAÇÕES ADICIONAIS -->
+                <div class="secao">
+                    <div class="secao-titulo">
+                        <span class="numero">5</span> INFORMAÇÕES ADICIONAIS
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Como conheceu a Escolinha do Jacaré?</label>
+                        <select id="origem">
+                            <option value="">Selecione...</option>
+                            <option value="Instagram">📱 Instagram</option>
+                            <option value="Facebook">📘 Facebook</option>
+                            <option value="Amigo/Indicação">👥 Amigo/Indicação</option>
+                            <option value="Panfleto">📄 Panfleto</option>
+                            <option value="Passou em frente">🚶 Passou em frente</option>
+                            <option value="Outros">📢 Outros</option>
+                        </select>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="declaracao">
+                        <label for="declaracao">Declaro que as informações são verdadeiras. <span class="obrigatorio">*</span></label>
+                    </div>
+                    <div class="mensagem-erro" id="erroDeclaracao">Você precisa confirmar esta declaração</div>
+                </div>
+
+                <button type="button" class="btn-enviar" onclick="enviarCadastro()">
+                    ✅ ENVIAR SOLICITAÇÃO
+                </button>
+            </form>
         </div>
-        <p><strong>Faça sua pré-matrícula e venha fazer parte dessa família!</strong></p>
-        <button class="btn-entendi" onclick="fecharWelcome()">👍 ENTENDI, VAMOS LÁ!</button>
+    </div>
+
+    <!-- MENSAGEM DE SUCESSO -->
+    <div id="mensagemSucesso" class="mensagem-sucesso hidden">
+        <div class="emoji-animado">🎉</div>
+        <h2>SOLICITAÇÃO ENVIADA!</h2>
+        <p>Recebemos sua pré-matrícula com sucesso!</p>
+        <div id="protocoloDiv" class="protocolo"></div>
+        <p><strong>Aguarde o contato da diretoria.</strong></p>
+        <div style="margin-top: 20px;">
+            <a href="index.html" style="background: white; color: #003399; display: inline-block; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-weight: bold;">← VOLTAR AO INÍCIO</a>
+        </div>
     </div>
 </div>
 
-<!-- Overlay -->
-<div id="overlay" class="overlay" onclick="fecharMenu()"></div>
-
-<!-- Menu Lateral -->
-<div id="sidebar" class="sidebar">
-    <a href="index.html">🏠 INÍCIO</a>
-    <a href="diretoria.html">📊 DIRETORIA</a>
-    <a href="funcionarios.html">🔒 FUNCIONÁRIOS</a>
-    <a href="#">📸 GALERIA</a>
-    <div class="divider"></div>
-    <a href="#" id="menuInstagram">📱 INSTAGRAM</a>
-    <a href="#" id="menuFacebook">📘 FACEBOOK</a>
-    <a href="#" id="menuWhatsapp">💬 CONTATOS</a>
-</div>
-
-<!-- BOTÃO FLUTUANTE WHATSAPP -->
-<a href="#" id="whatsappBtn" class="btn-whatsapp" target="_blank">
-    💬
-</a>
-
-<!-- CONTEÚDO PRINCIPAL -->
-<div class="container">
-    <div class="nav-bar">
-        <div class="logo-area">
-            <div class="logo-text">🐊 ESCOLINHA DO JACARÉ</div>
-            <!-- CLIMA -->
-            <div class="clima-widget" id="climaWidget">
-                <span id="climaIcone">🌡️</span>
-                <span id="climaTemp">--°C</span>
-                <span id="climaDesc">Manaus, AM</span>
-            </div>
-        </div>
-        <div class="acoes-topo">
-            <button class="btn-tema" id="btnTema" onclick="alternarTema()">🌞</button>
-            <button class="hamburger" id="hamburger" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </div>
-
-    <div class="hero">
-        <div class="slides-container">
-            <div class="slides" id="slider">
-                <div class="slide" style="background-image: url('imagem1.jpg');"></div>
-                <div class="slide" style="background-image: url('imagem2.jpg');"></div>
-                <div class="slide" style="background-image: url('imagem3.jpg');"></div>
-                <div class="slide" style="background-image: url('./pascoa.jpg');"></div>
-            </div>
-            <div class="seta seta-esquerda" onclick="mudarSlide(-1)">❮</div>
-            <div class="seta seta-direita" onclick="mudarSlide(1)">❯</div>
-            <div class="indicadores" id="indicadores">
-                <div class="indicador ativo" onclick="irParaSlide(0)"></div>
-                <div class="indicador" onclick="irParaSlide(1)"></div>
-                <div class="indicador" onclick="irParaSlide(2)"></div>
-                <div class="indicador" onclick="irParaSlide(3)"></div>
-            </div>
-        </div>
-    </div>
-
-    <section id="sobre">
-        <div class="card">
-            <h2>Nossa Escola</h2>
-            <p>A maior tradição esportiva do bairro Alvorada. Formando cidadãos através do esporte.</p>
-        </div>
-    </section>
-
-    <div style="text-align: center; margin: 20px 0;">
-        <a href="prematricula.html" class="btn-prematricula" id="btnPrematricula">
-            📝 PRÉ-MATRÍCULA ONLINE
-        </a>
-        <p style="color: #666; margin-top: 10px; font-size: 0.85rem;">Faça sua solicitação de matrícula de forma rápida e segura</p>
-    </div>
-
-    <div class="horario-card">
-        <div class="horario-content">
-            <div class="horario-icone">🕐</div>
-            <h3>HORÁRIO DE ATENDIMENTO</h3>
-            <div class="horario-dia">📅 Sábado</div>
-            <div class="horario-hora">7:30 às 12:00</div>
-            <div class="horario-detalhe">📍 Atendimento presencial para matrículas e informações</div>
-        </div>
-    </div>
-
-    <!-- FAQ - PERGUNTAS FREQUENTES (UNIFORME DOADO) -->
-    <div class="faq-section">
-        <h2>❓ PERGUNTAS FREQUENTES</h2>
-        <div class="faq-grid">
-            <div class="faq-item">
-                <button class="faq-question">
-                    Qual a idade mínima para participar?
-                    <span class="icone">▼</span>
-                </button>
-                <div class="faq-answer">
-                    Aceitamos crianças a partir de 5 anos até 17 anos. Temos categorias Sub-7, Sub-9, Sub-11, Sub-13 e Sub-15.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    Quais os dias e horários dos treinos?
-                    <span class="icone">▼</span>
-                </button>
-                <div class="faq-answer">
-                    Os treinos acontecem aos sábados, das 7:30 às 12:00. Cada turma tem um horário específico dentro desse período.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    Como funciona o uniforme?
-                    <span class="icone">▼</span>
-                </button>
-                <div class="faq-answer">
-                    O uniforme é doado pela escolinha para os alunos matriculados. Fazemos questão que todos tenham o mesmo kit para igualdade e pertencimento.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    Como faço a pré-matrícula?
-                    <span class="icone">▼</span>
-                </button>
-                <div class="faq-answer">
-                    Basta clicar no botão "PRÉ-MATRÍCULA ONLINE" no topo da página, preencher o formulário e aguardar o contato da diretoria.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    A quadra é coberta?
-                    <span class="icone">▼</span>
-                </button>
-                <div class="faq-answer">
-                    Sim! Nossa quadra é coberta, garantindo conforto e segurança mesmo em dias de chuva.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="categorias-container" id="atividades">
-        <h2>🏆 CATEGORIAS</h2>
-        <div class="grid-categorias">
-            <div class="cat-item"><span class="emoji-cat">⚽</span><span>FUTEBOL</span></div>
-            <div class="cat-item"><span class="emoji-cat">🥋</span><span>TAEKWONDO</span></div>
-            <div class="cat-item"><span class="emoji-cat">🏓</span><span>TÊNIS DE MESA</span></div>
-            <div class="cat-item"><span class="emoji-cat">🤸</span><span>GINÁSTICA</span></div>
-        </div>
-        <div class="info-idades">
-            📋 <strong>Categorias oficiais:</strong> Sub-07 • Sub-09 • Sub-11 • Sub-13 • Sub-15<br>
-            <span>👉 Aceitamos alunos até 17 anos</span> (consulte disponibilidade de vaga)
-        </div>
-    </div>
-
-    <div class="patrocinadores">
-        <h2>🏆 NOSSOS PATROCINADORES</h2>
-        <div class="patrocinadores-grid">
-            <div class="patrocinador-item"><img src="./dubom.png" alt="Dubom"></div>
-            <div class="patrocinador-item"><img src="./sao-jose.png" alt="São José"></div>
-        </div>
-        <div class="chamada-patrocinio">
-            📢 <strong>Sua marca pode estar aqui!</strong><br>
-            Seja um patrocinador da Escolinha do Jacaré.<br>
-            <a href="#" id="patrocinioLink">📱 Fale conosco</a>
-        </div>
-    </div>
-
-    <section id="localizacao">
-        <div class="loc-card">
-            <h2>📍 VENHA NOS CONHECER</h2>
-            <div class="mapa-container">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.123456789!2d-60.0445!3d-3.0911!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMDUnMjguMCJTIDYwwrAwMic0MC4yIlc!5e0!3m2!1spt-BR!2sbr!4v1234567890"
-                    allowfullscreen=""
-                    loading="lazy">
-                </iframe>
-            </div>
-            <div class="endereco-info">
-                <p><strong>Unidos do Alvorada</strong></p>
-                <p>R. São Bernardo, 88 - Alvorada I, Manaus</p>
-            </div>
-            <a href="#" target="_blank" class="btn-mapa" id="mapaLink">
-                <span>📍</span> ABRIR NO GOOGLE MAPS
-            </a>
-        </div>
-    </section>
-
-    <footer>
-        ESCOLINHA DO JACARÉ - ALVORADA<br>
-        Manaus/AM - Brasil
-        <div class="rights">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</div>
-    </footer>
-</div>
-
-<!-- BOTÃO VOLTAR AO TOPO -->
-<button id="btnTopo" class="btn-topo" title="Voltar ao topo">⬆️</button>
+<footer>
+    ESCOLINHA DO JACARÉ - ALVORADA<br>
+    Manaus/AM - Brasil
+    <div class="rights">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</div>
+</footer>
 
 <script>
-    // ========== SLIDER ==========
-    let slideIndex = 0;
-    const slides = document.getElementById('slider');
-    const totalSlides = 4;
-    const indicadores = document.querySelectorAll('.indicador');
+    // ========== CONFIGURAÇÕES ==========
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw2Dl7TM8gIC8UDTVSVeRcnSokVQOeMsJvasLzHMAL8BiwdEgyD6_gfRy33WpS91U23Pw/exec';
+    const PLANILHA_ID = '1O48gLWV9zb_dtDFpz9MtIMLZ4Cx8jibtTjWlE922bAw';
+    const NOME_ABA = 'solicitaçoes';
 
-    function mudarSlide(n) {
-        slideIndex = (slideIndex + n + totalSlides) % totalSlides;
-        atualizarSlider();
-    }
-
-    function irParaSlide(n) {
-        slideIndex = n;
-        atualizarSlider();
-    }
-
-    function atualizarSlider() {
-        slides.style.transform = `translateX(-${slideIndex * 25}%)`;
-        indicadores.forEach((ind, i) => {
-            if (i === slideIndex) ind.classList.add('ativo');
-            else ind.classList.remove('ativo');
-        });
-    }
-
-    setInterval(() => { mudarSlide(1); }, 5000);
-
-    // ========== SPLASH SCREEN + WELCOME ==========
-    const SCRIPT_URL_VISITAS = 'https://script.google.com/macros/s/AKfycbxaaHcEtRBwKcTpUxvZT0v_zUM4vbJfqWx2OlE3LG8UqK1_AGV-ozTi4LN0rSuLDjIx/exec';
-    
-    async function registrarVisita() {
-        try {
-            await fetch(SCRIPT_URL_VISITAS, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ acao: 'visita' }) });
-        } catch (error) { console.log('Erro ao registrar visita:', error); }
-    }
-
-    function fecharWelcome() {
-        document.getElementById('modalWelcome').style.display = 'none';
-        localStorage.setItem('welcome_visto', 'true');
-    }
-
-    // ========== MENU HAMBURGUER ==========
-    function toggleMenu() {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-        const hamburger = document.getElementById('hamburger');
-        
-        sidebar.classList.toggle('open');
-        overlay.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    }
-
-    function fecharMenu() {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-        const hamburger = document.getElementById('hamburger');
-        
-        sidebar.classList.remove('open');
-        overlay.classList.remove('active');
-        hamburger.classList.remove('active');
-    }
-
-    // ========== TEMA ESCURO/CLARO ==========
+    // ========== TEMA ESCURO ==========
     function alternarTema() {
-        const btn = document.getElementById('btnTema');
-        btn.classList.add('animar');
-        
         document.body.classList.toggle('dark-mode');
-        
+        const btn = document.querySelector('.btn-tema');
         const isDark = document.body.classList.contains('dark-mode');
         btn.innerHTML = isDark ? '🌙' : '🌞';
-        localStorage.setItem('tema', isDark ? 'dark' : 'light');
-        
-        setTimeout(() => btn.classList.remove('animar'), 500);
+        localStorage.setItem('tema_prematricula', isDark ? 'dark' : 'light');
     }
 
-    // ========== BOTÃO VOLTAR AO TOPO ==========
-    const btnTopo = document.getElementById('btnTopo');
-    
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-            btnTopo.classList.add('visible');
-        } else {
-            btnTopo.classList.remove('visible');
-        }
-    });
-    
-    btnTopo.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    // Carregar tema salvo
+    if (localStorage.getItem('tema_prematricula') === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.querySelector('.btn-tema').innerHTML = '🌙';
+    }
 
-    // ========== TOAST ==========
-    function mostrarToast(mensagem) {
+    // ========== FUNÇÕES AUXILIARES ==========
+    
+    function mostrarToast(mensagem, tipo = 'success') {
         const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.innerHTML = `✅ ${mensagem}`;
+        toast.className = `toast ${tipo}`;
+        toast.innerHTML = `${tipo === 'success' ? '✅' : '❌'} ${mensagem}`;
         document.body.appendChild(toast);
-        setTimeout(() => toast.classList.add('show'), 10);
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 300);
-        }, 2500);
+        setTimeout(() => toast.remove(), 3000);
     }
 
-    // ========== CLIMA ==========
-    async function buscarClima() {
-        try {
-            const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-3.1019&longitude=-60.0250&current_weather=true&timezone=America/Manaus');
-            const dados = await response.json();
+    // Controle de deficiência
+    document.getElementById('semDeficiencia').addEventListener('change', function() {
+        const opcoes = document.getElementById('deficienciaOpcoes');
+        const checks = document.querySelectorAll('.deficiencia-check');
+        const outraInput = document.getElementById('outraDeficiencia');
+        
+        if (this.checked) {
+            opcoes.classList.add('disabled');
+            checks.forEach(c => { c.checked = false; c.disabled = true; });
+            outraInput.disabled = true;
+            outraInput.value = '';
+        } else {
+            opcoes.classList.remove('disabled');
+            checks.forEach(c => c.disabled = false);
+            outraInput.disabled = false;
+        }
+    });
+
+    // Controle de remédio
+    document.querySelectorAll('input[name="remedio"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const descField = document.getElementById('remedioDesc');
+            descField.style.display = this.value === 'Sim' ? 'block' : 'none';
+        });
+    });
+
+    // Calcular idade
+    function calcularIdade() {
+        const dataNasc = document.getElementById('dataNasc').value;
+        if (!dataNasc) return null;
+        const hoje = new Date();
+        const nasc = new Date(dataNasc);
+        let idade = hoje.getFullYear() - nasc.getFullYear();
+        const m = hoje.getMonth() - nasc.getMonth();
+        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
+        return idade;
+    }
+
+    // Sugerir categoria automaticamente pela idade
+    function sugerirCategoriaPorIdade() {
+        const idade = calcularIdade();
+        const selectCategoria = document.getElementById('categoria');
+        
+        if (idade !== null && idade >= 0) {
+            let categoriaSugerida = '';
+            if (idade <= 5) categoriaSugerida = 'Sub-5';
+            else if (idade <= 7) categoriaSugerida = 'Sub-7';
+            else if (idade <= 9) categoriaSugerida = 'Sub-9';
+            else if (idade <= 11) categoriaSugerida = 'Sub-11';
+            else if (idade <= 13) categoriaSugerida = 'Sub-13';
+            else if (idade <= 15) categoriaSugerida = 'Sub-15';
+            else if (idade <= 17) categoriaSugerida = 'Sub-17';
+            else categoriaSugerida = 'Acima-17';
             
-            const temp = Math.round(dados.current_weather.temperature);
-            const codigo = dados.current_weather.weathercode;
-            
-            let iconeEmoji = '🌡️';
-            let desc = '';
-            
-            if (codigo === 0) { iconeEmoji = '☀️'; desc = 'Céu limpo'; }
-            else if (codigo === 1 || codigo === 2) { iconeEmoji = '⛅'; desc = 'Parcialmente nublado'; }
-            else if (codigo === 3) { iconeEmoji = '☁️'; desc = 'Nublado'; }
-            else if (codigo >= 45 && codigo <= 48) { iconeEmoji = '🌫️'; desc = 'Nevoeiro'; }
-            else if ((codigo >= 51 && codigo <= 55) || (codigo >= 61 && codigo <= 65) || (codigo >= 80 && codigo <= 82)) { 
-                iconeEmoji = '🌧️'; desc = 'Chuva'; 
+            // Verificar se já está selecionada
+            if (selectCategoria.value !== categoriaSugerida && selectCategoria.value !== '') {
+                // Mostrar sugestão sem alterar automaticamente
+                const infoIdade = document.getElementById('infoIdade');
+                infoIdade.innerHTML = `📊 Idade: ${idade} anos | Sugestão: <strong>${categoriaSugerida}</strong>`;
+                infoIdade.style.display = 'block';
+            } else if (selectCategoria.value === '') {
+                // Se não tem categoria selecionada, sugerir
+                selectCategoria.value = categoriaSugerida;
+                const infoIdade = document.getElementById('infoIdade');
+                infoIdade.innerHTML = `📊 Idade: ${idade} anos | Categoria sugerida: <strong>${categoriaSugerida}</strong>`;
+                infoIdade.style.display = 'block';
             }
-            else if (codigo >= 71 && codigo <= 77) { iconeEmoji = '❄️'; desc = 'Neve'; }
-            else if (codigo >= 95 && codigo <= 99) { iconeEmoji = '⛈️'; desc = 'Tempestade'; }
-            else { iconeEmoji = '🌡️'; desc = 'Manaus'; }
-            
-            document.getElementById('climaTemp').innerHTML = `${temp}°C`;
-            document.getElementById('climaDesc').innerHTML = `Manaus, AM • ${desc}`;
-            document.getElementById('climaIcone').innerHTML = iconeEmoji;
-            
+        }
+    }
+
+    function mostrarIdade() {
+        const idade = calcularIdade();
+        const infoDiv = document.getElementById('infoIdade');
+        if (idade !== null && idade >= 0) {
+            infoDiv.innerHTML = `📊 Idade calculada: <strong>${idade} anos</strong>`;
+            infoDiv.style.display = 'block';
+            sugerirCategoriaPorIdade();
+        } else {
+            infoDiv.style.display = 'none';
+        }
+    }
+
+    document.getElementById('dataNasc').addEventListener('change', mostrarIdade);
+    document.getElementById('dataNasc').addEventListener('input', mostrarIdade);
+
+    async function buscarCEP() {
+        const cep = document.getElementById('cep').value.replace(/\D/g, '');
+        if (cep.length !== 8) {
+            mostrarToast('Digite um CEP válido com 8 dígitos!', 'error');
+            return;
+        }
+
+        const carregando = document.getElementById('carregandoCEP');
+        carregando.style.display = 'block';
+
+        try {
+            const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            const dados = await response.json();
+
+            if (!dados.erro) {
+                document.getElementById('endereco').value = dados.logradouro || '';
+                document.getElementById('bairro').value = dados.bairro || '';
+                document.getElementById('municipio').value = dados.localidade || '';
+                document.getElementById('uf').value = dados.uf || '';
+                mostrarToast('✅ Endereço encontrado!', 'success');
+            } else {
+                mostrarToast('CEP não encontrado!', 'error');
+            }
         } catch (error) {
-            console.log('Erro ao buscar clima:', error);
-            document.getElementById('climaTemp').innerHTML = '--°C';
-            document.getElementById('climaDesc').innerHTML = 'Manaus, AM';
-            document.getElementById('climaIcone').innerHTML = '🌡️';
+            console.error('Erro:', error);
+            mostrarToast('Erro ao buscar CEP', 'error');
+        } finally {
+            carregando.style.display = 'none';
         }
     }
 
-    // ========== FAQ ==========
-    function initFaq() {
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            const questionBtn = item.querySelector('.faq-question');
-            questionBtn.addEventListener('click', () => {
-                item.classList.toggle('active');
-            });
-        });
+    async function verificarDuplicidade(rgResponsavel, nomeResponsavel, nomeAluno, dataNasc) {
+        try {
+            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=${NOME_ABA}`;
+            const response = await fetch(url);
+            const texto = await response.text();
+            const linhas = texto.split('\n');
+
+            for (let i = 1; i < linhas.length; i++) {
+                const linha = linhas[i].trim();
+                if (!linha) continue;
+
+                const valores = [];
+                let atual = '';
+                let dentroAspas = false;
+                for (let c of linha) {
+                    if (c === '"') dentroAspas = !dentroAspas;
+                    else if (c === ',' && !dentroAspas) { valores.push(atual); atual = ''; }
+                    else atual += c;
+                }
+                valores.push(atual);
+
+                const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
+
+                if (valores.length >= 27) {
+                    const rgExistente = limpar(valores[15]);
+                    const nomeResponsavelExistente = limpar(valores[7]);
+                    const nomeAlunoExistente = limpar(valores[2]);
+                    const dataExistente = limpar(valores[3]);
+
+                    if (rgExistente === rgResponsavel && 
+                        nomeResponsavelExistente === nomeResponsavel && 
+                        nomeAlunoExistente === nomeAluno && 
+                        dataExistente === dataNasc) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        } catch (error) {
+            console.error('Erro ao verificar duplicidade:', error);
+            return false;
+        }
     }
 
-    // ========== REDES SOCIAIS (links #) ==========
-    document.getElementById('menuInstagram')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarToast('📸 Abrindo Instagram...');
-        // setTimeout(() => window.open('https://instagram.com/escolinhadojacare', '_blank'), 500);
-    });
-    
-    document.getElementById('menuFacebook')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarToast('📘 Abrindo Facebook...');
-        // setTimeout(() => window.open('https://facebook.com/escolinhadojacare', '_blank'), 500);
-    });
-    
-    document.getElementById('menuWhatsapp')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarToast('📱 Abrindo WhatsApp...');
-    });
-
-    document.getElementById('whatsappBtn')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarToast('📱 Abrindo WhatsApp...');
-    });
-
-    document.getElementById('patrocinioLink')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarToast('📱 Fale conosco pelo WhatsApp');
-    });
-
-    document.getElementById('mapaLink')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarToast('📍 Abrindo Google Maps...');
-    });
-
-    document.getElementById('btnPrematricula')?.addEventListener('click', () => {
-        mostrarToast('⏳ Redirecionando para pré-matrícula...');
-    });
-
-    // ========== INICIALIZAÇÃO ==========
-    window.addEventListener('load', function() {
-        const splash = document.getElementById('splashScreen');
-        const modal = document.getElementById('modalWelcome');
-        
-        setTimeout(() => {
-            splash.style.opacity = '0';
+    function mostrarErro(erroId, campoId) {
+        const erroDiv = document.getElementById(erroId);
+        if (erroDiv) erroDiv.style.display = 'block';
+        if (campoId) {
+            const campo = document.getElementById(campoId);
+            if (campo) campo.classList.add('erro');
             setTimeout(() => {
-                splash.style.display = 'none';
-                const jaViu = localStorage.getItem('welcome_visto');
-                if (!jaViu) modal.style.display = 'flex';
-            }, 500);
-        }, 2000);
+                if (campo) campo.classList.remove('erro');
+                if (erroDiv) erroDiv.style.display = 'none';
+            }, 3000);
+        }
+    }
+
+    async function enviarCadastro() {
+        // Coletar dados
+        const nomeAluno = document.getElementById('nomeAluno').value.trim();
+        const dataNasc = document.getElementById('dataNasc').value;
+        const sexo = document.querySelector('input[name="sexo"]:checked')?.value;
+        const categoria = document.getElementById('categoria').value;
+        const peso = document.getElementById('peso').value;
+        const altura = document.getElementById('altura').value;
+        const calcado = document.getElementById('calcado').value;
+        const uniforme = document.getElementById('uniforme').value;
+        const turma = document.getElementById('turma').value;
         
-        registrarVisita();
-        buscarClima();
-        setInterval(buscarClima, 600000);
-        initFaq();
-        
-        if (localStorage.getItem('tema') === 'dark') {
-            document.body.classList.add('dark-mode');
-            document.getElementById('btnTema').innerHTML = '🌙';
+        const semDeficiencia = document.getElementById('semDeficiencia').checked;
+        let deficienciaTexto = '';
+        if (!semDeficiencia) {
+            const selecionadas = Array.from(document.querySelectorAll('.deficiencia-check:checked')).map(cb => cb.value);
+            const outra = document.getElementById('outraDeficiencia').value.trim();
+            if (outra) selecionadas.push(`Outra: ${outra}`);
+            deficienciaTexto = selecionadas.length > 0 ? selecionadas.join(', ') : 'Nenhuma';
+        } else {
+            deficienciaTexto = 'Nenhuma';
         }
         
-        document.querySelectorAll('.sidebar a').forEach(link => {
-            link.addEventListener('click', fecharMenu);
-        });
-    });
+        const remedioSelecionado = document.querySelector('input[name="remedio"]:checked')?.value;
+        const remedioDesc = remedioSelecionado === 'Sim' ? document.getElementById('remedioDesc').value.trim() : '';
+        
+        const rgResponsavel = document.getElementById('rgResponsavel').value.trim().replace(/\D/g, '');
+        const responsavel = document.getElementById('responsavel').value.trim();
+        const telefone = document.getElementById('telefone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        
+        const endereco = document.getElementById('endereco').value.trim();
+        const numero = document.getElementById('numero').value.trim();
+        const bairro = document.getElementById('bairro').value.trim();
+        const municipio = document.getElementById('municipio').value.trim();
+        const uf = document.getElementById('uf').value;
+        const moradores = document.getElementById('moradores').value.trim();
+        
+        const escola = document.getElementById('escola').value.trim();
+        const serie = document.getElementById('serie').value;
+        const origem = document.getElementById('origem').value;
+        const declaracao = document.getElementById('declaracao').checked;
+
+        // Validações
+        let isValid = true;
+        
+        if (!nomeAluno) { mostrarErro('erroNome', 'nomeAluno'); isValid = false; }
+        if (!dataNasc) { mostrarErro('erroData', 'dataNasc'); isValid = false; }
+        if (!sexo) { mostrarErro('erroSexo', null); isValid = false; }
+        if (!categoria) { mostrarErro('erroCategoria', 'categoria'); isValid = false; }
+        if (!peso) { mostrarErro('erroPeso', 'peso'); isValid = false; }
+        if (!altura) { mostrarErro('erroAltura', 'altura'); isValid = false; }
+        if (!calcado) { mostrarErro('erroCalcado', 'calcado'); isValid = false; }
+        if (!uniforme) { mostrarErro('erroUniforme', 'uniforme'); isValid = false; }
+        if (!turma) { mostrarErro('erroTurma', 'turma'); isValid = false; }
+        if (!rgResponsavel) { mostrarErro('erroRG', 'rgResponsavel'); isValid = false; }
+        if (!responsavel) { mostrarErro('erroResponsavel', 'responsavel'); isValid = false; }
+        
+        const numeros = telefone.replace(/\D/g, '');
+        if (numeros.length < 10 || numeros.length > 11) { mostrarErro('erroTelefone', 'telefone'); isValid = false; }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) { mostrarErro('erroEmail', 'email'); isValid = false; }
+        
+        if (!endereco) { mostrarErro('erroEndereco', 'endereco'); isValid = false; }
+        if (!numero) { mostrarErro('erroNumero', 'numero'); isValid = false; }
+        if (!bairro) { mostrarErro('erroBairro', 'bairro'); isValid = false; }
+        if (!municipio) { mostrarErro('erroMunicipio', 'municipio'); isValid = false; }
+        if (!uf) { mostrarErro('erroUF', 'uf'); isValid = false; }
+        if (!moradores || parseInt(moradores) < 1) { mostrarErro('erroMoradores', 'moradores'); isValid = false; }
+        if (!escola) { mostrarErro('erroEscola', 'escola'); isValid = false; }
+        if (!serie) { mostrarErro('erroSerie', 'serie'); isValid = false; }
+        if (!declaracao) { mostrarErro('erroDeclaracao', null); isValid = false; }
+        
+        if (remedioSelecionado === 'Sim' && !remedioDesc) {
+            mostrarErro('erroRemedioDesc', 'remedioDesc');
+            isValid = false;
+        }
+
+        if (!isValid) {
+            mostrarToast('⚠️ Preencha todos os campos obrigatórios!', 'error');
+            return;
+        }
+
+        const btn = document.querySelector('.btn-enviar');
+        btn.disabled = true;
+        btn.innerHTML = '⏳ VERIFICANDO...';
+
+        try {
+            const jaExiste = await verificarDuplicidade(rgResponsavel, responsavel, nomeAluno, dataNasc);
+            
+            if (jaExiste) {
+                mostrarToast('❌ Este aluno já está cadastrado! Entre em contato.', 'error');
+                btn.disabled = false;
+                btn.innerHTML = '✅ ENVIAR SOLICITAÇÃO';
+                return;
+            }
+
+            btn.innerHTML = '⏳ ENVIANDO...';
+
+            const idade = calcularIdade();
+            const protocolo = `JAC-${Date.now()}`;
+            const dataEnvio = new Date().toLocaleString('pt-BR');
+            const enderecoCompleto = `${endereco}, ${numero} - ${bairro}, ${municipio}/${uf}`;
+
+            const dados = {
+                protocolo: protocolo,
+                dataEnvio: dataEnvio,
+                nomeAluno: nomeAluno,
+                dataNasc: dataNasc,
+                idade: idade,
+                turma: turma,
+                categoria: categoria,  // <--- CAMPO CATEGORIA ADICIONADO
+                responsavel: responsavel,
+                telefone: telefone,
+                email: email,
+                endereco: enderecoCompleto,
+                bairro: bairro,
+                moradores: moradores,
+                remedio: remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não',
+                origem: origem,
+                rg: rgResponsavel,
+                sexo: sexo,
+                peso: peso,
+                altura: altura,
+                calcado: calcado,
+                uniforme: uniforme,
+                deficiencia: deficienciaTexto,
+                municipio: municipio,
+                uf: uf,
+                escola: escola,
+                serie: serie,
+                status: 'pendente'
+            };
+
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(dados)
+            });
+
+            const solicitacoes = JSON.parse(localStorage.getItem('solicitacoes_prematricula') || '[]');
+            solicitacoes.push({ id: Date.now(), protocolo: protocolo, ...dados });
+            localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+
+            document.getElementById('protocoloDiv').innerHTML = `🔑 PROTOCOLO: ${protocolo}`;
+            document.getElementById('formularioContainer').classList.add('hidden');
+            document.getElementById('mensagemSucesso').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            mostrarToast('✅ Solicitação enviada com sucesso!', 'success');
+
+        } catch (error) {
+            console.error('Erro:', error);
+            mostrarToast('❌ Erro ao enviar. Tente novamente.', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '✅ ENVIAR SOLICITAÇÃO';
+        }
+    }
 </script>
 
 </body>
