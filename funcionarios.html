@@ -43,201 +43,41 @@
         .btn-sair:hover { background: rgba(255,255,255,0.3); }
         .btn-cadastrar { background: #10b981; border-color: #10b981; }
         .btn-cadastrar:hover { background: #059669; }
-        /* Layout vertical: uma seção abaixo da outra */
-        .vertical-layout {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-        .secao {
-            background: white;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: background 0.3s;
-        }
-        body.dark-mode .secao {
-            background: #1e293b;
-        }
-        .secao-header {
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-            padding: 18px 20px;
-            border-bottom: 2px solid #e2e8f0;
-            transition: background 0.3s;
-        }
-        body.dark-mode .secao-header {
-            background: #0f172a;
-            border-bottom-color: #334155;
-        }
-        .secao-header h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .secao-header .badge {
-            background: #0047AB;
-            color: white;
-            padding: 2px 10px;
-            border-radius: 40px;
-            font-size: 12px;
-        }
-        .secao-content {
-            padding: 20px;
-        }
-        .filtros {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .filtro-group {
-            flex: 1;
-            min-width: 140px;
-        }
-        .filtro-group label {
-            display: block;
-            font-size: 11px;
-            font-weight: 600;
-            color: #64748b;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-        }
-        body.dark-mode .filtro-group label {
-            color: #94a3b8;
-        }
-        .filtro-group select, .filtro-group input {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 13px;
-            background: white;
-            transition: background 0.3s;
-        }
-        body.dark-mode .filtro-group select, body.dark-mode .filtro-group input {
-            background: #0f172a;
-            border-color: #334155;
-            color: white;
-        }
-        .busca-input {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 13px;
-        }
-        .resultados-info {
-            font-size: 11px;
-            color: #64748b;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        body.dark-mode .resultados-info {
-            color: #94a3b8;
-            border-bottom-color: #334155;
-        }
-        .acoes-massa {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        body.dark-mode .acoes-massa {
-            border-bottom-color: #334155;
-        }
-        .selecionar-todos {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-        }
-        .btn-excluir-massa {
-            background: #fee2e2;
-            color: #dc2626;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-excluir-massa:hover {
-            background: #fecaca;
-        }
-        .tabela-container {
-            overflow-x: auto;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 12px 10px;
-            text-align: left;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 13px;
-            white-space: nowrap; /* Impede quebra de linha */
-        }
-        body.dark-mode th, body.dark-mode td {
-            border-bottom-color: #334155;
-        }
-        th {
-            background: #f8fafc;
-            font-weight: 600;
-            color: #1e293b;
-            position: sticky;
-            top: 0;
-            cursor: pointer;
-            user-select: none;
-            transition: background 0.3s;
-        }
-        th:hover {
-            background: #e2e8f0;
-        }
-        body.dark-mode th {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
-        body.dark-mode th:hover {
-            background: #1e293b;
-        }
-        tr {
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        tr:hover {
-            background: #f8fafc;
-        }
-        body.dark-mode tr:hover {
-            background: #334155;
-        }
-        .status-pendente {
-            background: #fef3c7;
-            color: #d97706;
-            padding: 4px 10px;
-            border-radius: 40px;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-block;
-        }
-        .btn-acao {
-            padding: 5px 12px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 11px;
-            margin: 0 3px;
-            transition: all 0.2s;
-        }
+        .vertical-layout { display: flex; flex-direction: column; gap: 30px; }
+        .secao { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: background 0.3s; }
+        body.dark-mode .secao { background: #1e293b; }
+        .secao-header { background: linear-gradient(135deg, #f8fafc, #f1f5f9); padding: 18px 20px; border-bottom: 2px solid #e2e8f0; transition: background 0.3s; }
+        body.dark-mode .secao-header { background: #0f172a; border-bottom-color: #334155; }
+        .secao-header h2 { font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .secao-header .badge { background: #0047AB; color: white; padding: 2px 10px; border-radius: 40px; font-size: 12px; }
+        .secao-content { padding: 20px; }
+        .filtros { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+        .filtro-group { flex: 1; min-width: 140px; }
+        .filtro-group label { display: block; font-size: 11px; font-weight: 600; color: #64748b; margin-bottom: 4px; text-transform: uppercase; }
+        body.dark-mode .filtro-group label { color: #94a3b8; }
+        .filtro-group select, .filtro-group input { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 13px; background: white; transition: background 0.3s; }
+        body.dark-mode .filtro-group select, body.dark-mode .filtro-group input { background: #0f172a; border-color: #334155; color: white; }
+        .busca-input { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 13px; }
+        .resultados-info { font-size: 11px; color: #64748b; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; }
+        body.dark-mode .resultados-info { color: #94a3b8; border-bottom-color: #334155; }
+        .acoes-massa { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #e2e8f0; }
+        body.dark-mode .acoes-massa { border-bottom-color: #334155; }
+        .selecionar-todos { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+        .btn-excluir-massa { background: #fee2e2; color: #dc2626; border: none; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .btn-excluir-massa:hover { background: #fecaca; }
+        .tabela-container { overflow-x: auto; max-height: 500px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid #f1f5f9; font-size: 13px; white-space: nowrap; }
+        body.dark-mode th, body.dark-mode td { border-bottom-color: #334155; }
+        th { background: #f8fafc; font-weight: 600; color: #1e293b; position: sticky; top: 0; cursor: pointer; user-select: none; transition: background 0.3s; }
+        th:hover { background: #e2e8f0; }
+        body.dark-mode th { background: #0f172a; color: #e2e8f0; }
+        body.dark-mode th:hover { background: #1e293b; }
+        tr { cursor: pointer; transition: background 0.2s; }
+        tr:hover { background: #f8fafc; }
+        body.dark-mode tr:hover { background: #334155; }
+        .status-pendente { background: #fef3c7; color: #d97706; padding: 4px 10px; border-radius: 40px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .btn-acao { padding: 5px 12px; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 11px; margin: 0 3px; transition: all 0.2s; }
         .btn-aprovar { background: #10b981; color: white; }
         .btn-aprovar:hover { background: #059669; transform: scale(1.02); }
         .btn-recusar { background: #ef4444; color: white; }
@@ -360,6 +200,20 @@
                                 <option value="Judô">Judô</option>
                             </select>
                         </div>
+                        <div class="filtro-group">
+                            <label>🏆 CATEGORIA</label>
+                            <select id="filtroCategoriaAluno">
+                                <option value="">Todas</option>
+                                <option value="Sub-5">Sub-5</option>
+                                <option value="Sub-7">Sub-7</option>
+                                <option value="Sub-9">Sub-9</option>
+                                <option value="Sub-11">Sub-11</option>
+                                <option value="Sub-13">Sub-13</option>
+                                <option value="Sub-15">Sub-15</option>
+                                <option value="Sub-17">Sub-17</option>
+                                <option value="Acima-17">Acima-17</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="resultados-info" id="resultadosAlunosInfo">Mostrando 0 de 0 registros</div>
                     <div class="acoes-massa">
@@ -372,10 +226,11 @@
                         <div id="loadingAlunos" class="skeleton-loader" style="display: none;"><div class="spinner"></div> Carregando...</div>
                         <table id="tabelaAlunos">
                             <thead>
-                                <tr>
+                                32
                                     <th style="width:30px"></th>
                                     <th onclick="ordenarAlunos('nome')">Nome ⬍</th>
                                     <th onclick="ordenarAlunos('turma')">Turma ⬍</th>
+                                    <th onclick="ordenarAlunos('categoria')">Categoria ⬍</th>
                                     <th onclick="ordenarAlunos('idade')">Idade ⬍</th>
                                     <th>Responsável</th>
                                     <th>Telefone</th>
@@ -409,6 +264,20 @@
                                 <option value="Judô">Judô</option>
                             </select>
                         </div>
+                        <div class="filtro-group">
+                            <label>🏆 CATEGORIA</label>
+                            <select id="filtroCategoriaSolicitacao">
+                                <option value="">Todas</option>
+                                <option value="Sub-5">Sub-5</option>
+                                <option value="Sub-7">Sub-7</option>
+                                <option value="Sub-9">Sub-9</option>
+                                <option value="Sub-11">Sub-11</option>
+                                <option value="Sub-13">Sub-13</option>
+                                <option value="Sub-15">Sub-15</option>
+                                <option value="Sub-17">Sub-17</option>
+                                <option value="Acima-17">Acima-17</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="resultados-info" id="resultadosSolicitacoesInfo">Mostrando 0 de 0 registros</div>
                     <div class="acoes-massa">
@@ -425,6 +294,7 @@
                                     <th style="width:30px"></th>
                                     <th onclick="ordenarSolicitacoes('nome')">Nome ⬍</th>
                                     <th onclick="ordenarSolicitacoes('turma')">Turma ⬍</th>
+                                    <th onclick="ordenarSolicitacoes('categoria')">Categoria ⬍</th>
                                     <th onclick="ordenarSolicitacoes('idade')">Idade ⬍</th>
                                     <th>Responsável</th>
                                     <th>Status</th>
@@ -442,8 +312,9 @@
 
 <!-- Modal Detalhes -->
 <div id="modalDetalhes" class="modal"><div class="modal-content"><div class="modal-header"><h3>📄 FICHA DO ALUNO</h3><span class="fechar-modal" onclick="fecharModal()">&times;</span></div><div id="detalhesConteudo" class="detalhes-grid"></div><div class="modal-acoes" id="modalAcoes"></div></div></div>
+
 <!-- Modal Cadastro Manual -->
-<div id="modalCadastro" class="modal"><div class="modal-content"><div class="modal-header"><h3>➕ CADASTRAR ALUNO</h3><span class="fechar-modal" onclick="fecharModalCadastro()">&times;</span></div><form id="formCadastroAluno"><div class="form-linha"><div class="form-grupo"><label>Nome completo *</label><input type="text" id="cadNome" required></div><div class="form-grupo"><label>Data Nascimento *</label><input type="date" id="cadDataNasc" required></div></div><div class="form-linha"><div class="form-grupo"><label>Sexo *</label><div class="radio-group"><label><input type="radio" name="cadSexo" value="Masculino"> Masculino</label><label><input type="radio" name="cadSexo" value="Feminino"> Feminino</label></div></div><div class="form-grupo"><label>Turma *</label><select id="cadTurma" required><option value="">Selecione</option><option value="Futebol">Futebol</option><option value="Taekwondo">Taekwondo</option><option value="Ginástica">Ginástica</option><option value="Tênis de Mesa">Tênis de Mesa</option><option value="Judô">Judô</option></select></div></div><div class="form-linha-3"><div class="form-grupo"><label>Peso (kg)</label><input type="number" id="cadPeso" step="0.1"></div><div class="form-grupo"><label>Altura (cm)</label><input type="number" id="cadAltura"></div><div class="form-grupo"><label>Calçado</label><input type="text" id="cadCalcado"></div></div><div class="form-linha"><div class="form-grupo"><label>Uniforme</label><select id="cadUniforme"><option value="">Selecione</option><option value="PP">PP</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option><option value="XG">XG</option><option value="XXG">XXG</option></select></div><div class="form-grupo"><label>Deficiência</label><input type="text" id="cadDeficiencia" placeholder="Nenhuma"></div></div><div class="form-grupo"><label>Responsável *</label><input type="text" id="cadResponsavel" required></div><div class="form-linha"><div class="form-grupo"><label>RG *</label><input type="text" id="cadRG" required></div><div class="form-grupo"><label>Telefone</label><input type="text" id="cadTelefone"></div></div><div class="form-linha"><div class="form-grupo"><label>Email</label><input type="email" id="cadEmail"></div><div class="form-grupo"><label>Moradores</label><input type="number" id="cadMoradores" value="1"></div></div><div class="form-grupo"><label>Endereço</label><input type="text" id="cadEndereco"></div><div class="form-linha"><div class="form-grupo"><label>Bairro</label><input type="text" id="cadBairro"></div><div class="form-grupo"><label>Município</label><input type="text" id="cadMunicipio"></div><div class="form-grupo"><label>UF</label><select id="cadUF"><option value="">Selecione</option><option value="AC">AC</option><option value="AL">AL</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MG">MG</option><option value="MS">MS</option><option value="MT">MT</option><option value="PA">PA</option><option value="PB">PB</option><option value="PE">PE</option><option value="PI">PI</option><option value="PR">PR</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RO">RO</option><option value="RR">RR</option><option value="RS">RS</option><option value="SC">SC</option><option value="SE">SE</option><option value="SP">SP</option><option value="TO">TO</option></select></div></div><div class="form-linha"><div class="form-grupo"><label>Escola</label><input type="text" id="cadEscola"></div><div class="form-grupo"><label>Série</label><select id="cadSerie"><option value="">Selecione</option><option value="1º Ano EF">1º Ano EF</option><option value="2º Ano EF">2º Ano EF</option><option value="3º Ano EF">3º Ano EF</option><option value="4º Ano EF">4º Ano EF</option><option value="5º Ano EF">5º Ano EF</option><option value="6º Ano EF">6º Ano EF</option><option value="7º Ano EF">7º Ano EF</option><option value="8º Ano EF">8º Ano EF</option><option value="9º Ano EF">9º Ano EF</option><option value="1º Ano EM">1º Ano EM</option><option value="2º Ano EM">2º Ano EM</option><option value="3º Ano EM">3º Ano EM</option><option value="Não estuda">Não estuda</option><option value="Formado">Formado</option></select></div></div><div class="form-grupo"><label>Remédio Controlado</label><div class="radio-group"><label><input type="radio" name="cadRemedio" value="Não" checked> Não</label><label><input type="radio" name="cadRemedio" value="Sim"> Sim</label></div><input type="text" id="cadRemedioDesc" placeholder="Se sim, qual?" style="margin-top: 8px; display: none;"></div><button type="button" class="btn-salvar" onclick="salvarCadastroManual()">💾 SALVAR ALUNO</button></form></div></div>
+<div id="modalCadastro" class="modal"><div class="modal-content"><div class="modal-header"><h3>➕ CADASTRAR ALUNO</h3><span class="fechar-modal" onclick="fecharModalCadastro()">&times;</span></div><form id="formCadastroAluno"><div class="form-linha"><div class="form-grupo"><label>Nome completo *</label><input type="text" id="cadNome" required></div><div class="form-grupo"><label>Data Nascimento *</label><input type="date" id="cadDataNasc" required></div></div><div class="form-linha"><div class="form-grupo"><label>Sexo *</label><div class="radio-group"><label><input type="radio" name="cadSexo" value="Masculino"> Masculino</label><label><input type="radio" name="cadSexo" value="Feminino"> Feminino</label></div></div><div class="form-grupo"><label>Turma *</label><select id="cadTurma" required><option value="">Selecione</option><option value="Futebol">Futebol</option><option value="Taekwondo">Taekwondo</option><option value="Ginástica">Ginástica</option><option value="Tênis de Mesa">Tênis de Mesa</option><option value="Judô">Judô</option></select></div></div><div class="form-grupo"><label>🏆 Categoria / Sub *</label><select id="cadCategoria" required><option value="">Selecione a categoria</option><option value="Sub-5">Sub-5 (até 5 anos)</option><option value="Sub-7">Sub-7 (6 a 7 anos)</option><option value="Sub-9">Sub-9 (8 a 9 anos)</option><option value="Sub-11">Sub-11 (10 a 11 anos)</option><option value="Sub-13">Sub-13 (12 a 13 anos)</option><option value="Sub-15">Sub-15 (14 a 15 anos)</option><option value="Sub-17">Sub-17 (16 a 17 anos)</option><option value="Acima-17">Acima de 17 anos (consultar diretoria)</option></select><div class="observacao" style="margin-top: 8px; font-size: 0.7rem; color: #666;">💡 Acima de 17 anos, a matrícula será analisada pela diretoria.</div></div><div class="form-linha-3"><div class="form-grupo"><label>Peso (kg)</label><input type="number" id="cadPeso" step="0.1"></div><div class="form-grupo"><label>Altura (cm)</label><input type="number" id="cadAltura"></div><div class="form-grupo"><label>Calçado</label><input type="text" id="cadCalcado"></div></div><div class="form-linha"><div class="form-grupo"><label>Uniforme</label><select id="cadUniforme"><option value="">Selecione</option><option value="PP">PP</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option><option value="XG">XG</option><option value="XXG">XXG</option></select></div><div class="form-grupo"><label>Deficiência</label><input type="text" id="cadDeficiencia" placeholder="Nenhuma"></div></div><div class="form-grupo"><label>Responsável *</label><input type="text" id="cadResponsavel" required></div><div class="form-linha"><div class="form-grupo"><label>RG *</label><input type="text" id="cadRG" required></div><div class="form-grupo"><label>Telefone</label><input type="text" id="cadTelefone"></div></div><div class="form-linha"><div class="form-grupo"><label>Email</label><input type="email" id="cadEmail"></div><div class="form-grupo"><label>Moradores</label><input type="number" id="cadMoradores" value="1"></div></div><div class="form-grupo"><label>Endereço</label><input type="text" id="cadEndereco"></div><div class="form-linha"><div class="form-grupo"><label>Bairro</label><input type="text" id="cadBairro"></div><div class="form-grupo"><label>Município</label><input type="text" id="cadMunicipio"></div><div class="form-grupo"><label>UF</label><select id="cadUF"><option value="">Selecione</option><option value="AC">AC</option><option value="AL">AL</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MG">MG</option><option value="MS">MS</option><option value="MT">MT</option><option value="PA">PA</option><option value="PB">PB</option><option value="PE">PE</option><option value="PI">PI</option><option value="PR">PR</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RO">RO</option><option value="RR">RR</option><option value="RS">RS</option><option value="SC">SC</option><option value="SE">SE</option><option value="SP">SP</option><option value="TO">TO</option></select></div></div><div class="form-linha"><div class="form-grupo"><label>Escola</label><input type="text" id="cadEscola"></div><div class="form-grupo"><label>Série</label><select id="cadSerie"><option value="">Selecione</option><option value="1º Ano EF">1º Ano EF</option><option value="2º Ano EF">2º Ano EF</option><option value="3º Ano EF">3º Ano EF</option><option value="4º Ano EF">4º Ano EF</option><option value="5º Ano EF">5º Ano EF</option><option value="6º Ano EF">6º Ano EF</option><option value="7º Ano EF">7º Ano EF</option><option value="8º Ano EF">8º Ano EF</option><option value="9º Ano EF">9º Ano EF</option><option value="1º Ano EM">1º Ano EM</option><option value="2º Ano EM">2º Ano EM</option><option value="3º Ano EM">3º Ano EM</option><option value="Não estuda">Não estuda</option><option value="Formado">Formado</option></select></div></div><div class="form-grupo"><label>Remédio Controlado</label><div class="radio-group"><label><input type="radio" name="cadRemedio" value="Não" checked> Não</label><label><input type="radio" name="cadRemedio" value="Sim"> Sim</label></div><input type="text" id="cadRemedioDesc" placeholder="Se sim, qual?" style="margin-top: 8px; display: none;"></div><div class="form-grupo"><label>Como conheceu</label><select id="cadOrigem"><option value="">Selecione</option><option value="Instagram">Instagram</option><option value="Facebook">Facebook</option><option value="Amigo/Indicação">Amigo/Indicação</option><option value="Panfleto">Panfleto</option><option value="Passou em frente">Passou em frente</option><option value="Outros">Outros</option></select></div><button type="button" class="btn-salvar" onclick="salvarCadastroManual()">💾 SALVAR ALUNO</button></form></div></div>
 
 <script>
     const SENHA = 'jacare123';
@@ -553,8 +424,8 @@
     function exportarDados() {
         const dados = [...alunos, ...solicitacoes];
         if (dados.length === 0) { mostrarToast('Nenhum dado para exportar', 'error'); return; }
-        const cabecalhos = ['Nome', 'Turma', 'Idade', 'Responsável', 'Telefone', 'Status', 'Email', 'Endereço', 'Bairro', 'RG', 'Remédio', 'Data Nasc', 'Sexo', 'Peso', 'Altura', 'Calçado', 'Uniforme', 'Deficiência', 'Município', 'UF', 'Escola', 'Série'];
-        const linhas = dados.map(item => [item.nomeAluno || '', item.turma || '', item.idade || '', item.responsavel || '', item.telefone || '', item.status || '', item.email || '', item.endereco || '', item.bairro || '', item.rg || '', item.remedio || '', formatarData(item.dataNasc), item.sexo || '', item.peso || '', item.altura || '', item.calcado || '', item.uniforme || '', item.deficiencia || '', item.municipio || '', item.uf || '', item.escola || '', item.serie || '']);
+        const cabecalhos = ['Nome', 'Turma', 'Categoria', 'Idade', 'Responsável', 'Telefone', 'Status', 'Email', 'Endereço', 'Bairro', 'RG', 'Remédio', 'Data Nasc', 'Sexo', 'Peso', 'Altura', 'Calçado', 'Uniforme', 'Deficiência', 'Município', 'UF', 'Escola', 'Série'];
+        const linhas = dados.map(item => [item.nomeAluno || '', item.turma || '', item.categoria || '', item.idade || '', item.responsavel || '', item.telefone || '', item.status || '', item.email || '', item.endereco || '', item.bairro || '', item.rg || '', item.remedio || '', formatarData(item.dataNasc), item.sexo || '', item.peso || '', item.altura || '', item.calcado || '', item.uniforme || '', item.deficiencia || '', item.municipio || '', item.uf || '', item.escola || '', item.serie || '']);
         const csv = [cabecalhos, ...linhas].map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
         const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');
@@ -569,9 +440,11 @@
     function filtrarESolicitacoes() {
         const busca = document.getElementById('buscaSolicitacao').value.toLowerCase();
         const turma = document.getElementById('filtroTurmaSolicitacao').value;
+        const categoria = document.getElementById('filtroCategoriaSolicitacao').value;
         solicitacoesFiltradas = solicitacoes.filter(s => {
             if (busca && !s.nomeAluno?.toLowerCase().includes(busca)) return false;
             if (turma && s.turma !== turma) return false;
+            if (categoria && s.categoria !== categoria) return false;
             return true;
         });
         ordenarLista(solicitacoesFiltradas, ordemSolicitacoes);
@@ -582,9 +455,11 @@
     function filtrarEAlunos() {
         const busca = document.getElementById('buscaAluno').value.toLowerCase();
         const turma = document.getElementById('filtroTurmaAluno').value;
+        const categoria = document.getElementById('filtroCategoriaAluno').value;
         alunosFiltrados = alunos.filter(a => {
             if (busca && !a.nomeAluno?.toLowerCase().includes(busca)) return false;
             if (turma && a.turma !== turma) return false;
+            if (categoria && a.categoria !== categoria) return false;
             return true;
         });
         ordenarLista(alunosFiltrados, ordemAlunos);
@@ -595,7 +470,7 @@
     function renderizarSolicitacoes(lista) {
         const tbody = document.getElementById('listaSolicitacoes');
         if (lista.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:40px;">📭 Nenhuma solicitação pendente</td></tr>';
+            tbody.innerHTML = '.<td colspan="8" style="text-align:center; padding:40px;">📭 Nenhuma solicitação pendente</td></tr>';
             return;
         }
         tbody.innerHTML = lista.map(s => `
@@ -603,6 +478,7 @@
                 <td onclick="event.stopPropagation()"><input type="checkbox" class="checkbox sel-solicitacao" value="${s.protocolo}"></td>
                 <td><strong>${s.nomeAluno || '-'}</strong></td>
                 <td>${s.turma || '-'}</td>
+                <td><span style="background: #f0f7ff; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem;">${s.categoria || '-'}</span></td>
                 <td>${s.idade || '-'}</td>
                 <td>${s.responsavel || '-'}</td>
                 <td><span class="status-pendente">Pendente</span></td>
@@ -618,7 +494,7 @@
     function renderizarAlunos(lista) {
         const tbody = document.getElementById('listaAlunos');
         if (lista.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:40px;">👥 Nenhum aluno aprovado</td></tr>';
+            tbody.innerHTML = '.<td colspan="7" style="text-align:center; padding:40px;">👥 Nenhum aluno aprovado</td></tr>';
             return;
         }
         tbody.innerHTML = lista.map(a => `
@@ -626,6 +502,7 @@
                 <td onclick="event.stopPropagation()"><input type="checkbox" class="checkbox sel-aluno" value="${a.protocolo}"></td>
                 <td><strong>${a.nomeAluno || '-'}</strong></td>
                 <td>${a.turma || '-'}</td>
+                <td><span style="background: #f0f7ff; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem;">${a.categoria || '-'}</span></td>
                 <td>${a.idade || '-'}</td>
                 <td>${a.responsavel || '-'}</td>
                 <td>${a.telefone || '-'}</td>
@@ -636,19 +513,23 @@
     async function atualizarStatus(protocolo, novoStatus) {
         const acao = novoStatus === 'aprovado' ? 'Aprovando' : 'Recusando';
         mostrarToast(`${acao} matrícula...`, 'info');
+        
         try {
-            await fetch(SCRIPT_URL, {
+            const response = await fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ acao: 'atualizar_status', protocolo, status: novoStatus })
             });
+            
             cacheDados = null;
             ultimoFetch = null;
+            
             setTimeout(async () => {
                 await carregarDados(true);
                 mostrarToast(novoStatus === 'aprovado' ? '✅ Matrícula aprovada!' : '❌ Matrícula recusada!', 'success');
             }, 1500);
+            
         } catch (error) {
             console.error('Erro:', error);
             mostrarToast('Erro ao atualizar status', 'error');
@@ -666,6 +547,7 @@
             <div class="detalhe-item"><div class="detalhe-label">🎂 Data Nasc</div><div class="detalhe-valor">${formatarData(item.dataNasc)}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">📊 Idade</div><div class="detalhe-valor">${item.idade || '-'} anos</div></div>
             <div class="detalhe-item"><div class="detalhe-label">⚽ Turma</div><div class="detalhe-valor">${item.turma || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">🏆 Categoria</div><div class="detalhe-valor"><strong>${item.categoria || '-'}</strong></div></div>
             <div class="detalhe-item"><div class="detalhe-label">👤 Responsável</div><div class="detalhe-valor">${item.responsavel || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">📞 Telefone</div><div class="detalhe-valor">${item.telefone || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">📧 Email</div><div class="detalhe-valor">${item.email || '-'}</div></div>
@@ -683,6 +565,7 @@
             <div class="detalhe-item"><div class="detalhe-label">📌 UF</div><div class="detalhe-valor">${item.uf || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">🏫 Escola</div><div class="detalhe-valor">${item.escola || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">📚 Série</div><div class="detalhe-valor">${item.serie || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">📢 Como conheceu</div><div class="detalhe-valor">${item.origem || '-'}</div></div>
         `;
         if (tipo === 'solicitacao') {
             modalAcoes.innerHTML = `<button class="btn-acao btn-aprovar" onclick="atualizarStatus('${protocolo}', 'aprovado'); fecharModal();">✅ APROVAR</button><button class="btn-acao btn-recusar" onclick="atualizarStatus('${protocolo}', 'recusado'); fecharModal();">❌ RECUSAR</button>`;
@@ -730,28 +613,69 @@
     function abrirModalCadastro() { document.getElementById('modalCadastro').style.display = 'flex'; document.getElementById('formCadastroAluno').reset(); document.getElementById('cadRemedioDesc').style.display = 'none'; }
     function fecharModalCadastro() { document.getElementById('modalCadastro').style.display = 'none'; }
 
+    function calcularIdade(dataNasc) {
+        if (!dataNasc) return null;
+        const hoje = new Date();
+        const nasc = new Date(dataNasc);
+        let idade = hoje.getFullYear() - nasc.getFullYear();
+        const m = hoje.getMonth() - nasc.getMonth();
+        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
+        return idade;
+    }
+
     async function salvarCadastroManual() {
         const nomeAluno = document.getElementById('cadNome').value.trim();
         const dataNasc = document.getElementById('cadDataNasc').value;
         const sexo = document.querySelector('input[name="cadSexo"]:checked')?.value;
         const turma = document.getElementById('cadTurma').value;
+        const categoria = document.getElementById('cadCategoria').value;
         const rg = document.getElementById('cadRG').value.trim().replace(/\D/g, '');
         const responsavel = document.getElementById('cadResponsavel').value.trim();
-        if (!nomeAluno || !dataNasc || !sexo || !turma || !rg || !responsavel) { mostrarToast('⚠️ Preencha os campos obrigatórios', 'error'); return; }
-        const idade = Math.floor((new Date() - new Date(dataNasc)) / (1000 * 60 * 60 * 24 * 365));
+        
+        if (!nomeAluno || !dataNasc || !sexo || !turma || !categoria || !rg || !responsavel) { 
+            mostrarToast('⚠️ Preencha os campos obrigatórios', 'error'); 
+            return; 
+        }
+        
+        const idade = calcularIdade(dataNasc);
         const protocolo = `JAC-MANUAL-${Date.now()}`;
         const dataEnvio = new Date().toLocaleString('pt-BR');
         const enderecoCompleto = `${document.getElementById('cadEndereco').value || ''}, ${document.getElementById('cadBairro').value || ''}, ${document.getElementById('cadMunicipio').value || ''}/${document.getElementById('cadUF').value || ''}`;
-        const dados = { protocolo, dataEnvio, nomeAluno, dataNasc, idade, turma, categoria: '', responsavel, telefone: document.getElementById('cadTelefone').value || '', email: document.getElementById('cadEmail').value || '', endereco: enderecoCompleto, bairro: document.getElementById('cadBairro').value || '', moradores: document.getElementById('cadMoradores').value || '1', remedio: document.querySelector('input[name="cadRemedio"]:checked')?.value === 'Sim' ? `Sim - ${document.getElementById('cadRemedioDesc').value}` : 'Não', origem: 'Cadastro manual', rg, sexo, peso: document.getElementById('cadPeso').value || '', altura: document.getElementById('cadAltura').value || '', calcado: document.getElementById('cadCalcado').value || '', uniforme: document.getElementById('cadUniforme').value || '', deficiencia: document.getElementById('cadDeficiencia').value || 'Nenhuma', municipio: document.getElementById('cadMunicipio').value || '', uf: document.getElementById('cadUF').value || '', escola: document.getElementById('cadEscola').value || '', serie: document.getElementById('cadSerie').value || '', status: 'pendente' };
-        try { await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(dados) }); cacheDados = null; await carregarDados(true); fecharModalCadastro(); mostrarToast('✅ Aluno cadastrado com sucesso!', 'success'); } catch (error) { mostrarToast('❌ Erro ao cadastrar', 'error'); }
+        
+        const dados = { 
+            protocolo, dataEnvio, nomeAluno, dataNasc, idade, turma, categoria,
+            responsavel, telefone: document.getElementById('cadTelefone').value || '', 
+            email: document.getElementById('cadEmail').value || '', endereco: enderecoCompleto, 
+            bairro: document.getElementById('cadBairro').value || '', moradores: document.getElementById('cadMoradores').value || '1', 
+            remedio: document.querySelector('input[name="cadRemedio"]:checked')?.value === 'Sim' ? `Sim - ${document.getElementById('cadRemedioDesc').value}` : 'Não', 
+            origem: document.getElementById('cadOrigem').value || 'Cadastro manual', rg, sexo, 
+            peso: document.getElementById('cadPeso').value || '', altura: document.getElementById('cadAltura').value || '', 
+            calcado: document.getElementById('cadCalcado').value || '', uniforme: document.getElementById('cadUniforme').value || '', 
+            deficiencia: document.getElementById('cadDeficiencia').value || 'Nenhuma', 
+            municipio: document.getElementById('cadMunicipio').value || '', uf: document.getElementById('cadUF').value || '', 
+            escola: document.getElementById('cadEscola').value || '', serie: document.getElementById('cadSerie').value || '', 
+            status: 'pendente' 
+        };
+        
+        try { 
+            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(dados) }); 
+            cacheDados = null; 
+            await carregarDados(true); 
+            fecharModalCadastro(); 
+            mostrarToast('✅ Aluno cadastrado com sucesso!', 'success'); 
+        } catch (error) { 
+            mostrarToast('❌ Erro ao cadastrar', 'error'); 
+        }
     }
 
     document.addEventListener('keydown', (e) => { if (e.ctrlKey && e.key === 'f') { e.preventDefault(); document.querySelector('.busca-input')?.focus(); } if (e.key === 'Escape') { fecharModal(); fecharModalCadastro(); } if (e.ctrlKey && e.key === 'r') { e.preventDefault(); forcarAtualizacao(); } });
 
     document.getElementById('buscaSolicitacao').addEventListener('input', filtrarESolicitacoes);
     document.getElementById('filtroTurmaSolicitacao').addEventListener('change', filtrarESolicitacoes);
+    document.getElementById('filtroCategoriaSolicitacao').addEventListener('change', filtrarESolicitacoes);
     document.getElementById('buscaAluno').addEventListener('input', filtrarEAlunos);
     document.getElementById('filtroTurmaAluno').addEventListener('change', filtrarEAlunos);
+    document.getElementById('filtroCategoriaAluno').addEventListener('change', filtrarEAlunos);
 
     function verificarSenha() {
         const senha = document.getElementById('senhaInput').value;
