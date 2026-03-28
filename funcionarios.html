@@ -191,7 +191,7 @@
             border-radius: 40px;
             font-size: 11px;
         }
-        .btn-tema, .btn-exportar, .btn-atualizar {
+        .btn-tema, .btn-exportar, .btn-atualizar, .btn-cadastrar {
             background: rgba(255,255,255,0.2);
             border: 1px solid rgba(255,255,255,0.3);
             padding: 8px 14px;
@@ -201,7 +201,7 @@
             font-size: 12px;
             transition: all 0.2s;
         }
-        .btn-tema:hover, .btn-exportar:hover, .btn-atualizar:hover {
+        .btn-tema:hover, .btn-exportar:hover, .btn-atualizar:hover, .btn-cadastrar:hover {
             background: rgba(255,255,255,0.3);
         }
         .btn-sair {
@@ -214,6 +214,14 @@
         }
         .btn-sair:hover {
             background: rgba(255,255,255,0.3);
+        }
+
+        .btn-cadastrar {
+            background: #10b981;
+            border-color: #10b981;
+        }
+        .btn-cadastrar:hover {
+            background: #059669;
         }
 
         .dashboard {
@@ -458,7 +466,7 @@
         .modal-content {
             background: white;
             border-radius: 32px;
-            max-width: 700px;
+            max-width: 800px;
             width: 90%;
             max-height: 85vh;
             overflow-y: auto;
@@ -496,6 +504,109 @@
             cursor: pointer;
             color: #94a3b8;
         }
+
+        .form-linha {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .form-linha-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .form-grupo {
+            margin-bottom: 12px;
+        }
+        .form-grupo label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 12px;
+            color: #1e293b;
+        }
+        body.dark-mode .form-grupo label {
+            color: #e2e8f0;
+        }
+        .form-grupo input, .form-grupo select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 13px;
+            background: white;
+        }
+        body.dark-mode .form-grupo input, body.dark-mode .form-grupo select {
+            background: #0f172a;
+            border-color: #334155;
+            color: white;
+        }
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+            font-size: 13px;
+        }
+        .btn-salvar {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .btn-salvar:hover {
+            transform: translateY(-2px);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            padding: 14px 24px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 1100;
+            animation: slideIn 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        body.dark-mode .toast {
+            background: #1e293b;
+            color: white;
+        }
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        .toast.info { border-left: 4px solid #3b82f6; }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #0047AB;
+        }
+
         .detalhes-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -505,7 +616,6 @@
             background: #f8fafc;
             padding: 12px;
             border-radius: 16px;
-            transition: background 0.3s;
         }
         body.dark-mode .detalhe-item {
             background: #0f172a;
@@ -548,47 +658,12 @@
             border: none;
         }
 
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: white;
-            padding: 14px 24px;
-            border-radius: 60px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            z-index: 1100;
-            animation: slideIn 0.3s ease;
-            font-weight: 500;
-            font-size: 14px;
-            transition: background 0.3s;
-        }
-        body.dark-mode .toast {
-            background: #1e293b;
-            color: white;
-        }
-        .toast.success { border-left: 4px solid #10b981; }
-        .toast.error { border-left: 4px solid #ef4444; }
-        .toast.info { border-left: 4px solid #3b82f6; }
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        .checkbox {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: #0047AB;
-        }
-
         @media (max-width: 900px) {
             .dashboard { flex-direction: column; }
             .detalhes-grid { grid-template-columns: 1fr; }
             .toast { bottom: 20px; right: 20px; left: 20px; border-radius: 16px; }
             .header-info { justify-content: center; }
+            .form-linha, .form-linha-3 { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -632,6 +707,7 @@
             <div class="header-info">
                 <button class="btn-atualizar" onclick="forcarAtualizacao()">🔄 ATUALIZAR</button>
                 <button class="btn-exportar" onclick="exportarDados()">📥 EXPORTAR</button>
+                <button class="btn-cadastrar" onclick="abrirModalCadastro()">➕ CADASTRAR ALUNO</button>
                 <button class="btn-tema" onclick="alternarTema()">🌓 TEMA</button>
                 <span class="ultima-atualizacao" id="ultimaAtualizacao">🕐 Carregando...</span>
                 <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
@@ -680,10 +756,10 @@
                                     <th onclick="ordenarAlunos('idade')">Idade ⬍</th>
                                     <th>Responsável</th>
                                     <th>Telefone</th>
-                                 </tr>
+                                  </tr>
                             </thead>
                             <tbody id="listaAlunos"></tbody>
-                         </table>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -730,10 +806,10 @@
                                     <th>Responsável</th>
                                     <th>Status</th>
                                     <th>Ações</th>
-                                 </tr>
+                                  </tr>
                             </thead>
                             <tbody id="listaSolicitacoes"></tbody>
-                         </table>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -750,6 +826,43 @@
         </div>
         <div id="detalhesConteudo" class="detalhes-grid"></div>
         <div class="modal-acoes" id="modalAcoes"></div>
+    </div>
+</div>
+
+<!-- Modal Cadastro Manual -->
+<div id="modalCadastro" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>➕ CADASTRAR ALUNO</h3>
+            <span class="fechar-modal" onclick="fecharModalCadastro()">&times;</span>
+        </div>
+        <form id="formCadastroAluno">
+            <div class="form-linha">
+                <div class="form-grupo"><label>Nome completo *</label><input type="text" id="cadNome" required></div>
+                <div class="form-grupo"><label>Data Nascimento *</label><input type="date" id="cadDataNasc" required></div>
+            </div>
+            <div class="form-linha">
+                <div class="form-grupo"><label>Sexo *</label><div class="radio-group"><label><input type="radio" name="cadSexo" value="Masculino"> Masculino</label><label><input type="radio" name="cadSexo" value="Feminino"> Feminino</label></div></div>
+                <div class="form-grupo"><label>Turma *</label><select id="cadTurma" required><option value="">Selecione</option><option value="Futebol">Futebol</option><option value="Taekwondo">Taekwondo</option><option value="Ginástica">Ginástica</option><option value="Tênis de Mesa">Tênis de Mesa</option><option value="Judô">Judô</option></select></div>
+            </div>
+            <div class="form-linha-3">
+                <div class="form-grupo"><label>Peso (kg)</label><input type="number" id="cadPeso" step="0.1"></div>
+                <div class="form-grupo"><label>Altura (cm)</label><input type="number" id="cadAltura"></div>
+                <div class="form-grupo"><label>Calçado</label><input type="text" id="cadCalcado"></div>
+            </div>
+            <div class="form-linha">
+                <div class="form-grupo"><label>Uniforme</label><select id="cadUniforme"><option value="">Selecione</option><option value="PP">PP</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option><option value="XG">XG</option><option value="XXG">XXG</option></select></div>
+                <div class="form-grupo"><label>Deficiência</label><input type="text" id="cadDeficiencia" placeholder="Nenhuma"></div>
+            </div>
+            <div class="form-grupo"><label>Responsável *</label><input type="text" id="cadResponsavel" required></div>
+            <div class="form-linha"><div class="form-grupo"><label>RG *</label><input type="text" id="cadRG" required></div><div class="form-grupo"><label>Telefone</label><input type="text" id="cadTelefone"></div></div>
+            <div class="form-linha"><div class="form-grupo"><label>Email</label><input type="email" id="cadEmail"></div><div class="form-grupo"><label>Moradores</label><input type="number" id="cadMoradores" value="1"></div></div>
+            <div class="form-grupo"><label>Endereço</label><input type="text" id="cadEndereco"></div>
+            <div class="form-linha"><div class="form-grupo"><label>Bairro</label><input type="text" id="cadBairro"></div><div class="form-grupo"><label>Município</label><input type="text" id="cadMunicipio"></div><div class="form-grupo"><label>UF</label><select id="cadUF"><option value="">Selecione</option><option value="AC">AC</option><option value="AL">AL</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MG">MG</option><option value="MS">MS</option><option value="MT">MT</option><option value="PA">PA</option><option value="PB">PB</option><option value="PE">PE</option><option value="PI">PI</option><option value="PR">PR</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RO">RO</option><option value="RR">RR</option><option value="RS">RS</option><option value="SC">SC</option><option value="SE">SE</option><option value="SP">SP</option><option value="TO">TO</option></select></div></div>
+            <div class="form-linha"><div class="form-grupo"><label>Escola</label><input type="text" id="cadEscola"></div><div class="form-grupo"><label>Série</label><select id="cadSerie"><option value="">Selecione</option><option value="1º Ano EF">1º Ano EF</option><option value="2º Ano EF">2º Ano EF</option><option value="3º Ano EF">3º Ano EF</option><option value="4º Ano EF">4º Ano EF</option><option value="5º Ano EF">5º Ano EF</option><option value="6º Ano EF">6º Ano EF</option><option value="7º Ano EF">7º Ano EF</option><option value="8º Ano EF">8º Ano EF</option><option value="9º Ano EF">9º Ano EF</option><option value="1º Ano EM">1º Ano EM</option><option value="2º Ano EM">2º Ano EM</option><option value="3º Ano EM">3º Ano EM</option><option value="Não estuda">Não estuda</option><option value="Formado">Formado</option></select></div></div>
+            <div class="form-grupo"><label>Remédio Controlado</label><div class="radio-group"><label><input type="radio" name="cadRemedio" value="Não" checked> Não</label><label><input type="radio" name="cadRemedio" value="Sim"> Sim</label></div><input type="text" id="cadRemedioDesc" placeholder="Se sim, qual?" style="margin-top: 8px; display: none;"></div>
+            <button type="button" class="btn-salvar" onclick="salvarCadastroManual()">💾 SALVAR ALUNO</button>
+        </form>
     </div>
 </div>
 
@@ -775,9 +888,7 @@
             let data = new Date(dataStr);
             if (isNaN(data.getTime())) return dataStr;
             return data.toLocaleDateString('pt-BR');
-        } catch {
-            return dataStr;
-        }
+        } catch { return dataStr; }
     }
 
     function alternarTema() {
@@ -882,15 +993,13 @@
 
     function exportarDados() {
         const dados = [...alunos, ...solicitacoes];
-        if (dados.length === 0) {
-            mostrarToast('Nenhum dado para exportar', 'error');
-            return;
-        }
-        const cabecalhos = ['Nome', 'Turma', 'Idade', 'Responsável', 'Telefone', 'Status', 'Email', 'Endereço', 'Bairro', 'RG', 'Remédio', 'Data Nasc'];
+        if (dados.length === 0) { mostrarToast('Nenhum dado para exportar', 'error'); return; }
+        const cabecalhos = ['Nome', 'Turma', 'Idade', 'Responsável', 'Telefone', 'Status', 'Email', 'Endereço', 'Bairro', 'RG', 'Remédio', 'Data Nasc', 'Sexo', 'Peso', 'Altura', 'Calçado', 'Uniforme', 'Deficiência', 'Município', 'UF', 'Escola', 'Série'];
         const linhas = dados.map(item => [
             item.nomeAluno || '', item.turma || '', item.idade || '', item.responsavel || '', item.telefone || '',
             item.status || '', item.email || '', item.endereco || '', item.bairro || '', item.rg || '', item.remedio || '',
-            formatarData(item.dataNasc)
+            formatarData(item.dataNasc), item.sexo || '', item.peso || '', item.altura || '', item.calcado || '',
+            item.uniforme || '', item.deficiencia || '', item.municipio || '', item.uf || '', item.escola || '', item.serie || ''
         ]);
         const csv = [cabecalhos, ...linhas].map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
         const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
@@ -929,10 +1038,11 @@
         document.getElementById('resultadosAlunosInfo').innerHTML = `Mostrando ${alunosFiltrados.length} de ${alunos.length} registros`;
     }
 
+    // ========== RENDERIZAÇÃO CORRIGIDA ==========
     function renderizarSolicitacoes(lista) {
         const tbody = document.getElementById('listaSolicitacoes');
         if (lista.length === 0) {
-            tbody.innerHTML = '.<td colspan="7" style="text-align:center; padding:40px;">📭 Nenhuma solicitação pendente.</tr>';
+            tbody.innerHTML = '}<td colspan="7" style="text-align:center; padding:40px;">📭 Nenhuma solicitação pendente</td></tr>';
             return;
         }
         tbody.innerHTML = lista.map(s => `
@@ -955,7 +1065,7 @@
     function renderizarAlunos(lista) {
         const tbody = document.getElementById('listaAlunos');
         if (lista.length === 0) {
-            tbody.innerHTML = '.<td colspan="6" style="text-align:center; padding:40px;">👥 Nenhum aluno aprovado.</tr>';
+            tbody.innerHTML = '}<td colspan="6" style="text-align:center; padding:40px;">👥 Nenhum aluno aprovado</td></tr>';
             return;
         }
         tbody.innerHTML = lista.map(a => `
@@ -970,6 +1080,7 @@
         `).join('');
     }
 
+    // ========== ATUALIZAR STATUS ==========
     async function atualizarStatus(protocolo, novoStatus) {
         const acao = novoStatus === 'aprovado' ? 'Aprovando' : 'Recusando';
         mostrarToast(`${acao} matrícula...`, 'info');
@@ -977,13 +1088,19 @@
             await fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
-                body: JSON.stringify({ protocolo, status: novoStatus })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    acao: 'atualizar_status',
+                    protocolo: protocolo, 
+                    status: novoStatus 
+                })
             });
+            
             cacheDados = null;
             setTimeout(async () => {
                 await carregarDados(true);
                 mostrarToast(novoStatus === 'aprovado' ? '✅ Matrícula aprovada!' : '❌ Matrícula recusada!', 'success');
-            }, 800);
+            }, 1000);
         } catch (error) {
             mostrarToast('Erro ao atualizar status', 'error');
         }
@@ -994,10 +1111,7 @@
         const item = dados.find(i => i.protocolo == protocolo);
         if (!item) return;
         
-        const conteudo = document.getElementById('detalhesConteudo');
-        const modalAcoes = document.getElementById('modalAcoes');
-        
-        conteudo.innerHTML = `
+        document.getElementById('detalhesConteudo').innerHTML = `
             <div class="detalhe-item"><div class="detalhe-label">📋 Nome</div><div class="detalhe-valor">${item.nomeAluno || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">🎂 Data Nasc</div><div class="detalhe-valor">${formatarData(item.dataNasc)}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">📊 Idade</div><div class="detalhe-valor">${item.idade || '-'} anos</div></div>
@@ -1021,6 +1135,7 @@
             <div class="detalhe-item"><div class="detalhe-label">📚 Série</div><div class="detalhe-valor">${item.serie || '-'}</div></div>
         `;
         
+        const modalAcoes = document.getElementById('modalAcoes');
         if (tipo === 'solicitacao') {
             modalAcoes.innerHTML = `
                 <button class="btn-acao btn-aprovar" onclick="atualizarStatus('${protocolo}', 'aprovado'); fecharModal();">✅ APROVAR</button>
@@ -1029,13 +1144,10 @@
         } else {
             modalAcoes.innerHTML = `<button class="btn-acao btn-ver" onclick="fecharModal()">🔒 FECHAR</button>`;
         }
-        
         document.getElementById('modalDetalhes').style.display = 'flex';
     }
 
-    function fecharModal() {
-        document.getElementById('modalDetalhes').style.display = 'none';
-    }
+    function fecharModal() { document.getElementById('modalDetalhes').style.display = 'none'; }
 
     function excluirSelecionados(tipo) {
         let selecionados = [];
@@ -1070,19 +1182,83 @@
         });
     }
 
+    document.querySelectorAll('input[name="cadRemedio"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.getElementById('cadRemedioDesc').style.display = this.value === 'Sim' ? 'block' : 'none';
+        });
+    });
+
+    function abrirModalCadastro() {
+        document.getElementById('modalCadastro').style.display = 'flex';
+        document.getElementById('formCadastroAluno').reset();
+        document.getElementById('cadRemedioDesc').style.display = 'none';
+    }
+
+    function fecharModalCadastro() { document.getElementById('modalCadastro').style.display = 'none'; }
+
+    async function salvarCadastroManual() {
+        const nomeAluno = document.getElementById('cadNome').value.trim();
+        const dataNasc = document.getElementById('cadDataNasc').value;
+        const sexo = document.querySelector('input[name="cadSexo"]:checked')?.value;
+        const turma = document.getElementById('cadTurma').value;
+        const rg = document.getElementById('cadRG').value.trim().replace(/\D/g, '');
+        const responsavel = document.getElementById('cadResponsavel').value.trim();
+
+        if (!nomeAluno || !dataNasc || !sexo || !turma || !rg || !responsavel) {
+            mostrarToast('⚠️ Preencha os campos obrigatórios', 'error');
+            return;
+        }
+
+        const idade = Math.floor((new Date() - new Date(dataNasc)) / (1000 * 60 * 60 * 24 * 365));
+        const protocolo = `JAC-MANUAL-${Date.now()}`;
+        const dataEnvio = new Date().toLocaleString('pt-BR');
+        const enderecoCompleto = `${document.getElementById('cadEndereco').value || ''}, ${document.getElementById('cadBairro').value || ''}, ${document.getElementById('cadMunicipio').value || ''}/${document.getElementById('cadUF').value || ''}`;
+
+        const dados = {
+            protocolo: protocolo,
+            dataEnvio: dataEnvio,
+            nomeAluno: nomeAluno,
+            dataNasc: dataNasc,
+            idade: idade,
+            turma: turma,
+            categoria: '',
+            responsavel: responsavel,
+            telefone: document.getElementById('cadTelefone').value || '',
+            email: document.getElementById('cadEmail').value || '',
+            endereco: enderecoCompleto,
+            bairro: document.getElementById('cadBairro').value || '',
+            moradores: document.getElementById('cadMoradores').value || '1',
+            remedio: document.querySelector('input[name="cadRemedio"]:checked')?.value === 'Sim' ? `Sim - ${document.getElementById('cadRemedioDesc').value}` : 'Não',
+            origem: 'Cadastro manual',
+            rg: rg,
+            sexo: sexo,
+            peso: document.getElementById('cadPeso').value || '',
+            altura: document.getElementById('cadAltura').value || '',
+            calcado: document.getElementById('cadCalcado').value || '',
+            uniforme: document.getElementById('cadUniforme').value || '',
+            deficiencia: document.getElementById('cadDeficiencia').value || 'Nenhuma',
+            municipio: document.getElementById('cadMunicipio').value || '',
+            uf: document.getElementById('cadUF').value || '',
+            escola: document.getElementById('cadEscola').value || '',
+            serie: document.getElementById('cadSerie').value || '',
+            status: 'pendente'
+        };
+
+        try {
+            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(dados) });
+            cacheDados = null;
+            await carregarDados(true);
+            fecharModalCadastro();
+            mostrarToast('✅ Aluno cadastrado com sucesso!', 'success');
+        } catch (error) {
+            mostrarToast('❌ Erro ao cadastrar', 'error');
+        }
+    }
+
     document.addEventListener('keydown', (e) => {
-        if (e.ctrlKey && e.key === 'f') {
-            e.preventDefault();
-            const busca = document.querySelector('.busca-input');
-            if (busca) busca.focus();
-        }
-        if (e.key === 'Escape') {
-            fecharModal();
-        }
-        if (e.ctrlKey && e.key === 'r') {
-            e.preventDefault();
-            forcarAtualizacao();
-        }
+        if (e.ctrlKey && e.key === 'f') { e.preventDefault(); document.querySelector('.busca-input')?.focus(); }
+        if (e.key === 'Escape') { fecharModal(); fecharModalCadastro(); }
+        if (e.ctrlKey && e.key === 'r') { e.preventDefault(); forcarAtualizacao(); }
     });
 
     document.getElementById('buscaSolicitacao').addEventListener('input', filtrarESolicitacoes);
@@ -1097,11 +1273,7 @@
         if (senha === SENHA) {
             document.getElementById('telaLogin').style.display = 'none';
             document.getElementById('painelInterno').style.display = 'block';
-            
-            if (localStorage.getItem('tema') === 'dark') {
-                document.body.classList.add('dark-mode');
-            }
-            
+            if (localStorage.getItem('tema') === 'dark') document.body.classList.add('dark-mode');
             carregarDados();
             setInterval(() => carregarDados(), 60000);
             setInterval(atualizarTimestamp, 1000);
