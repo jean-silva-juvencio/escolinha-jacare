@@ -42,7 +42,8 @@
         body.dark-mode .card,
         body.dark-mode .categorias-container,
         body.dark-mode .patrocinadores,
-        body.dark-mode .loc-card {
+        body.dark-mode .loc-card,
+        body.dark-mode .faq-section {
             background: #1e293b;
             color: #ffffff;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
@@ -50,15 +51,27 @@
 
         body.dark-mode .card h2,
         body.dark-mode .categorias-container h2,
-        body.dark-mode .patrocinadores h2 {
+        body.dark-mode .patrocinadores h2,
+        body.dark-mode .faq-section h2 {
             color: #60a5fa;
         }
 
         body.dark-mode .info-idades,
-        body.dark-mode .observacao {
+        body.dark-mode .observacao,
+        body.dark-mode .faq-item {
             background: #0f172a;
             color: #cbd5e1;
             border-color: #334155;
+        }
+
+        body.dark-mode .faq-question {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .faq-answer {
+            background: #0f172a;
+            color: #cbd5e1;
         }
 
         body.dark-mode .cat-item {
@@ -91,6 +104,10 @@
 
         body.dark-mode .clima-widget {
             background: rgba(59,130,246,0.2);
+        }
+
+        body.dark-mode .faq-question:hover {
+            background: #1e293b;
         }
 
         /* ========== BARRA DE NAVEGAÇÃO ========== */
@@ -294,7 +311,7 @@
         /* ========== BOTÃO VOLTAR AO TOPO ========== */
         .btn-topo {
             position: fixed;
-            bottom: 30px;
+            bottom: 100px;
             right: 30px;
             width: 55px;
             height: 55px;
@@ -321,11 +338,112 @@
 
         .btn-topo:hover {
             transform: translateY(-3px);
-            background: linear-gradient(135deg, #003399, #002277);
         }
 
         body.dark-mode .btn-topo {
             background: linear-gradient(135deg, #3b82f6, #1e40af);
+        }
+
+        /* ========== BOTÃO FLUTUANTE WHATSAPP ========== */
+        .btn-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, #25d366, #128C7E);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 998;
+            text-decoration: none;
+        }
+
+        .btn-whatsapp:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(37,211,102,0.3);
+        }
+
+        /* ========== FAQ ========== */
+        .faq-section {
+            background: white;
+            border-radius: 30px;
+            padding: 40px 20px;
+            margin: 30px auto;
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .faq-section h2 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .faq-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .faq-item {
+            background: #f8f9fa;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 18px 20px;
+            background: #f8f9fa;
+            border: none;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #003399;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+
+        .faq-question .icone {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question .icone {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            padding: 0 20px;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: #666;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+            padding: 0 20px 18px 20px;
         }
 
         /* SPLASH SCREEN */
@@ -746,7 +864,7 @@
         /* Toast */
         .toast {
             position: fixed;
-            bottom: 100px;
+            bottom: 120px;
             right: 30px;
             background: white;
             padding: 12px 20px;
@@ -793,6 +911,20 @@
                 font-size: 0.7rem;
                 padding: 3px 10px;
             }
+            .btn-whatsapp {
+                width: 55px;
+                height: 55px;
+                font-size: 1.8rem;
+                bottom: 20px;
+                right: 20px;
+            }
+            .btn-topo {
+                bottom: 90px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -833,12 +965,17 @@
     <a href="index.html">🏠 INÍCIO</a>
     <a href="diretoria.html">📊 DIRETORIA</a>
     <a href="funcionarios.html">🔒 FUNCIONÁRIOS</a>
-    <a href="galerias.html">📸 GALERIA</a>
+    <a href="#">📸 GALERIA</a>
     <div class="divider"></div>
     <a href="#" id="menuInstagram">📱 INSTAGRAM</a>
     <a href="#" id="menuFacebook">📘 FACEBOOK</a>
-    <a href="https://wa.me/5592999999999" id="menuWhatsapp">💬 CONTATOS</a>
+    <a href="#" id="menuWhatsapp">💬 CONTATOS</a>
 </div>
+
+<!-- BOTÃO FLUTUANTE WHATSAPP -->
+<a href="#" id="whatsappBtn" class="btn-whatsapp" target="_blank">
+    💬
+</a>
 
 <!-- CONTEÚDO PRINCIPAL -->
 <div class="container">
@@ -905,6 +1042,58 @@
         </div>
     </div>
 
+    <!-- FAQ - PERGUNTAS FREQUENTES (UNIFORME DOADO) -->
+    <div class="faq-section">
+        <h2>❓ PERGUNTAS FREQUENTES</h2>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <button class="faq-question">
+                    Qual a idade mínima para participar?
+                    <span class="icone">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Aceitamos crianças a partir de 5 anos até 17 anos. Temos categorias Sub-7, Sub-9, Sub-11, Sub-13 e Sub-15.
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    Quais os dias e horários dos treinos?
+                    <span class="icone">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Os treinos acontecem aos sábados, das 7:30 às 12:00. Cada turma tem um horário específico dentro desse período.
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    Como funciona o uniforme?
+                    <span class="icone">▼</span>
+                </button>
+                <div class="faq-answer">
+                    O uniforme é doado pela escolinha para os alunos matriculados. Fazemos questão que todos tenham o mesmo kit para igualdade e pertencimento.
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    Como faço a pré-matrícula?
+                    <span class="icone">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Basta clicar no botão "PRÉ-MATRÍCULA ONLINE" no topo da página, preencher o formulário e aguardar o contato da diretoria.
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    A quadra é coberta?
+                    <span class="icone">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Sim! Nossa quadra é coberta, garantindo conforto e segurança mesmo em dias de chuva.
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="categorias-container" id="atividades">
         <h2>🏆 CATEGORIAS</h2>
         <div class="grid-categorias">
@@ -928,7 +1117,7 @@
         <div class="chamada-patrocinio">
             📢 <strong>Sua marca pode estar aqui!</strong><br>
             Seja um patrocinador da Escolinha do Jacaré.<br>
-            <a href="https://wa.me/5592999999999" style="color: #0047AB;">📱 Fale conosco</a>
+            <a href="#" id="patrocinioLink">📱 Fale conosco</a>
         </div>
     </div>
 
@@ -946,7 +1135,7 @@
                 <p><strong>Unidos do Alvorada</strong></p>
                 <p>R. São Bernardo, 88 - Alvorada I, Manaus</p>
             </div>
-            <a href="https://maps.app.goo.gl/2mAkd4v1zhB3qgxZ8" target="_blank" class="btn-mapa">
+            <a href="#" target="_blank" class="btn-mapa" id="mapaLink">
                 <span>📍</span> ABRIR NO GOOGLE MAPS
             </a>
         </div>
@@ -1069,18 +1258,12 @@
     // ========== CLIMA ==========
     async function buscarClima() {
         try {
-            // Coordenadas de Manaus: latitude -3.1019, longitude -60.0250
             const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-3.1019&longitude=-60.0250&current_weather=true&timezone=America/Manaus');
             const dados = await response.json();
-            
-            if (!dados || !dados.current_weather) {
-                throw new Error('Dados não disponíveis');
-            }
             
             const temp = Math.round(dados.current_weather.temperature);
             const codigo = dados.current_weather.weathercode;
             
-            // Mapeamento dos códigos de clima
             let iconeEmoji = '🌡️';
             let desc = '';
             
@@ -1095,12 +1278,9 @@
             else if (codigo >= 95 && codigo <= 99) { iconeEmoji = '⛈️'; desc = 'Tempestade'; }
             else { iconeEmoji = '🌡️'; desc = 'Manaus'; }
             
-            // Atualizar o widget
             document.getElementById('climaTemp').innerHTML = `${temp}°C`;
             document.getElementById('climaDesc').innerHTML = `Manaus, AM • ${desc}`;
             document.getElementById('climaIcone').innerHTML = iconeEmoji;
-            
-            console.log('✅ Clima atualizado:', temp, '°C', desc, '- Manaus, AM');
             
         } catch (error) {
             console.log('Erro ao buscar clima:', error);
@@ -1110,21 +1290,48 @@
         }
     }
 
-    // ========== REDES SOCIAIS ==========
+    // ========== FAQ ==========
+    function initFaq() {
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const questionBtn = item.querySelector('.faq-question');
+            questionBtn.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+    }
+
+    // ========== REDES SOCIAIS (links #) ==========
     document.getElementById('menuInstagram')?.addEventListener('click', (e) => {
         e.preventDefault();
         mostrarToast('📸 Abrindo Instagram...');
-        setTimeout(() => window.open('https://instagram.com/escolinhadojacare', '_blank'), 500);
+        // setTimeout(() => window.open('https://instagram.com/escolinhadojacare', '_blank'), 500);
     });
     
     document.getElementById('menuFacebook')?.addEventListener('click', (e) => {
         e.preventDefault();
         mostrarToast('📘 Abrindo Facebook...');
-        setTimeout(() => window.open('https://facebook.com/escolinhadojacare', '_blank'), 500);
+        // setTimeout(() => window.open('https://facebook.com/escolinhadojacare', '_blank'), 500);
     });
     
-    document.getElementById('menuWhatsapp')?.addEventListener('click', () => {
+    document.getElementById('menuWhatsapp')?.addEventListener('click', (e) => {
+        e.preventDefault();
         mostrarToast('📱 Abrindo WhatsApp...');
+    });
+
+    document.getElementById('whatsappBtn')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        mostrarToast('📱 Abrindo WhatsApp...');
+    });
+
+    document.getElementById('patrocinioLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        mostrarToast('📱 Fale conosco pelo WhatsApp');
+    });
+
+    document.getElementById('mapaLink')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        mostrarToast('📍 Abrindo Google Maps...');
     });
 
     document.getElementById('btnPrematricula')?.addEventListener('click', () => {
@@ -1147,7 +1354,8 @@
         
         registrarVisita();
         buscarClima();
-        setInterval(buscarClima, 600000); // Atualiza a cada 10 minutos
+        setInterval(buscarClima, 600000);
+        initFaq();
         
         if (localStorage.getItem('tema') === 'dark') {
             document.body.classList.add('dark-mode');
