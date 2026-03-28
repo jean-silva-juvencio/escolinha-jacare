@@ -39,7 +39,7 @@
             border-radius: 60px;
             padding: 10px 20px;
             margin: 0 auto 20px;
-            max-width: 700px;
+            max-width: 800px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -74,7 +74,7 @@
         }
 
         .form-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             animation: fadeInUp 0.6s ease;
         }
@@ -398,7 +398,6 @@
         @media (max-width: 700px) {
             .form-linha, .form-linha-3 { grid-template-columns: 1fr; }
             .deficiencia-opcoes { margin-left: 10px; }
-            .deficiencia-header { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
@@ -479,17 +478,15 @@
                         </div>
                     </div>
 
-                    <div class="form-linha">
-                        <div class="form-grupo">
-                            <label>Tamanho Uniforme <span class="obrigatorio">*</span></label>
-                            <select id="uniforme">
-                                <option value="">Selecione</option>
-                                <option value="PP">PP</option><option value="P">P</option><option value="M">M</option>
-                                <option value="G">G</option><option value="GG">GG</option><option value="XG">XG</option>
-                                <option value="XXG">XXG</option>
-                            </select>
-                            <div class="mensagem-erro" id="erroUniforme">Campo obrigatório</div>
-                        </div>
+                    <div class="form-grupo">
+                        <label>Tamanho Uniforme <span class="obrigatorio">*</span></label>
+                        <select id="uniforme">
+                            <option value="">Selecione</option>
+                            <option value="PP">PP</option><option value="P">P</option><option value="M">M</option>
+                            <option value="G">G</option><option value="GG">GG</option><option value="XG">XG</option>
+                            <option value="XXG">XXG</option>
+                        </select>
+                        <div class="mensagem-erro" id="erroUniforme">Campo obrigatório</div>
                     </div>
 
                     <div class="form-grupo">
@@ -845,7 +842,7 @@
 
                 const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
 
-                if (valores.length >= 17) {
+                if (valores.length >= 27) {
                     const rgExistente = limpar(valores[15]);
                     const nomeResponsavelExistente = limpar(valores[7]);
                     const nomeAlunoExistente = limpar(valores[2]);
@@ -991,26 +988,27 @@
                 nomeAluno: nomeAluno,
                 dataNasc: dataNasc,
                 idade: idade,
-                sexo: sexo,
-                peso: peso,
-                altura: altura,
-                calcado: calcado,
-                uniforme: uniforme,
                 turma: turma,
-                deficiencia: deficienciaTexto,
-                remedio: remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não',
-                rg: rgResponsavel,
+                categoria: '',
                 responsavel: responsavel,
                 telefone: telefone,
                 email: email,
                 endereco: enderecoCompleto,
                 bairro: bairro,
+                moradores: moradores,
+                remedio: remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não',
+                origem: origem,
+                rg: rgResponsavel,
+                sexo: sexo,
+                peso: peso,
+                altura: altura,
+                calcado: calcado,
+                uniforme: uniforme,
+                deficiencia: deficienciaTexto,
                 municipio: municipio,
                 uf: uf,
-                moradores: moradores,
                 escola: escola,
                 serie: serie,
-                origem: origem,
                 status: 'pendente'
             };
 
