@@ -246,14 +246,23 @@
             cursor: pointer;
         }
 
-        .checkbox-principal {
-            margin-bottom: 10px;
+        .deficiencia-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 1px solid #eee;
         }
 
-        .checkbox-principal label {
+        .deficiencia-header label {
             font-weight: 600;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .deficiencia-opcoes {
@@ -389,6 +398,7 @@
         @media (max-width: 700px) {
             .form-linha, .form-linha-3 { grid-template-columns: 1fr; }
             .deficiencia-opcoes { margin-left: 10px; }
+            .deficiencia-header { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
@@ -480,7 +490,7 @@
                             </select>
                             <div class="mensagem-erro" id="erroUniforme">Campo obrigatório</div>
                         </div>
-                        
+                    </div>
 
                     <div class="form-grupo">
                         <label>Turma desejada <span class="obrigatorio">*</span></label>
@@ -497,8 +507,8 @@
 
                     <!-- DEFICIÊNCIA -->
                     <div class="form-grupo">
-                        <label>Deficiência</label>
-                        <div class="checkbox-principal">
+                        <div class="deficiencia-header">
+                            <label>Deficiência</label>
                             <label><input type="checkbox" id="semDeficiencia"> Não possui deficiência</label>
                         </div>
                         <div id="deficienciaOpcoes" class="deficiencia-opcoes">
@@ -879,7 +889,6 @@
         const altura = document.getElementById('altura').value;
         const calcado = document.getElementById('calcado').value;
         const uniforme = document.getElementById('uniforme').value;
-        const uniformeEntregue = document.querySelector('input[name="uniformeEntregue"]:checked')?.value;
         const turma = document.getElementById('turma').value;
         
         // Deficiência
@@ -924,7 +933,6 @@
         if (!altura) { mostrarErro('erroAltura', 'altura'); isValid = false; }
         if (!calcado) { mostrarErro('erroCalcado', 'calcado'); isValid = false; }
         if (!uniforme) { mostrarErro('erroUniforme', 'uniforme'); isValid = false; }
-        if (!uniformeEntregue) { mostrarErro('erroUniformeEntregue', null); isValid = false; }
         if (!turma) { mostrarErro('erroTurma', 'turma'); isValid = false; }
         if (!rgResponsavel) { mostrarErro('erroRG', 'rgResponsavel'); isValid = false; }
         if (!responsavel) { mostrarErro('erroResponsavel', 'responsavel'); isValid = false; }
@@ -988,7 +996,6 @@
                 altura: altura,
                 calcado: calcado,
                 uniforme: uniforme,
-                uniformeEntregue: uniformeEntregue,
                 turma: turma,
                 deficiencia: deficienciaTexto,
                 remedio: remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não',
