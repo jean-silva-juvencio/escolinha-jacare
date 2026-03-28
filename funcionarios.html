@@ -2,54 +2,52 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Funcionários | Escolinha do Jacaré</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Diretoria | Escolinha do Jacaré</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --azul-escuro: #003399;
+            --azul-premium: #0047AB;
+            --azul-claro: #00aaff;
+            --verde-whatsapp: #25d366;
+            --laranja-destaque: #ff9800;
+            --rosa-aniversario: #ff69b4;
+            --cinza-claro: #f8fafc;
+            --cinza-borda: #e2e8f0;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fc 0%, #e9eef5 100%);
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Open Sans', sans-serif; 
+            background: linear-gradient(135deg, #f0f7ff 0%, #e0ecf9 100%);
             min-height: 100vh;
-            padding: 20px;
-            transition: background 0.3s, color 0.3s;
         }
 
-        body.dark-mode {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #eee;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
+        /* Barra de navegação */
         .nav-bar {
             background: white;
             border-radius: 60px;
             padding: 12px 24px;
-            margin-bottom: 30px;
+            margin: 20px auto 0;
+            max-width: 1200px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            transition: background 0.3s;
         }
-        body.dark-mode .nav-bar {
-            background: #1e293b;
-        }
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, #003399, #00aaff);
+        .logo-text {
+            text-decoration: none;
+            font-family: 'Montserrat';
+            font-weight: 900;
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, var(--azul-escuro), var(--azul-claro));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -68,380 +66,336 @@
             background: #f1f5f9;
             color: #1e293b;
         }
-        body.dark-mode .nav-link {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
         .nav-link:hover {
             transform: translateY(-2px);
+            background: #e2e8f0;
         }
         .nav-link.ativo {
-            background: #0047AB;
+            background: var(--azul-premium);
             color: white;
-        }
-        body.dark-mode .nav-link.ativo {
-            background: #3b82f6;
         }
 
-        .login-box {
-            background: white;
-            max-width: 420px;
-            margin: 40px auto;
-            padding: 40px;
-            border-radius: 32px;
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 100px);
+            background: linear-gradient(135deg, var(--azul-escuro), var(--azul-premium));
+        }
+        
+        .login-card {
+            background: rgba(255,255,255,0.98);
+            border-radius: 40px;
+            padding: 50px 40px;
+            width: 90%;
+            max-width: 450px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            transition: background 0.3s;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.6s ease;
         }
-        body.dark-mode .login-box {
-            background: #1e293b;
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .login-box h2 {
-            color: #003399;
-            margin-bottom: 8px;
-            font-size: 28px;
-        }
-        body.dark-mode .login-box h2 {
-            color: #60a5fa;
-        }
-        .login-box p {
-            color: #666;
-            margin-bottom: 24px;
-            font-size: 14px;
-        }
-        body.dark-mode .login-box p {
-            color: #94a3b8;
-        }
-        .login-box input {
+        
+        .login-card .icone { font-size: 4rem; margin-bottom: 15px; }
+        .login-card h1 { font-family: 'Montserrat'; color: var(--azul-escuro); font-size: 1.8rem; margin-bottom: 10px; }
+        .login-card p { color: #666; margin-bottom: 30px; font-size: 0.9rem; }
+        .login-card input {
             width: 100%;
-            padding: 14px 18px;
-            margin: 12px 0;
-            border: 2px solid #e2e8f0;
-            border-radius: 16px;
-            font-size: 15px;
-            transition: all 0.2s;
-            background: white;
-        }
-        body.dark-mode .login-box input {
-            background: #0f172a;
-            border-color: #334155;
-            color: white;
-        }
-        .login-box input:focus {
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 60px;
+            font-size: 1rem;
+            margin-bottom: 20px;
             outline: none;
-            border-color: #0047AB;
-            box-shadow: 0 0 0 3px rgba(0,71,171,0.1);
         }
-        .login-box button {
-            background: linear-gradient(135deg, #0047AB, #003399);
+        .login-card input:focus { border-color: var(--azul-claro); }
+        .login-card button {
+            background: var(--azul-premium);
             color: white;
-            padding: 14px;
             border: none;
-            border-radius: 16px;
+            padding: 15px;
             width: 100%;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1rem;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            margin-top: 8px;
-            transition: transform 0.2s;
         }
-        .login-box button:hover {
-            transform: translateY(-2px);
-        }
-        .erro {
-            color: #dc2626;
-            margin-top: 12px;
-            font-size: 13px;
-        }
+        .login-card button:hover { background: var(--azul-escuro); transform: translateY(-2px); }
+        .erro { color: #ff4444; margin-top: 15px; font-size: 0.85rem; }
+        .info-acesso { margin-top: 20px; font-size: 0.7rem; color: #999; border-top: 1px solid #eee; padding-top: 15px; }
 
         .painel {
             display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
-        .header {
-            background: linear-gradient(135deg, #0047AB, #003399);
+        .header-painel {
+            background: linear-gradient(135deg, var(--azul-premium), var(--azul-escuro));
             color: white;
-            padding: 20px 24px;
-            border-radius: 24px;
-            margin-bottom: 24px;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: background 0.3s;
         }
-        body.dark-mode .header {
-            background: linear-gradient(135deg, #1e40af, #1e3a8a);
-        }
-        .header h1 {
+
+        .header-painel h1 {
+            font-family: 'Montserrat';
             font-size: 1.5rem;
-            font-weight: 700;
         }
-        .header-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .ultima-atualizacao {
+        
+        .info-usuario {
             background: rgba(255,255,255,0.2);
-            padding: 6px 14px;
-            border-radius: 40px;
-            font-size: 11px;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.8rem;
         }
-        .btn-tema, .btn-exportar, .btn-atualizar {
+        
+        .btn-atualizar, .btn-planilha, .btn-exportar-imagem {
             background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 8px 14px;
-            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 50px;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 12px;
-            transition: all 0.2s;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
         }
-        .btn-tema:hover, .btn-exportar:hover, .btn-atualizar:hover {
+        
+        .btn-atualizar:hover, .btn-planilha:hover, .btn-exportar-imagem:hover {
             background: rgba(255,255,255,0.3);
+            transform: scale(1.02);
         }
+        
         .btn-sair {
             background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 8px 20px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .btn-sair:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .dashboard {
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
-        }
-        .coluna {
-            flex: 1;
-            min-width: 300px;
-            background: white;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: background 0.3s;
-        }
-        body.dark-mode .coluna {
-            background: #1e293b;
-        }
-        .coluna-header {
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-            padding: 18px 20px;
-            border-bottom: 2px solid #e2e8f0;
-            transition: background 0.3s;
-        }
-        body.dark-mode .coluna-header {
-            background: #0f172a;
-            border-bottom-color: #334155;
-        }
-        .coluna-header h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .coluna-header .badge {
-            background: #0047AB;
+            border: 1px solid rgba(255,255,255,0.5);
             color: white;
-            padding: 2px 10px;
-            border-radius: 40px;
-            font-size: 12px;
-        }
-        .coluna-content {
-            padding: 20px;
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.8rem;
         }
 
-        .filtros {
+        .info-atualizacao {
+            text-align: right;
+            font-size: 0.75rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        /* Cards de métricas */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card-analise {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .card-analise:hover {
+            transform: translateY(-5px);
+        }
+        .card-analise .valor {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+        }
+        .card-analise .label {
+            color: #666;
+            margin-top: 5px;
+            font-size: 0.8rem;
+        }
+        .card-analise .icone {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .card-analise .detalhe {
+            font-size: 0.7rem;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        /* Filtros */
+        .filtros-container {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 20px;
+            align-items: flex-end;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         .filtro-group {
             flex: 1;
-            min-width: 140px;
+            min-width: 150px;
         }
         .filtro-group label {
             display: block;
-            font-size: 11px;
+            font-size: 0.7rem;
             font-weight: 600;
-            color: #64748b;
-            margin-bottom: 4px;
+            color: #666;
+            margin-bottom: 5px;
             text-transform: uppercase;
-        }
-        body.dark-mode .filtro-group label {
-            color: #94a3b8;
         }
         .filtro-group select, .filtro-group input {
             width: 100%;
             padding: 10px 12px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--cinza-borda);
             border-radius: 12px;
-            font-size: 13px;
+            font-size: 0.85rem;
+        }
+
+        /* Gráficos */
+        .graficos-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .grafico-card {
             background: white;
-            transition: background 0.3s;
-        }
-        body.dark-mode .filtro-group select, 
-        body.dark-mode .filtro-group input {
-            background: #0f172a;
-            border-color: #334155;
-            color: white;
-        }
-        .busca-input {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 13px;
-        }
-
-        .resultados-info {
-            font-size: 11px;
-            color: #64748b;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        body.dark-mode .resultados-info {
-            color: #94a3b8;
-            border-bottom-color: #334155;
-        }
-
-        .acoes-massa {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        body.dark-mode .acoes-massa {
-            border-bottom-color: #334155;
-        }
-        .selecionar-todos {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-        }
-        .btn-excluir-massa {
-            background: #fee2e2;
-            color: #dc2626;
-            border: none;
-            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-        .btn-excluir-massa:hover {
-            background: #fecaca;
+        .grafico-card.full-width {
+            grid-column: span 3;
+        }
+        .grafico-card h3 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1rem;
+        }
+        canvas {
+            max-height: 250px;
+            width: 100% !important;
         }
 
-        .tabela-container {
-            overflow-x: auto;
-            max-height: 500px;
-            overflow-y: auto;
+        /* Tabela últimos alunos */
+        .ultimos-alunos-section {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-        table {
+        .ultimos-alunos-section h2 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            margin-bottom: 20px;
+        }
+        .tabela-ultimos {
             width: 100%;
             border-collapse: collapse;
         }
-        th, td {
-            padding: 12px 10px;
+        .tabela-ultimos th, .tabela-ultimos td {
+            padding: 12px;
             text-align: left;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 13px;
+            border-bottom: 1px solid var(--cinza-borda);
         }
-        body.dark-mode th, 
-        body.dark-mode td {
-            border-bottom-color: #334155;
-        }
-        th {
-            background: #f8fafc;
+        .tabela-ultimos th {
+            background: var(--cinza-claro);
             font-weight: 600;
-            color: #1e293b;
-            position: sticky;
-            top: 0;
-            cursor: pointer;
-            user-select: none;
-            transition: background 0.3s;
         }
-        th:hover {
-            background: #e2e8f0;
-        }
-        body.dark-mode th {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
-        body.dark-mode th:hover {
-            background: #1e293b;
-        }
-        tr {
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        tr:hover {
-            background: #f8fafc;
-        }
-        body.dark-mode tr:hover {
-            background: #334155;
-        }
-        .status-pendente {
-            background: #fef3c7;
-            color: #d97706;
-            padding: 4px 10px;
-            border-radius: 40px;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .btn-acao {
-            padding: 5px 12px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 11px;
-            margin: 0 3px;
-            transition: all 0.2s;
-        }
-        .btn-aprovar { background: #10b981; color: white; }
-        .btn-aprovar:hover { background: #059669; transform: scale(1.02); }
-        .btn-recusar { background: #ef4444; color: white; }
-        .btn-recusar:hover { background: #dc2626; transform: scale(1.02); }
-        .btn-ver { background: #3b82f6; color: white; }
-        .btn-ver:hover { background: #2563eb; }
-
-        .skeleton-loader {
-            padding: 20px;
+        .ver-mais {
+            margin-top: 15px;
             text-align: center;
         }
-        .spinner {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 3px solid #e2e8f0;
-            border-top-color: #0047AB;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .ver-mais button {
+            background: var(--azul-premium);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
         }
 
+        /* Aniversariantes */
+        .aniversariantes-section {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .aniversariantes-section h2 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            margin-bottom: 20px;
+        }
+        .meses-botoes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+        .btn-mes {
+            background: #f0f0f0;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .btn-mes.ativo {
+            background: var(--azul-premium);
+            color: white;
+        }
+        .btn-mes.hoje {
+            background: var(--rosa-aniversario);
+            color: white;
+        }
+        .aniversariantes-lista {
+            background: #f9f9f9;
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 200px;
+        }
+        .item-aniversario {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: 12px;
+            border-left: 5px solid var(--rosa-aniversario);
+            margin-bottom: 8px;
+        }
+        .sem-aniversariantes {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -450,679 +404,551 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
             justify-content: center;
             align-items: center;
             z-index: 1000;
         }
         .modal-content {
             background: white;
-            border-radius: 32px;
-            max-width: 700px;
-            width: 90%;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 28px;
-            animation: modalFadeIn 0.3s ease;
-            transition: background 0.3s;
-        }
-        body.dark-mode .modal-content {
-            background: #1e293b;
-        }
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #e2e8f0;
-        }
-        body.dark-mode .modal-header {
-            border-bottom-color: #334155;
-        }
-        .modal-header h3 {
-            font-size: 1.4rem;
-            color: #003399;
-        }
-        body.dark-mode .modal-header h3 {
-            color: #60a5fa;
-        }
-        .fechar-modal {
-            font-size: 28px;
-            cursor: pointer;
-            color: #94a3b8;
-        }
-        .detalhes-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .detalhe-item {
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 16px;
-            transition: background 0.3s;
-        }
-        body.dark-mode .detalhe-item {
-            background: #0f172a;
-        }
-        .detalhe-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: #64748b;
-            text-transform: uppercase;
-        }
-        body.dark-mode .detalhe-label {
-            color: #94a3b8;
-        }
-        .detalhe-valor {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-top: 4px;
-            word-break: break-word;
-        }
-        body.dark-mode .detalhe-valor {
-            color: #e2e8f0;
-        }
-        .modal-acoes {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-            padding-top: 16px;
-            border-top: 1px solid #e2e8f0;
-        }
-        body.dark-mode .modal-acoes {
-            border-top-color: #334155;
-        }
-        .modal-acoes button {
-            flex: 1;
-            padding: 12px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
+            border-radius: 20px;
+            max-width: 90%;
+            width: 1000px;
+            max-height: 80vh;
+            overflow: auto;
+            padding: 20px;
         }
 
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: white;
-            padding: 14px 24px;
-            border-radius: 60px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            z-index: 1100;
-            animation: slideIn 0.3s ease;
-            font-weight: 500;
-            font-size: 14px;
-            transition: background 0.3s;
-        }
-        body.dark-mode .toast {
-            background: #1e293b;
+        footer {
+            background: var(--azul-escuro);
             color: white;
-        }
-        .toast.success { border-left: 4px solid #10b981; }
-        .toast.error { border-left: 4px solid #ef4444; }
-        .toast.info { border-left: 4px solid #3b82f6; }
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
         }
 
-        .checkbox {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: #0047AB;
+        @media (max-width: 1000px) {
+            .graficos-container { grid-template-columns: repeat(2, 1fr); }
+            .grafico-card.full-width { grid-column: span 2; }
         }
-
-        @media (max-width: 900px) {
-            .dashboard { flex-direction: column; }
-            .detalhes-grid { grid-template-columns: 1fr; }
-            .toast { bottom: 20px; right: 20px; left: 20px; border-radius: 16px; }
-            .header-info { justify-content: center; }
+        @media (max-width: 768px) {
+            .graficos-container { grid-template-columns: 1fr; }
+            .grafico-card.full-width { grid-column: span 1; }
+            .header-painel { flex-direction: column; text-align: center; }
+            .filtros-container { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-<div id="telaLogin" class="painel-login" style="display: block;">
-    <div class="container">
-        <div class="nav-bar">
-            <div class="logo">🐊 ESCOLINHA DO JACARÉ</div>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">🏠 INÍCIO</a>
-                <a href="diretoria.html" class="nav-link">📊 DIRETORIA</a>
-                <a href="funcionarios.html" class="nav-link ativo">🔒 FUNCIONÁRIOS</a>
-            </div>
-        </div>
-        
-        <div class="login-box">
-            <h2>🔐 ÁREA RESTRITA</h2>
-            <p>Acesso exclusivo para funcionários</p>
-            <input type="text" id="nomeUsuario" placeholder="Seu nome">
-            <input type="password" id="senhaInput" placeholder="Senha">
-            <button onclick="verificarSenha()">ACESSAR</button>
-            <div id="erroLogin" class="erro"></div>
-        </div>
+<div class="nav-bar">
+    <a href="index.html" class="logo-text">🐊 ESCOLINHA DO JACARÉ</a>
+    <div class="nav-links">
+        <a href="index.html" class="nav-link">🏠 INÍCIO</a>
+        <a href="diretoria.html" class="nav-link ativo">📊 DIRETORIA</a>
+        <a href="funcionarios.html" class="nav-link">🔒 FUNCIONÁRIOS</a>
     </div>
 </div>
 
-<div id="painelInterno" class="painel">
-    <div class="container">
-        <div class="nav-bar">
-            <div class="logo">🐊 ESCOLINHA DO JACARÉ</div>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">🏠 INÍCIO</a>
-                <a href="diretoria.html" class="nav-link">📊 DIRETORIA</a>
-                <a href="funcionarios.html" class="nav-link ativo">🔒 FUNCIONÁRIOS</a>
-            </div>
-        </div>
-
-        <div class="header">
-            <h1>📋 PAINEL DO FUNCIONÁRIO</h1>
-            <div class="header-info">
-                <button class="btn-atualizar" onclick="forcarAtualizacao()">🔄 ATUALIZAR</button>
-                <button class="btn-exportar" onclick="exportarDados()">📥 EXPORTAR</button>
-                <button class="btn-tema" onclick="alternarTema()">🌓 TEMA</button>
-                <span class="ultima-atualizacao" id="ultimaAtualizacao">🕐 Carregando...</span>
-                <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
-            </div>
-        </div>
-
-        <div class="dashboard">
-            <!-- Coluna ESQUERDA: ALUNOS (Aprovados) -->
-            <div class="coluna">
-                <div class="coluna-header">
-                    <h2>👥 ALUNOS <span class="badge" id="totalAlunosBadge">0</span></h2>
-                </div>
-                <div class="coluna-content">
-                    <div class="filtros">
-                        <div class="filtro-group">
-                            <label>🔍 BUSCAR</label>
-                            <input type="text" id="buscaAluno" placeholder="Nome..." class="busca-input">
-                        </div>
-                        <div class="filtro-group">
-                            <label>⚽ TURMA</label>
-                            <select id="filtroTurmaAluno">
-                                <option value="">Todas</option>
-                                <option value="Futebol">Futebol</option>
-                                <option value="Taekwondo">Taekwondo</option>
-                                <option value="Ginástica">Ginástica</option>
-                                <option value="Tênis de Mesa">Tênis de Mesa</option>
-                                <option value="Judô">Judô</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="resultados-info" id="resultadosAlunosInfo">Mostrando 0 de 0 registros</div>
-                    <div class="acoes-massa">
-                        <label class="selecionar-todos">
-                            <input type="checkbox" id="selecionarTodosAlunos" class="checkbox"> Selecionar todos
-                        </label>
-                        <button class="btn-excluir-massa" onclick="excluirSelecionados('alunos')">🗑️ Excluir selecionados</button>
-                    </div>
-                    <div class="tabela-container">
-                        <div id="loadingAlunos" class="skeleton-loader" style="display: none;"><div class="spinner"></div> Carregando...</div>
-                        <table id="tabelaAlunos">
-                            <thead>
-                                32
-                                    <th style="width:30px"></th>
-                                    <th onclick="ordenarAlunos('nome')">Nome ⬍</th>
-                                    <th onclick="ordenarAlunos('turma')">Turma ⬍</th>
-                                    <th onclick="ordenarAlunos('idade')">Idade ⬍</th>
-                                    <th>Responsável</th>
-                                    <th>Telefone</th>
-                                 </tr>
-                            </thead>
-                            <tbody id="listaAlunos"></tbody>
-                         </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Coluna DIREITA: SOLICITAÇÕES (Pendentes) -->
-            <div class="coluna">
-                <div class="coluna-header">
-                    <h2>📋 SOLICITAÇÕES <span class="badge" id="totalPendentesBadge">0</span></h2>
-                </div>
-                <div class="coluna-content">
-                    <div class="filtros">
-                        <div class="filtro-group">
-                            <label>🔍 BUSCAR</label>
-                            <input type="text" id="buscaSolicitacao" placeholder="Nome..." class="busca-input">
-                        </div>
-                        <div class="filtro-group">
-                            <label>⚽ TURMA</label>
-                            <select id="filtroTurmaSolicitacao">
-                                <option value="">Todas</option>
-                                <option value="Futebol">Futebol</option>
-                                <option value="Taekwondo">Taekwondo</option>
-                                <option value="Ginástica">Ginástica</option>
-                                <option value="Tênis de Mesa">Tênis de Mesa</option>
-                                <option value="Judô">Judô</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="resultados-info" id="resultadosSolicitacoesInfo">Mostrando 0 de 0 registros</div>
-                    <div class="acoes-massa">
-                        <label class="selecionar-todos">
-                            <input type="checkbox" id="selecionarTodosSolicitacoes" class="checkbox"> Selecionar todos
-                        </label>
-                        <button class="btn-excluir-massa" onclick="excluirSelecionados('solicitacoes')">🗑️ Excluir selecionados</button>
-                    </div>
-                    <div class="tabela-container">
-                        <div id="loadingSolicitacoes" class="skeleton-loader" style="display: none;"><div class="spinner"></div> Carregando...</div>
-                        <table id="tabelaSolicitacoes">
-                            <thead>
-                                32
-                                    <th style="width:30px"></th>
-                                    <th onclick="ordenarSolicitacoes('nome')">Nome ⬍</th>
-                                    <th onclick="ordenarSolicitacoes('turma')">Turma ⬍</th>
-                                    <th onclick="ordenarSolicitacoes('idade')">Idade ⬍</th>
-                                    <th>Responsável</th>
-                                    <th>Status</th>
-                                    <th>Ações</th>
-                                 </tr>
-                            </thead>
-                            <tbody id="listaSolicitacoes"></tbody>
-                         </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div id="telaLogin" class="login-container">
+    <div class="login-card">
+        <div class="icone">🔐</div>
+        <h1>ÁREA DA DIRETORIA</h1>
+        <p>Análise de dados da Escolinha do Jacaré</p>
+        <input type="email" id="emailLogin" placeholder="E-mail" required>
+        <input type="password" id="senhaLogin" placeholder="Senha">
+        <button onclick="verificarLogin()">ACESSAR</button>
+        <div id="erroLogin" class="erro"></div>
+        <div class="info-acesso">🔒 Acesso restrito a 3 diretores autorizados</div>
     </div>
 </div>
 
-<!-- Modal Detalhes -->
-<div id="modalDetalhes" class="modal">
+<div id="painelAnalise" class="painel">
+    <div class="header-painel">
+        <h1>📊 DASHBOARD | ESCOLINHA DO JACARÉ</h1>
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <div class="info-usuario" id="infoUsuario"></div>
+            <button class="btn-atualizar" onclick="atualizarDados()">🔄 ATUALIZAR</button>
+            <a href="https://docs.google.com/spreadsheets/d/1O48gLWV9zb_dtDFpz9MtIMLZ4Cx8jibtTjWlE922bAw/edit" target="_blank" class="btn-planilha">📊 VER PLANILHA</a>
+            <button class="btn-exportar-imagem" onclick="exportarComoImagem()">📸 EXPORTAR IMAGEM</button>
+            <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
+        </div>
+    </div>
+    
+    <div class="info-atualizacao">
+        <span id="ultimaAtualizacao">🕐 Última atualização: carregando...</span>
+    </div>
+
+    <!-- Cards de métricas -->
+    <div class="cards-container">
+        <div class="card-analise">
+            <div class="icone">👥</div>
+            <div class="valor" id="totalAlunos">0</div>
+            <div class="label">Total de Alunos</div>
+            <div class="detalhe" id="novosAlunosMes">+0 este mês</div>
+        </div>
+        <div class="card-analise">
+            <div class="icone">📊</div>
+            <div class="valor" id="mediaIdade">0</div>
+            <div class="label">Média de Idade</div>
+            <div class="detalhe">anos</div>
+        </div>
+        <div class="card-analise">
+            <div class="icone">🏆</div>
+            <div class="valor" id="turmaMaisAlunos">-</div>
+            <div class="label">Turma com + Alunos</div>
+            <div class="detalhe" id="turmaPercentual">0% do total</div>
+        </div>
+        <div class="card-analise">
+            <div class="icone">🏘️</div>
+            <div class="valor" id="bairroMaisAlunos">-</div>
+            <div class="label">Bairro com + Alunos</div>
+            <div class="detalhe" id="bairroPercentual">0% do total</div>
+        </div>
+    </div>
+
+    <!-- Cards de análise (Deficiência e Remédio) -->
+    <div class="cards-container">
+        <div class="card-analise">
+            <div class="icone">⚠️</div>
+            <div class="valor" id="totalDeficiencia">0</div>
+            <div class="label">Alunos com Deficiência</div>
+            <div class="detalhe" id="tiposDeficiencia">-</div>
+        </div>
+        <div class="card-analise">
+            <div class="icone">💊</div>
+            <div class="valor" id="totalRemedio">0</div>
+            <div class="label">Remédio Controlado</div>
+            <div class="detalhe" id="percentRemedio">0%</div>
+        </div>
+        <div class="card-analise">
+            <div class="icone">📢</div>
+            <div class="valor" id="totalOrigem">0</div>
+            <div class="label">Como conheceu</div>
+            <div class="detalhe" id="principalOrigem">-</div>
+        </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filtros-container">
+        <div class="filtro-group">
+            <label>⚽ FILTRAR POR TURMA</label>
+            <select id="filtroTurma">
+                <option value="">Todas</option>
+                <option value="Futebol">⚽ Futebol</option>
+                <option value="Taekwondo">🥋 Taekwondo</option>
+                <option value="Ginástica">🤸 Ginástica</option>
+                <option value="Tênis de Mesa">🏓 Tênis de Mesa</option>
+                <option value="Judô">🥋 Judô</option>
+            </select>
+        </div>
+        <div class="filtro-group">
+            <label>🔍 BUSCAR ALUNO</label>
+            <input type="text" id="buscaAlunoGlobal" placeholder="Nome do aluno...">
+        </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="graficos-container">
+        <div class="grafico-card">
+            <h3>⚽ Alunos por Turma</h3>
+            <canvas id="graficoTurmas"></canvas>
+        </div>
+        <div class="grafico-card">
+            <h3>🥧 Distribuição por Turma (%)</h3>
+            <canvas id="graficoPizza"></canvas>
+        </div>
+        <div class="grafico-card">
+            <h3>🏘️ Alunos por Bairro</h3>
+            <canvas id="graficoBairro"></canvas>
+        </div>
+        <div class="grafico-card">
+            <h3>📈 Evolução Mensal de Matrículas</h3>
+            <canvas id="graficoEvolucao"></canvas>
+        </div>
+        <div class="grafico-card">
+            <h3>⚠️ Alunos com Deficiência</h3>
+            <canvas id="graficoDeficiencia"></canvas>
+        </div>
+        <div class="grafico-card">
+            <h3>💊 Remédio Controlado</h3>
+            <canvas id="graficoRemedio"></canvas>
+        </div>
+        <div class="grafico-card">
+            <h3>📢 Como conheceu a Escolinha</h3>
+            <canvas id="graficoOrigem"></canvas>
+        </div>
+        <div class="grafico-card full-width">
+            <h3>📊 Alunos por Faixa Etária (Sub)</h3>
+            <canvas id="graficoSub"></canvas>
+        </div>
+    </div>
+
+    <!-- Últimos alunos aprovados -->
+    <div class="ultimos-alunos-section">
+        <h2>🆕 ÚLTIMOS ALUNOS APROVADOS</h2>
+        <div style="overflow-x: auto;">
+            <table class="tabela-ultimos">
+                <thead><tr><th>Nome</th><th>Turma</th><th>Idade</th><th>Responsável</th><th>Telefone</th></tr></thead>
+                <tbody id="listaUltimosAlunos"></tbody>
+            </table>
+        </div>
+        <div class="ver-mais"><button onclick="verTodosAlunos()">📋 VER TODOS OS ALUNOS</button></div>
+    </div>
+
+    <!-- Aniversariantes -->
+    <div class="aniversariantes-section">
+        <h2>🎂 ANIVERSARIANTES</h2>
+        <div class="meses-botoes" id="mesesBotoes"></div>
+        <div id="aniversariantesLista" class="aniversariantes-lista"><div class="sem-aniversariantes">Selecione um mês</div></div>
+    </div>
+</div>
+
+<div id="modalTodosAlunos" class="modal">
     <div class="modal-content">
-        <div class="modal-header">
-            <h3>📄 FICHA DO ALUNO</h3>
-            <span class="fechar-modal" onclick="fecharModal()">&times;</span>
+        <h3>📋 TODOS OS ALUNOS</h3>
+        <div style="overflow-x: auto;">
+            <table class="tabela-ultimos">
+                <thead><tr><th>Nome</th><th>Turma</th><th>Idade</th><th>Responsável</th><th>Telefone</th><th>Bairro</th></tr></thead>
+                <tbody id="listaTodosAlunos"></tbody>
+            </table>
         </div>
-        <div id="detalhesConteudo" class="detalhes-grid"></div>
-        <div class="modal-acoes" id="modalAcoes"></div>
+        <div style="text-align:right; margin-top:15px;"><button onclick="fecharModal()" style="padding:8px 20px; background:#0047AB; color:white; border:none; border-radius:30px;">FECHAR</button></div>
     </div>
 </div>
+
+<footer>
+    ESCOLINHA DO JACARÉ - ALVORADA<br>
+    Manaus/AM - Brasil<br>
+    © 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte
+</footer>
 
 <script>
-    const SENHA = 'jacare123';
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwaZza83Xacfp6mgSPcK-SbJUwMzVrM8MJwj6SVoXihwL2HxYD-KlBpjGsSYmyM-MSP3A/exec';
+    const USUARIOS = [
+        { email: "diretor.jean@escolinha.com", nome: "Jean Silva", senha: "Clash454647*" },
+        { email: "diretor.jacare@escolinha.com", nome: "jacaré", senha: "jacare1998" },
+        { email: "diretor.max@escolinha.com", nome: "max", senha: "max1998" }
+    ];
     
-    let cacheDados = null;
-    let ultimoFetch = null;
-    const TEMPO_CACHE = 30000;
-    
-    let solicitacoes = [];
+    let usuarioLogado = null;
     let alunos = [];
-    let solicitacoesFiltradas = [];
     let alunosFiltrados = [];
-    let ultimaAtualizacao = null;
-    let ordemAlunos = { campo: 'nome', direcao: 'asc' };
-    let ordemSolicitacoes = { campo: 'nome', direcao: 'asc' };
+    let graficos = {};
+    let mesSelecionado = new Date().getMonth();
+    let ultimaAtualizacao = new Date();
 
-    function formatarData(dataStr) {
-        if (!dataStr) return '-';
-        try {
-            let data = new Date(dataStr);
-            if (isNaN(data.getTime())) return dataStr;
-            return data.toLocaleDateString('pt-BR');
-        } catch {
-            return dataStr;
-        }
-    }
-
-    function alternarTema() {
-        document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        localStorage.setItem('tema', isDark ? 'dark' : 'light');
-        mostrarToast(isDark ? '🌙 Modo escuro ativado' : '☀️ Modo claro ativado', 'info');
-    }
-
-    function mostrarToast(mensagem, tipo = 'success') {
-        const toast = document.createElement('div');
-        toast.className = `toast ${tipo}`;
-        const icone = tipo === 'success' ? '✅' : (tipo === 'error' ? '❌' : 'ℹ️');
-        toast.innerHTML = `${icone} ${mensagem}`;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
-    }
+    const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    const TURMAS = ['Futebol', 'Taekwondo', 'Ginástica', 'Tênis de Mesa', 'Judô'];
+    const SUBS = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Sub-20', 'Sub-30'];
+    
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwaZza83Xacfp6mgSPcK-SbJUwMzVrM8MJwj6SVoXihwL2HxYD-KlBpjGsSYmyM-MSP3A/exec';
 
     function atualizarTimestamp() {
-        if (ultimaAtualizacao) {
-            const diff = Math.floor((new Date() - ultimaAtualizacao) / 1000);
-            const texto = diff < 5 ? 'agora' : `há ${diff} segundos`;
-            document.getElementById('ultimaAtualizacao').innerHTML = `🕐 ${texto}`;
-        }
+        const diff = Math.floor((new Date() - ultimaAtualizacao) / 1000);
+        document.getElementById('ultimaAtualizacao').innerHTML = `🕐 Última atualização: ${diff < 60 ? `há ${diff} segundos` : `há ${Math.floor(diff / 60)} minutos`}`;
     }
 
-    async function carregarDados(forcarAtualizacao = false) {
-        if (!forcarAtualizacao && cacheDados && ultimoFetch && (Date.now() - ultimoFetch < TEMPO_CACHE)) {
-            const dados = cacheDados;
-            solicitacoes = dados.filter(item => item.status === 'pendente');
-            alunos = dados.filter(item => item.status === 'aprovado');
-            document.getElementById('totalPendentesBadge').innerText = solicitacoes.length;
-            document.getElementById('totalAlunosBadge').innerText = alunos.length;
-            filtrarESolicitacoes();
-            filtrarEAlunos();
-            ultimaAtualizacao = new Date();
-            atualizarTimestamp();
-            return;
-        }
-        
-        if (!cacheDados) {
-            document.getElementById('loadingAlunos').style.display = 'block';
-            document.getElementById('loadingSolicitacoes').style.display = 'block';
-        }
-        
+    function capitalizar(str) {
+        if (!str || str === 'Não informada' || str === 'Não informado') return 'Não informada';
+        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    }
+
+    async function carregarDadosDaPlanilha() {
         try {
             const response = await fetch(SCRIPT_URL);
             const dados = await response.json();
-            cacheDados = dados;
-            ultimoFetch = Date.now();
             
-            solicitacoes = dados.filter(item => item.status === 'pendente');
-            alunos = dados.filter(item => item.status === 'aprovado');
-            document.getElementById('totalPendentesBadge').innerText = solicitacoes.length;
-            document.getElementById('totalAlunosBadge').innerText = alunos.length;
+            alunos = dados.filter(item => item.status === 'aprovado').map(item => ({
+                nome: item.nomeAluno || 'Não informado',
+                dataNasc: item.dataNasc || '',
+                idade: parseInt(item.idade) || 0,
+                turma: capitalizar(item.turma),
+                bairro: item.bairro ? capitalizar(item.bairro) : 'Não informado',
+                responsavel: item.responsavel || 'Não informado',
+                telefone: item.telefone || '',
+                dataMatricula: item.dataEnvio || new Date().toISOString(),
+                sexo: item.sexo || '',
+                peso: item.peso || '',
+                altura: item.altura || '',
+                calcado: item.calcado || '',
+                uniforme: item.uniforme || '',
+                deficiencia: item.deficiencia || 'Nenhuma',
+                municipio: item.municipio || '',
+                uf: item.uf || '',
+                escola: item.escola || '',
+                serie: item.serie || '',
+                remedio: item.remedio || 'Não',
+                origem: item.origem || ''
+            }));
             
-            filtrarESolicitacoes();
-            filtrarEAlunos();
+            aplicarFiltros();
+            atualizarCards();
+            atualizarCardsDeficienciaRemedioOrigem();
+            atualizarTodosGraficos();
+            atualizarUltimosAlunos();
+            atualizarAniversariantes();
+            
             ultimaAtualizacao = new Date();
             atualizarTimestamp();
         } catch (error) {
             console.error('Erro:', error);
-            mostrarToast('Erro ao carregar dados', 'error');
-        } finally {
-            document.getElementById('loadingAlunos').style.display = 'none';
-            document.getElementById('loadingSolicitacoes').style.display = 'none';
+            alert('Erro ao carregar dados da planilha');
         }
     }
 
-    function forcarAtualizacao() {
-        mostrarToast('Atualizando dados...', 'info');
-        carregarDados(true);
-    }
-
-    function ordenarAlunos(campo) {
-        if (ordemAlunos.campo === campo) ordemAlunos.direcao = ordemAlunos.direcao === 'asc' ? 'desc' : 'asc';
-        else { ordemAlunos.campo = campo; ordemAlunos.direcao = 'asc'; }
-        ordenarLista(alunosFiltrados, ordemAlunos);
-        renderizarAlunos(alunosFiltrados);
-    }
-
-    function ordenarSolicitacoes(campo) {
-        if (ordemSolicitacoes.campo === campo) ordemSolicitacoes.direcao = ordemSolicitacoes.direcao === 'asc' ? 'desc' : 'asc';
-        else { ordemSolicitacoes.campo = campo; ordemSolicitacoes.direcao = 'asc'; }
-        ordenarLista(solicitacoesFiltradas, ordemSolicitacoes);
-        renderizarSolicitacoes(solicitacoesFiltradas);
-    }
-
-    function ordenarLista(lista, ordem) {
-        lista.sort((a, b) => {
-            let valA = a[ordem.campo === 'nome' ? 'nomeAluno' : ordem.campo] || '';
-            let valB = b[ordem.campo === 'nome' ? 'nomeAluno' : ordem.campo] || '';
-            if (ordem.campo === 'idade') {
-                valA = parseInt(valA) || 0;
-                valB = parseInt(valB) || 0;
-            }
-            if (valA < valB) return ordem.direcao === 'asc' ? -1 : 1;
-            if (valA > valB) return ordem.direcao === 'asc' ? 1 : -1;
-            return 0;
-        });
-    }
-
-    function exportarDados() {
-        const dados = [...alunos, ...solicitacoes];
-        if (dados.length === 0) {
-            mostrarToast('Nenhum dado para exportar', 'error');
-            return;
-        }
-        const cabecalhos = ['Nome', 'Turma', 'Idade', 'Responsável', 'Telefone', 'Status', 'Email', 'Endereço', 'Bairro', 'RG', 'Remédio', 'Data Nasc'];
-        const linhas = dados.map(item => [
-            item.nomeAluno || '', item.turma || '', item.idade || '', item.responsavel || '', item.telefone || '',
-            item.status || '', item.email || '', item.endereco || '', item.bairro || '', item.rg || '', item.remedio || '',
-            formatarData(item.dataNasc)
-        ]);
-        const csv = [cabecalhos, ...linhas].map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
-        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        const url = URL.createObjectURL(blob);
-        link.href = url;
-        link.download = `escolinha_dados_${new Date().toISOString().slice(0,10)}.csv`;
-        link.click();
-        URL.revokeObjectURL(url);
-        mostrarToast('Dados exportados!', 'success');
-    }
-
-    function filtrarESolicitacoes() {
-        const busca = document.getElementById('buscaSolicitacao').value.toLowerCase();
-        const turma = document.getElementById('filtroTurmaSolicitacao').value;
-        solicitacoesFiltradas = solicitacoes.filter(s => {
-            if (busca && !s.nomeAluno?.toLowerCase().includes(busca)) return false;
-            if (turma && s.turma !== turma) return false;
-            return true;
-        });
-        ordenarLista(solicitacoesFiltradas, ordemSolicitacoes);
-        renderizarSolicitacoes(solicitacoesFiltradas);
-        document.getElementById('resultadosSolicitacoesInfo').innerHTML = `Mostrando ${solicitacoesFiltradas.length} de ${solicitacoes.length} registros`;
-    }
-
-    function filtrarEAlunos() {
-        const busca = document.getElementById('buscaAluno').value.toLowerCase();
-        const turma = document.getElementById('filtroTurmaAluno').value;
+    function aplicarFiltros() {
+        const turmaFiltro = document.getElementById('filtroTurma').value;
+        const busca = document.getElementById('buscaAlunoGlobal').value.toLowerCase();
         alunosFiltrados = alunos.filter(a => {
-            if (busca && !a.nomeAluno?.toLowerCase().includes(busca)) return false;
-            if (turma && a.turma !== turma) return false;
+            if (turmaFiltro && a.turma !== turmaFiltro) return false;
+            if (busca && !a.nome.toLowerCase().includes(busca)) return false;
             return true;
         });
-        ordenarLista(alunosFiltrados, ordemAlunos);
-        renderizarAlunos(alunosFiltrados);
-        document.getElementById('resultadosAlunosInfo').innerHTML = `Mostrando ${alunosFiltrados.length} de ${alunos.length} registros`;
+        if (alunosFiltrados.length === 0 && alunos.length > 0) alunosFiltrados = [...alunos];
     }
 
-    function renderizarSolicitacoes(lista) {
-        const tbody = document.getElementById('listaSolicitacoes');
-        if (lista.length === 0) {
-            tbody.innerHTML = '.<td colspan="7" style="text-align:center; padding:40px;">📭 Nenhuma solicitação pendente.</tr>';
-            return;
-        }
-        tbody.innerHTML = lista.map(s => `
-            <tr onclick="abrirDetalhes('${s.protocolo}', 'solicitacao')">
-                <td onclick="event.stopPropagation()"><input type="checkbox" class="checkbox sel-solicitacao" value="${s.protocolo}"></td>
-                <td><strong>${s.nomeAluno || '-'}</strong></td>
-                <td>${s.turma || '-'}</td>
-                <td>${s.idade || '-'}</td>
-                <td>${s.responsavel || '-'}</td>
-                <td><span class="status-pendente">Pendente</span></td>
-                <td onclick="event.stopPropagation()">
-                    <button class="btn-acao btn-aprovar" onclick="atualizarStatus('${s.protocolo}', 'aprovado')">✅ Aprovar</button>
-                    <button class="btn-acao btn-recusar" onclick="atualizarStatus('${s.protocolo}', 'recusado')">❌ Recusar</button>
-                    <button class="btn-acao btn-ver" onclick="abrirDetalhes('${s.protocolo}', 'solicitacao')">👁️ Ver</button>
-                </td>
-            </tr>
+    function atualizarCards() {
+        const total = alunos.length;
+        document.getElementById('totalAlunos').innerText = total;
+        const somaIdade = alunos.reduce((s, a) => s + a.idade, 0);
+        document.getElementById('mediaIdade').innerText = total ? (somaIdade / total).toFixed(1) : 0;
+        
+        const turmasCount = {};
+        alunos.forEach(a => turmasCount[a.turma] = (turmasCount[a.turma] || 0) + 1);
+        let turmaMais = { nome: '-', count: 0 };
+        for (const [nome, count] of Object.entries(turmasCount)) if (count > turmaMais.count) turmaMais = { nome, count };
+        document.getElementById('turmaMaisAlunos').innerText = turmaMais.nome;
+        document.getElementById('turmaPercentual').innerHTML = total ? `${((turmaMais.count / total) * 100).toFixed(1)}% do total` : '0%';
+        
+        const bairrosCount = {};
+        alunos.forEach(a => { if(a.bairro && a.bairro !== 'Não informado') bairrosCount[a.bairro] = (bairrosCount[a.bairro] || 0) + 1; });
+        let bairroMais = { nome: '-', count: 0 };
+        for (const [nome, count] of Object.entries(bairrosCount)) if (count > bairroMais.count) bairroMais = { nome, count };
+        document.getElementById('bairroMaisAlunos').innerText = bairroMais.nome;
+        document.getElementById('bairroPercentual').innerHTML = total ? `${((bairroMais.count / total) * 100).toFixed(1)}% do total` : '0%';
+        
+        const mesAtual = new Date().getMonth();
+        const novosMes = alunos.filter(a => a.dataMatricula && new Date(a.dataMatricula).getMonth() === mesAtual).length;
+        document.getElementById('novosAlunosMes').innerHTML = `+${novosMes} este mês`;
+    }
+
+    function atualizarCardsDeficienciaRemedioOrigem() {
+        const total = alunos.length;
+        const deficienciaCount = alunos.filter(a => a.deficiencia && a.deficiencia !== 'Nenhuma').length;
+        document.getElementById('totalDeficiencia').innerText = deficienciaCount;
+        
+        const remedioCount = alunos.filter(a => a.remedio && a.remedio !== 'Não').length;
+        document.getElementById('totalRemedio').innerText = remedioCount;
+        document.getElementById('percentRemedio').innerHTML = total ? `${((remedioCount / total) * 100).toFixed(1)}%` : '0%';
+        
+        const origemCount = {};
+        alunos.forEach(a => { if(a.origem) origemCount[a.origem] = (origemCount[a.origem] || 0) + 1; });
+        let origemMais = { nome: '-', count: 0 };
+        for (const [nome, count] of Object.entries(origemCount)) if (count > origemMais.count) origemMais = { nome, count };
+        document.getElementById('totalOrigem').innerText = Object.keys(origemCount).length;
+        document.getElementById('principalOrigem').innerHTML = origemMais.nome !== '-' ? `${origemMais.nome} (${origemMais.count})` : '-';
+    }
+
+    function atualizarTodosGraficos() {
+        const dados = alunosFiltrados;
+        
+        const turmasCount = TURMAS.map(t => dados.filter(a => a.turma === t).length);
+        if (graficos.turmas) graficos.turmas.destroy();
+        graficos.turmas = new Chart(document.getElementById('graficoTurmas'), {
+            type: 'bar', data: { labels: TURMAS, datasets: [{ label: 'Alunos', data: turmasCount, backgroundColor: '#0047AB', borderRadius: 8 }] },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
+        });
+        
+        if (graficos.pizza) graficos.pizza.destroy();
+        graficos.pizza = new Chart(document.getElementById('graficoPizza'), {
+            type: 'pie', data: { labels: TURMAS, datasets: [{ data: turmasCount, backgroundColor: ['#0047AB', '#00aaff', '#ff9800', '#25d366', '#ff69b4'] }] },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
+        });
+        
+        const bairrosMap = new Map();
+        dados.forEach(a => { if(a.bairro && a.bairro !== 'Não informado') bairrosMap.set(a.bairro, (bairrosMap.get(a.bairro) || 0) + 1); });
+        const bairros = Array.from(bairrosMap.entries()).sort((a,b) => b[1]-a[1]).slice(0, 8);
+        if (graficos.bairro) graficos.bairro.destroy();
+        graficos.bairro = new Chart(document.getElementById('graficoBairro'), {
+            type: 'bar', data: { labels: bairros.map(b => b[0]), datasets: [{ label: 'Alunos', data: bairros.map(b => b[1]), backgroundColor: '#ff9800', borderRadius: 8 }] },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
+        });
+        
+        const matriculasPorMes = new Array(12).fill(0);
+        dados.forEach(a => { if (a.dataMatricula) { const mes = new Date(a.dataMatricula).getMonth(); matriculasPorMes[mes]++; } });
+        if (graficos.evolucao) graficos.evolucao.destroy();
+        graficos.evolucao = new Chart(document.getElementById('graficoEvolucao'), {
+            type: 'line', data: { labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], 
+                    datasets: [{ label: 'Matrículas', data: matriculasPorMes, borderColor: '#0047AB', backgroundColor: 'rgba(0,71,171,0.1)', fill: true, tension: 0.3 }] },
+            options: { responsive: true, maintainAspectRatio: true }
+        });
+        
+        // Gráfico de Deficiência
+        const deficienciaMap = new Map();
+        dados.forEach(a => {
+            if (a.deficiencia && a.deficiencia !== 'Nenhuma') {
+                const tipos = a.deficiencia.split(', ');
+                tipos.forEach(tipo => {
+                    const tipoLimpo = tipo.replace('Outra: ', '').trim();
+                    if (tipoLimpo) deficienciaMap.set(tipoLimpo, (deficienciaMap.get(tipoLimpo) || 0) + 1);
+                });
+            }
+        });
+        const deficienciaLabels = deficienciaMap.size ? Array.from(deficienciaMap.keys()) : ['Nenhuma'];
+        const deficienciaData = deficienciaMap.size ? Array.from(deficienciaMap.values()) : [dados.length];
+        if (graficos.deficiencia) graficos.deficiencia.destroy();
+        graficos.deficiencia = new Chart(document.getElementById('graficoDeficiencia'), {
+            type: 'bar', data: { labels: deficienciaLabels, datasets: [{ label: 'Alunos', data: deficienciaData, backgroundColor: '#ff9800', borderRadius: 8 }] },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
+        });
+        
+        // Gráfico de Remédio Controlado
+        const remedioSim = dados.filter(a => a.remedio && a.remedio !== 'Não').length;
+        const remedioNao = dados.length - remedioSim;
+        if (graficos.remedio) graficos.remedio.destroy();
+        graficos.remedio = new Chart(document.getElementById('graficoRemedio'), {
+            type: 'pie', data: { labels: ['Sim', 'Não'], datasets: [{ data: [remedioSim, remedioNao], backgroundColor: ['#f44336', '#4caf50'] }] },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
+        });
+        
+        // Gráfico de Origem (como conheceu)
+        const origemMap = new Map();
+        dados.forEach(a => { if (a.origem) origemMap.set(a.origem, (origemMap.get(a.origem) || 0) + 1); });
+        const origemLabels = Array.from(origemMap.keys());
+        const origemData = Array.from(origemMap.values());
+        if (graficos.origem) graficos.origem.destroy();
+        graficos.origem = new Chart(document.getElementById('graficoOrigem'), {
+            type: 'bar', data: { labels: origemLabels, datasets: [{ label: 'Alunos', data: origemData, backgroundColor: '#25d366', borderRadius: 8 }] },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
+        });
+        
+        const subCount = [0,0,0,0,0,0,0,0];
+        dados.forEach(a => {
+            const idade = a.idade;
+            if (!idade) return;
+            if (idade <= 7) subCount[0]++;
+            else if (idade <= 9) subCount[1]++;
+            else if (idade <= 11) subCount[2]++;
+            else if (idade <= 13) subCount[3]++;
+            else if (idade <= 15) subCount[4]++;
+            else if (idade <= 17) subCount[5]++;
+            else if (idade <= 20) subCount[6]++;
+            else subCount[7]++;
+        });
+        if (graficos.sub) graficos.sub.destroy();
+        graficos.sub = new Chart(document.getElementById('graficoSub'), {
+            type: 'bar', data: { labels: SUBS, datasets: [{ label: 'Alunos', data: subCount, backgroundColor: '#00aaff', borderRadius: 8 }] },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
+        });
+    }
+
+    function atualizarUltimosAlunos() {
+        const ultimos = [...alunos].sort((a,b) => new Date(b.dataMatricula) - new Date(a.dataMatricula)).slice(0, 10);
+        document.getElementById('listaUltimosAlunos').innerHTML = ultimos.map(a => `
+            <tr><td><strong>${a.nome}</strong></td><td>${a.turma}</td><td>${a.idade} anos</td><td>${a.responsavel}</td><td>${a.telefone}</td></tr>
         `).join('');
     }
 
-    function renderizarAlunos(lista) {
-        const tbody = document.getElementById('listaAlunos');
-        if (lista.length === 0) {
-            tbody.innerHTML = '.<td colspan="6" style="text-align:center; padding:40px;">👥 Nenhum aluno aprovado.</tr>';
-            return;
-        }
-        tbody.innerHTML = lista.map(a => `
-            <tr onclick="abrirDetalhes('${a.protocolo}', 'aluno')">
-                <td onclick="event.stopPropagation()"><input type="checkbox" class="checkbox sel-aluno" value="${a.protocolo}"></td>
-                <td><strong>${a.nomeAluno || '-'}</strong></td>
-                <td>${a.turma || '-'}</td>
-                <td>${a.idade || '-'}</td>
-                <td>${a.responsavel || '-'}</td>
-                <td>${a.telefone || '-'}</td>
-            </tr>
+    function verTodosAlunos() {
+        document.getElementById('listaTodosAlunos').innerHTML = alunos.map(a => `
+            <tr><td><strong>${a.nome}</strong></td><td>${a.turma}</td><td>${a.idade} anos</td><td>${a.responsavel}</td><td>${a.telefone}</td><td>${a.bairro}</td></tr>
         `).join('');
+        document.getElementById('modalTodosAlunos').style.display = 'flex';
     }
 
-    async function atualizarStatus(protocolo, novoStatus) {
-        const acao = novoStatus === 'aprovado' ? 'Aprovando' : 'Recusando';
-        mostrarToast(`${acao} matrícula...`, 'info');
+    function fecharModal() { document.getElementById('modalTodosAlunos').style.display = 'none'; }
+
+    function formatarData(dataNasc) {
+        if (!dataNasc) return '-';
         try {
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify({ protocolo, status: novoStatus })
-            });
-            cacheDados = null;
-            setTimeout(async () => {
-                await carregarDados(true);
-                mostrarToast(novoStatus === 'aprovado' ? '✅ Matrícula aprovada!' : '❌ Matrícula recusada!', 'success');
-            }, 800);
-        } catch (error) {
-            mostrarToast('Erro ao atualizar status', 'error');
-        }
+            const d = new Date(dataNasc);
+            return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`;
+        } catch { return dataNasc; }
     }
 
-    function abrirDetalhes(protocolo, tipo) {
-        const dados = tipo === 'solicitacao' ? solicitacoes : alunos;
-        const item = dados.find(i => i.protocolo == protocolo);
-        if (!item) return;
-        
-        const conteudo = document.getElementById('detalhesConteudo');
-        const modalAcoes = document.getElementById('modalAcoes');
-        
-        conteudo.innerHTML = `
-            <div class="detalhe-item"><div class="detalhe-label">📋 Nome</div><div class="detalhe-valor">${item.nomeAluno || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">🎂 Data Nasc</div><div class="detalhe-valor">${formatarData(item.dataNasc)}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📊 Idade</div><div class="detalhe-valor">${item.idade || '-'} anos</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">⚽ Turma</div><div class="detalhe-valor">${item.turma || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">👤 Responsável</div><div class="detalhe-valor">${item.responsavel || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📞 Telefone</div><div class="detalhe-valor">${item.telefone || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📧 Email</div><div class="detalhe-valor">${item.email || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">🏠 Endereço</div><div class="detalhe-valor">${item.endereco || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📍 Bairro</div><div class="detalhe-valor">${item.bairro || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">🆔 RG</div><div class="detalhe-valor">${item.rg || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">💊 Remédio</div><div class="detalhe-valor">${item.remedio || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">👤 Sexo</div><div class="detalhe-valor">${item.sexo || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">⚖️ Peso</div><div class="detalhe-valor">${item.peso ? item.peso + ' kg' : '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📏 Altura</div><div class="detalhe-valor">${item.altura ? item.altura + ' cm' : '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">👟 Calçado</div><div class="detalhe-valor">${item.calcado || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">👕 Uniforme</div><div class="detalhe-valor">${item.uniforme || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">⚠️ Deficiência</div><div class="detalhe-valor">${item.deficiencia || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">🏙️ Município</div><div class="detalhe-valor">${item.municipio || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📌 UF</div><div class="detalhe-valor">${item.uf || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">🏫 Escola</div><div class="detalhe-valor">${item.escola || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📚 Série</div><div class="detalhe-valor">${item.serie || '-'}</div></div>
-        `;
-        
-        if (tipo === 'solicitacao') {
-            modalAcoes.innerHTML = `
-                <button class="btn-acao btn-aprovar" onclick="atualizarStatus('${protocolo}', 'aprovado'); fecharModal();">✅ APROVAR</button>
-                <button class="btn-acao btn-recusar" onclick="atualizarStatus('${protocolo}', 'recusado'); fecharModal();">❌ RECUSAR</button>
-            `;
+    function atualizarAniversariantes() {
+        const aniversariantes = alunos.filter(a => a.dataNasc && new Date(a.dataNasc).getMonth() === mesSelecionado);
+        const listaDiv = document.getElementById('aniversariantesLista');
+        if (!aniversariantes.length) {
+            listaDiv.innerHTML = '<div class="sem-aniversariantes">🎂 Nenhum aniversariante neste mês</div>';
         } else {
-            modalAcoes.innerHTML = `<button class="btn-acao btn-ver" onclick="fecharModal()">🔒 FECHAR</button>`;
+            listaDiv.innerHTML = aniversariantes.map(a => `
+                <div class="item-aniversario"><div class="emoji">🎈</div><div><strong>${a.nome}</strong><br>${a.idade} anos • ${formatarData(a.dataNasc)} • ${a.turma}</div></div>
+            `).join('');
         }
-        
-        document.getElementById('modalDetalhes').style.display = 'flex';
     }
 
-    function fecharModal() {
-        document.getElementById('modalDetalhes').style.display = 'none';
+    function criarBotoesMeses() {
+        const hoje = new Date();
+        document.getElementById('mesesBotoes').innerHTML = MESES.map((mes, idx) => `
+            <button class="btn-mes ${mesSelecionado === idx ? 'ativo' : ''} ${hoje.getMonth() === idx ? 'hoje' : ''}" onclick="selecionarMes(${idx})">${mes.substring(0,3)}</button>
+        `).join('');
     }
 
-    function excluirSelecionados(tipo) {
-        let selecionados = [];
-        if (tipo === 'solicitacoes') {
-            selecionados = Array.from(document.querySelectorAll('.sel-solicitacao:checked')).map(cb => cb.value);
-            if (selecionados.length === 0) { mostrarToast('Selecione pelo menos uma solicitação', 'error'); return; }
-            if (confirm(`Excluir ${selecionados.length} solicitação(ões)?`)) {
-                solicitacoes = solicitacoes.filter(s => !selecionados.includes(s.protocolo));
-                cacheDados = null;
-                filtrarESolicitacoes();
-                mostrarToast(`${selecionados.length} solicitação(ões) excluída(s)`, 'success');
-            }
-        } else {
-            selecionados = Array.from(document.querySelectorAll('.sel-aluno:checked')).map(cb => cb.value);
-            if (selecionados.length === 0) { mostrarToast('Selecione pelo menos um aluno', 'error'); return; }
-            if (confirm(`Excluir ${selecionados.length} aluno(s)?`)) {
-                alunos = alunos.filter(a => !selecionados.includes(a.protocolo));
-                cacheDados = null;
-                filtrarEAlunos();
-                mostrarToast(`${selecionados.length} aluno(s) excluído(s)`, 'success');
-            }
-        }
-        document.getElementById(`selecionarTodos${tipo === 'solicitacoes' ? 'Solicitacoes' : 'Alunos'}`).checked = false;
-    }
+    function selecionarMes(mes) { mesSelecionado = mes; criarBotoesMeses(); atualizarAniversariantes(); }
 
-    function configurarSelecionarTodos() {
-        document.getElementById('selecionarTodosSolicitacoes').addEventListener('change', (e) => {
-            document.querySelectorAll('.sel-solicitacao').forEach(cb => cb.checked = e.target.checked);
-        });
-        document.getElementById('selecionarTodosAlunos').addEventListener('change', (e) => {
-            document.querySelectorAll('.sel-aluno').forEach(cb => cb.checked = e.target.checked);
+    function atualizarDados() {
+        const btn = document.querySelector('.btn-atualizar');
+        btn.innerHTML = '🔄 ATUALIZANDO...';
+        btn.disabled = true;
+        carregarDadosDaPlanilha().finally(() => {
+            btn.innerHTML = '🔄 ATUALIZAR';
+            btn.disabled = false;
         });
     }
 
-    document.addEventListener('keydown', (e) => {
-        if (e.ctrlKey && e.key === 'f') {
-            e.preventDefault();
-            const busca = document.querySelector('.busca-input');
-            if (busca) busca.focus();
-        }
-        if (e.key === 'Escape') {
-            fecharModal();
-        }
-        if (e.ctrlKey && e.key === 'r') {
-            e.preventDefault();
-            forcarAtualizacao();
-        }
+    function exportarComoImagem() {
+        const btn = document.querySelector('.btn-exportar-imagem');
+        btn.innerHTML = '📸 GERANDO...';
+        btn.disabled = true;
+        html2canvas(document.getElementById('painelAnalise'), { scale: 2 }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `dashboard_${new Date().toISOString().slice(0,10)}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+            alert('✅ Dashboard salvo como imagem!');
+        }).catch(() => alert('Erro ao gerar imagem')).finally(() => {
+            btn.innerHTML = '📸 EXPORTAR IMAGEM';
+            btn.disabled = false;
+        });
+    }
+
+    document.getElementById('filtroTurma').addEventListener('change', () => {
+        aplicarFiltros();
+        atualizarTodosGraficos();
+        atualizarUltimosAlunos();
+    });
+    document.getElementById('buscaAlunoGlobal').addEventListener('input', () => {
+        aplicarFiltros();
+        atualizarTodosGraficos();
+        atualizarUltimosAlunos();
     });
 
-    document.getElementById('buscaSolicitacao').addEventListener('input', filtrarESolicitacoes);
-    document.getElementById('filtroTurmaSolicitacao').addEventListener('change', filtrarESolicitacoes);
-    document.getElementById('buscaAluno').addEventListener('input', filtrarEAlunos);
-    document.getElementById('filtroTurmaAluno').addEventListener('change', filtrarEAlunos);
-
-    function verificarSenha() {
-        const senha = document.getElementById('senhaInput').value;
-        const nome = document.getElementById('nomeUsuario').value.trim();
-        if (!nome) { document.getElementById('erroLogin').innerText = 'Digite seu nome!'; return; }
-        if (senha === SENHA) {
+    function verificarLogin() {
+        const email = document.getElementById('emailLogin').value.trim();
+        const senha = document.getElementById('senhaLogin').value;
+        const usuario = USUARIOS.find(u => u.email === email && u.senha === senha);
+        if (usuario) {
+            usuarioLogado = usuario;
             document.getElementById('telaLogin').style.display = 'none';
-            document.getElementById('painelInterno').style.display = 'block';
-            
-            if (localStorage.getItem('tema') === 'dark') {
-                document.body.classList.add('dark-mode');
-            }
-            
-            carregarDados();
-            setInterval(() => carregarDados(), 60000);
-            setInterval(atualizarTimestamp, 1000);
-            configurarSelecionarTodos();
+            document.getElementById('painelAnalise').style.display = 'block';
+            document.getElementById('infoUsuario').innerHTML = `👤 ${usuario.nome}`;
+            criarBotoesMeses();
+            carregarDadosDaPlanilha();
+            setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') carregarDadosDaPlanilha(); }, 60000);
         } else {
-            document.getElementById('erroLogin').innerText = 'Senha incorreta!';
+            document.getElementById('erroLogin').innerText = 'E-mail ou senha incorretos!';
         }
     }
 
     function logout() {
-        document.getElementById('painelInterno').style.display = 'none';
-        document.getElementById('telaLogin').style.display = 'block';
-        document.getElementById('senhaInput').value = '';
-        document.getElementById('nomeUsuario').value = '';
+        document.getElementById('telaLogin').style.display = 'flex';
+        document.getElementById('painelAnalise').style.display = 'none';
+        document.getElementById('emailLogin').value = '';
+        document.getElementById('senhaLogin').value = '';
         document.getElementById('erroLogin').innerText = '';
-        cacheDados = null;
-        if (document.getElementById('buscaSolicitacao')) {
-            document.getElementById('buscaSolicitacao').value = '';
-            document.getElementById('buscaAluno').value = '';
-        }
     }
+
+    setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') atualizarTimestamp(); }, 1000);
 </script>
 
 </body>
