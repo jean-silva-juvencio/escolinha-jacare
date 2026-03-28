@@ -45,7 +45,6 @@
             background: #1e293b;
         }
 
-        /* Barra de navegação */
         .nav-bar {
             background: white;
             border-radius: 60px;
@@ -247,7 +246,6 @@
             color: #94a3b8;
         }
 
-        /* Cards de métricas */
         .cards-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -296,7 +294,6 @@
             margin-top: 8px;
         }
         
-        /* Reduzir tamanho do nome da turma no card */
         .card-analise .valor#turmaMaisAlunos {
             font-size: 1.4rem;
             word-break: break-word;
@@ -304,7 +301,6 @@
             line-height: 1.2;
         }
 
-        /* Filtros avançados */
         .filtros-container {
             background: white;
             border-radius: 20px;
@@ -364,7 +360,6 @@
             font-size: 0.75rem;
         }
 
-        /* Gráficos */
         .graficos-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -399,7 +394,6 @@
             width: 100% !important;
         }
 
-        /* Seção Veteranos */
         .veteranos-section {
             background: white;
             border-radius: 20px;
@@ -526,7 +520,6 @@
             color: #94a3b8;
         }
 
-        /* Últimos alunos */
         .ultimos-alunos-section {
             background: white;
             border-radius: 20px;
@@ -587,7 +580,6 @@
             cursor: pointer;
         }
 
-        /* Aniversariantes */
         .aniversariantes-section {
             background: white;
             border-radius: 20px;
@@ -607,7 +599,6 @@
             gap: 10px;
             flex-wrap: wrap;
         }
-        /* BADGE DE ANIVERSARIANTES ANIMADO */
         .aniversariantes-section h2 .badge-aniversario {
             background: linear-gradient(135deg, #ff69b4, #ff1493);
             color: white;
@@ -715,7 +706,6 @@
             color: #999;
         }
 
-        /* Modal de detalhes do aluno */
         .modal {
             display: none;
             position: fixed;
@@ -802,7 +792,6 @@
             color: #e2e8f0;
         }
 
-        /* Modal de todos os alunos - TAMANHO ADEQUADO E RESPONSIVO */
         .modal-todos {
             display: none;
             position: fixed;
@@ -864,7 +853,6 @@
             background: #334155;
         }
         
-        /* Para telas pequenas, permitir quebra de linha */
         @media (max-width: 900px) {
             .modal-tabela th, .modal-tabela td {
                 white-space: normal;
@@ -943,7 +931,6 @@
         <span id="ultimaAtualizacao">🕐 Última atualização: carregando...</span>
     </div>
 
-    <!-- Cards de métricas -->
     <div class="cards-container">
         <div class="card-analise">
             <div class="icone">👥</div>
@@ -971,7 +958,6 @@
         </div>
     </div>
 
-    <!-- Cards de análise (Deficiência e Remédio) -->
     <div class="cards-container">
         <div class="card-analise">
             <div class="icone">⚠️</div>
@@ -994,84 +980,31 @@
         </div>
     </div>
 
-    <!-- FILTROS AVANÇADOS -->
     <div class="filtros-container">
         <div class="filtros-grid">
-            <div class="filtro-group">
-                <label>🔍 NOME</label>
-                <input type="text" id="filtroNome" placeholder="Nome do aluno...">
-            </div>
-            <div class="filtro-group">
-                <label>👤 RESPONSÁVEL</label>
-                <input type="text" id="filtroResponsavel" placeholder="Nome do responsável...">
-            </div>
-            <div class="filtro-group">
-                <label>📞 TELEFONE</label>
-                <input type="text" id="filtroTelefone" placeholder="Telefone...">
-            </div>
-            <div class="filtro-group">
-                <label>⚽ TURMA</label>
-                <select id="filtroTurma">
-                    <option value="">Todas</option>
-                    <option value="Futebol">Futebol</option>
-                    <option value="Taekwondo">Taekwondo</option>
-                    <option value="Ginástica">Ginástica</option>
-                    <option value="Tênis de Mesa">Tênis de Mesa</option>
-                    <option value="Judô">Judô</option>
-                </select>
-            </div>
-            <div class="filtro-group">
-                <label>🏘️ BAIRRO</label>
-                <input type="text" id="filtroBairro" placeholder="Bairro...">
-            </div>
+            <div class="filtro-group"><label>🔍 NOME</label><input type="text" id="filtroNome" placeholder="Nome do aluno..."></div>
+            <div class="filtro-group"><label>👤 RESPONSÁVEL</label><input type="text" id="filtroResponsavel" placeholder="Nome do responsável..."></div>
+            <div class="filtro-group"><label>📞 TELEFONE</label><input type="text" id="filtroTelefone" placeholder="Telefone..."></div>
+            <div class="filtro-group"><label>⚽ TURMA</label><select id="filtroTurma"><option value="">Todas</option><option value="Futebol">Futebol</option><option value="Taekwondo">Taekwondo</option><option value="Ginástica">Ginástica</option><option value="Tênis de Mesa">Tênis de Mesa</option><option value="Judô">Judô</option></select></div>
+            <div class="filtro-group"><label>🏘️ BAIRRO</label><input type="text" id="filtroBairro" placeholder="Bairro..."></div>
         </div>
-        <div class="filtros-acoes">
-            <button class="btn-limpar-filtros" onclick="limparFiltros()">🗑️ LIMPAR FILTROS</button>
-        </div>
+        <div class="filtros-acoes"><button class="btn-limpar-filtros" onclick="limparFiltros()">🗑️ LIMPAR FILTROS</button></div>
     </div>
 
-    <!-- Gráficos -->
     <div class="graficos-container">
-        <div class="grafico-card">
-            <h3>⚽ Alunos por Turma</h3>
-            <canvas id="graficoTurmas"></canvas>
-        </div>
-        <div class="grafico-card">
-            <h3>🥧 Distribuição por Turma (%)</h3>
-            <canvas id="graficoPizza"></canvas>
-        </div>
-        <div class="grafico-card">
-            <h3>🏘️ Alunos por Bairro</h3>
-            <canvas id="graficoBairro"></canvas>
-        </div>
-        <div class="grafico-card">
-            <h3>📈 Evolução Mensal de Matrículas</h3>
-            <canvas id="graficoEvolucao"></canvas>
-        </div>
-        <div class="grafico-card">
-            <h3>⚠️ Alunos com Deficiência</h3>
-            <canvas id="graficoDeficiencia"></canvas>
-        </div>
-        <div class="grafico-card">
-            <h3>💊 Remédio Controlado</h3>
-            <canvas id="graficoRemedio"></canvas>
-        </div>
-        <div class="grafico-card">
-            <h3>📢 Como conheceu a Escolinha (%)</h3>
-            <canvas id="graficoOrigem"></canvas>
-        </div>
-        <div class="grafico-card full-width">
-            <h3>📊 Alunos por Faixa Etária (Sub)</h3>
-            <canvas id="graficoSub"></canvas>
-        </div>
+        <div class="grafico-card"><h3>⚽ Alunos por Turma</h3><canvas id="graficoTurmas"></canvas></div>
+        <div class="grafico-card"><h3>🥧 Distribuição por Turma (%)</h3><canvas id="graficoPizza"></canvas></div>
+        <div class="grafico-card"><h3>🏘️ Alunos por Bairro</h3><canvas id="graficoBairro"></canvas></div>
+        <div class="grafico-card"><h3>📈 Evolução Mensal de Matrículas</h3><canvas id="graficoEvolucao"></canvas></div>
+        <div class="grafico-card"><h3>⚠️ Alunos com Deficiência</h3><canvas id="graficoDeficiencia"></canvas></div>
+        <div class="grafico-card"><h3>💊 Remédio Controlado</h3><canvas id="graficoRemedio"></canvas></div>
+        <div class="grafico-card"><h3>📢 Como conheceu a Escolinha (%)</h3><canvas id="graficoOrigem"></canvas></div>
+        <div class="grafico-card full-width"><h3>📊 Alunos por Faixa Etária (Sub)</h3><canvas id="graficoSub"></canvas></div>
     </div>
 
-    <!-- Seção Veteranos -->
     <div class="veteranos-section">
         <h2>🏅 ALUNOS VETERANOS <span style="font-size: 0.8rem;">(mais tempo de casa)</span></h2>
-        <div class="ranking-veteranos" id="rankingVeteranos">
-            <div class="skeleton-loader">Carregando veteranos...</div>
-        </div>
+        <div class="ranking-veteranos" id="rankingVeteranos"><div class="skeleton-loader">Carregando veteranos...</div></div>
         <div class="stats-veteranos" id="statsVeteranos">
             <div class="stat-veterano"><div class="numero">0</div><div class="label">Veteranos (1+ ano)</div></div>
             <div class="stat-veterano"><div class="numero">0</div><div class="label">Média de tempo</div></div>
@@ -1079,19 +1012,12 @@
         </div>
     </div>
 
-    <!-- Últimos alunos aprovados -->
     <div class="ultimos-alunos-section">
         <h2>🆕 ÚLTIMOS ALUNOS APROVADOS</h2>
-        <div style="overflow-x: auto;">
-            <table class="tabela-ultimos">
-                <thead> <tr><th>Nome</th><th>Turma</th><th>Idade</th><th>Responsável</th><th>Telefone</th></tr> </thead>
-                <tbody id="listaUltimosAlunos"></tbody>
-            </table>
-        </div>
+        <div style="overflow-x: auto;"><table class="tabela-ultimos"><thead> 32<th>Nome</th><th>Turma</th><th>Idade</th><th>Responsável</th><th>Telefone</th> </thead><tbody id="listaUltimosAlunos"></tbody> </table></div>
         <div class="ver-mais"><button onclick="abrirModalTodosAlunos()">📋 VER TODOS OS ALUNOS</button></div>
     </div>
 
-    <!-- Aniversariantes com badge animado -->
     <div class="aniversariantes-section">
         <h2>🎂 ANIVERSARIANTES <span class="badge-aniversario" id="totalAniversariantesMes">0</span></h2>
         <div class="meses-botoes" id="mesesBotoes"></div>
@@ -1099,40 +1025,19 @@
     </div>
 </div>
 
-<!-- Modal de detalhes do aluno -->
 <div id="modalDetalhesAluno" class="modal">
     <div class="modal-content">
-        <div class="modal-header">
-            <h3>📄 FICHA DO ALUNO</h3>
-            <span class="fechar-modal" onclick="fecharModalDetalhes()">&times;</span>
-        </div>
+        <div class="modal-header"><h3>📄 FICHA DO ALUNO</h3><span class="fechar-modal" onclick="fecharModalDetalhes()">&times;</span></div>
         <div id="detalhesAlunoConteudo" class="detalhes-grid"></div>
-        <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-            <button onclick="fecharModalDetalhes()" style="background: #0047AB; color: white; border: none; padding: 8px 20px; border-radius: 30px; cursor: pointer;">FECHAR</button>
-        </div>
+        <div style="display: flex; justify-content: flex-end; margin-top: 20px;"><button onclick="fecharModalDetalhes()" style="background: #0047AB; color: white; border: none; padding: 8px 20px; border-radius: 30px;">FECHAR</button></div>
     </div>
 </div>
 
-<!-- Modal de todos os alunos -->
 <div id="modalTodosAlunos" class="modal-todos">
     <div class="modal-content">
-        <div class="modal-header">
-            <h3>📋 TODOS OS ALUNOS</h3>
-            <span class="fechar-modal" onclick="fecharModalTodos()">&times;</span>
-        </div>
-        <div class="modal-tabela-container">
-            <table class="modal-tabela">
-                <thead>
-                    <tr>
-                        <th>Nome</th><th>Turma</th><th>Idade</th><th>Responsável</th><th>Telefone</th><th>Bairro</th><th>Data Matrícula</th>
-                    </tr>
-                </thead>
-                <tbody id="listaTodosAlunosModal"></tbody>
-            </table>
-        </div>
-        <div style="text-align:right; margin-top:15px;">
-            <button onclick="fecharModalTodos()" style="background: #0047AB; color: white; border: none; padding: 8px 20px; border-radius: 30px;">FECHAR</button>
-        </div>
+        <div class="modal-header"><h3>📋 TODOS OS ALUNOS</h3><span class="fechar-modal" onclick="fecharModalTodos()">&times;</span></div>
+        <div class="modal-tabela-container"><table class="modal-tabela"><thead> 32<th>Nome</th><th>Turma</th><th>Idade</th><th>Responsável</th><th>Telefone</th><th>Bairro</th><th>Data Matrícula</th> </thead><tbody id="listaTodosAlunosModal"></tbody> </table></div>
+        <div style="text-align:right; margin-top:15px;"><button onclick="fecharModalTodos()" style="background: #0047AB; color: white; border: none; padding: 8px 20px; border-radius: 30px;">FECHAR</button></div>
     </div>
 </div>
 
@@ -1330,10 +1235,22 @@
         document.getElementById('percentRemedio').innerHTML = total ? `${((remedioCount / total) * 100).toFixed(1)}%` : '0%';
         document.getElementById('numerosRemedio').innerHTML = `${remedioCount} de ${total} alunos`;
         
+        // CORREÇÃO: Contar origens padronizando maiúsculas/minúsculas
         const origemCount = {};
-        alunos.forEach(a => { if(a.origem) origemCount[a.origem] = (origemCount[a.origem] || 0) + 1; });
+        alunos.forEach(a => { 
+            if(a.origem && a.origem.trim() !== '') {
+                let origemFormatada = a.origem.trim();
+                origemFormatada = origemFormatada.charAt(0).toUpperCase() + origemFormatada.slice(1).toLowerCase();
+                origemCount[origemFormatada] = (origemCount[origemFormatada] || 0) + 1;
+            }
+        });
+        
+        console.log('Origens encontradas:', origemCount);
+        
         let origemMais = { nome: '-', count: 0 };
-        for (const [nome, count] of Object.entries(origemCount)) if (count > origemMais.count) origemMais = { nome, count };
+        for (const [nome, count] of Object.entries(origemCount)) {
+            if (count > origemMais.count) origemMais = { nome, count };
+        }
         document.getElementById('totalOrigem').innerText = Object.keys(origemCount).length;
         document.getElementById('principalOrigem').innerHTML = origemMais.nome !== '-' ? `${origemMais.nome} (${origemMais.count})` : '-';
     }
@@ -1351,10 +1268,61 @@
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, scales: { y: { ticks: { font: { size: 11 } } } }, plugins: { legend: { display: false } } }
         });
         
+        const totalTurmas = turmasCount.reduce((a, b) => a + b, 0);
+        const porcentagens = turmasCount.map(v => totalTurmas > 0 ? ((v / totalTurmas) * 100).toFixed(1) : 0);
+        
         if (graficos.pizza) graficos.pizza.destroy();
         graficos.pizza = new Chart(document.getElementById('graficoPizza'), {
-            type: 'pie', data: { labels: TURMAS, datasets: [{ data: turmasCount, backgroundColor: ['#0047AB', '#00aaff', '#ff9800', '#25d366', '#ff69b4'] }] },
-            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
+            type: 'pie',
+            data: { 
+                labels: TURMAS, 
+                datasets: [{ 
+                    data: turmasCount, 
+                    backgroundColor: ['#0047AB', '#00aaff', '#ff9800', '#25d366', '#ff69b4'],
+                    borderWidth: 2,
+                    borderColor: 'white'
+                }] 
+            },
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => {
+                                const label = ctx.label || '';
+                                const value = ctx.raw || 0;
+                                const porcentagem = totalTurmas > 0 ? ((value / totalTurmas) * 100).toFixed(1) : 0;
+                                return `${label}: ${value} alunos (${porcentagem}%)`;
+                            }
+                        }
+                    },
+                    legend: { position: 'bottom', labels: { font: { size: 11 } } }
+                }
+            },
+            plugins: [{
+                afterDatasetsDraw: function(chart) {
+                    const ctx = chart.ctx;
+                    chart.data.datasets.forEach((dataset, i) => {
+                        const meta = chart.getDatasetMeta(i);
+                        if (!meta.hidden) {
+                            meta.data.forEach((element, index) => {
+                                const dataValue = dataset.data[index];
+                                const percentage = totalTurmas > 0 ? ((dataValue / totalTurmas) * 100).toFixed(1) : 0;
+                                if (percentage > 0) {
+                                    const position = element.tooltipPosition();
+                                    ctx.fillStyle = '#ffffff';
+                                    ctx.font = 'bold 12px "Open Sans"';
+                                    ctx.shadowBlur = 0;
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'middle';
+                                    ctx.fillText(`${percentage}%`, position.x, position.y);
+                                }
+                            });
+                        }
+                    });
+                }
+            }]
         });
         
         const bairrosMap = new Map();
@@ -1401,12 +1369,19 @@
             options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
         });
         
+        // GRÁFICO DE ORIGEM CORRIGIDO
         const origemMap = new Map();
-        dados.forEach(a => { if (a.origem) origemMap.set(a.origem, (origemMap.get(a.origem) || 0) + 1); });
+        dados.forEach(a => { 
+            if (a.origem && a.origem.trim() !== '') {
+                let origemFormatada = a.origem.trim();
+                origemFormatada = origemFormatada.charAt(0).toUpperCase() + origemFormatada.slice(1).toLowerCase();
+                origemMap.set(origemFormatada, (origemMap.get(origemFormatada) || 0) + 1);
+            }
+        });
         const origemLabels = Array.from(origemMap.keys());
         const origemData = Array.from(origemMap.values());
         const totalOrigem = dados.length;
-        const origemPercentuais = origemData.map(v => ((v / totalOrigem) * 100).toFixed(1));
+        const origemPercentuais = origemData.map(v => totalOrigem > 0 ? ((v / totalOrigem) * 100).toFixed(1) : 0);
         
         if (graficos.origem) graficos.origem.destroy();
         graficos.origem = new Chart(document.getElementById('graficoOrigem'), {
@@ -1425,7 +1400,13 @@
                 responsive: true, 
                 maintainAspectRatio: true, 
                 scales: { x: { title: { display: true, text: 'Percentual (%)' } } },
-                plugins: { tooltip: { callbacks: { label: (ctx) => `${origemData[ctx.dataIndex]} alunos (${ctx.raw}%)` } } }
+                plugins: { 
+                    tooltip: { 
+                        callbacks: { 
+                            label: (ctx) => `${origemData[ctx.dataIndex]} alunos (${ctx.raw}%)` 
+                        } 
+                    } 
+                }
             }
         });
         
@@ -1452,40 +1433,22 @@
     function atualizarUltimosAlunos() {
         const ultimos = [...alunos].sort((a,b) => new Date(b.dataMatricula) - new Date(a.dataMatricula)).slice(0, 10);
         document.getElementById('listaUltimosAlunos').innerHTML = ultimos.map(a => `
-            <tr onclick="abrirDetalhesAluno('${a.nome}')">
-                <td><strong>${a.nome}</strong></td>
-                <td>${a.turma}</td>
-                <td>${a.idade} anos</td>
-                <td>${a.responsavel}</td>
-                <td>${a.telefone}</td>
-            </tr>
+            <tr onclick="abrirDetalhesAluno('${a.nome}')"> <td><strong>${a.nome}</strong></td><td>${a.turma}</td><td>${a.idade} anos</td><td>${a.responsavel}</td><td>${a.telefone}</td> </tr>
         `).join('');
     }
 
     function abrirModalTodosAlunos() {
         const tbody = document.getElementById('listaTodosAlunosModal');
         tbody.innerHTML = alunos.map(a => `
-            <tr onclick="abrirDetalhesAluno('${a.nome}')">
-                <td><strong>${a.nome}</strong></td>
-                <td>${a.turma}</td>
-                <td>${a.idade} anos</td>
-                <td>${a.responsavel}</td>
-                <td>${a.telefone}</td>
-                <td>${a.bairro}</td>
-                <td>${formatarDataSimples(a.dataMatricula)}</td>
-            </tr>
+            <tr onclick="abrirDetalhesAluno('${a.nome}')"> <td><strong>${a.nome}</strong></td><td>${a.turma}</td><td>${a.idade} anos</td><td>${a.responsavel}</td><td>${a.telefone}</td><td>${a.bairro}</td><td>${formatarDataSimples(a.dataMatricula)}</td> </tr>
         `).join('');
         document.getElementById('modalTodosAlunos').style.display = 'flex';
     }
 
-    function fecharModalTodos() {
-        document.getElementById('modalTodosAlunos').style.display = 'none';
-    }
+    function fecharModalTodos() { document.getElementById('modalTodosAlunos').style.display = 'none'; }
 
     function abrirDetalhesAluno(nome) {
-        // Fechar o modal "Todos os Alunos" antes de abrir os detalhes
         fecharModalTodos();
-        
         const aluno = alunos.find(a => a.nome === nome);
         if (!aluno) return;
         
@@ -1517,23 +1480,16 @@
             <div class="detalhe-item"><div class="detalhe-label">🗓️ Matrícula</div><div class="detalhe-valor">${formatarDataSimples(aluno.dataMatricula)}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">⏳ Tempo de Casa</div><div class="detalhe-valor">${formatarTempoCasa(tempoMeses)}</div></div>
         `;
-        
         document.getElementById('modalDetalhesAluno').style.display = 'flex';
     }
 
-    function fecharModalDetalhes() {
-        document.getElementById('modalDetalhesAluno').style.display = 'none';
-    }
+    function fecharModalDetalhes() { document.getElementById('modalDetalhesAluno').style.display = 'none'; }
 
     function atualizarVeteranos() {
-        const alunosComTempo = alunos.map(a => ({
-            ...a,
-            tempoMeses: calcularTempoCasa(a.dataMatricula)
-        })).filter(a => a.tempoMeses > 0).sort((a, b) => b.tempoMeses - a.tempoMeses);
-        
+        const alunosComTempo = alunos.map(a => ({ ...a, tempoMeses: calcularTempoCasa(a.dataMatricula) })).filter(a => a.tempoMeses > 0).sort((a, b) => b.tempoMeses - a.tempoMeses);
         const topVeteranos = alunosComTempo.slice(0, 5);
-        
         const container = document.getElementById('rankingVeteranos');
+        
         if (topVeteranos.length === 0) {
             container.innerHTML = '<div class="sem-aniversariantes">🏅 Nenhum veterano ainda</div>';
         } else {
@@ -1542,17 +1498,10 @@
                 const tempoBadge = getTempoBadge(a.tempoMeses);
                 return `
                     <div class="veterano-card" onclick="abrirDetalhesAluno('${a.nome}')">
-                        <div class="veterano-medalha ${medalhaClass}">
-                            ${idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : '🏅'}
-                        </div>
+                        <div class="veterano-medalha ${medalhaClass}">${idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : '🏅'}</div>
                         <div class="veterano-info">
-                            <div class="veterano-nome">
-                                <strong>${a.nome}</strong>
-                                <span class="tempo-badge ${tempoBadge.class}">${tempoBadge.texto}</span>
-                            </div>
-                            <div class="veterano-detalhes">
-                                ${a.turma} • ${formatarTempoCasa(a.tempoMeses)} de casa • Matrícula: ${formatarDataSimples(a.dataMatricula)}
-                            </div>
+                            <div class="veterano-nome"><strong>${a.nome}</strong><span class="tempo-badge ${tempoBadge.class}">${tempoBadge.texto}</span></div>
+                            <div class="veterano-detalhes">${a.turma} • ${formatarTempoCasa(a.tempoMeses)} de casa • Matrícula: ${formatarDataSimples(a.dataMatricula)}</div>
                         </div>
                     </div>
                 `;
