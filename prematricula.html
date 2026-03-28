@@ -33,7 +33,6 @@
             padding: 110px 16px 50px;
         }
 
-        /* Barra de navegação */
         .nav-bar {
             background: white;
             border-radius: 60px;
@@ -403,7 +402,6 @@
 </head>
 <body>
 
-<!-- Barra de navegação -->
 <div class="nav-bar">
     <a href="index.html" class="logo-text">🐊 ESCOLINHA DO JACARÉ</a>
     <div class="nav-links">
@@ -699,7 +697,6 @@
         </div>
     </div>
 
-    <!-- MENSAGEM DE SUCESSO -->
     <div id="mensagemSucesso" class="mensagem-sucesso hidden">
         <div class="emoji-animado">🎉</div>
         <h2>SOLICITAÇÃO ENVIADA!</h2>
@@ -760,7 +757,6 @@
         });
     });
 
-    // Calcular idade
     function calcularIdade() {
         const dataNasc = document.getElementById('dataNasc').value;
         if (!dataNasc) return null;
@@ -786,7 +782,6 @@
     document.getElementById('dataNasc').addEventListener('change', mostrarIdade);
     document.getElementById('dataNasc').addEventListener('input', mostrarIdade);
 
-    // Buscar CEP
     async function buscarCEP() {
         const cep = document.getElementById('cep').value.replace(/\D/g, '');
         if (cep.length !== 8) {
@@ -818,7 +813,6 @@
         }
     }
 
-    // Verificar duplicidade
     async function verificarDuplicidade(rgResponsavel, nomeResponsavel, nomeAluno, dataNasc) {
         try {
             const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=${NOME_ABA}`;
@@ -876,7 +870,6 @@
         }
     }
 
-    // Enviar cadastro
     async function enviarCadastro() {
         // Coletar dados
         const nomeAluno = document.getElementById('nomeAluno').value.trim();
@@ -960,7 +953,6 @@
             return;
         }
 
-        // Verificar duplicidade
         const btn = document.querySelector('.btn-enviar');
         btn.disabled = true;
         btn.innerHTML = '⏳ VERIFICANDO...';
@@ -999,32 +991,29 @@
                 remedio: remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não',
                 origem: origem,
                 rg: rgResponsavel,
-                sexo: sexo,
-                peso: peso,
-                altura: altura,
-                calcado: calcado,
-                uniforme: uniforme,
+                sexo: sexo || '',
+                peso: peso || '',
+                altura: altura || '',
+                calcado: calcado || '',
+                uniforme: uniforme || '',
                 deficiencia: deficienciaTexto,
-                municipio: municipio,
-                uf: uf,
-                escola: escola,
-                serie: serie,
+                municipio: municipio || '',
+                uf: uf || '',
+                escola: escola || '',
+                serie: serie || '',
                 status: 'pendente'
             };
 
-            // Enviar para a planilha
             await fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 body: JSON.stringify(dados)
             });
 
-            // Salvar no localStorage
             const solicitacoes = JSON.parse(localStorage.getItem('solicitacoes_prematricula') || '[]');
             solicitacoes.push({ id: Date.now(), protocolo: protocolo, ...dados });
             localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
 
-            // Mostrar sucesso
             document.getElementById('protocoloDiv').innerHTML = `🔑 PROTOCOLO: ${protocolo}`;
             document.getElementById('formularioContainer').classList.add('hidden');
             document.getElementById('mensagemSucesso').classList.remove('hidden');
