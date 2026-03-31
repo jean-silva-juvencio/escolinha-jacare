@@ -20,6 +20,7 @@
             background: linear-gradient(135deg, #f0f7ff 0%, #e0ecf9 100%);
             min-height: 100vh;
             transition: background 0.3s ease, color 0.3s ease;
+            padding-top: 95px;
         }
 
         /* ========== TEMA ESCURO ========== */
@@ -29,14 +30,9 @@
         }
 
         body.dark-mode .nav-bar {
-            background: #1e293b;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        body.dark-mode .logo-text {
-            background: linear-gradient(45deg, #60a5fa, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: rgba(30,41,59,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
 
         body.dark-mode .card,
@@ -80,69 +76,194 @@
             border-color: #334155;
         }
 
-        body.dark-mode .cat-item:active {
-            background: #334155;
+        body.dark-mode .noticias-ticker {
+            background: linear-gradient(135deg, #1e40af, #0f2b5e);
+            box-shadow: 0 0 20px rgba(59,130,246,0.4);
         }
 
-        body.dark-mode .btn-mapa,
-        body.dark-mode .btn-prematricula {
-            background: linear-gradient(135deg, #3b82f6, #1e40af);
+        body.dark-mode .ticker-content span {
+            background: rgba(255,255,255,0.12);
         }
 
-        body.dark-mode footer {
-            background: #0f172a;
-            color: #cbd5e1;
+        body.dark-mode .ticker-content span:hover {
+            background: rgba(255,255,255,0.25);
         }
 
-        body.dark-mode .chamada-patrocinio a {
-            color: #60a5fa;
+        body.dark-mode .selo-ao-vivo {
+            background: #b91c1c;
         }
 
-        body.dark-mode .horario-content {
-            background: linear-gradient(135deg, #1e40af, #1e3a8a);
-        }
-
-        body.dark-mode .clima-widget {
-            background: rgba(59,130,246,0.2);
-        }
-
-        body.dark-mode .faq-question:hover {
-            background: #1e293b;
-        }
-
-        /* ========== BARRA DE NAVEGAÇÃO ========== */
+        /* ========== BARRA DE NAVEGAÇÃO (FIXA FULL-WIDTH) ========== */
         .nav-bar {
-            background: white;
-            border-radius: 60px;
-            padding: 12px 20px;
-            margin: 20px auto 0;
-            max-width: 1200px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: relative;
-            z-index: 100;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            padding: 12px 24px;
         }
 
-        .logo-area {
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* Logo Jacaré Premium */
+        .logo-destaque {
+            flex-shrink: 0;
+        }
+
+        .logo-jacare {
+            font-size: 2.8rem;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            animation: pulseJumpPremium 2.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(0,71,171,0.6));
+        }
+
+        .logo-jacare:hover {
+            transform: scale(1.12) rotate(3deg);
+            filter: drop-shadow(0 0 20px rgba(0,71,171,0.9));
+        }
+
+        @keyframes pulseJumpPremium {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+                filter: drop-shadow(0 0 5px rgba(0,71,171,0.5));
+            }
+            50% {
+                transform: translateY(-6px) scale(1.02);
+                filter: drop-shadow(0 0 20px rgba(0,71,171,0.9));
+            }
+        }
+
+        /* Notícias Rolantes - COM SELO AO VIVO */
+        .noticias-ticker {
+            flex: 2;
+            background: linear-gradient(135deg, #0047AB, #002277);
+            border-radius: 60px;
+            overflow: hidden;
+            padding: 8px 20px;
+            min-width: 320px;
+            box-shadow: 0 0 20px rgba(0,71,171,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.25);
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 12px;
-            flex-wrap: wrap;
         }
 
-        .logo-text {
-            text-decoration: none;
-            font-family: 'Montserrat';
-            font-weight: 900;
-            font-size: 1.2rem;
-            background: linear-gradient(45deg, #003399, #00aaff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .noticias-ticker:hover {
+            box-shadow: 0 0 30px rgba(0,71,171,0.6);
+            transform: translateY(-1px);
         }
 
-        /* Clima Widget */
+        /* SELO AO VIVO */
+        .selo-ao-vivo {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #dc2626;
+            color: white;
+            font-weight: 800;
+            font-size: 0.7rem;
+            padding: 5px 12px;
+            border-radius: 40px;
+            letter-spacing: 1px;
+            animation: pulseSelo 1.5s ease-in-out infinite;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .ponto-vivo {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: piscar 1s step-end infinite;
+        }
+
+        @keyframes piscar {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        @keyframes pulseSelo {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.4); }
+            50% { box-shadow: 0 0 0 4px rgba(220,38,38,0); }
+        }
+
+        .ticker-wrapper {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            flex: 1;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: tickerScrollPremium 150s linear infinite;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            letter-spacing: 0.3px;
+        }
+
+        .ticker-content span {
+            display: inline-block;
+            margin-right: 70px;
+            background: rgba(255,255,255,0.15);
+            padding: 5px 18px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .ticker-content span:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.02);
+        }
+
+        @keyframes tickerScrollPremium {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0.95;
+            }
+            5% {
+                opacity: 1;
+            }
+            95% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 0.95;
+            }
+        }
+
+        .ticker-wrapper:hover .ticker-content {
+            animation-play-state: paused;
+        }
+
+        /* Área direita */
+        .nav-direita {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
         .clima-widget {
             display: flex;
             align-items: center;
@@ -158,16 +279,9 @@
             background: rgba(59,130,246,0.2);
         }
 
-        /* Botões do topo */
-        .acoes-topo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
         .btn-tema {
-            width: 52px;
-            height: 52px;
+            width: 45px;
+            height: 45px;
             background: #f1f5f9;
             border: none;
             border-radius: 50%;
@@ -175,7 +289,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             transition: all 0.3s ease;
         }
 
@@ -196,10 +310,9 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Botão Hamburguer */
         .hamburger {
-            width: 52px;
-            height: 52px;
+            width: 45px;
+            height: 45px;
             background: #0047AB;
             border: none;
             border-radius: 50%;
@@ -213,7 +326,7 @@
         }
 
         .hamburger span {
-            width: 26px;
+            width: 22px;
             height: 3px;
             background: white;
             border-radius: 3px;
@@ -241,9 +354,9 @@
             height: 100%;
             background: white;
             box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-            z-index: 200;
+            z-index: 1100;
             transition: left 0.3s ease;
-            padding: 80px 20px 20px;
+            padding: 100px 20px 20px;
         }
 
         body.dark-mode .sidebar {
@@ -289,7 +402,6 @@
             background: #334155;
         }
 
-        /* Overlay */
         .overlay {
             position: fixed;
             top: 0;
@@ -297,7 +409,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.5);
-            z-index: 150;
+            z-index: 1050;
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
@@ -308,7 +420,7 @@
             visibility: visible;
         }
 
-        /* ========== BOTÃO VOLTAR AO TOPO ========== */
+        /* Botões flutuantes */
         .btn-topo {
             position: fixed;
             bottom: 100px;
@@ -344,7 +456,6 @@
             background: linear-gradient(135deg, #3b82f6, #1e40af);
         }
 
-        /* ========== BOTÃO FLUTUANTE WHATSAPP ========== */
         .btn-whatsapp {
             position: fixed;
             bottom: 30px;
@@ -371,7 +482,7 @@
             box-shadow: 0 6px 20px rgba(37,211,102,0.3);
         }
 
-        /* ========== FAQ ========== */
+        /* FAQ, Categorias, etc */
         .faq-section {
             background: white;
             border-radius: 30px;
@@ -383,7 +494,7 @@
 
         .faq-section h2 {
             font-family: 'Montserrat';
-            color: var(--azul-escuro);
+            color: #003399;
             font-size: 1.8rem;
             margin-bottom: 30px;
             text-align: center;
@@ -673,7 +784,6 @@
             50% { transform: scale(1.03); }
         }
         
-        /* Horário */
         .horario-card {
             text-align: center;
             margin: 30px auto;
@@ -727,6 +837,7 @@
             flex-wrap: wrap;
         }
 
+        /* LOCALIZAÇÃO */
         .loc-card {
             background: #fff;
             padding: 30px 20px;
@@ -738,7 +849,7 @@
         }
         .mapa-container {
             width: 100%;
-            height: 250px;
+            height: 300px;
             border-radius: 20px;
             overflow: hidden;
             margin: 15px 0;
@@ -861,7 +972,6 @@
             transform: scale(1.2);
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 120px;
@@ -896,20 +1006,39 @@
             .hero {
                 margin-top: 20px;
             }
-            .logo-text {
-                font-size: 1.5rem;
+        }
+        
+        @media (max-width: 900px) {
+            .nav-container {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .noticias-ticker {
+                order: 3;
+                width: 100%;
+                margin-top: 8px;
+                min-width: auto;
+                padding: 6px 16px;
+            }
+            .ticker-content {
+                font-size: 0.85rem;
+            }
+            .ticker-content span {
+                margin-right: 50px;
+                padding: 4px 14px;
+            }
+            .selo-ao-vivo {
+                padding: 4px 10px;
+                font-size: 0.65rem;
+            }
+            .nav-direita {
+                margin-left: auto;
             }
         }
         
         @media (max-width: 650px) {
-            .logo-area {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-            }
-            .clima-widget {
-                font-size: 0.7rem;
-                padding: 3px 10px;
+            body {
+                padding-top: 110px;
             }
             .btn-whatsapp {
                 width: 55px;
@@ -924,6 +1053,32 @@
                 width: 45px;
                 height: 45px;
                 font-size: 1.2rem;
+            }
+            .clima-widget {
+                font-size: 0.65rem;
+                padding: 4px 8px;
+            }
+            .logo-jacare {
+                font-size: 2rem;
+            }
+            .noticias-ticker {
+                padding: 5px 12px;
+            }
+            .ticker-content {
+                font-size: 0.7rem;
+            }
+            .ticker-content span {
+                margin-right: 35px;
+                padding: 3px 10px;
+            }
+            .selo-ao-vivo {
+                padding: 3px 8px;
+                font-size: 0.6rem;
+                gap: 4px;
+            }
+            .ponto-vivo {
+                width: 6px;
+                height: 6px;
             }
         }
     </style>
@@ -965,7 +1120,7 @@
     <a href="index.html">🏠 INÍCIO</a>
     <a href="diretoria.html">📊 DIRETORIA</a>
     <a href="funcionarios.html">🔒 FUNCIONÁRIOS</a>
-    <a href="#">📸 GALERIA</a>
+    <a href="galeria.html">📸 GALERIA</a>
     <div class="divider"></div>
     <a href="#" id="menuInstagram">📱 INSTAGRAM</a>
     <a href="#" id="menuFacebook">📘 FACEBOOK</a>
@@ -979,23 +1134,38 @@
 
 <!-- CONTEÚDO PRINCIPAL -->
 <div class="container">
+    <!-- BARRA FIXA COM SELO AO VIVO -->
     <div class="nav-bar">
-        <div class="logo-area">
-            <div class="logo-text">🐊 ESCOLINHA DO JACARÉ</div>
-            <!-- CLIMA -->
-            <div class="clima-widget" id="climaWidget">
-                <span id="climaIcone">🌡️</span>
-                <span id="climaTemp">--°C</span>
-                <span id="climaDesc">Manaus, AM</span>
+        <div class="nav-container">
+            <div class="logo-destaque">
+                <span class="logo-jacare">🐊</span>
             </div>
-        </div>
-        <div class="acoes-topo">
-            <button class="btn-tema" id="btnTema" onclick="alternarTema()">🌞</button>
-            <button class="hamburger" id="hamburger" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+
+            <div class="noticias-ticker">
+                <div class="selo-ao-vivo">
+                    <span class="ponto-vivo"></span>
+                    AO VIVO
+                </div>
+                <div class="ticker-wrapper">
+                    <div class="ticker-content" id="tickerNoticias">
+                        <span>🏆 Carregando notícias...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-direita">
+                <div class="clima-widget" id="climaWidget">
+                    <span id="climaIcone">🌡️</span>
+                    <span id="climaTemp">--°C</span>
+                    <span id="climaDesc">Manaus, AM</span>
+                </div>
+                <button class="btn-tema" id="btnTema" onclick="alternarTema()">🌞</button>
+                <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1042,7 +1212,6 @@
         </div>
     </div>
 
-    <!-- FAQ - PERGUNTAS FREQUENTES (UNIFORME DOADO) -->
     <div class="faq-section">
         <h2>❓ PERGUNTAS FREQUENTES</h2>
         <div class="faq-grid">
@@ -1126,7 +1295,7 @@
             <h2>📍 VENHA NOS CONHECER</h2>
             <div class="mapa-container">
                 <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.123456789!2d-60.0445!3d-3.0911!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwMDUnMjguMCJTIDYwwrAwMic0MC4yIlc!5e0!3m2!1spt-BR!2sbr!4v1234567890"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.203015457583!2d-60.028347!3d-3.091704!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x926c1bc79a881f0b%3A0x2b8f6e3d5c4a2f9!2sR.%20S%C3%A3o%20Bernardo%2C%2088%20-%20Alvorada%2C%20Manaus%20-%20AM%2C%2069043-180!5e0!3m2!1spt-BR!2sbr!4v1712345678901!5m2!1spt-BR!2sbr"
                     allowfullscreen=""
                     loading="lazy">
                 </iframe>
@@ -1135,7 +1304,7 @@
                 <p><strong>Unidos do Alvorada</strong></p>
                 <p>R. São Bernardo, 88 - Alvorada I, Manaus</p>
             </div>
-            <a href="#" target="_blank" class="btn-mapa" id="mapaLink">
+            <a href="https://maps.google.com/?q=R.+S%C3%A3o+Bernardo,+88+-+Alvorada+I,+Manaus" target="_blank" class="btn-mapa" id="mapaLink">
                 <span>📍</span> ABRIR NO GOOGLE MAPS
             </a>
         </div>
@@ -1177,6 +1346,72 @@
     }
 
     setInterval(() => { mudarSlide(1); }, 5000);
+
+    // ========== NOTÍCIAS DE FUTEBOL (DUPLA FONTE) ==========
+    let noticiasLista = [];
+
+    async function buscarNoticiasFutebol() {
+        // Tenta Globo Esporte primeiro
+        try {
+            const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://ge.globo.com/rss/ge/');
+            const dados = await response.json();
+            
+            if (dados.items && dados.items.length > 0) {
+                noticiasLista = dados.items.slice(0, 12).map(item => {
+                    let titulo = item.title;
+                    if (titulo.length > 80) titulo = titulo.substring(0, 77) + '...';
+                    return `⚽ ${titulo}`;
+                });
+                atualizarTickerNoticias();
+                return;
+            }
+        } catch (error) {
+            console.log('Globo Esporte falhou, tentando Lance!...');
+        }
+        
+        // Fallback: Lance!
+        try {
+            const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.lance.com.br/feed/');
+            const dados = await response.json();
+            
+            if (dados.items && dados.items.length > 0) {
+                noticiasLista = dados.items.slice(0, 12).map(item => {
+                    let titulo = item.title;
+                    if (titulo.length > 80) titulo = titulo.substring(0, 77) + '...';
+                    return `⚽ ${titulo}`;
+                });
+                atualizarTickerNoticias();
+                return;
+            }
+        } catch (error) {
+            console.log('Lance! falhou, usando notícias da escolinha...');
+        }
+        
+        // Último recurso: notícias da própria escolinha
+        usarNoticiasFallback();
+    }
+
+    function usarNoticiasFallback() {
+        noticiasLista = [
+            "🏆 Campeonato Municipal de Futebol começa neste sábado!",
+            "⚽ Novos talentos se destacam nos treinos da semana",
+            "📢 Treinos abertos para visitantes neste fim de semana",
+            "🎉 Formatura da turma Sub-11 foi um sucesso!",
+            "🥋 Taekwondo: novos graduados recebem faixas",
+            "🏓 Tênis de Mesa: equipe se prepara para competição",
+            "🤸 Ginástica: alunas participam de festival esportivo",
+            "🥋 Judô: campeonato interno acontece em maio"
+        ];
+        atualizarTickerNoticias();
+    }
+
+    function atualizarTickerNoticias() {
+        const tickerDiv = document.getElementById('tickerNoticias');
+        if (tickerDiv && noticiasLista.length > 0) {
+            let noticiasDuplicadas = [...noticiasLista, ...noticiasLista];
+            tickerDiv.innerHTML = noticiasDuplicadas.map(noticia => `<span>${noticia}</span>`).join('');
+        }
+    }
 
     // ========== SPLASH SCREEN + WELCOME ==========
     const SCRIPT_URL_VISITAS = 'https://script.google.com/macros/s/AKfycbxaaHcEtRBwKcTpUxvZT0v_zUM4vbJfqWx2OlE3LG8UqK1_AGV-ozTi4LN0rSuLDjIx/exec';
@@ -1301,17 +1536,15 @@
         });
     }
 
-    // ========== REDES SOCIAIS (links #) ==========
+    // ========== REDES SOCIAIS ==========
     document.getElementById('menuInstagram')?.addEventListener('click', (e) => {
         e.preventDefault();
         mostrarToast('📸 Abrindo Instagram...');
-        // setTimeout(() => window.open('https://instagram.com/escolinhadojacare', '_blank'), 500);
     });
     
     document.getElementById('menuFacebook')?.addEventListener('click', (e) => {
         e.preventDefault();
         mostrarToast('📘 Abrindo Facebook...');
-        // setTimeout(() => window.open('https://facebook.com/escolinhadojacare', '_blank'), 500);
     });
     
     document.getElementById('menuWhatsapp')?.addEventListener('click', (e) => {
@@ -1330,8 +1563,7 @@
     });
 
     document.getElementById('mapaLink')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarToast('📍 Abrindo Google Maps...');
+        window.open('https://maps.google.com/?q=R.+S%C3%A3o+Bernardo,+88+-+Alvorada+I,+Manaus', '_blank');
     });
 
     document.getElementById('btnPrematricula')?.addEventListener('click', () => {
@@ -1354,7 +1586,9 @@
         
         registrarVisita();
         buscarClima();
+        buscarNoticiasFutebol();
         setInterval(buscarClima, 600000);
+        setInterval(buscarNoticiasFutebol, 300000);
         initFaq();
         
         if (localStorage.getItem('tema') === 'dark') {
