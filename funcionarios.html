@@ -2,953 +2,618 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Pré-Matrícula | Escolinha do Jacaré</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Funcionários | Escolinha do Jacaré</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --azul-escuro: #003399;
-            --azul-premium: #0047AB;
-            --azul-claro: #00aaff;
-            --verde-whatsapp: #25d366;
-            --laranja-destaque: #ff9800;
-            --vermelho-erro: #ff4444;
-            --verde-sucesso: #4caf50;
-            --cinza-claro: #f8f9fa;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background: linear-gradient(135deg, #f0f7ff 0%, #e0ecf9 100%);
-            min-height: 100vh;
-            padding: 110px 16px 50px;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
-
-        /* ========== TEMA ESCURO ========== */
-        body.dark-mode {
-            background: linear-gradient(135deg, #0f172a 0%, #1e1a3a 100%);
-            color: #e2e8f0;
-        }
-
-        body.dark-mode .nav-bar {
-            background: #1e293b;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        body.dark-mode .logo-text {
-            background: linear-gradient(45deg, #60a5fa, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        body.dark-mode .form-card {
-            background: #1e293b;
-        }
-
-        body.dark-mode .form-card h1 {
-            color: #60a5fa;
-        }
-
-        body.dark-mode .form-card .subtitulo {
-            color: #94a3b8;
-        }
-
-        body.dark-mode .secao {
-            border-bottom-color: #334155;
-        }
-
-        body.dark-mode .secao-titulo {
-            color: #60a5fa;
-        }
-
-        body.dark-mode .form-grupo label {
-            color: #e2e8f0;
-        }
-
-        body.dark-mode .form-grupo input,
-        body.dark-mode .form-grupo select {
-            background: #0f172a;
-            border-color: #334155;
-            color: #e2e8f0;
-        }
-
-        body.dark-mode .form-grupo input:focus,
-        body.dark-mode .form-grupo select:focus {
-            border-color: #60a5fa;
-            box-shadow: 0 0 0 3px rgba(96,165,250,0.1);
-        }
-
-        body.dark-mode .observacao {
-            background: #0f172a;
-            color: #94a3b8;
-        }
-
-        body.dark-mode .radio-group label {
-            color: #e2e8f0;
-        }
-
-        body.dark-mode .checkbox-group label {
-            color: #e2e8f0;
-        }
-
-        body.dark-mode .buscar-cep {
-            background: #3b82f6;
-        }
-
-        body.dark-mode .buscar-cep:active {
-            background: #2563eb;
-        }
-
-        body.dark-mode .btn-enviar {
-            background: linear-gradient(135deg, #3b82f6, #1e40af);
-        }
-
-        body.dark-mode .info-idade {
-            background: #0f172a;
-            color: #60a5fa;
-        }
-
-        body.dark-mode .mensagem-erro {
-            color: #f87171;
-        }
-
-        body.dark-mode .toast {
-            background: #1e293b;
-            color: white;
-        }
-
-        body.dark-mode .mensagem-sucesso {
-            background: linear-gradient(135deg, #059669, #047857);
-        }
-
-        body.dark-mode footer {
-            background: #0f172a;
-        }
-
-        /* Barra de navegação */
-        .nav-bar {
-            background: white;
-            border-radius: 60px;
-            padding: 10px 20px;
-            margin: 0 auto 20px;
-            max-width: 800px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            transition: background 0.3s;
-        }
-        .logo-text {
-            text-decoration: none;
-            font-family: 'Montserrat';
-            font-weight: 900;
-            font-size: 1.2rem;
-            background: linear-gradient(45deg, #003399, #00aaff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .nav-links {
-            display: flex;
-            gap: 8px;
-        }
-        .nav-link {
-            text-decoration: none;
-            padding: 6px 14px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.75rem;
-            background: #f1f5f9;
-            color: #1e293b;
-            transition: background 0.3s;
-        }
-        body.dark-mode .nav-link {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
-        .nav-link:hover {
-            background: #e2e8f0;
-        }
-
-        .btn-tema {
-            background: #0047AB;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            width: 45px;
-            height: 45px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        body.dark-mode .btn-tema {
-            background: #3b82f6;
-        }
-        .btn-tema:hover {
-            transform: scale(1.05);
-        }
-
-        .form-container {
-            max-width: 900px;
-            margin: 0 auto;
-            animation: fadeInUp 0.6s ease;
-        }
-
-        .form-card {
-            background: white;
-            border-radius: 32px;
-            padding: 28px 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            transition: background 0.3s;
-        }
-
-        .form-card h1 {
-            font-family: 'Montserrat';
-            color: var(--azul-escuro);
-            text-align: center;
-            font-size: 1.6rem;
-            margin-bottom: 8px;
-        }
-
-        .form-card .subtitulo {
-            text-align: center;
-            color: #666;
-            margin-bottom: 25px;
-            font-size: 0.85rem;
-        }
-
-        .secao {
-            margin-bottom: 28px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
-            transition: border-color 0.3s;
-        }
-
-        .secao:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .secao-titulo {
-            font-weight: 800;
-            color: var(--azul-escuro);
-            margin-bottom: 18px;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s;
-        }
-
-        .secao-titulo .numero {
-            background: var(--azul-premium);
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-        }
-
-        .form-grupo {
-            margin-bottom: 16px;
-        }
-
-        .form-grupo label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: #333;
-            font-size: 0.85rem;
-            transition: color 0.3s;
-        }
-
-        .form-grupo label .obrigatorio {
-            color: var(--vermelho-erro);
-            margin-left: 3px;
-        }
-
-        .form-grupo input,
-        .form-grupo select {
-            width: 100%;
-            padding: 12px 14px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-            font-family: 'Open Sans', sans-serif;
-            background: white;
-        }
-
-        .form-grupo input:focus,
-        .form-grupo select:focus {
-            outline: none;
-            border-color: var(--azul-claro);
-            box-shadow: 0 0 0 3px rgba(0,170,255,0.1);
-        }
-
-        .form-grupo input.erro,
-        .form-grupo select.erro {
-            border-color: var(--vermelho-erro);
-            animation: shake 0.3s ease;
-        }
-
-        .mensagem-erro {
-            color: var(--vermelho-erro);
-            font-size: 0.7rem;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .form-linha {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .form-linha-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 12px;
-        }
-
-        .info-idade {
-            background: #f0f7ff;
-            padding: 10px;
-            border-radius: 50px;
-            text-align: center;
-            margin-top: 8px;
-            font-size: 0.8rem;
-            color: var(--azul-premium);
-            font-weight: 600;
-            display: none;
-            transition: background 0.3s;
-        }
-
-        .observacao {
-            background: var(--cinza-claro);
-            padding: 12px;
-            border-radius: 12px;
-            margin-top: 12px;
-            font-size: 0.75rem;
-            color: #666;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            padding: 8px 0;
-            flex-wrap: wrap;
-        }
-
-        .radio-group label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: normal;
-            margin-bottom: 0;
-            cursor: pointer;
-        }
-
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            padding: 10px 0;
-        }
-
-        .checkbox-group label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: normal;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-
-        .checkbox-group input {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        .deficiencia-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .deficiencia-header label {
-            font-weight: 600;
-            margin-bottom: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .deficiencia-opcoes {
-            margin-left: 20px;
-            padding-left: 15px;
-            border-left: 2px solid #e0e0e0;
-        }
-
-        .deficiencia-opcoes.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        .btn-enviar {
-            background: linear-gradient(135deg, var(--laranja-destaque), #f57c00);
-            color: white;
-            border: none;
-            padding: 16px 20px;
-            border-radius: 60px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-enviar:active {
-            transform: scale(0.98);
-        }
-
-        .btn-enviar:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .buscar-cep {
-            background: var(--azul-premium);
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 8px;
-            width: 100%;
-            transition: all 0.2s;
-        }
-
-        .buscar-cep:active {
-            transform: scale(0.96);
-        }
-
-        .carregando-cep {
-            font-size: 0.7rem;
-            color: #666;
-            margin-top: 5px;
-            display: none;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .mensagem-sucesso {
-            background: linear-gradient(135deg, var(--verde-sucesso), #45a049);
-            color: white;
-            padding: 30px 20px;
-            border-radius: 30px;
-            text-align: center;
-            animation: fadeInUp 0.5s ease;
-        }
-
-        .mensagem-sucesso h2 {
-            font-family: 'Montserrat';
-            margin-bottom: 12px;
-            font-size: 1.4rem;
-        }
-
-        .mensagem-sucesso .protocolo {
-            background: rgba(255,255,255,0.2);
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 50px;
-            margin: 12px 0;
-            font-weight: 800;
-            font-size: 0.9rem;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: white;
-            padding: 12px 20px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            z-index: 1100;
-            animation: slideIn 0.3s ease;
-            font-weight: 500;
-            font-size: 0.85rem;
-        }
-        .toast.success { border-left: 4px solid #4caf50; }
-        .toast.error { border-left: 4px solid #f44336; }
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        footer {
-            background: var(--azul-escuro);
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            transition: background 0.3s;
-        }
-
-        @media (max-width: 700px) {
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f5f7fc 0%, #e9eef5 100%); min-height: 100vh; padding: 20px; transition: background 0.3s, color 0.3s; }
+        body.dark-mode { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #eee; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .nav-bar { background: white; border-radius: 60px; padding: 12px 24px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: background 0.3s; }
+        body.dark-mode .nav-bar { background: #1e293b; }
+        .logo { font-size: 1.3rem; font-weight: 800; background: linear-gradient(45deg, #003399, #00aaff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 12px; flex-wrap: wrap; }
+        .nav-link { text-decoration: none; padding: 8px 20px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; transition: all 0.2s; background: #f1f5f9; color: #1e293b; }
+        body.dark-mode .nav-link { background: #0f172a; color: #e2e8f0; }
+        .nav-link:hover { transform: translateY(-2px); }
+        .nav-link.ativo { background: #0047AB; color: white; }
+        body.dark-mode .nav-link.ativo { background: #3b82f6; }
+        .login-box { background: white; max-width: 420px; margin: 40px auto; padding: 40px; border-radius: 32px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.1); transition: background 0.3s; }
+        body.dark-mode .login-box { background: #1e293b; }
+        .login-box h2 { color: #003399; margin-bottom: 8px; font-size: 28px; }
+        body.dark-mode .login-box h2 { color: #60a5fa; }
+        .login-box p { color: #666; margin-bottom: 24px; font-size: 14px; }
+        body.dark-mode .login-box p { color: #94a3b8; }
+        .login-box input { width: 100%; padding: 14px 18px; margin: 12px 0; border: 2px solid #e2e8f0; border-radius: 16px; font-size: 15px; transition: all 0.2s; background: white; }
+        body.dark-mode .login-box input { background: #0f172a; border-color: #334155; color: white; }
+        .login-box input:focus { outline: none; border-color: #0047AB; box-shadow: 0 0 0 3px rgba(0,71,171,0.1); }
+        .login-box button { background: linear-gradient(135deg, #0047AB, #003399); color: white; padding: 14px; border: none; border-radius: 16px; width: 100%; cursor: pointer; font-size: 16px; font-weight: 600; margin-top: 8px; transition: transform 0.2s; }
+        .login-box button:hover { transform: translateY(-2px); }
+        .erro { color: #dc2626; margin-top: 12px; font-size: 13px; }
+        .painel { display: none; }
+        .header { background: linear-gradient(135deg, #0047AB, #003399); color: white; padding: 20px 24px; border-radius: 24px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: background 0.3s; }
+        body.dark-mode .header { background: linear-gradient(135deg, #1e40af, #1e3a8a); }
+        .header h1 { font-size: 1.5rem; font-weight: 700; }
+        .header-info { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .ultima-atualizacao { background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 40px; font-size: 11px; }
+        .btn-tema, .btn-exportar, .btn-atualizar, .btn-cadastrar { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); padding: 8px 14px; border-radius: 40px; cursor: pointer; font-weight: 600; font-size: 12px; transition: all 0.2s; }
+        .btn-tema:hover, .btn-exportar:hover, .btn-atualizar:hover, .btn-cadastrar:hover { background: rgba(255,255,255,0.3); }
+        .btn-sair { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); padding: 8px 20px; border-radius: 40px; cursor: pointer; font-weight: 600; }
+        .btn-sair:hover { background: rgba(255,255,255,0.3); }
+        .btn-cadastrar { background: #10b981; border-color: #10b981; }
+        .btn-cadastrar:hover { background: #059669; }
+        .vertical-layout { display: flex; flex-direction: column; gap: 30px; }
+        .secao { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: background 0.3s; }
+        body.dark-mode .secao { background: #1e293b; }
+        .secao-header { background: linear-gradient(135deg, #f8fafc, #f1f5f9); padding: 18px 20px; border-bottom: 2px solid #e2e8f0; transition: background 0.3s; }
+        body.dark-mode .secao-header { background: #0f172a; border-bottom-color: #334155; }
+        .secao-header h2 { font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .secao-header .badge { background: #0047AB; color: white; padding: 2px 10px; border-radius: 40px; font-size: 12px; }
+        .secao-content { padding: 20px; }
+        .filtros { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+        .filtro-group { flex: 1; min-width: 140px; }
+        .filtro-group label { display: block; font-size: 11px; font-weight: 600; color: #64748b; margin-bottom: 4px; text-transform: uppercase; }
+        body.dark-mode .filtro-group label { color: #94a3b8; }
+        .filtro-group select, .filtro-group input { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 13px; background: white; transition: background 0.3s; }
+        body.dark-mode .filtro-group select, body.dark-mode .filtro-group input { background: #0f172a; border-color: #334155; color: white; }
+        .busca-input { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 13px; }
+        .resultados-info { font-size: 11px; color: #64748b; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; }
+        body.dark-mode .resultados-info { color: #94a3b8; border-bottom-color: #334155; }
+        .acoes-massa { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #e2e8f0; }
+        body.dark-mode .acoes-massa { border-bottom-color: #334155; }
+        .selecionar-todos { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+        .btn-excluir-massa { background: #fee2e2; color: #dc2626; border: none; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .btn-excluir-massa:hover { background: #fecaca; }
+        .tabela-container { overflow-x: auto; max-height: 500px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid #f1f5f9; font-size: 13px; white-space: nowrap; }
+        body.dark-mode th, body.dark-mode td { border-bottom-color: #334155; }
+        th { background: #f8fafc; font-weight: 600; color: #1e293b; position: sticky; top: 0; cursor: pointer; user-select: none; transition: background 0.3s; }
+        th:hover { background: #e2e8f0; }
+        body.dark-mode th { background: #0f172a; color: #e2e8f0; }
+        body.dark-mode th:hover { background: #1e293b; }
+        tr { cursor: pointer; transition: background 0.2s; }
+        tr:hover { background: #f8fafc; }
+        body.dark-mode tr:hover { background: #334155; }
+        .status-pendente { background: #fef3c7; color: #d97706; padding: 4px 10px; border-radius: 40px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .btn-acao { padding: 5px 12px; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 11px; margin: 0 3px; transition: all 0.2s; }
+        .btn-aprovar { background: #10b981; color: white; }
+        .btn-aprovar:hover { background: #059669; transform: scale(1.02); }
+        .btn-recusar { background: #ef4444; color: white; }
+        .btn-recusar:hover { background: #dc2626; transform: scale(1.02); }
+        .btn-ver { background: #3b82f6; color: white; }
+        .btn-ver:hover { background: #2563eb; }
+        .skeleton-loader { padding: 20px; text-align: center; }
+        .spinner { display: inline-block; width: 30px; height: 30px; border: 3px solid #e2e8f0; border-top-color: #0047AB; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; border-radius: 32px; max-width: 800px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 28px; animation: modalFadeIn 0.3s ease; transition: background 0.3s; }
+        body.dark-mode .modal-content { background: #1e293b; }
+        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0; }
+        body.dark-mode .modal-header { border-bottom-color: #334155; }
+        .modal-header h3 { font-size: 1.4rem; color: #003399; }
+        body.dark-mode .modal-header h3 { color: #60a5fa; }
+        .fechar-modal { font-size: 28px; cursor: pointer; color: #94a3b8; }
+        .form-linha { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .form-linha-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .form-grupo { margin-bottom: 12px; }
+        .form-grupo label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 12px; color: #1e293b; }
+        body.dark-mode .form-grupo label { color: #e2e8f0; }
+        .form-grupo input, .form-grupo select { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 13px; background: white; }
+        body.dark-mode .form-grupo input, body.dark-mode .form-grupo select { background: #0f172a; border-color: #334155; color: white; }
+        .radio-group { display: flex; gap: 20px; align-items: center; }
+        .radio-group label { display: flex; align-items: center; gap: 8px; font-weight: normal; font-size: 13px; }
+        .btn-salvar { background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 12px; border-radius: 40px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 20px; font-size: 14px; }
+        .btn-salvar:hover { transform: translateY(-2px); }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: white; padding: 14px 24px; border-radius: 60px; display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1100; animation: slideIn 0.3s ease; font-weight: 500; font-size: 14px; transition: background 0.3s; }
+        body.dark-mode .toast { background: #1e293b; color: white; }
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        .toast.info { border-left: 4px solid #3b82f6; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .checkbox { width: 18px; height: 18px; cursor: pointer; accent-color: #0047AB; }
+        .detalhes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .detalhe-item { background: #f8fafc; padding: 12px; border-radius: 16px; }
+        body.dark-mode .detalhe-item { background: #0f172a; }
+        .detalhe-label { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; }
+        body.dark-mode .detalhe-label { color: #94a3b8; }
+        .detalhe-valor { font-size: 14px; font-weight: 600; color: #1e293b; margin-top: 4px; word-break: break-word; }
+        body.dark-mode .detalhe-valor { color: #e2e8f0; }
+        .modal-acoes { display: flex; gap: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0; }
+        body.dark-mode .modal-acoes { border-top-color: #334155; }
+        .modal-acoes button { flex: 1; padding: 12px; border-radius: 40px; font-weight: 600; cursor: pointer; border: none; }
+        @media (max-width: 900px) {
+            .detalhes-grid { grid-template-columns: 1fr; }
+            .toast { bottom: 20px; right: 20px; left: 20px; border-radius: 16px; }
+            .header-info { justify-content: center; }
             .form-linha, .form-linha-3 { grid-template-columns: 1fr; }
-            .deficiencia-opcoes { margin-left: 10px; }
         }
     </style>
 </head>
 <body>
 
-<!-- Barra de navegação -->
-<div class="nav-bar">
-    <a href="index.html" class="logo-text">🐊 ESCOLINHA DO JACARÉ</a>
-    <div class="nav-links">
-        <a href="index.html" class="nav-link">🏠 INÍCIO</a>
-        <a href="diretoria.html" class="nav-link">📊 DIRETORIA</a>
-        <a href="funcionarios.html" class="nav-link">🔒 FUNCIONÁRIOS</a>
-        <button class="btn-tema" onclick="alternarTema()" style="margin-left: 8px;">🌞</button>
+<div id="telaLogin" class="painel-login" style="display: block;">
+    <div class="container">
+        <div class="nav-bar">
+            <div class="logo">🐊 ESCOLINHA DO JACARÉ</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">🏠 INÍCIO</a>
+                <a href="diretoria.html" class="nav-link">📊 DIRETORIA</a>
+                <a href="funcionarios.html" class="nav-link ativo">🔒 FUNCIONÁRIOS</a>
+            </div>
+        </div>
+        <div class="login-box">
+            <h2>🔐 ÁREA RESTRITA</h2>
+            <p>Acesso exclusivo para funcionários</p>
+            <input type="text" id="nomeUsuario" placeholder="Seu nome">
+            <input type="password" id="senhaInput" placeholder="Senha">
+            <button onclick="verificarSenha()">ACESSAR</button>
+            <div id="erroLogin" class="erro"></div>
+        </div>
     </div>
 </div>
 
-<div class="form-container">
-    <div id="formularioContainer">
-        <div class="form-card">
-            <h1>📝 PRÉ-MATRÍCULA</h1>
-            <div class="subtitulo">
-                Preencha todos os campos <strong>obrigatórios (*)</strong> para solicitar sua matrícula
+<div id="painelInterno" class="painel">
+    <div class="container">
+        <div class="nav-bar">
+            <div class="logo">🐊 ESCOLINHA DO JACARÉ</div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">🏠 INÍCIO</a>
+                <a href="diretoria.html" class="nav-link">📊 DIRETORIA</a>
+                <a href="funcionarios.html" class="nav-link ativo">🔒 FUNCIONÁRIOS</a>
+            </div>
+        </div>
+        <div class="header">
+            <h1>📋 PAINEL DO FUNCIONÁRIO</h1>
+            <div class="header-info">
+                <button class="btn-atualizar" onclick="forcarAtualizacao()">🔄 ATUALIZAR</button>
+                <button class="btn-exportar" onclick="exportarDados()">📥 EXPORTAR</button>
+                <button class="btn-cadastrar" onclick="abrirModalCadastro()">➕ CADASTRAR ALUNO</button>
+                <button class="btn-tema" onclick="alternarTema()">🌓 TEMA</button>
+                <span class="ultima-atualizacao" id="ultimaAtualizacao">🕐 Carregando...</span>
+                <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
+            </div>
+        </div>
+
+        <div class="vertical-layout">
+            <!-- Seção ALUNOS (aprovados) -->
+            <div class="secao">
+                <div class="secao-header">
+                    <h2>👥 ALUNOS <span class="badge" id="totalAlunosBadge">0</span></h2>
+                </div>
+                <div class="secao-content">
+                    <div class="filtros">
+                        <div class="filtro-group">
+                            <label>🔍 BUSCAR</label>
+                            <input type="text" id="buscaAluno" placeholder="Nome..." class="busca-input">
+                        </div>
+                        <div class="filtro-group">
+                            <label>⚽ TURMA</label>
+                            <select id="filtroTurmaAluno">
+                                <option value="">Todas</option>
+                                <option value="Futebol">Futebol</option>
+                                <option value="Taekwondo">Taekwondo</option>
+                                <option value="Ginástica">Ginástica</option>
+                                <option value="Tênis de Mesa">Tênis de Mesa</option>
+                                <option value="Judô">Judô</option>
+                            </select>
+                        </div>
+                        <div class="filtro-group">
+                            <label>🏆 CATEGORIA</label>
+                            <select id="filtroCategoriaAluno">
+                                <option value="">Todas</option>
+                                <option value="Sub-5">Sub-5</option>
+                                <option value="Sub-7">Sub-7</option>
+                                <option value="Sub-9">Sub-9</option>
+                                <option value="Sub-11">Sub-11</option>
+                                <option value="Sub-13">Sub-13</option>
+                                <option value="Sub-15">Sub-15</option>
+                                <option value="Sub-17">Sub-17</option>
+                                <option value="Acima-17">Acima-17</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="resultados-info" id="resultadosAlunosInfo">Mostrando 0 de 0 registros</div>
+                    <div class="acoes-massa">
+                        <label class="selecionar-todos">
+                            <input type="checkbox" id="selecionarTodosAlunos" class="checkbox"> Selecionar todos
+                        </label>
+                        <button class="btn-excluir-massa" onclick="excluirSelecionados('alunos')">🗑️ Excluir selecionados</button>
+                    </div>
+                    <div class="tabela-container">
+                        <div id="loadingAlunos" class="skeleton-loader" style="display: none;"><div class="spinner"></div> Carregando...</div>
+                        <table id="tabelaAlunos">
+                            <thead>
+                                32
+                                    <th style="width:30px"></th>
+                                    <th onclick="ordenarAlunos('nome')">Nome ⬍</th>
+                                    <th onclick="ordenarAlunos('turma')">Turma ⬍</th>
+                                    <th onclick="ordenarAlunos('categoria')">Categoria ⬍</th>
+                                    <th onclick="ordenarAlunos('idade')">Idade ⬍</th>
+                                    <th>Responsável</th>
+                                    <th>Telefone</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listaAlunos"></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
-            <form id="formPrematricula">
-                <!-- SEÇÃO 1: DADOS DO ALUNO -->
-                <div class="secao">
-                    <div class="secao-titulo">
-                        <span class="numero">1</span> DADOS DO ALUNO
-                    </div>
-
-                    <div class="form-grupo">
-                        <label>Nome completo do aluno <span class="obrigatorio">*</span></label>
-                        <input type="text" id="nomeAluno" placeholder="Digite o nome completo">
-                        <div class="mensagem-erro" id="erroNome">Campo obrigatório</div>
-                    </div>
-
-                    <div class="form-linha">
-                        <div class="form-grupo">
-                            <label>Data de nascimento <span class="obrigatorio">*</span></label>
-                            <input type="date" id="dataNasc">
-                            <div class="mensagem-erro" id="erroData">Campo obrigatório</div>
-                            <div id="infoIdade" class="info-idade"></div>
+            <!-- Seção SOLICITAÇÕES (pendentes) -->
+            <div class="secao">
+                <div class="secao-header">
+                    <h2>📋 SOLICITAÇÕES <span class="badge" id="totalPendentesBadge">0</span></h2>
+                </div>
+                <div class="secao-content">
+                    <div class="filtros">
+                        <div class="filtro-group">
+                            <label>🔍 BUSCAR</label>
+                            <input type="text" id="buscaSolicitacao" placeholder="Nome..." class="busca-input">
                         </div>
-                        <div class="form-grupo">
-                            <label>Sexo <span class="obrigatorio">*</span></label>
-                            <div class="radio-group">
-                                <label><input type="radio" name="sexo" value="Masculino"> Masculino</label>
-                                <label><input type="radio" name="sexo" value="Feminino"> Feminino</label>
-                            </div>
-                            <div class="mensagem-erro" id="erroSexo">Selecione o sexo</div>
-                        </div>
-                    </div>
-
-                    <!-- CAMPO CATEGORIA ADICIONADO AQUI -->
-                    <div class="form-grupo">
-                        <label>🏆 Categoria / Sub <span class="obrigatorio">*</span></label>
-                        <select id="categoria" required>
-                            <option value="">Selecione a categoria</option>
-                            <option value="Sub-5">Sub-5 (até 5 anos)</option>
-                            <option value="Sub-7">Sub-7 (6 a 7 anos)</option>
-                            <option value="Sub-9">Sub-9 (8 a 9 anos)</option>
-                            <option value="Sub-11">Sub-11 (10 a 11 anos)</option>
-                            <option value="Sub-13">Sub-13 (12 a 13 anos)</option>
-                            <option value="Sub-15">Sub-15 (14 a 15 anos)</option>
-                            <option value="Sub-17">Sub-17 (16 a 17 anos)</option>
-                            <option value="Acima-17">Acima de 17 anos (consultar diretoria)</option>
-                        </select>
-                        <div class="mensagem-erro" id="erroCategoria">Campo obrigatório</div>
-                        <div class="observacao" style="margin-top: 8px;">
-                            💡 <strong>Dica:</strong> Acima de 17 anos, a matrícula será analisada pela diretoria.
-                        </div>
-                    </div>
-
-                    <div class="form-linha-3">
-                        <div class="form-grupo">
-                            <label>Peso (kg) <span class="obrigatorio">*</span></label>
-                            <input type="number" id="peso" step="0.1" placeholder="Ex: 35.5">
-                            <div class="mensagem-erro" id="erroPeso">Campo obrigatório</div>
-                        </div>
-                        <div class="form-grupo">
-                            <label>Altura (cm) <span class="obrigatorio">*</span></label>
-                            <input type="number" id="altura" placeholder="Ex: 145">
-                            <div class="mensagem-erro" id="erroAltura">Campo obrigatório</div>
-                        </div>
-                        <div class="form-grupo">
-                            <label>Nº Calçado <span class="obrigatorio">*</span></label>
-                            <select id="calcado">
-                                <option value="">Selecione</option>
-                                <option value="25">25</option><option value="26">26</option><option value="27">27</option>
-                                <option value="28">28</option><option value="29">29</option><option value="30">30</option>
-                                <option value="31">31</option><option value="32">32</option><option value="33">33</option>
-                                <option value="34">34</option><option value="35">35</option><option value="36">36</option>
-                                <option value="37">37</option><option value="38">38</option><option value="39">39</option>
-                                <option value="40">40</option><option value="41">41</option><option value="42">42</option>
-                                <option value="43">43</option><option value="44">44</option><option value="45">45</option>
+                        <div class="filtro-group">
+                            <label>⚽ TURMA</label>
+                            <select id="filtroTurmaSolicitacao">
+                                <option value="">Todas</option>
+                                <option value="Futebol">Futebol</option>
+                                <option value="Taekwondo">Taekwondo</option>
+                                <option value="Ginástica">Ginástica</option>
+                                <option value="Tênis de Mesa">Tênis de Mesa</option>
+                                <option value="Judô">Judô</option>
                             </select>
-                            <div class="mensagem-erro" id="erroCalcado">Campo obrigatório</div>
                         </div>
-                    </div>
-
-                    <div class="form-grupo">
-                        <label>Tamanho Uniforme <span class="obrigatorio">*</span></label>
-                        <select id="uniforme">
-                            <option value="">Selecione</option>
-                            <option value="PP">PP</option><option value="P">P</option><option value="M">M</option>
-                            <option value="G">G</option><option value="GG">GG</option><option value="XG">XG</option>
-                            <option value="XXG">XXG</option>
-                        </select>
-                        <div class="mensagem-erro" id="erroUniforme">Campo obrigatório</div>
-                    </div>
-
-                    <div class="form-grupo">
-                        <label>Turma desejada <span class="obrigatorio">*</span></label>
-                        <select id="turma">
-                            <option value="">Selecione...</option>
-                            <option value="Futebol">⚽ Futebol</option>
-                            <option value="Taekwondo">🥋 Taekwondo</option>
-                            <option value="Ginástica">🤸 Ginástica</option>
-                            <option value="Tênis de Mesa">🏓 Tênis de Mesa</option>
-                            <option value="Judô">🥋 Judô</option>
-                        </select>
-                        <div class="mensagem-erro" id="erroTurma">Campo obrigatório</div>
-                    </div>
-
-                    <!-- DEFICIÊNCIA -->
-                    <div class="form-grupo">
-                        <div class="deficiencia-header">
-                            <label>Deficiência</label>
-                            <label><input type="checkbox" id="semDeficiencia"> Não possui deficiência</label>
-                        </div>
-                        <div id="deficienciaOpcoes" class="deficiencia-opcoes">
-                            <div class="checkbox-group">
-                                <label><input type="checkbox" class="deficiencia-check" value="Visual"> Visual</label>
-                                <label><input type="checkbox" class="deficiencia-check" value="Auditiva"> Auditiva</label>
-                                <label><input type="checkbox" class="deficiencia-check" value="Física"> Física</label>
-                                <label><input type="checkbox" class="deficiencia-check" value="Mental"> Mental</label>
-                                <label><input type="checkbox" class="deficiencia-check" value="Motora"> Motora</label>
-                            </div>
-                            <div class="form-grupo">
-                                <label>Outra:</label>
-                                <input type="text" id="outraDeficiencia" placeholder="Especifique outra deficiência">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-grupo">
-                        <label>Faz uso de remédio controlado? <span class="obrigatorio">*</span></label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="remedio" value="Não" checked> Não</label>
-                            <label><input type="radio" name="remedio" value="Sim"> Sim</label>
-                        </div>
-                        <input type="text" id="remedioDesc" placeholder="Se sim, qual remédio?" style="margin-top: 10px; display: none;">
-                        <div class="mensagem-erro" id="erroRemedioDesc">Informe qual remédio</div>
-                    </div>
-                </div>
-
-                <!-- SEÇÃO 2: DADOS DO RESPONSÁVEL -->
-                <div class="secao">
-                    <div class="secao-titulo">
-                        <span class="numero">2</span> DADOS DO RESPONSÁVEL
-                    </div>
-
-                    <div class="form-linha">
-                        <div class="form-grupo">
-                            <label>RG do responsável <span class="obrigatorio">*</span></label>
-                            <input type="text" id="rgResponsavel" placeholder="Apenas números">
-                            <div class="mensagem-erro" id="erroRG">Campo obrigatório</div>
-                        </div>
-                        <div class="form-grupo">
-                            <label>Nome do responsável <span class="obrigatorio">*</span></label>
-                            <input type="text" id="responsavel" placeholder="Nome completo">
-                            <div class="mensagem-erro" id="erroResponsavel">Campo obrigatório</div>
-                        </div>
-                    </div>
-
-                    <div class="form-linha">
-                        <div class="form-grupo">
-                            <label>Telefone (WhatsApp) <span class="obrigatorio">*</span></label>
-                            <input type="tel" id="telefone" placeholder="(92) 9xxxx-xxxx">
-                            <div class="mensagem-erro" id="erroTelefone">Digite um telefone válido</div>
-                        </div>
-                        <div class="form-grupo">
-                            <label>E-mail <span class="obrigatorio">*</span></label>
-                            <input type="email" id="email" placeholder="seuemail@exemplo.com">
-                            <div class="mensagem-erro" id="erroEmail">Digite um e-mail válido</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SEÇÃO 3: ENDEREÇO -->
-                <div class="secao">
-                    <div class="secao-titulo">
-                        <span class="numero">3</span> ENDEREÇO
-                    </div>
-
-                    <div class="form-linha">
-                        <div class="form-grupo">
-                            <label>CEP</label>
-                            <input type="text" id="cep" placeholder="Digite o CEP" maxlength="9">
-                            <button type="button" class="buscar-cep" onclick="buscarCEP()">🔍 BUSCAR ENDEREÇO</button>
-                            <div id="carregandoCEP" class="carregando-cep">🔍 Buscando...</div>
-                        </div>
-                    </div>
-
-                    <div class="form-linha-3">
-                        <div class="form-grupo">
-                            <label>Endereço <span class="obrigatorio">*</span></label>
-                            <input type="text" id="endereco" placeholder="Rua/Avenida">
-                            <div class="mensagem-erro" id="erroEndereco">Campo obrigatório</div>
-                        </div>
-                        <div class="form-grupo">
-                            <label>Número <span class="obrigatorio">*</span></label>
-                            <input type="text" id="numero" placeholder="Número">
-                            <div class="mensagem-erro" id="erroNumero">Campo obrigatório</div>
-                        </div>
-                        <div class="form-grupo">
-                            <label>Bairro <span class="obrigatorio">*</span></label>
-                            <input type="text" id="bairro" placeholder="Bairro">
-                            <div class="mensagem-erro" id="erroBairro">Campo obrigatório</div>
-                        </div>
-                    </div>
-
-                    <div class="form-linha">
-                        <div class="form-grupo">
-                            <label>Município <span class="obrigatorio">*</span></label>
-                            <input type="text" id="municipio" placeholder="Cidade">
-                            <div class="mensagem-erro" id="erroMunicipio">Campo obrigatório</div>
-                        </div>
-                        <div class="form-grupo">
-                            <label>UF <span class="obrigatorio">*</span></label>
-                            <select id="uf">
-                                <option value="">Selecione</option>
-                                <option value="AC">AC</option><option value="AL">AL</option><option value="AM">AM</option>
-                                <option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option>
-                                <option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option>
-                                <option value="MG">MG</option><option value="MS">MS</option><option value="MT">MT</option>
-                                <option value="PA">PA</option><option value="PB">PB</option><option value="PE">PE</option>
-                                <option value="PI">PI</option><option value="PR">PR</option><option value="RJ">RJ</option>
-                                <option value="RN">RN</option><option value="RO">RO</option><option value="RR">RR</option>
-                                <option value="RS">RS</option><option value="SC">SC</option><option value="SE">SE</option>
-                                <option value="SP">SP</option><option value="TO">TO</option>
+                        <div class="filtro-group">
+                            <label>🏆 CATEGORIA</label>
+                            <select id="filtroCategoriaSolicitacao">
+                                <option value="">Todas</option>
+                                <option value="Sub-5">Sub-5</option>
+                                <option value="Sub-7">Sub-7</option>
+                                <option value="Sub-9">Sub-9</option>
+                                <option value="Sub-11">Sub-11</option>
+                                <option value="Sub-13">Sub-13</option>
+                                <option value="Sub-15">Sub-15</option>
+                                <option value="Sub-17">Sub-17</option>
+                                <option value="Acima-17">Acima-17</option>
                             </select>
-                            <div class="mensagem-erro" id="erroUF">Campo obrigatório</div>
                         </div>
                     </div>
-
-                    <div class="form-grupo">
-                        <label>Quantas pessoas moram na sua casa? <span class="obrigatorio">*</span></label>
-                        <input type="number" id="moradores" min="1" max="20" placeholder="Número de moradores">
-                        <div class="mensagem-erro" id="erroMoradores">Campo obrigatório</div>
+                    <div class="resultados-info" id="resultadosSolicitacoesInfo">Mostrando 0 de 0 registros</div>
+                    <div class="acoes-massa">
+                        <label class="selecionar-todos">
+                            <input type="checkbox" id="selecionarTodosSolicitacoes" class="checkbox"> Selecionar todos
+                        </label>
+                        <button class="btn-excluir-massa" onclick="excluirSelecionados('solicitacoes')">🗑️ Excluir selecionados</button>
+                    </div>
+                    <div class="tabela-container">
+                        <div id="loadingSolicitacoes" class="skeleton-loader" style="display: none;"><div class="spinner"></div> Carregando...</div>
+                        <table id="tabelaSolicitacoes">
+                            <thead>
+                                <tr>
+                                    <th style="width:30px"></th>
+                                    <th onclick="ordenarSolicitacoes('nome')">Nome ⬍</th>
+                                    <th onclick="ordenarSolicitacoes('turma')">Turma ⬍</th>
+                                    <th onclick="ordenarSolicitacoes('categoria')">Categoria ⬍</th>
+                                    <th onclick="ordenarSolicitacoes('idade')">Idade ⬍</th>
+                                    <th>Responsável</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listaSolicitacoes"></tbody>
+                        </table>
                     </div>
                 </div>
-
-                <!-- SEÇÃO 4: ESCOLARIDADE -->
-                <div class="secao">
-                    <div class="secao-titulo">
-                        <span class="numero">4</span> ESCOLARIDADE
-                    </div>
-
-                    <div class="form-grupo">
-                        <label>Escola onde estuda <span class="obrigatorio">*</span></label>
-                        <input type="text" id="escola" placeholder="Nome da escola">
-                        <div class="mensagem-erro" id="erroEscola">Campo obrigatório</div>
-                    </div>
-
-                    <div class="form-grupo">
-                        <label>Série <span class="obrigatorio">*</span></label>
-                        <select id="serie">
-                            <option value="">Selecione...</option>
-                            <option value="1º Ano EF">1º Ano - Ensino Fundamental</option>
-                            <option value="2º Ano EF">2º Ano - Ensino Fundamental</option>
-                            <option value="3º Ano EF">3º Ano - Ensino Fundamental</option>
-                            <option value="4º Ano EF">4º Ano - Ensino Fundamental</option>
-                            <option value="5º Ano EF">5º Ano - Ensino Fundamental</option>
-                            <option value="6º Ano EF">6º Ano - Ensino Fundamental</option>
-                            <option value="7º Ano EF">7º Ano - Ensino Fundamental</option>
-                            <option value="8º Ano EF">8º Ano - Ensino Fundamental</option>
-                            <option value="9º Ano EF">9º Ano - Ensino Fundamental</option>
-                            <option value="1º Ano EM">1º Ano - Ensino Médio</option>
-                            <option value="2º Ano EM">2º Ano - Ensino Médio</option>
-                            <option value="3º Ano EM">3º Ano - Ensino Médio</option>
-                            <option value="Não estuda">Não estuda</option>
-                            <option value="Formado">Formado</option>
-                        </select>
-                        <div class="mensagem-erro" id="erroSerie">Campo obrigatório</div>
-                    </div>
-                </div>
-
-                <!-- SEÇÃO 5: INFORMAÇÕES ADICIONAIS -->
-                <div class="secao">
-                    <div class="secao-titulo">
-                        <span class="numero">5</span> INFORMAÇÕES ADICIONAIS
-                    </div>
-
-                    <div class="form-grupo">
-                        <label>Como conheceu a Escolinha do Jacaré?</label>
-                        <select id="origem">
-                            <option value="">Selecione...</option>
-                            <option value="Instagram">📱 Instagram</option>
-                            <option value="Facebook">📘 Facebook</option>
-                            <option value="Amigo/Indicação">👥 Amigo/Indicação</option>
-                            <option value="Panfleto">📄 Panfleto</option>
-                            <option value="Passou em frente">🚶 Passou em frente</option>
-                            <option value="Outros">📢 Outros</option>
-                        </select>
-                    </div>
-
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="declaracao">
-                        <label for="declaracao">Declaro que as informações são verdadeiras. <span class="obrigatorio">*</span></label>
-                    </div>
-                    <div class="mensagem-erro" id="erroDeclaracao">Você precisa confirmar esta declaração</div>
-                </div>
-
-                <button type="button" class="btn-enviar" onclick="enviarCadastro()">
-                    ✅ ENVIAR SOLICITAÇÃO
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- MENSAGEM DE SUCESSO -->
-    <div id="mensagemSucesso" class="mensagem-sucesso hidden">
-        <div class="emoji-animado">🎉</div>
-        <h2>SOLICITAÇÃO ENVIADA!</h2>
-        <p>Recebemos sua pré-matrícula com sucesso!</p>
-        <div id="protocoloDiv" class="protocolo"></div>
-        <p><strong>Aguarde o contato da diretoria.</strong></p>
-        <div style="margin-top: 20px;">
-            <a href="index.html" style="background: white; color: #003399; display: inline-block; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-weight: bold;">← VOLTAR AO INÍCIO</a>
+            </div>
         </div>
     </div>
 </div>
 
-<footer>
-    ESCOLINHA DO JACARÉ - ALVORADA<br>
-    Manaus/AM - Brasil
-    <div class="rights">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</div>
-</footer>
+<!-- Modal Detalhes -->
+<div id="modalDetalhes" class="modal"><div class="modal-content"><div class="modal-header"><h3>📄 FICHA DO ALUNO</h3><span class="fechar-modal" onclick="fecharModal()">&times;</span></div><div id="detalhesConteudo" class="detalhes-grid"></div><div class="modal-acoes" id="modalAcoes"></div></div></div>
+
+<!-- Modal Cadastro Manual -->
+<div id="modalCadastro" class="modal"><div class="modal-content"><div class="modal-header"><h3>➕ CADASTRAR ALUNO</h3><span class="fechar-modal" onclick="fecharModalCadastro()">&times;</span></div><form id="formCadastroAluno"><div class="form-linha"><div class="form-grupo"><label>Nome completo *</label><input type="text" id="cadNome" required></div><div class="form-grupo"><label>Data Nascimento *</label><input type="date" id="cadDataNasc" required></div></div><div class="form-linha"><div class="form-grupo"><label>Sexo *</label><div class="radio-group"><label><input type="radio" name="cadSexo" value="Masculino"> Masculino</label><label><input type="radio" name="cadSexo" value="Feminino"> Feminino</label></div></div><div class="form-grupo"><label>Turma *</label><select id="cadTurma" required><option value="">Selecione</option><option value="Futebol">Futebol</option><option value="Taekwondo">Taekwondo</option><option value="Ginástica">Ginástica</option><option value="Tênis de Mesa">Tênis de Mesa</option><option value="Judô">Judô</option></select></div></div><div class="form-grupo"><label>🏆 Categoria / Sub *</label><select id="cadCategoria" required><option value="">Selecione a categoria</option><option value="Sub-5">Sub-5 (até 5 anos)</option><option value="Sub-7">Sub-7 (6 a 7 anos)</option><option value="Sub-9">Sub-9 (8 a 9 anos)</option><option value="Sub-11">Sub-11 (10 a 11 anos)</option><option value="Sub-13">Sub-13 (12 a 13 anos)</option><option value="Sub-15">Sub-15 (14 a 15 anos)</option><option value="Sub-17">Sub-17 (16 a 17 anos)</option><option value="Acima-17">Acima de 17 anos (consultar diretoria)</option></select><div class="observacao" style="margin-top: 8px; font-size: 0.7rem; color: #666;">💡 Acima de 17 anos, a matrícula será analisada pela diretoria.</div></div><div class="form-linha-3"><div class="form-grupo"><label>Peso (kg)</label><input type="number" id="cadPeso" step="0.1"></div><div class="form-grupo"><label>Altura (cm)</label><input type="number" id="cadAltura"></div><div class="form-grupo"><label>Calçado</label><input type="text" id="cadCalcado"></div></div><div class="form-linha"><div class="form-grupo"><label>Uniforme</label><select id="cadUniforme"><option value="">Selecione</option><option value="PP">PP</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option><option value="XG">XG</option><option value="XXG">XXG</option></select></div><div class="form-grupo"><label>Deficiência</label><input type="text" id="cadDeficiencia" placeholder="Nenhuma"></div></div><div class="form-grupo"><label>Responsável *</label><input type="text" id="cadResponsavel" required></div><div class="form-linha"><div class="form-grupo"><label>RG *</label><input type="text" id="cadRG" required></div><div class="form-grupo"><label>Telefone</label><input type="text" id="cadTelefone"></div></div><div class="form-linha"><div class="form-grupo"><label>Email</label><input type="email" id="cadEmail"></div><div class="form-grupo"><label>Moradores</label><input type="number" id="cadMoradores" value="1"></div></div><div class="form-grupo"><label>Endereço</label><input type="text" id="cadEndereco"></div><div class="form-linha"><div class="form-grupo"><label>Bairro</label><input type="text" id="cadBairro"></div><div class="form-grupo"><label>Município</label><input type="text" id="cadMunicipio"></div><div class="form-grupo"><label>UF</label><select id="cadUF"><option value="">Selecione</option><option value="AC">AC</option><option value="AL">AL</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MG">MG</option><option value="MS">MS</option><option value="MT">MT</option><option value="PA">PA</option><option value="PB">PB</option><option value="PE">PE</option><option value="PI">PI</option><option value="PR">PR</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RO">RO</option><option value="RR">RR</option><option value="RS">RS</option><option value="SC">SC</option><option value="SE">SE</option><option value="SP">SP</option><option value="TO">TO</option></select></div></div><div class="form-linha"><div class="form-grupo"><label>Escola</label><input type="text" id="cadEscola"></div><div class="form-grupo"><label>Série</label><select id="cadSerie"><option value="">Selecione</option><option value="1º Ano EF">1º Ano EF</option><option value="2º Ano EF">2º Ano EF</option><option value="3º Ano EF">3º Ano EF</option><option value="4º Ano EF">4º Ano EF</option><option value="5º Ano EF">5º Ano EF</option><option value="6º Ano EF">6º Ano EF</option><option value="7º Ano EF">7º Ano EF</option><option value="8º Ano EF">8º Ano EF</option><option value="9º Ano EF">9º Ano EF</option><option value="1º Ano EM">1º Ano EM</option><option value="2º Ano EM">2º Ano EM</option><option value="3º Ano EM">3º Ano EM</option><option value="Não estuda">Não estuda</option><option value="Formado">Formado</option></select></div></div><div class="form-grupo"><label>Remédio Controlado</label><div class="radio-group"><label><input type="radio" name="cadRemedio" value="Não" checked> Não</label><label><input type="radio" name="cadRemedio" value="Sim"> Sim</label></div><input type="text" id="cadRemedioDesc" placeholder="Se sim, qual?" style="margin-top: 8px; display: none;"></div><div class="form-grupo"><label>Como conheceu</label><select id="cadOrigem"><option value="">Selecione</option><option value="Instagram">Instagram</option><option value="Facebook">Facebook</option><option value="Amigo/Indicação">Amigo/Indicação</option><option value="Panfleto">Panfleto</option><option value="Passou em frente">Passou em frente</option><option value="Outros">Outros</option></select></div><button type="button" class="btn-salvar" onclick="salvarCadastroManual()">💾 SALVAR ALUNO</button></form></div></div>
 
 <script>
-    // ========== CONFIGURAÇÕES ==========
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw2Dl7TM8gIC8UDTVSVeRcnSokVQOeMsJvasLzHMAL8BiwdEgyD6_gfRy33WpS91U23Pw/exec';
-    const PLANILHA_ID = '1O48gLWV9zb_dtDFpz9MtIMLZ4Cx8jibtTjWlE922bAw';
-    const NOME_ABA = 'solicitaçoes';
+    const SENHA = 'jacare123';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8zJwfYCHN7kOkjwFYaAICjqEPof_k6C6fDDSdC6mHg_e56PErVYFNB5isTCzCQklO/exec';
+    
+    let cacheDados = null;
+    let ultimoFetch = null;
+    const TEMPO_CACHE = 30000;
+    let solicitacoes = [];
+    let alunos = [];
+    let solicitacoesFiltradas = [];
+    let alunosFiltrados = [];
+    let ultimaAtualizacao = null;
+    let ordemAlunos = { campo: 'nome', direcao: 'asc' };
+    let ordemSolicitacoes = { campo: 'nome', direcao: 'asc' };
 
-    // ========== TEMA ESCURO ==========
+    function formatarData(dataStr) {
+        if (!dataStr) return '-';
+        try { let data = new Date(dataStr); if (isNaN(data.getTime())) return dataStr; return data.toLocaleDateString('pt-BR'); } catch { return dataStr; }
+    }
+
     function alternarTema() {
         document.body.classList.toggle('dark-mode');
-        const btn = document.querySelector('.btn-tema');
-        const isDark = document.body.classList.contains('dark-mode');
-        btn.innerHTML = isDark ? '🌙' : '🌞';
-        localStorage.setItem('tema_prematricula', isDark ? 'dark' : 'light');
+        localStorage.setItem('tema', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        mostrarToast(document.body.classList.contains('dark-mode') ? '🌙 Modo escuro ativado' : '☀️ Modo claro ativado', 'info');
     }
 
-    // Carregar tema salvo
-    if (localStorage.getItem('tema_prematricula') === 'dark') {
-        document.body.classList.add('dark-mode');
-        document.querySelector('.btn-tema').innerHTML = '🌙';
-    }
-
-    // ========== FUNÇÕES AUXILIARES ==========
-    
     function mostrarToast(mensagem, tipo = 'success') {
         const toast = document.createElement('div');
         toast.className = `toast ${tipo}`;
-        toast.innerHTML = `${tipo === 'success' ? '✅' : '❌'} ${mensagem}`;
+        toast.innerHTML = `${tipo === 'success' ? '✅' : (tipo === 'error' ? '❌' : 'ℹ️')} ${mensagem}`;
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 3000);
     }
 
-    // Controle de deficiência
-    document.getElementById('semDeficiencia').addEventListener('change', function() {
-        const opcoes = document.getElementById('deficienciaOpcoes');
-        const checks = document.querySelectorAll('.deficiencia-check');
-        const outraInput = document.getElementById('outraDeficiencia');
-        
-        if (this.checked) {
-            opcoes.classList.add('disabled');
-            checks.forEach(c => { c.checked = false; c.disabled = true; });
-            outraInput.disabled = true;
-            outraInput.value = '';
-        } else {
-            opcoes.classList.remove('disabled');
-            checks.forEach(c => c.disabled = false);
-            outraInput.disabled = false;
+    function atualizarTimestamp() {
+        if (ultimaAtualizacao) {
+            const diff = Math.floor((new Date() - ultimaAtualizacao) / 1000);
+            document.getElementById('ultimaAtualizacao').innerHTML = `🕐 ${diff < 5 ? 'agora' : `há ${diff} segundos`}`;
         }
-    });
+    }
 
-    // Controle de remédio
-    document.querySelectorAll('input[name="remedio"]').forEach(radio => {
-        radio.addEventListener('change', function() {
-            const descField = document.getElementById('remedioDesc');
-            descField.style.display = this.value === 'Sim' ? 'block' : 'none';
+    async function carregarDados(forcarAtualizacao = false) {
+        if (forcarAtualizacao) { cacheDados = null; ultimoFetch = null; }
+        if (!forcarAtualizacao && cacheDados && ultimoFetch && (Date.now() - ultimoFetch < TEMPO_CACHE)) {
+            const dados = cacheDados;
+            solicitacoes = dados.filter(item => item.status === 'pendente');
+            alunos = dados.filter(item => item.status === 'aprovado');
+            atualizarInterface();
+            return;
+        }
+        document.getElementById('loadingAlunos').style.display = 'block';
+        document.getElementById('loadingSolicitacoes').style.display = 'block';
+        try {
+            const response = await fetch(SCRIPT_URL);
+            const dados = await response.json();
+            cacheDados = dados;
+            ultimoFetch = Date.now();
+            solicitacoes = dados.filter(item => item.status === 'pendente');
+            alunos = dados.filter(item => item.status === 'aprovado');
+            atualizarInterface();
+            ultimaAtualizacao = new Date();
+            atualizarTimestamp();
+        } catch (error) {
+            console.error('Erro:', error);
+            mostrarToast('Erro ao carregar dados', 'error');
+        } finally {
+            document.getElementById('loadingAlunos').style.display = 'none';
+            document.getElementById('loadingSolicitacoes').style.display = 'none';
+        }
+    }
+
+    function atualizarInterface() {
+        document.getElementById('totalPendentesBadge').innerText = solicitacoes.length;
+        document.getElementById('totalAlunosBadge').innerText = alunos.length;
+        filtrarESolicitacoes();
+        filtrarEAlunos();
+    }
+
+    function forcarAtualizacao() { mostrarToast('Atualizando dados...', 'info'); carregarDados(true); }
+
+    function ordenarAlunos(campo) {
+        if (ordemAlunos.campo === campo) ordemAlunos.direcao = ordemAlunos.direcao === 'asc' ? 'desc' : 'asc';
+        else { ordemAlunos.campo = campo; ordemAlunos.direcao = 'asc'; }
+        ordenarLista(alunosFiltrados, ordemAlunos);
+        renderizarAlunos(alunosFiltrados);
+    }
+
+    function ordenarSolicitacoes(campo) {
+        if (ordemSolicitacoes.campo === campo) ordemSolicitacoes.direcao = ordemSolicitacoes.direcao === 'asc' ? 'desc' : 'asc';
+        else { ordemSolicitacoes.campo = campo; ordemSolicitacoes.direcao = 'asc'; }
+        ordenarLista(solicitacoesFiltradas, ordemSolicitacoes);
+        renderizarSolicitacoes(solicitacoesFiltradas);
+    }
+
+    function ordenarLista(lista, ordem) {
+        lista.sort((a, b) => {
+            let valA = a[ordem.campo === 'nome' ? 'nomeAluno' : ordem.campo] || '';
+            let valB = b[ordem.campo === 'nome' ? 'nomeAluno' : ordem.campo] || '';
+            if (ordem.campo === 'idade') { valA = parseInt(valA) || 0; valB = parseInt(valB) || 0; }
+            if (valA < valB) return ordem.direcao === 'asc' ? -1 : 1;
+            if (valA > valB) return ordem.direcao === 'asc' ? 1 : -1;
+            return 0;
         });
+    }
+
+    function exportarDados() {
+        const dados = [...alunos, ...solicitacoes];
+        if (dados.length === 0) { mostrarToast('Nenhum dado para exportar', 'error'); return; }
+        const cabecalhos = ['Nome', 'Turma', 'Categoria', 'Idade', 'Responsável', 'Telefone', 'Status', 'Email', 'Endereço', 'Bairro', 'RG', 'Remédio', 'Data Nasc', 'Sexo', 'Peso', 'Altura', 'Calçado', 'Uniforme', 'Deficiência', 'Município', 'UF', 'Escola', 'Série'];
+        const linhas = dados.map(item => [item.nomeAluno || '', item.turma || '', item.categoria || '', item.idade || '', item.responsavel || '', item.telefone || '', item.status || '', item.email || '', item.endereco || '', item.bairro || '', item.rg || '', item.remedio || '', formatarData(item.dataNasc), item.sexo || '', item.peso || '', item.altura || '', item.calcado || '', item.uniforme || '', item.deficiencia || '', item.municipio || '', item.uf || '', item.escola || '', item.serie || '']);
+        const csv = [cabecalhos, ...linhas].map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
+        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = `escolinha_dados_${new Date().toISOString().slice(0,10)}.csv`;
+        link.click();
+        URL.revokeObjectURL(url);
+        mostrarToast('Dados exportados!', 'success');
+    }
+
+    function filtrarESolicitacoes() {
+        const busca = document.getElementById('buscaSolicitacao').value.toLowerCase();
+        const turma = document.getElementById('filtroTurmaSolicitacao').value;
+        const categoria = document.getElementById('filtroCategoriaSolicitacao').value;
+        solicitacoesFiltradas = solicitacoes.filter(s => {
+            if (busca && !s.nomeAluno?.toLowerCase().includes(busca)) return false;
+            if (turma && s.turma !== turma) return false;
+            if (categoria && s.categoria !== categoria) return false;
+            return true;
+        });
+        ordenarLista(solicitacoesFiltradas, ordemSolicitacoes);
+        renderizarSolicitacoes(solicitacoesFiltradas);
+        document.getElementById('resultadosSolicitacoesInfo').innerHTML = `Mostrando ${solicitacoesFiltradas.length} de ${solicitacoes.length} registros`;
+    }
+
+    function filtrarEAlunos() {
+        const busca = document.getElementById('buscaAluno').value.toLowerCase();
+        const turma = document.getElementById('filtroTurmaAluno').value;
+        const categoria = document.getElementById('filtroCategoriaAluno').value;
+        alunosFiltrados = alunos.filter(a => {
+            if (busca && !a.nomeAluno?.toLowerCase().includes(busca)) return false;
+            if (turma && a.turma !== turma) return false;
+            if (categoria && a.categoria !== categoria) return false;
+            return true;
+        });
+        ordenarLista(alunosFiltrados, ordemAlunos);
+        renderizarAlunos(alunosFiltrados);
+        document.getElementById('resultadosAlunosInfo').innerHTML = `Mostrando ${alunosFiltrados.length} de ${alunos.length} registros`;
+    }
+
+    function renderizarSolicitacoes(lista) {
+        const tbody = document.getElementById('listaSolicitacoes');
+        if (lista.length === 0) {
+            tbody.innerHTML = '.<td colspan="8" style="text-align:center; padding:40px;">📭 Nenhuma solicitação pendente</td></tr>';
+            return;
+        }
+        tbody.innerHTML = lista.map(s => `
+            <tr onclick="abrirDetalhes('${s.protocolo}', 'solicitacao')">
+                <td onclick="event.stopPropagation()"><input type="checkbox" class="checkbox sel-solicitacao" value="${s.protocolo}"></td>
+                <td><strong>${s.nomeAluno || '-'}</strong></td>
+                <td>${s.turma || '-'}</td>
+                <td><span style="background: #f0f7ff; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem;">${s.categoria || '-'}</span></td>
+                <td>${s.idade || '-'}</td>
+                <td>${s.responsavel || '-'}</td>
+                <td><span class="status-pendente">Pendente</span></td>
+                <td onclick="event.stopPropagation()">
+                    <button class="btn-acao btn-aprovar" onclick="atualizarStatus('${s.protocolo}', 'aprovado')">✅ Aprovar</button>
+                    <button class="btn-acao btn-recusar" onclick="atualizarStatus('${s.protocolo}', 'recusado')">❌ Recusar</button>
+                    <button class="btn-acao btn-ver" onclick="abrirDetalhes('${s.protocolo}', 'solicitacao')">👁️ Ver</button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function renderizarAlunos(lista) {
+        const tbody = document.getElementById('listaAlunos');
+        if (lista.length === 0) {
+            tbody.innerHTML = '.<td colspan="7" style="text-align:center; padding:40px;">👥 Nenhum aluno aprovado</td></tr>';
+            return;
+        }
+        tbody.innerHTML = lista.map(a => `
+            <tr onclick="abrirDetalhes('${a.protocolo}', 'aluno')">
+                <td onclick="event.stopPropagation()"><input type="checkbox" class="checkbox sel-aluno" value="${a.protocolo}"></td>
+                <td><strong>${a.nomeAluno || '-'}</strong></td>
+                <td>${a.turma || '-'}</td>
+                <td><span style="background: #f0f7ff; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem;">${a.categoria || '-'}</span></td>
+                <td>${a.idade || '-'}</td>
+                <td>${a.responsavel || '-'}</td>
+                <td>${a.telefone || '-'}</td>
+            </tr>
+        `).join('');
+    }
+
+    async function atualizarStatus(protocolo, novoStatus) {
+        const acao = novoStatus === 'aprovado' ? 'Aprovando' : 'Recusando';
+        mostrarToast(`${acao} matrícula...`, 'info');
+        
+        try {
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ acao: 'atualizar_status', protocolo, status: novoStatus })
+            });
+            
+            cacheDados = null;
+            ultimoFetch = null;
+            
+            setTimeout(async () => {
+                await carregarDados(true);
+                mostrarToast(novoStatus === 'aprovado' ? '✅ Matrícula aprovada!' : '❌ Matrícula recusada!', 'success');
+            }, 1500);
+            
+        } catch (error) {
+            console.error('Erro:', error);
+            mostrarToast('Erro ao atualizar status', 'error');
+        }
+    }
+
+    function abrirDetalhes(protocolo, tipo) {
+        const dados = tipo === 'solicitacao' ? solicitacoes : alunos;
+        const item = dados.find(i => i.protocolo == protocolo);
+        if (!item) return;
+        const conteudo = document.getElementById('detalhesConteudo');
+        const modalAcoes = document.getElementById('modalAcoes');
+        conteudo.innerHTML = `
+            <div class="detalhe-item"><div class="detalhe-label">📋 Nome</div><div class="detalhe-valor">${item.nomeAluno || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">🎂 Data Nasc</div><div class="detalhe-valor">${formatarData(item.dataNasc)}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">📊 Idade</div><div class="detalhe-valor">${item.idade || '-'} anos</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">⚽ Turma</div><div class="detalhe-valor">${item.turma || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">🏆 Categoria</div><div class="detalhe-valor"><strong>${item.categoria || '-'}</strong></div></div>
+            <div class="detalhe-item"><div class="detalhe-label">👤 Responsável</div><div class="detalhe-valor">${item.responsavel || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">📞 Telefone</div><div class="detalhe-valor">${item.telefone || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">📧 Email</div><div class="detalhe-valor">${item.email || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">🏠 Endereço</div><div class="detalhe-valor">${item.endereco || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">📍 Bairro</div><div class="detalhe-valor">${item.bairro || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">🆔 RG</div><div class="detalhe-valor">${item.rg || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">💊 Remédio</div><div class="detalhe-valor">${item.remedio || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">👤 Sexo</div><div class="detalhe-valor">${item.sexo || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">⚖️ Peso</div><div class="detalhe-valor">${item.peso ? item.peso + ' kg' : '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">📏 Altura</div><div class="detalhe-valor">${item.altura ? item.altura + ' cm' : '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">👟 Calçado</div><div class="detalhe-valor">${item.calcado || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">👕 Uniforme</div><div class="detalhe-valor">${item.uniforme || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">⚠️ Deficiência</div><div class="detalhe-valor">${item.deficiencia || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">🏙️ Município</div><div class="detalhe-valor">${item.municipio || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">📌 UF</div><div class="detalhe-valor">${item.uf || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">🏫 Escola</div><div class="detalhe-valor">${item.escola || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">📚 Série</div><div class="detalhe-valor">${item.serie || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">📢 Como conheceu</div><div class="detalhe-valor">${item.origem || '-'}</div></div>
+        `;
+        if (tipo === 'solicitacao') {
+            modalAcoes.innerHTML = `<button class="btn-acao btn-aprovar" onclick="atualizarStatus('${protocolo}', 'aprovado'); fecharModal();">✅ APROVAR</button><button class="btn-acao btn-recusar" onclick="atualizarStatus('${protocolo}', 'recusado'); fecharModal();">❌ RECUSAR</button>`;
+        } else {
+            modalAcoes.innerHTML = `<button class="btn-acao btn-ver" onclick="fecharModal()">🔒 FECHAR</button>`;
+        }
+        document.getElementById('modalDetalhes').style.display = 'flex';
+    }
+
+    function fecharModal() { document.getElementById('modalDetalhes').style.display = 'none'; }
+
+    function excluirSelecionados(tipo) {
+        let selecionados = [];
+        if (tipo === 'solicitacoes') {
+            selecionados = Array.from(document.querySelectorAll('.sel-solicitacao:checked')).map(cb => cb.value);
+            if (selecionados.length === 0) { mostrarToast('Selecione pelo menos uma solicitação', 'error'); return; }
+            if (confirm(`Excluir ${selecionados.length} solicitação(ões)?`)) {
+                solicitacoes = solicitacoes.filter(s => !selecionados.includes(s.protocolo));
+                cacheDados = null;
+                filtrarESolicitacoes();
+                mostrarToast(`${selecionados.length} solicitação(ões) excluída(s)`, 'success');
+            }
+        } else {
+            selecionados = Array.from(document.querySelectorAll('.sel-aluno:checked')).map(cb => cb.value);
+            if (selecionados.length === 0) { mostrarToast('Selecione pelo menos um aluno', 'error'); return; }
+            if (confirm(`Excluir ${selecionados.length} aluno(s)?`)) {
+                alunos = alunos.filter(a => !selecionados.includes(a.protocolo));
+                cacheDados = null;
+                filtrarEAlunos();
+                mostrarToast(`${selecionados.length} aluno(s) excluído(s)`, 'success');
+            }
+        }
+        document.getElementById(`selecionarTodos${tipo === 'solicitacoes' ? 'Solicitacoes' : 'Alunos'}`).checked = false;
+    }
+
+    function configurarSelecionarTodos() {
+        document.getElementById('selecionarTodosSolicitacoes').addEventListener('change', (e) => { document.querySelectorAll('.sel-solicitacao').forEach(cb => cb.checked = e.target.checked); });
+        document.getElementById('selecionarTodosAlunos').addEventListener('change', (e) => { document.querySelectorAll('.sel-aluno').forEach(cb => cb.checked = e.target.checked); });
+    }
+
+    document.querySelectorAll('input[name="cadRemedio"]').forEach(radio => {
+        radio.addEventListener('change', function() { document.getElementById('cadRemedioDesc').style.display = this.value === 'Sim' ? 'block' : 'none'; });
     });
 
-    // Calcular idade
-    function calcularIdade() {
-        const dataNasc = document.getElementById('dataNasc').value;
+    function abrirModalCadastro() { document.getElementById('modalCadastro').style.display = 'flex'; document.getElementById('formCadastroAluno').reset(); document.getElementById('cadRemedioDesc').style.display = 'none'; }
+    function fecharModalCadastro() { document.getElementById('modalCadastro').style.display = 'none'; }
+
+    function calcularIdade(dataNasc) {
         if (!dataNasc) return null;
         const hoje = new Date();
         const nasc = new Date(dataNasc);
@@ -958,301 +623,84 @@
         return idade;
     }
 
-    // Sugerir categoria automaticamente pela idade
-    function sugerirCategoriaPorIdade() {
-        const idade = calcularIdade();
-        const selectCategoria = document.getElementById('categoria');
+    async function salvarCadastroManual() {
+        const nomeAluno = document.getElementById('cadNome').value.trim();
+        const dataNasc = document.getElementById('cadDataNasc').value;
+        const sexo = document.querySelector('input[name="cadSexo"]:checked')?.value;
+        const turma = document.getElementById('cadTurma').value;
+        const categoria = document.getElementById('cadCategoria').value;
+        const rg = document.getElementById('cadRG').value.trim().replace(/\D/g, '');
+        const responsavel = document.getElementById('cadResponsavel').value.trim();
         
-        if (idade !== null && idade >= 0) {
-            let categoriaSugerida = '';
-            if (idade <= 5) categoriaSugerida = 'Sub-5';
-            else if (idade <= 7) categoriaSugerida = 'Sub-7';
-            else if (idade <= 9) categoriaSugerida = 'Sub-9';
-            else if (idade <= 11) categoriaSugerida = 'Sub-11';
-            else if (idade <= 13) categoriaSugerida = 'Sub-13';
-            else if (idade <= 15) categoriaSugerida = 'Sub-15';
-            else if (idade <= 17) categoriaSugerida = 'Sub-17';
-            else categoriaSugerida = 'Acima-17';
-            
-            // Verificar se já está selecionada
-            if (selectCategoria.value !== categoriaSugerida && selectCategoria.value !== '') {
-                // Mostrar sugestão sem alterar automaticamente
-                const infoIdade = document.getElementById('infoIdade');
-                infoIdade.innerHTML = `📊 Idade: ${idade} anos | Sugestão: <strong>${categoriaSugerida}</strong>`;
-                infoIdade.style.display = 'block';
-            } else if (selectCategoria.value === '') {
-                // Se não tem categoria selecionada, sugerir
-                selectCategoria.value = categoriaSugerida;
-                const infoIdade = document.getElementById('infoIdade');
-                infoIdade.innerHTML = `📊 Idade: ${idade} anos | Categoria sugerida: <strong>${categoriaSugerida}</strong>`;
-                infoIdade.style.display = 'block';
-            }
+        if (!nomeAluno || !dataNasc || !sexo || !turma || !categoria || !rg || !responsavel) { 
+            mostrarToast('⚠️ Preencha os campos obrigatórios', 'error'); 
+            return; 
+        }
+        
+        const idade = calcularIdade(dataNasc);
+        const protocolo = `JAC-MANUAL-${Date.now()}`;
+        const dataEnvio = new Date().toLocaleString('pt-BR');
+        const enderecoCompleto = `${document.getElementById('cadEndereco').value || ''}, ${document.getElementById('cadBairro').value || ''}, ${document.getElementById('cadMunicipio').value || ''}/${document.getElementById('cadUF').value || ''}`;
+        
+        const dados = { 
+            protocolo, dataEnvio, nomeAluno, dataNasc, idade, turma, categoria,
+            responsavel, telefone: document.getElementById('cadTelefone').value || '', 
+            email: document.getElementById('cadEmail').value || '', endereco: enderecoCompleto, 
+            bairro: document.getElementById('cadBairro').value || '', moradores: document.getElementById('cadMoradores').value || '1', 
+            remedio: document.querySelector('input[name="cadRemedio"]:checked')?.value === 'Sim' ? `Sim - ${document.getElementById('cadRemedioDesc').value}` : 'Não', 
+            origem: document.getElementById('cadOrigem').value || 'Cadastro manual', rg, sexo, 
+            peso: document.getElementById('cadPeso').value || '', altura: document.getElementById('cadAltura').value || '', 
+            calcado: document.getElementById('cadCalcado').value || '', uniforme: document.getElementById('cadUniforme').value || '', 
+            deficiencia: document.getElementById('cadDeficiencia').value || 'Nenhuma', 
+            municipio: document.getElementById('cadMunicipio').value || '', uf: document.getElementById('cadUF').value || '', 
+            escola: document.getElementById('cadEscola').value || '', serie: document.getElementById('cadSerie').value || '', 
+            status: 'pendente' 
+        };
+        
+        try { 
+            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(dados) }); 
+            cacheDados = null; 
+            await carregarDados(true); 
+            fecharModalCadastro(); 
+            mostrarToast('✅ Aluno cadastrado com sucesso!', 'success'); 
+        } catch (error) { 
+            mostrarToast('❌ Erro ao cadastrar', 'error'); 
         }
     }
 
-    function mostrarIdade() {
-        const idade = calcularIdade();
-        const infoDiv = document.getElementById('infoIdade');
-        if (idade !== null && idade >= 0) {
-            infoDiv.innerHTML = `📊 Idade calculada: <strong>${idade} anos</strong>`;
-            infoDiv.style.display = 'block';
-            sugerirCategoriaPorIdade();
-        } else {
-            infoDiv.style.display = 'none';
-        }
+    document.addEventListener('keydown', (e) => { if (e.ctrlKey && e.key === 'f') { e.preventDefault(); document.querySelector('.busca-input')?.focus(); } if (e.key === 'Escape') { fecharModal(); fecharModalCadastro(); } if (e.ctrlKey && e.key === 'r') { e.preventDefault(); forcarAtualizacao(); } });
+
+    document.getElementById('buscaSolicitacao').addEventListener('input', filtrarESolicitacoes);
+    document.getElementById('filtroTurmaSolicitacao').addEventListener('change', filtrarESolicitacoes);
+    document.getElementById('filtroCategoriaSolicitacao').addEventListener('change', filtrarESolicitacoes);
+    document.getElementById('buscaAluno').addEventListener('input', filtrarEAlunos);
+    document.getElementById('filtroTurmaAluno').addEventListener('change', filtrarEAlunos);
+    document.getElementById('filtroCategoriaAluno').addEventListener('change', filtrarEAlunos);
+
+    function verificarSenha() {
+        const senha = document.getElementById('senhaInput').value;
+        const nome = document.getElementById('nomeUsuario').value.trim();
+        if (!nome) { document.getElementById('erroLogin').innerText = 'Digite seu nome!'; return; }
+        if (senha === SENHA) {
+            document.getElementById('telaLogin').style.display = 'none';
+            document.getElementById('painelInterno').style.display = 'block';
+            if (localStorage.getItem('tema') === 'dark') document.body.classList.add('dark-mode');
+            carregarDados();
+            setInterval(() => carregarDados(), 60000);
+            setInterval(atualizarTimestamp, 1000);
+            configurarSelecionarTodos();
+        } else { document.getElementById('erroLogin').innerText = 'Senha incorreta!'; }
     }
 
-    document.getElementById('dataNasc').addEventListener('change', mostrarIdade);
-    document.getElementById('dataNasc').addEventListener('input', mostrarIdade);
-
-    async function buscarCEP() {
-        const cep = document.getElementById('cep').value.replace(/\D/g, '');
-        if (cep.length !== 8) {
-            mostrarToast('Digite um CEP válido com 8 dígitos!', 'error');
-            return;
-        }
-
-        const carregando = document.getElementById('carregandoCEP');
-        carregando.style.display = 'block';
-
-        try {
-            const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-            const dados = await response.json();
-
-            if (!dados.erro) {
-                document.getElementById('endereco').value = dados.logradouro || '';
-                document.getElementById('bairro').value = dados.bairro || '';
-                document.getElementById('municipio').value = dados.localidade || '';
-                document.getElementById('uf').value = dados.uf || '';
-                mostrarToast('✅ Endereço encontrado!', 'success');
-            } else {
-                mostrarToast('CEP não encontrado!', 'error');
-            }
-        } catch (error) {
-            console.error('Erro:', error);
-            mostrarToast('Erro ao buscar CEP', 'error');
-        } finally {
-            carregando.style.display = 'none';
-        }
-    }
-
-    async function verificarDuplicidade(rgResponsavel, nomeResponsavel, nomeAluno, dataNasc) {
-        try {
-            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=${NOME_ABA}`;
-            const response = await fetch(url);
-            const texto = await response.text();
-            const linhas = texto.split('\n');
-
-            for (let i = 1; i < linhas.length; i++) {
-                const linha = linhas[i].trim();
-                if (!linha) continue;
-
-                const valores = [];
-                let atual = '';
-                let dentroAspas = false;
-                for (let c of linha) {
-                    if (c === '"') dentroAspas = !dentroAspas;
-                    else if (c === ',' && !dentroAspas) { valores.push(atual); atual = ''; }
-                    else atual += c;
-                }
-                valores.push(atual);
-
-                const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
-
-                if (valores.length >= 27) {
-                    const rgExistente = limpar(valores[15]);
-                    const nomeResponsavelExistente = limpar(valores[7]);
-                    const nomeAlunoExistente = limpar(valores[2]);
-                    const dataExistente = limpar(valores[3]);
-
-                    if (rgExistente === rgResponsavel && 
-                        nomeResponsavelExistente === nomeResponsavel && 
-                        nomeAlunoExistente === nomeAluno && 
-                        dataExistente === dataNasc) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        } catch (error) {
-            console.error('Erro ao verificar duplicidade:', error);
-            return false;
-        }
-    }
-
-    function mostrarErro(erroId, campoId) {
-        const erroDiv = document.getElementById(erroId);
-        if (erroDiv) erroDiv.style.display = 'block';
-        if (campoId) {
-            const campo = document.getElementById(campoId);
-            if (campo) campo.classList.add('erro');
-            setTimeout(() => {
-                if (campo) campo.classList.remove('erro');
-                if (erroDiv) erroDiv.style.display = 'none';
-            }, 3000);
-        }
-    }
-
-    async function enviarCadastro() {
-        // Coletar dados
-        const nomeAluno = document.getElementById('nomeAluno').value.trim();
-        const dataNasc = document.getElementById('dataNasc').value;
-        const sexo = document.querySelector('input[name="sexo"]:checked')?.value;
-        const categoria = document.getElementById('categoria').value;
-        const peso = document.getElementById('peso').value;
-        const altura = document.getElementById('altura').value;
-        const calcado = document.getElementById('calcado').value;
-        const uniforme = document.getElementById('uniforme').value;
-        const turma = document.getElementById('turma').value;
-        
-        const semDeficiencia = document.getElementById('semDeficiencia').checked;
-        let deficienciaTexto = '';
-        if (!semDeficiencia) {
-            const selecionadas = Array.from(document.querySelectorAll('.deficiencia-check:checked')).map(cb => cb.value);
-            const outra = document.getElementById('outraDeficiencia').value.trim();
-            if (outra) selecionadas.push(`Outra: ${outra}`);
-            deficienciaTexto = selecionadas.length > 0 ? selecionadas.join(', ') : 'Nenhuma';
-        } else {
-            deficienciaTexto = 'Nenhuma';
-        }
-        
-        const remedioSelecionado = document.querySelector('input[name="remedio"]:checked')?.value;
-        const remedioDesc = remedioSelecionado === 'Sim' ? document.getElementById('remedioDesc').value.trim() : '';
-        
-        const rgResponsavel = document.getElementById('rgResponsavel').value.trim().replace(/\D/g, '');
-        const responsavel = document.getElementById('responsavel').value.trim();
-        const telefone = document.getElementById('telefone').value.trim();
-        const email = document.getElementById('email').value.trim();
-        
-        const endereco = document.getElementById('endereco').value.trim();
-        const numero = document.getElementById('numero').value.trim();
-        const bairro = document.getElementById('bairro').value.trim();
-        const municipio = document.getElementById('municipio').value.trim();
-        const uf = document.getElementById('uf').value;
-        const moradores = document.getElementById('moradores').value.trim();
-        
-        const escola = document.getElementById('escola').value.trim();
-        const serie = document.getElementById('serie').value;
-        const origem = document.getElementById('origem').value;
-        const declaracao = document.getElementById('declaracao').checked;
-
-        // Validações
-        let isValid = true;
-        
-        if (!nomeAluno) { mostrarErro('erroNome', 'nomeAluno'); isValid = false; }
-        if (!dataNasc) { mostrarErro('erroData', 'dataNasc'); isValid = false; }
-        if (!sexo) { mostrarErro('erroSexo', null); isValid = false; }
-        if (!categoria) { mostrarErro('erroCategoria', 'categoria'); isValid = false; }
-        if (!peso) { mostrarErro('erroPeso', 'peso'); isValid = false; }
-        if (!altura) { mostrarErro('erroAltura', 'altura'); isValid = false; }
-        if (!calcado) { mostrarErro('erroCalcado', 'calcado'); isValid = false; }
-        if (!uniforme) { mostrarErro('erroUniforme', 'uniforme'); isValid = false; }
-        if (!turma) { mostrarErro('erroTurma', 'turma'); isValid = false; }
-        if (!rgResponsavel) { mostrarErro('erroRG', 'rgResponsavel'); isValid = false; }
-        if (!responsavel) { mostrarErro('erroResponsavel', 'responsavel'); isValid = false; }
-        
-        const numeros = telefone.replace(/\D/g, '');
-        if (numeros.length < 10 || numeros.length > 11) { mostrarErro('erroTelefone', 'telefone'); isValid = false; }
-        
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) { mostrarErro('erroEmail', 'email'); isValid = false; }
-        
-        if (!endereco) { mostrarErro('erroEndereco', 'endereco'); isValid = false; }
-        if (!numero) { mostrarErro('erroNumero', 'numero'); isValid = false; }
-        if (!bairro) { mostrarErro('erroBairro', 'bairro'); isValid = false; }
-        if (!municipio) { mostrarErro('erroMunicipio', 'municipio'); isValid = false; }
-        if (!uf) { mostrarErro('erroUF', 'uf'); isValid = false; }
-        if (!moradores || parseInt(moradores) < 1) { mostrarErro('erroMoradores', 'moradores'); isValid = false; }
-        if (!escola) { mostrarErro('erroEscola', 'escola'); isValid = false; }
-        if (!serie) { mostrarErro('erroSerie', 'serie'); isValid = false; }
-        if (!declaracao) { mostrarErro('erroDeclaracao', null); isValid = false; }
-        
-        if (remedioSelecionado === 'Sim' && !remedioDesc) {
-            mostrarErro('erroRemedioDesc', 'remedioDesc');
-            isValid = false;
-        }
-
-        if (!isValid) {
-            mostrarToast('⚠️ Preencha todos os campos obrigatórios!', 'error');
-            return;
-        }
-
-        const btn = document.querySelector('.btn-enviar');
-        btn.disabled = true;
-        btn.innerHTML = '⏳ VERIFICANDO...';
-
-        try {
-            const jaExiste = await verificarDuplicidade(rgResponsavel, responsavel, nomeAluno, dataNasc);
-            
-            if (jaExiste) {
-                mostrarToast('❌ Este aluno já está cadastrado! Entre em contato.', 'error');
-                btn.disabled = false;
-                btn.innerHTML = '✅ ENVIAR SOLICITAÇÃO';
-                return;
-            }
-
-            btn.innerHTML = '⏳ ENVIANDO...';
-
-            const idade = calcularIdade();
-            const protocolo = `JAC-${Date.now()}`;
-            const dataEnvio = new Date().toLocaleString('pt-BR');
-            const enderecoCompleto = `${endereco}, ${numero} - ${bairro}, ${municipio}/${uf}`;
-
-            const dados = {
-                protocolo: protocolo,
-                dataEnvio: dataEnvio,
-                nomeAluno: nomeAluno,
-                dataNasc: dataNasc,
-                idade: idade,
-                turma: turma,
-                categoria: categoria,  // <--- CAMPO CATEGORIA ADICIONADO
-                responsavel: responsavel,
-                telefone: telefone,
-                email: email,
-                endereco: enderecoCompleto,
-                bairro: bairro,
-                moradores: moradores,
-                remedio: remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não',
-                origem: origem,
-                rg: rgResponsavel,
-                sexo: sexo,
-                peso: peso,
-                altura: altura,
-                calcado: calcado,
-                uniforme: uniforme,
-                deficiencia: deficienciaTexto,
-                municipio: municipio,
-                uf: uf,
-                escola: escola,
-                serie: serie,
-                status: 'pendente'
-            };
-
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify(dados)
-            });
-
-            const solicitacoes = JSON.parse(localStorage.getItem('solicitacoes_prematricula') || '[]');
-            solicitacoes.push({ id: Date.now(), protocolo: protocolo, ...dados });
-            localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
-
-            document.getElementById('protocoloDiv').innerHTML = `🔑 PROTOCOLO: ${protocolo}`;
-            document.getElementById('formularioContainer').classList.add('hidden');
-            document.getElementById('mensagemSucesso').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            mostrarToast('✅ Solicitação enviada com sucesso!', 'success');
-
-        } catch (error) {
-            console.error('Erro:', error);
-            mostrarToast('❌ Erro ao enviar. Tente novamente.', 'error');
-        } finally {
-            btn.disabled = false;
-            btn.innerHTML = '✅ ENVIAR SOLICITAÇÃO';
-        }
+    function logout() {
+        document.getElementById('painelInterno').style.display = 'none';
+        document.getElementById('telaLogin').style.display = 'block';
+        document.getElementById('senhaInput').value = '';
+        document.getElementById('nomeUsuario').value = '';
+        document.getElementById('erroLogin').innerText = '';
+        cacheDados = null;
+        if (document.getElementById('buscaSolicitacao')) { document.getElementById('buscaSolicitacao').value = ''; document.getElementById('buscaAluno').value = ''; }
     }
 </script>
-
 </body>
 </html>
