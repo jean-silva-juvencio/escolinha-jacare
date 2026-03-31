@@ -1019,7 +1019,7 @@
         <div style="overflow-x: auto;">
             <table class="tabela-ultimos">
                 <thead>
-                    <tr>
+                    32
                         <th>Nome</th>
                         <th>Turma</th>
                         <th>Categoria</th>
@@ -1055,7 +1055,7 @@
         <div class="modal-tabela-container">
             <table class="modal-tabela">
                 <thead>
-                    <tr>
+                    32
                         <th>Nome</th>
                         <th>Turma</th>
                         <th>Categoria</th>
@@ -1292,6 +1292,7 @@
     function atualizarTodosGraficos() {
         const dados = alunosFiltrados;
         
+        // Gráfico de Turmas (barras horizontais)
         const turmasCount = TURMAS.map(t => dados.filter(a => a.turma === t).length);
         const labelsAbreviadas = TURMAS.map(t => t === 'Taekwondo' ? 'Taekw.' : t);
         
@@ -1302,23 +1303,63 @@
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, scales: { y: { ticks: { font: { size: 11 } } } }, plugins: { legend: { display: false } } }
         });
         
+        // GRÁFICO DE PIZZA COM PORCENTAGEM DENTRO DAS FATIAS
         const totalTurmas = turmasCount.reduce((a, b) => a + b, 0);
         if (graficos.pizza) graficos.pizza.destroy();
         graficos.pizza = new Chart(document.getElementById('graficoPizza'), {
             type: 'pie',
             data: { 
                 labels: TURMAS, 
-                datasets: [{ data: turmasCount, backgroundColor: ['#0047AB', '#00aaff', '#ff9800', '#25d366', '#ff69b4'], borderWidth: 2, borderColor: 'white' }] 
+                datasets: [{ 
+                    data: turmasCount, 
+                    backgroundColor: ['#0047AB', '#00aaff', '#ff9800', '#25d366', '#ff69b4'],
+                    borderWidth: 2,
+                    borderColor: 'white'
+                }] 
             },
             options: { 
-                responsive: true, maintainAspectRatio: true,
+                responsive: true, 
+                maintainAspectRatio: true,
                 plugins: {
-                    tooltip: { callbacks: { label: (ctx) => { const label = ctx.label || ''; const value = ctx.raw || 0; const porcentagem = totalTurmas > 0 ? ((value / totalTurmas) * 100).toFixed(1) : 0; return `${label}: ${value} alunos (${porcentagem}%)`; } } },
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => {
+                                const label = ctx.label || '';
+                                const value = ctx.raw || 0;
+                                const porcentagem = totalTurmas > 0 ? ((value / totalTurmas) * 100).toFixed(1) : 0;
+                                return `${label}: ${value} alunos (${porcentagem}%)`;
+                            }
+                        }
+                    },
                     legend: { position: 'bottom', labels: { font: { size: 11 } } }
                 }
-            }
+            },
+            plugins: [{
+                afterDatasetsDraw: function(chart) {
+                    const ctx = chart.ctx;
+                    chart.data.datasets.forEach((dataset, i) => {
+                        const meta = chart.getDatasetMeta(i);
+                        if (!meta.hidden) {
+                            meta.data.forEach((element, index) => {
+                                const dataValue = dataset.data[index];
+                                const percentage = totalTurmas > 0 ? ((dataValue / totalTurmas) * 100).toFixed(1) : 0;
+                                if (percentage > 5) { // Só mostra se a fatia for maior que 5%
+                                    const position = element.tooltipPosition();
+                                    ctx.fillStyle = '#ffffff';
+                                    ctx.font = 'bold 12px "Open Sans"';
+                                    ctx.shadowBlur = 0;
+                                    ctx.textAlign = 'center';
+                                    ctx.textBaseline = 'middle';
+                                    ctx.fillText(`${percentage}%`, position.x, position.y);
+                                }
+                            });
+                        }
+                    });
+                }
+            }]
         });
         
+        // Gráfico de Categorias
         const categoriasCount = CATEGORIAS.map(cat => dados.filter(a => a.categoria === cat).length);
         if (graficos.categoria) graficos.categoria.destroy();
         graficos.categoria = new Chart(document.getElementById('graficoCategoria'), {
@@ -1327,6 +1368,7 @@
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
         });
         
+        // Gráfico de Bairros
         const bairrosMap = new Map();
         dados.forEach(a => { if(a.bairro && a.bairro !== 'Não informado') bairrosMap.set(a.bairro, (bairrosMap.get(a.bairro) || 0) + 1); });
         const bairros = Array.from(bairrosMap.entries()).sort((a,b) => b[1]-a[1]).slice(0, 8);
@@ -1336,6 +1378,7 @@
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
         });
         
+        // Evolução Mensal
         const matriculasPorMes = new Array(12).fill(0);
         dados.forEach(a => { if (a.dataMatricula) { const mes = new Date(a.dataMatricula).getMonth(); matriculasPorMes[mes]++; } });
         if (graficos.evolucao) graficos.evolucao.destroy();
@@ -1345,6 +1388,7 @@
             options: { responsive: true, maintainAspectRatio: true }
         });
         
+        // Deficiência
         const deficienciaMap = new Map();
         dados.forEach(a => {
             if (a.deficiencia && a.deficiencia !== 'Nenhuma') {
@@ -1363,6 +1407,7 @@
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
         });
         
+        // Remédio
         const remedioSim = dados.filter(a => a.remedio && a.remedio !== 'Não').length;
         const remedioNao = dados.length - remedioSim;
         if (graficos.remedio) graficos.remedio.destroy();
@@ -1371,6 +1416,7 @@
             options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
         });
         
+        // GRÁFICO DE ORIGEM - BARRAS VERTICAIS (mais fácil de ler)
         const origemMap = new Map();
         dados.forEach(a => { 
             if (a.origem && a.origem.trim() !== '') {
@@ -1387,11 +1433,38 @@
         if (graficos.origem) graficos.origem.destroy();
         graficos.origem = new Chart(document.getElementById('graficoOrigem'), {
             type: 'bar',
-            data: { labels: origemLabels, datasets: [{ label: 'Alunos (%)', data: origemPercentuais, backgroundColor: '#25d366', borderRadius: 8 }] },
-            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, scales: { x: { title: { display: true, text: 'Percentual (%)' } } },
-                plugins: { tooltip: { callbacks: { label: (ctx) => `${origemData[ctx.dataIndex]} alunos (${ctx.raw}%)` } } } }
+            data: { 
+                labels: origemLabels, 
+                datasets: [{ 
+                    label: 'Alunos (%)', 
+                    data: origemPercentuais, 
+                    backgroundColor: '#25d366', 
+                    borderRadius: 8 
+                }] 
+            },
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: true,
+                scales: { 
+                    y: { 
+                        title: { display: true, text: 'Percentual (%)' },
+                        beginAtZero: true,
+                        max: 100
+                    },
+                    x: { ticks: { font: { size: 11 } } }
+                },
+                plugins: { 
+                    tooltip: { 
+                        callbacks: { 
+                            label: (ctx) => `${origemData[ctx.dataIndex]} alunos (${ctx.raw}%)` 
+                        } 
+                    },
+                    legend: { display: false }
+                }
+            }
         });
         
+        // Sub
         const subCount = [0,0,0,0,0,0,0,0];
         dados.forEach(a => {
             const idade = a.idade;
