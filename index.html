@@ -211,15 +211,17 @@
         /* ========== BARRA DE NOTÍCIAS - AZUL ========== */
         .barra-noticias {
             position: fixed;
-            top: 78px;
-            left: 0;
-            right: 0;
+             top: 79px;
+            left: 50px;  /* em vez de 0 */
+            right: 50px; /* em vez de 0 */
             z-index: 999;
             background: linear-gradient(135deg, #3b82f6, #2563eb);
             padding: 12px 20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             overflow: hidden;
-        }
+            border-radius: 50px;  
+}
+       
 
         .container-noticias {
             max-width: 1400px;
@@ -1376,31 +1378,35 @@
         }
     }
 
+ 
     function iniciarAnimacaoTicker() {
-        const ticker = document.getElementById('tickerNoticias');
-        if (!ticker) return;
-        
-        const larguraTotal = ticker.scrollWidth / 3;
-        
-        function animar() {
-            if (!tickerRunning) {
-                tickerAnimation = requestAnimationFrame(animar);
-                return;
-            }
-            
-            tickerPosition += tickerSpeed;
-            
-            if (tickerPosition >= larguraTotal) {
-                tickerPosition = 0;
-            }
-            
-            ticker.style.transform = `translateX(-${tickerPosition}px)`;
+    const ticker = document.getElementById('tickerNoticias');
+    if (!ticker) return;
+    
+    const larguraTotal = ticker.scrollWidth / 3;
+    
+    // Começa do final para ir para a direita
+    tickerPosition = larguraTotal;
+    
+    function animar() {
+        if (!tickerRunning) {
             tickerAnimation = requestAnimationFrame(animar);
+            return;
         }
         
-        if (tickerAnimation) cancelAnimationFrame(tickerAnimation);
+        tickerPosition -= tickerSpeed;  // ← MUDEI de += para -=
+        
+        if (tickerPosition <= 0) {  // ← MUDEI de >= para <=
+            tickerPosition = larguraTotal;
+        }
+        
+        ticker.style.transform = `translateX(-${tickerPosition}px)`;
         tickerAnimation = requestAnimationFrame(animar);
     }
+    
+    if (tickerAnimation) cancelAnimationFrame(tickerAnimation);
+    tickerAnimation = requestAnimationFrame(animar);
+}
 
     function pararAnimacaoTicker() {
         tickerRunning = false;
