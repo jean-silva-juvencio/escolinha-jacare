@@ -208,20 +208,18 @@
             transform: rotate(-45deg) translate(5px, -5px);
         }
 
-        /* ========== BARRA DE NOTÍCIAS - AZUL ========== */
+        /* ========== BARRA DE NOTÍCIAS - CORRIGIDA (FUNCIONA NO CELULAR) ========== */
         .barra-noticias {
             position: fixed;
-             top: 79px;
-            left: 50px;  /* em vez de 0 */
-            right: 50px; /* em vez de 0 */
+            top: 78px;
+            left: 0;
+            right: 0;
             z-index: 999;
             background: linear-gradient(135deg, #3b82f6, #2563eb);
-            padding: 12px 20px;
+            padding: 10px 20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             overflow: hidden;
-            border-radius: 50px;  
-}
-       
+        }
 
         .container-noticias {
             max-width: 1400px;
@@ -238,8 +236,8 @@
             background: #dc2626;
             color: white;
             font-weight: 700;
-            font-size: 0.75rem;
-            padding: 5px 12px;
+            font-size: 0.7rem;
+            padding: 4px 10px;
             border-radius: 30px;
             letter-spacing: 0.5px;
             white-space: nowrap;
@@ -279,11 +277,11 @@
 
         .ticker-content span {
             display: inline-block;
-            margin-right: 60px;
-            background: rgba(255,255,255,0.2);
-            padding: 5px 20px;
+            margin-right: 40px;
+            background: rgba(255,255,255,0.15);
+            padding: 4px 15px;
             border-radius: 40px;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 600;
             color: #ffffff;
         }
@@ -983,12 +981,12 @@
             }
             .selo-ao-vivo {
                 padding: 4px 10px;
-                font-size: 0.7rem;
+                font-size: 0.65rem;
             }
             .ticker-content span {
-                font-size: 0.75rem;
-                padding: 4px 12px;
-                margin-right: 30px;
+                font-size: 0.7rem;
+                padding: 3px 10px;
+                margin-right: 25px;
             }
             .btn-tema, .hamburger {
                 width: 38px;
@@ -1077,7 +1075,7 @@
         </div>
     </div>
 
-    <!-- BARRA DE NOTÍCIAS -->
+    <!-- BARRA DE NOTÍCIAS CORRIGIDA -->
     <div class="barra-noticias">
         <div class="container-noticias">
             <div class="selo-ao-vivo">
@@ -1248,8 +1246,8 @@
     <div class="patrocinadores">
         <h2>🏆 NOSSOS PATROCINADORES</h2>
         <div class="patrocinadores-grid">
-            <div class="patrocinador-item"><img src="./dubom.png" alt="Dubom" style="max-width: 120px;"></div>
-            <div class="patrocinador-item"><img src="./sao-jose.png" alt="São José" style="max-width: 120px;"></div>
+            <div class="patrocinador-item"><img src="./dubom.png" alt="Dubom" style="max-width: 100px;"></div>
+            <div class="patrocinador-item"><img src="./sao-jose.png" alt="São José" style="max-width: 100px;"></div>
         </div>
         <div class="chamada-patrocinio">
             📢 <strong>Sua marca pode estar aqui!</strong><br>
@@ -1315,11 +1313,11 @@
 
     setInterval(() => { mudarSlide(1); }, 5000);
 
-    // ========== BARRA DE NOTÍCIAS (GE/LANCE, DIREITA → ESQUERDA) ==========
+    // ========== BARRA DE NOTÍCIAS - FUNCIONA NO CELULAR ==========
     let noticiasLista = [];
     let tickerAnimation = null;
     let tickerPosition = 0;
-    let tickerSpeed = 0.8;  // Velocidade suave para ler
+    let tickerSpeed = 0.6;
     let tickerRunning = true;
 
     async function buscarNoticiasFutebol() {
@@ -1330,7 +1328,7 @@
             if (dados.items && dados.items.length > 0) {
                 noticiasLista = dados.items.slice(0, 12).map(item => {
                     let titulo = item.title;
-                    if (titulo.length > 75) titulo = titulo.substring(0, 72) + '...';
+                    if (titulo.length > 70) titulo = titulo.substring(0, 67) + '...';
                     return `⚽ ${titulo}`;
                 });
                 atualizarTicker();
@@ -1347,7 +1345,7 @@
             if (dados.items && dados.items.length > 0) {
                 noticiasLista = dados.items.slice(0, 12).map(item => {
                     let titulo = item.title;
-                    if (titulo.length > 75) titulo = titulo.substring(0, 72) + '...';
+                    if (titulo.length > 70) titulo = titulo.substring(0, 67) + '...';
                     return `⚽ ${titulo}`;
                 });
                 atualizarTicker();
@@ -1360,8 +1358,7 @@
         noticiasLista = [
             "🏆 Campeonato Brasileiro: líder vence e mantém vantagem na ponta",
             "⚽ Craque do time se destaca na rodada com dois gols",
-            "🎉 Seleção brasileira se prepara para próximo amistoso",
-            "🥋 Destaque do futebol feminino brilha na competição"
+            "🎉 Seleção brasileira se prepara para próximo amistoso"
         ];
         atualizarTicker();
     }
@@ -1378,35 +1375,31 @@
         }
     }
 
- 
     function iniciarAnimacaoTicker() {
-    const ticker = document.getElementById('tickerNoticias');
-    if (!ticker) return;
-    
-    const larguraTotal = ticker.scrollWidth / 3;
-    
-    // Começa do final para ir para a direita
-    tickerPosition = larguraTotal;
-    
-    function animar() {
-        if (!tickerRunning) {
+        const ticker = document.getElementById('tickerNoticias');
+        if (!ticker) return;
+        
+        const larguraTotal = ticker.scrollWidth / 3;
+        
+        function animar() {
+            if (!tickerRunning) {
+                tickerAnimation = requestAnimationFrame(animar);
+                return;
+            }
+            
+            tickerPosition += tickerSpeed;
+            
+            if (tickerPosition >= larguraTotal) {
+                tickerPosition = 0;
+            }
+            
+            ticker.style.transform = `translateX(-${tickerPosition}px)`;
             tickerAnimation = requestAnimationFrame(animar);
-            return;
         }
         
-        tickerPosition -= tickerSpeed;  // ← MUDEI de += para -=
-        
-        if (tickerPosition <= 0) {  // ← MUDEI de >= para <=
-            tickerPosition = larguraTotal;
-        }
-        
-        ticker.style.transform = `translateX(-${tickerPosition}px)`;
+        if (tickerAnimation) cancelAnimationFrame(tickerAnimation);
         tickerAnimation = requestAnimationFrame(animar);
     }
-    
-    if (tickerAnimation) cancelAnimationFrame(tickerAnimation);
-    tickerAnimation = requestAnimationFrame(animar);
-}
 
     function pararAnimacaoTicker() {
         tickerRunning = false;
@@ -1416,91 +1409,51 @@
         tickerRunning = true;
     }
 
-    // ========== JACARÉ IA INTELIGENTE ==========
+    // ========== JACARÉ IA ==========
     const conhecimentoEscolinha = {
         categorias: "A Escolinha do Jacaré tem as categorias: Sub-7 (5-7 anos), Sub-9 (7-9 anos), Sub-11 (9-11 anos), Sub-13 (11-13 anos) e Sub-15 (13-15 anos). Também oferecemos Taekwondo, Tênis de Mesa e Ginástica.",
         idade: "Aceitamos crianças a partir de 5 anos até 17 anos. As categorias são divididas por idade: Sub-7, Sub-9, Sub-11, Sub-13 e Sub-15.",
         horarios: "Os treinos acontecem aos sábados, das 7:30 às 12:00. Cada turma tem um horário específico dentro desse período. O atendimento presencial para matrículas também é neste horário.",
-        localizacao: "Ficamos na Rua São Bernardo, 88 - Alvorada I, Manaus - AM. É ao lado do campo do Unidos do Alvorada. Você pode abrir o mapa no Google Maps clicando no botão 'ABRIR NO GOOGLE MAPS'.",
-        matricula: "Para fazer a pré-matrícula, clique no botão 'PRÉ-MATRÍCULA ONLINE' no topo da página. Preencha o formulário com seus dados e aguarde nosso contato. As matrículas presenciais são aos sábados das 7:30 às 12:00.",
-        uniforme: "O uniforme é doado pela escolinha para todos os alunos matriculados. Inclui camisa, calção, meião e, para o futebol, caneleira. Fazemos questão da igualdade entre todos os alunos.",
-        contato: "Você pode falar conosco pelo WhatsApp (botão flutuante verde no canto direito da tela) ou nos visitar presencialmente aos sábados das 7:30 às 12:00 na Rua São Bernardo, 88 - Alvorada I.",
-        patrocinadores: "Nossos patrocinadores atuais são Dubom e São José. Estamos sempre abertos a novos parceiros! Se sua empresa quiser patrocinar, entre em contato pelo WhatsApp.",
-        valores: "Para informações sobre valores e mensalidades, entre em contato conosco pelo WhatsApp ou venha nos visitar em um sábado. Os valores são acessíveis e temos condições especiais.",
-        quadra: "Nossa quadra é coberta, garantindo conforto e segurança mesmo em dias de chuva. As instalações são adequadas para crianças e adolescentes.",
-        eventos: "A Escolinha participa de campeonatos municipais e promove eventos internos como festa do Dia das Crianças, formatura das turmas e confraternizações.",
-        feminino: "Sim! Temos turmas femininas em todas as categorias. Meninas são muito bem-vindas na Escolinha do Jacaré.",
-        documentos: "Para matrícula, são necessários: certidão de nascimento do aluno, comprovante de residência, documento do responsável e uma foto 3x4."
+        localizacao: "Ficamos na Rua São Bernardo, 88 - Alvorada I, Manaus - AM. É ao lado do campo do Unidos do Alvorada.",
+        matricula: "Para fazer a pré-matrícula, clique no botão 'PRÉ-MATRÍCULA ONLINE' no topo da página. Preencha o formulário e aguarde nosso contato.",
+        uniforme: "O uniforme é doado pela escolinha para todos os alunos matriculados.",
+        contato: "Você pode falar conosco pelo WhatsApp (botão flutuante verde) ou nos visitar aos sábados das 7:30 às 12:00.",
+        patrocinadores: "Nossos patrocinadores atuais são Dubom e São José.",
+        valores: "Para informações sobre valores e mensalidades, entre em contato conosco pelo WhatsApp."
     };
 
     function responderPergunta(pergunta) {
         const p = pergunta.toLowerCase().trim();
         
-        // Categorias e idades
-        if (p.includes('categoria') || p.includes('sub') || (p.includes('idade') && p.includes('categoria')) || p.includes('faixa') || p.includes('divisão')) {
+        if (p.includes('categoria') || p.includes('sub')) {
             return `🐊 ${conhecimentoEscolinha.categorias}`;
         }
-        if (p.includes('idade') || p.includes('anos') || p.includes('pode participar') || p.includes('começar') || p.includes('qual a idade')) {
+        if (p.includes('idade') || p.includes('anos')) {
             return `🐊 ${conhecimentoEscolinha.idade}`;
         }
-        
-        // Horários
-        if (p.includes('horario') || p.includes('horário') || p.includes('treino') || p.includes('sábado') || p.includes('quando') || p.includes('dias') || p.includes('semana')) {
+        if (p.includes('horario') || p.includes('horário') || p.includes('treino') || p.includes('sábado')) {
             return `🐊 ${conhecimentoEscolinha.horarios}`;
         }
-        
-        // Localização
-        if (p.includes('local') || p.includes('endereço') || p.includes('onde fica') || p.includes('chegar') || p.includes('mapa') || p.includes('como chegar')) {
+        if (p.includes('local') || p.includes('endereço') || p.includes('onde fica')) {
             return `🐊 ${conhecimentoEscolinha.localizacao}`;
         }
-        
-        // Matrícula
-        if (p.includes('matricula') || p.includes('matrícula') || p.includes('inscrever') || p.includes('como faz') || p.includes('pré-matrícula') || p.includes('pre matricula')) {
+        if (p.includes('matricula') || p.includes('matrícula') || p.includes('inscrever')) {
             return `🐊 ${conhecimentoEscolinha.matricula}`;
         }
-        
-        // Uniforme
-        if (p.includes('uniforme') || p.includes('camisa') || p.includes('roupa') || p.includes('kit') || p.includes('farda') || p.includes('vestir')) {
+        if (p.includes('uniforme') || p.includes('camisa')) {
             return `🐊 ${conhecimentoEscolinha.uniforme}`;
         }
-        
-        // Contato
-        if (p.includes('contato') || p.includes('whatsapp') || p.includes('falar') || p.includes('telefone') || p.includes('ligar') || p.includes('fone')) {
+        if (p.includes('contato') || p.includes('whatsapp')) {
             return `🐊 ${conhecimentoEscolinha.contato}`;
         }
-        
-        // Patrocinadores
-        if (p.includes('patrocinador') || p.includes('patrocínio') || p.includes('marca') || p.includes('empresa') || p.includes('parceiro')) {
+        if (p.includes('patrocinador')) {
             return `🐊 ${conhecimentoEscolinha.patrocinadores}`;
         }
-        
-        // Valores / mensalidade
-        if (p.includes('valor') || p.includes('mensalidade') || p.includes('custo') || p.includes('preço') || p.includes('quanto custa') || p.includes('gratuito') || p.includes('pago')) {
+        if (p.includes('valor') || p.includes('mensalidade')) {
             return `🐊 ${conhecimentoEscolinha.valores}`;
         }
         
-        // Quadra
-        if (p.includes('quadra') || p.includes('coberta') || p.includes('instalação') || p.includes('estrutura')) {
-            return `🐊 ${conhecimentoEscolinha.quadra}`;
-        }
-        
-        // Eventos
-        if (p.includes('evento') || p.includes('campeonato') || p.includes('festa') || p.includes('formatura') || p.includes('conquista')) {
-            return `🐊 ${conhecimentoEscolinha.eventos}`;
-        }
-        
-        // Feminino / meninas
-        if (p.includes('feminino') || p.includes('menina') || p.includes('garota') || p.includes('mulher')) {
-            return `🐊 ${conhecimentoEscolinha.feminino}`;
-        }
-        
-        // Documentos
-        if (p.includes('documento') || p.includes('papel') || p.includes('certidão') || p.includes('comprovante')) {
-            return `🐊 ${conhecimentoEscolinha.documentos}`;
-        }
-        
-        // Resposta padrão para perguntas fora do contexto
-        return `🐊 Desculpe, só posso responder perguntas sobre a Escolinha do Jacaré. Que tal perguntar sobre:\n\n📋 Categorias\n🕐 Horários\n📍 Localização\n📝 Matrícula\n👕 Uniforme\n💰 Valores\n📞 Contato\n\nEstou aqui para ajudar!`;
+        return `🐊 Desculpe, só posso responder perguntas sobre a Escolinha do Jacaré. Que tal perguntar sobre horários, categorias, matrícula ou localização?`;
     }
 
     function adicionarMensagem(texto, isUser = false) {
@@ -1545,7 +1498,6 @@
             else if ((codigo >= 51 && codigo <= 55) || (codigo >= 61 && codigo <= 65) || (codigo >= 80 && codigo <= 82)) { 
                 iconeEmoji = '🌧️'; desc = 'Chuva'; 
             }
-            else if (codigo >= 71 && codigo <= 77) { iconeEmoji = '❄️'; desc = 'Neve'; }
             else if (codigo >= 95 && codigo <= 99) { iconeEmoji = '⛈️'; desc = 'Tempestade'; }
             else { iconeEmoji = '🌡️'; desc = 'Manaus'; }
             
@@ -1674,6 +1626,7 @@
         buscarClima();
         buscarNoticiasFutebol();
         setInterval(buscarClima, 600000);
+        setInterval(buscarNoticiasFutebol, 300000);
         initFaq();
         
         if (localStorage.getItem('tema') === 'dark') {
@@ -1685,6 +1638,7 @@
             link.addEventListener('click', fecharMenu);
         });
         
+        // Pausa a animação ao tocar na tela (celular)
         const tickerWrapper = document.querySelector('.ticker-wrapper');
         if (tickerWrapper) {
             tickerWrapper.addEventListener('mouseenter', pararAnimacaoTicker);
