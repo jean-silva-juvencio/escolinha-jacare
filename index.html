@@ -221,6 +221,22 @@
             overflow: hidden;
         }
 
+        /* Ajuste para celular - empurra a barra de notícias para baixo */
+        @media (max-width: 768px) {
+            .barra-noticias {
+                top: auto;
+                bottom: auto;
+                position: relative;
+                margin-top: 10px;
+            }
+            body {
+                padding-top: 120px;
+            }
+            .barra-superior {
+                position: relative;
+            }
+        }
+
         .container-noticias {
             max-width: 1400px;
             margin: 0 auto;
@@ -976,7 +992,6 @@
                 font-size: 2rem;
             }
             .barra-noticias {
-                top: 70px;
                 padding: 10px 16px;
             }
             .selo-ao-vivo {
