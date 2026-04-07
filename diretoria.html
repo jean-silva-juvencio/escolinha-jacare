@@ -1688,14 +1688,14 @@
     }
 
     function logout() {
-    // Registra o último acesso antes de sair
-    const email = document.getElementById('emailLogin').value;
-    const senha = document.getElementById('senhaLogin').value;
-    
-    if (email && senha) {
-        fetch(`${SCRIPT_URL}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`)
-            .then(() => console.log('✅ Acesso registrado ao sair'))
-            .catch(err => console.error('Erro:', err));
+    // Registra o último acesso ao clicar em SAIR
+    if (usuarioLogado && usuarioLogado.email) {
+        const senha = document.getElementById('senhaLogin').value;
+        if (senha) {
+            fetch(`${SCRIPT_URL}?email=${encodeURIComponent(usuarioLogado.email)}&senha=${encodeURIComponent(senha)}`)
+                .then(() => console.log('✅ Acesso registrado ao sair'))
+                .catch(err => console.error('Erro:', err));
+        }
     }
     
     // Faz o logout normal
