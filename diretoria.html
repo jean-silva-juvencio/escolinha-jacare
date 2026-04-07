@@ -910,7 +910,7 @@
         <input type="password" id="senhaLogin" placeholder="Senha">
         <button onclick="verificarLogin()">ACESSAR</button>
         <div id="erroLogin" class="erro"></div>
-        <div class="info-acesso">🔒 Acesso restrito a 3 diretores autorizados</div>
+        <div class="info-acesso">🔒 Acesso restrito a diretores autorizados</div>
     </div>
 </div>
 
@@ -1019,7 +1019,7 @@
         <div style="overflow-x: auto;">
             <table class="tabela-ultimos">
                 <thead>
-                    32
+                    <tr>
                         <th>Nome</th>
                         <th>Turma</th>
                         <th>Categoria</th>
@@ -1055,7 +1055,7 @@
         <div class="modal-tabela-container">
             <table class="modal-tabela">
                 <thead>
-                    32
+                    <tr>
                         <th>Nome</th>
                         <th>Turma</th>
                         <th>Categoria</th>
@@ -1080,11 +1080,9 @@
 </footer>
 
 <script>
-    const USUARIOS = [
-        { email: "diretor.jean@escolinha.com", nome: "Jean Silva", senha: "Clash454647*" },
-        { email: "diretor.jacare@escolinha.com", nome: "jacaré", senha: "jacare1998" },
-        { email: "diretor.max@escolinha.com", nome: "max", senha: "max1998" }
-    ];
+    // ========== CONFIGURAÇÕES ==========
+    // URL DO GOOGLE APPS SCRIPT (com a função doGetLogin)
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz76grUCrYQoi6z9VAQt5YOtzo50AG3O-kLB-nON0o4uGoBGQoHrdo4QUOCRmoVgjAcFg/exec';
     
     let usuarioLogado = null;
     let alunos = [];
@@ -1097,8 +1095,6 @@
     const TURMAS = ['Futebol', 'Taekwondo', 'Ginástica', 'Tênis de Mesa', 'Judô'];
     const CATEGORIAS = ['Sub-5', 'Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Acima-17'];
     const SUBS = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Sub-20', 'Sub-30'];
-    
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8zJwfYCHN7kOkjwFYaAICjqEPof_k6C6fDDSdC6mHg_e56PErVYFNB5isTCzCQklO/exec';
 
     function atualizarTimestamp() {
         const diff = Math.floor((new Date() - ultimaAtualizacao) / 1000);
@@ -1343,7 +1339,7 @@
                             meta.data.forEach((element, index) => {
                                 const dataValue = dataset.data[index];
                                 const percentage = totalTurmas > 0 ? ((dataValue / totalTurmas) * 100).toFixed(1) : 0;
-                                if (percentage > 5) { // Só mostra se a fatia for maior que 5%
+                                if (percentage > 5) {
                                     const position = element.tooltipPosition();
                                     ctx.fillStyle = '#ffffff';
                                     ctx.font = 'bold 12px "Open Sans"';
@@ -1416,7 +1412,7 @@
             options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
         });
         
-        // GRÁFICO DE ORIGEM - BARRAS VERTICAIS (mais fácil de ler)
+        // GRÁFICO DE ORIGEM - BARRAS VERTICAIS
         const origemMap = new Map();
         dados.forEach(a => { 
             if (a.origem && a.origem.trim() !== '') {
@@ -1651,20 +1647,43 @@
     document.getElementById('filtroCategoria').addEventListener('change', aplicarFiltros);
     document.getElementById('filtroBairro').addEventListener('input', aplicarFiltros);
 
-    function verificarLogin() {
+    // ========== FUNÇÃO DE LOGIN ATUALIZADA (VIA PLANILHA) ==========
+    async function verificarLogin() {
         const email = document.getElementById('emailLogin').value.trim();
         const senha = document.getElementById('senhaLogin').value;
-        const usuario = USUARIOS.find(u => u.email === email && u.senha === senha);
-        if (usuario) {
-            usuarioLogado = usuario;
-            document.getElementById('telaLogin').style.display = 'none';
-            document.getElementById('painelAnalise').style.display = 'block';
-            document.getElementById('infoUsuario').innerHTML = `👤 ${usuario.nome}`;
-            criarBotoesMeses();
-            carregarDadosDaPlanilha();
-            setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') carregarDadosDaPlanilha(); }, 60000);
-        } else {
-            document.getElementById('erroLogin').innerText = 'E-mail ou senha incorretos!';
+        const btn = document.querySelector('#telaLogin button');
+        
+        if (!email || !senha) {
+            document.getElementById('erroLogin').innerText = 'Digite e-mail e senha!';
+            return;
+        }
+
+        btn.disabled = true;
+        btn.innerHTML = '⏳ VERIFICANDO...';
+        document.getElementById('erroLogin').innerText = '';
+
+        try {
+            const response = await fetch(`${SCRIPT_URL}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`);
+            const resultado = await response.json();
+
+            if (resultado.valido) {
+                usuarioLogado = { email: email, cargo: resultado.cargo || 'Diretor' };
+                document.getElementById('telaLogin').style.display = 'none';
+                document.getElementById('painelAnalise').style.display = 'block';
+                document.getElementById('infoUsuario').innerHTML = `👤 ${email.split('@')[0]} | ✅ ${resultado.ultimoAcesso || 'acesso registrado'}`;
+                criarBotoesMeses();
+                carregarDadosDaPlanilha();
+                setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') carregarDadosDaPlanilha(); }, 60000);
+                setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') atualizarTimestamp(); }, 1000);
+            } else {
+                document.getElementById('erroLogin').innerText = resultado.erro || 'E-mail ou senha incorretos!';
+            }
+        } catch (error) {
+            console.error('Erro ao verificar login:', error);
+            document.getElementById('erroLogin').innerText = 'Erro ao conectar com o servidor. Tente novamente.';
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = 'ACESSAR';
         }
     }
 
@@ -1674,6 +1693,7 @@
         document.getElementById('emailLogin').value = '';
         document.getElementById('senhaLogin').value = '';
         document.getElementById('erroLogin').innerText = '';
+        usuarioLogado = null;
     }
 
     setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') atualizarTimestamp(); }, 1000);
