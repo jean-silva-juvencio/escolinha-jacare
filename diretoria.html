@@ -1688,13 +1688,24 @@
     }
 
     function logout() {
-        document.getElementById('telaLogin').style.display = 'flex';
-        document.getElementById('painelAnalise').style.display = 'none';
-        document.getElementById('emailLogin').value = '';
-        document.getElementById('senhaLogin').value = '';
-        document.getElementById('erroLogin').innerText = '';
-        usuarioLogado = null;
+    // Registra o último acesso antes de sair
+    const email = document.getElementById('emailLogin').value;
+    const senha = document.getElementById('senhaLogin').value;
+    
+    if (email && senha) {
+        fetch(`${SCRIPT_URL}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`)
+            .then(() => console.log('✅ Acesso registrado ao sair'))
+            .catch(err => console.error('Erro:', err));
     }
+    
+    // Faz o logout normal
+    document.getElementById('telaLogin').style.display = 'flex';
+    document.getElementById('painelAnalise').style.display = 'none';
+    document.getElementById('emailLogin').value = '';
+    document.getElementById('senhaLogin').value = '';
+    document.getElementById('erroLogin').innerText = '';
+    usuarioLogado = null;
+}
 
     setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') atualizarTimestamp(); }, 1000);
 </script>
