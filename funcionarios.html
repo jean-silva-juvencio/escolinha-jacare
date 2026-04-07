@@ -358,8 +358,7 @@
 <div id="modalCadastro" class="modal"><div class="modal-content"><div class="modal-header"><h3>➕ CADASTRAR ALUNO</h3><span class="fechar-modal" onclick="fecharModalCadastro()">&times;</span></div><form id="formCadastroAluno"><div class="form-linha"><div class="form-grupo"><label>Nome completo *</label><input type="text" id="cadNome" required></div><div class="form-grupo"><label>Data Nascimento *</label><input type="date" id="cadDataNasc" required></div></div><div class="form-linha"><div class="form-grupo"><label>Sexo *</label><div class="radio-group"><label><input type="radio" name="cadSexo" value="Masculino"> Masculino</label><label><input type="radio" name="cadSexo" value="Feminino"> Feminino</label></div></div><div class="form-grupo"><label>Turma *</label><select id="cadTurma" required><option value="">Selecione</option><option value="Futebol">Futebol</option><option value="Taekwondo">Taekwondo</option><option value="Ginástica">Ginástica</option><option value="Tênis de Mesa">Tênis de Mesa</option><option value="Judô">Judô</option></select></div></div><div class="form-grupo"><label>🏆 Categoria / Sub *</label><select id="cadCategoria" required><option value="">Selecione a categoria</option><option value="Sub-5">Sub-5 (até 5 anos)</option><option value="Sub-7">Sub-7 (6 a 7 anos)</option><option value="Sub-9">Sub-9 (8 a 9 anos)</option><option value="Sub-11">Sub-11 (10 a 11 anos)</option><option value="Sub-13">Sub-13 (12 a 13 anos)</option><option value="Sub-15">Sub-15 (14 a 15 anos)</option><option value="Sub-17">Sub-17 (16 a 17 anos)</option><option value="Acima-17">Acima de 17 anos (consultar diretoria)</option></select><div class="observacao" style="margin-top: 8px; font-size: 0.7rem; color: #666;">💡 Acima de 17 anos, a matrícula será analisada pela diretoria.</div></div><div class="form-linha-3"><div class="form-grupo"><label>Peso (kg)</label><input type="number" id="cadPeso" step="0.1"></div><div class="form-grupo"><label>Altura (cm)</label><input type="number" id="cadAltura"></div><div class="form-grupo"><label>Calçado</label><input type="text" id="cadCalcado"></div></div><div class="form-linha"><div class="form-grupo"><label>Uniforme</label><select id="cadUniforme"><option value="">Selecione</option><option value="PP">PP</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option><option value="XG">XG</option><option value="XXG">XXG</option></select></div><div class="form-grupo"><label>Deficiência</label><input type="text" id="cadDeficiencia" placeholder="Nenhuma"></div></div><div class="form-grupo"><label>Responsável *</label><input type="text" id="cadResponsavel" required></div><div class="form-linha"><div class="form-grupo"><label>RG *</label><input type="text" id="cadRG" required></div><div class="form-grupo"><label>Telefone</label><input type="text" id="cadTelefone"></div></div><div class="form-linha"><div class="form-grupo"><label>Email</label><input type="email" id="cadEmail"></div><div class="form-grupo"><label>Moradores</label><input type="number" id="cadMoradores" value="1"></div></div><div class="form-grupo"><label>Endereço</label><input type="text" id="cadEndereco"></div><div class="form-linha"><div class="form-grupo"><label>Bairro</label><input type="text" id="cadBairro"></div><div class="form-grupo"><label>Município</label><input type="text" id="cadMunicipio"></div><div class="form-grupo"><label>UF</label><select id="cadUF"><option value="">Selecione</option><option value="AC">AC</option><option value="AL">AL</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MG">MG</option><option value="MS">MS</option><option value="MT">MT</option><option value="PA">PA</option><option value="PB">PB</option><option value="PE">PE</option><option value="PI">PI</option><option value="PR">PR</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RO">RO</option><option value="RR">RR</option><option value="RS">RS</option><option value="SC">SC</option><option value="SE">SE</option><option value="SP">SP</option><option value="TO">TO</option></select></div></div><div class="form-linha"><div class="form-grupo"><label>Escola</label><input type="text" id="cadEscola"></div><div class="form-grupo"><label>Série</label><select id="cadSerie"><option value="">Selecione</option><option value="1º Ano EF">1º Ano EF</option><option value="2º Ano EF">2º Ano EF</option><option value="3º Ano EF">3º Ano EF</option><option value="4º Ano EF">4º Ano EF</option><option value="5º Ano EF">5º Ano EF</option><option value="6º Ano EF">6º Ano EF</option><option value="7º Ano EF">7º Ano EF</option><option value="8º Ano EF">8º Ano EF</option><option value="9º Ano EF">9º Ano EF</option><option value="1º Ano EM">1º Ano EM</option><option value="2º Ano EM">2º Ano EM</option><option value="3º Ano EM">3º Ano EM</option><option value="Não estuda">Não estuda</option><option value="Formado">Formado</option></select></div></div><div class="form-grupo"><label>Remédio Controlado</label><div class="radio-group"><label><input type="radio" name="cadRemedio" value="Não" checked> Não</label><label><input type="radio" name="cadRemedio" value="Sim"> Sim</label></div><input type="text" id="cadRemedioDesc" placeholder="Se sim, qual?" style="margin-top: 8px; display: none;"></div><div class="form-grupo"><label>Como conheceu</label><select id="cadOrigem"><option value="">Selecione</option><option value="Instagram">Instagram</option><option value="Facebook">Facebook</option><option value="Amigo/Indicação">Amigo/Indicação</option><option value="Panfleto">Panfleto</option><option value="Passou em frente">Passou em frente</option><option value="Outros">Outros</option></select></div><button type="button" class="btn-salvar" onclick="salvarCadastroManual()">💾 SALVAR ALUNO</button></form></div></div>
 
 <script>
-    const SENHA = 'escolinha454647*';
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby8zJwfYCHN7kOkjwFYaAICjqEPof_k6C6fDDSdC6mHg_e56PErVYFNB5isTCzCQklO/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz76grUCrYQoi6z9VAQt5YOtzo50AG3O-kLB-nON0o4uGoBGQoHrdo4QUOCRmoVgjAcFg/exec';
     
     let cacheDados = null;
     let ultimoFetch = null;
@@ -723,11 +722,25 @@
     document.getElementById('filtroTurmaAluno').addEventListener('change', filtrarEAlunos);
     document.getElementById('filtroCategoriaAluno').addEventListener('change', filtrarEAlunos);
 
-    function verificarSenha() {
-        const senha = document.getElementById('senhaInput').value;
-        const nome = document.getElementById('nomeUsuario').value.trim();
-        if (!nome) { document.getElementById('erroLogin').innerText = 'Digite seu nome!'; return; }
-        if (senha === SENHA) {
+    async function verificarSenha() {
+    const email = document.getElementById('nomeUsuario').value.trim();
+    const senha = document.getElementById('senhaInput').value;
+    const btn = document.querySelector('#telaLogin button');
+    
+    if (!email || !senha) {
+        document.getElementById('erroLogin').innerText = 'Digite e-mail e senha!';
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '⏳ VERIFICANDO...';
+    document.getElementById('erroLogin').innerText = '';
+
+    try {
+        const response = await fetch(`${SCRIPT_URL}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`);
+        const resultado = await response.json();
+
+        if (resultado.valido) {
             document.getElementById('telaLogin').style.display = 'none';
             document.getElementById('painelInterno').style.display = 'block';
             if (localStorage.getItem('tema') === 'dark') document.body.classList.add('dark-mode');
@@ -735,8 +748,17 @@
             setInterval(() => carregarDados(), 60000);
             setInterval(atualizarTimestamp, 1000);
             configurarSelecionarTodos();
-        } else { document.getElementById('erroLogin').innerText = 'Senha incorreta!'; }
+        } else {
+            document.getElementById('erroLogin').innerText = resultado.erro || 'E-mail ou senha incorretos!';
+        }
+    } catch (error) {
+        console.error(error);
+        document.getElementById('erroLogin').innerText = 'Erro ao conectar com o servidor. Tente novamente.';
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'ACESSAR';
     }
+}
 
     function logout() {
         document.getElementById('painelInterno').style.display = 'none';
