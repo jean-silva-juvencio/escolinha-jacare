@@ -57,7 +57,6 @@
             align-items: center;
         }
 
-        /* BOTÃO HAMBÚRGUER (igual ao index) */
         .hamburger {
             background: none;
             border: none;
@@ -77,7 +76,6 @@
             border-radius: 3px;
         }
 
-        /* Botão Voltar */
         .btn-voltar {
             background: var(--azul-premium);
             color: white;
@@ -94,7 +92,6 @@
             transform: scale(1.05);
         }
 
-        /* Botão Tema */
         .btn-tema {
             background: var(--azul-premium);
             color: white;
@@ -122,9 +119,7 @@
             box-shadow: -2px 0 10px rgba(0,0,0,0.2);
         }
 
-        .menu-mobile.ativo {
-            right: 0;
-        }
+        .menu-mobile.ativo { right: 0; }
 
         .menu-mobile a {
             display: block;
@@ -133,7 +128,7 @@
             padding: 15px;
             border-bottom: 1px solid var(--texto-claro);
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
 
         .menu-mobile a:hover {
@@ -165,9 +160,7 @@
             display: none;
         }
 
-        .overlay-menu.ativo {
-            display: block;
-        }
+        .overlay-menu.ativo { display: block; }
 
         /* CONTEÚDO PRINCIPAL */
         .container {
@@ -215,7 +208,7 @@
             margin-bottom: 15px;
         }
 
-        /* LINHA DO TEMPO - 3 ÉPOCAS */
+        /* LINHA DO TEMPO */
         .timeline {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -263,6 +256,7 @@
             line-height: 1.4;
         }
 
+        /* VALORES GRID */
         .valores-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -299,7 +293,7 @@
             margin-bottom: 0;
         }
 
-        /* GRADE DE FOTOS */
+        /* GALERIA */
         .galeria-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -314,6 +308,7 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: all 0.3s;
             cursor: pointer;
+            aspect-ratio: 4/3;
         }
 
         .foto-item:hover {
@@ -323,14 +318,13 @@
 
         .foto-item img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
             display: block;
             transition: all 0.3s;
         }
 
-        .foto-item:hover img {
-            transform: scale(1.02);
-        }
+        .foto-item:hover img { transform: scale(1.05); }
 
         .sem-fotos {
             text-align: center;
@@ -380,28 +374,9 @@
             margin-top: 50px;
         }
 
-        footer .assinatura {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        footer p {
-            margin: 5px 0;
-        }
-
-        footer .direitos {
-            font-size: 0.8rem;
-            opacity: 0.8;
-            margin-top: 10px;
-        }
-
-        footer .desenvolvido {
-            font-size: 0.8rem;
-            margin-top: 10px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-            padding-top: 12px;
-            display: inline-block;
-        }
+        footer .assinatura { max-width: 600px; margin: 0 auto; }
+        footer .direitos { font-size: 0.8rem; opacity: 0.8; margin-top: 10px; }
+        footer .desenvolvido { font-size: 0.8rem; margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 12px; display: inline-block; }
 
         @media (max-width: 768px) {
             .container { margin-top: 110px; }
@@ -427,7 +402,6 @@
     </div>
 </header>
 
-<!-- MENU MOBILE COM TODAS AS ABAS DO SITE -->
 <div class="menu-mobile" id="menuMobile">
     <a href="index.html">🏠 INÍCIO</a>
     <a href="galerias.html">📸 MOMENTOS REGISTRADOS</a>
@@ -444,7 +418,6 @@
         <p>Momentos especiais dos nossos treinos e eventos</p>
     </div>
 
-    <!-- SEÇÃO SOBRE NÓS COM LINHA DO TEMPO -->
     <div class="sobre-section">
         <h2>📖 NOSSA HISTÓRIA</h2>
         <p>Fundada no coração do bairro Alvorada, a Escolinha do Jacaré nasceu do sonho de transformar vidas através do esporte. Mais que formar atletas, nosso objetivo é formar cidadãos com valores sólidos como respeito, disciplina e trabalho em equipe.</p>
@@ -489,15 +462,13 @@
         </div>
     </div>
 
-    <!-- GALERIA -->
     <div id="galeria" class="galeria-grid">
         <div class="sem-fotos">
-            <p>📸 Galeria em construção.<br>Em breve, fotos dos nossos momentos especiais!</p>
+            <p>Carregando galeria do GitHub... 🐊</p>
         </div>
     </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
     <div class="assinatura">
         <p><strong>🐊 ESCOLINHA DO JACARÉ - ALVORADA</strong></p>
@@ -507,33 +478,47 @@
     </div>
 </footer>
 
-<!-- MODAL VISUALIZAÇÃO -->
 <div id="modalVisualizacao" class="modal" onclick="fecharModalVisualizacao()">
     <span class="fechar-modal">&times;</span>
     <div class="modal-content"><img id="modalImg" src=""></div>
 </div>
 
 <script>
+    const config = {
+        usuario: "jean-silva-juvencio",
+        repositorio: "escolinha-jacare",
+        pasta: "escolinha"
+    };
+
     let fotos = [];
 
-    function carregarDados() {
-        const salvas = localStorage.getItem('escolinha_galeria');
-        if (salvas) fotos = JSON.parse(salvas);
-        atualizarGaleria();
+    async function carregarFotosDoGithub() {
+        const urlAPI = `https://api.github.com/repos/${config.usuario}/${config.repositorio}/contents/${config.pasta}`;
+        try {
+            const resposta = await fetch(urlAPI);
+            if (!resposta.ok) throw new Error("Erro API");
+            const arquivos = await resposta.json();
+            const extensoesValidas = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+
+            fotos = arquivos.filter(arquivo => {
+                const nome = arquivo.name.toLowerCase();
+                return extensoesValidas.some(ext => nome.endsWith(ext));
+            }).map(arquivo => ({ url: arquivo.download_url }));
+
+            renderizarGaleria();
+        } catch (erro) {
+            document.getElementById('galeria').innerHTML = '<div class="sem-fotos"><p>⚠️ Erro ao carregar fotos.</p></div>';
+        }
     }
 
-    function atualizarGaleria() {
-        const galeriaDiv = document.getElementById('galeria');
-        
+    function renderizarGaleria() {
+        const div = document.getElementById('galeria');
         if (fotos.length === 0) {
-            galeriaDiv.innerHTML = '<div class="sem-fotos"><p>📸 Galeria em construção.<br>Em breve, fotos dos nossos momentos especiais!</p></div>';
+            div.innerHTML = '<div class="sem-fotos"><p>📸 Nenhuma foto na pasta "escolinha".</p></div>';
             return;
         }
-        
-        galeriaDiv.innerHTML = fotos.map(foto => `
-            <div class="foto-item">
-                <img src="${foto.url}" onclick="abrirFoto('${foto.url}')" onerror="this.src='https://via.placeholder.com/400x300/cccccc/666666?text=Erro'">
-            </div>
+        div.innerHTML = fotos.map(f => `
+            <div class="foto-item"><img src="${f.url}" onclick="abrirFoto('${f.url}')" loading="lazy"></div>
         `).join('');
     }
 
@@ -542,43 +527,31 @@
         document.getElementById('modalVisualizacao').style.display = 'flex';
     }
 
-    function fecharModalVisualizacao() { document.getElementById('modalVisualizacao').style.display = 'none'; }
+    function fecharModalVisualizacao() { 
+        document.getElementById('modalVisualizacao').style.display = 'none'; 
+    }
 
-    // TEMA CLARO/ESCURO
     function alternarTema() {
         const body = document.body;
-        const temaAtual = body.getAttribute('data-tema');
-        if (temaAtual === 'dark') {
-            body.removeAttribute('data-tema');
-            localStorage.setItem('tema', 'light');
-        } else {
-            body.setAttribute('data-tema', 'dark');
-            localStorage.setItem('tema', 'dark');
-        }
+        const novo = body.getAttribute('data-tema') === 'dark' ? 'light' : 'dark';
+        if (novo === 'light') body.removeAttribute('data-tema');
+        else body.setAttribute('data-tema', 'dark');
+        localStorage.setItem('tema', novo);
     }
 
-    function carregarTema() {
-        const temaSalvo = localStorage.getItem('tema');
-        if (temaSalvo === 'dark') {
-            document.body.setAttribute('data-tema', 'dark');
-        }
+    function carregarConfig() {
+        if (localStorage.getItem('tema') === 'dark') document.body.setAttribute('data-tema', 'dark');
+        carregarFotosDoGithub();
     }
 
-    // MENU HAMBÚRGUER
     function toggleMenu() {
-        const menu = document.getElementById('menuMobile');
-        const overlay = document.getElementById('overlayMenu');
-        menu.classList.toggle('ativo');
-        overlay.classList.toggle('ativo');
+        document.getElementById('menuMobile').classList.toggle('ativo');
+        document.getElementById('overlayMenu').classList.toggle('ativo');
     }
 
-    window.onclick = function(e) {
-        if (e.target === document.getElementById('modalVisualizacao')) fecharModalVisualizacao();
-    };
+    window.onclick = (e) => { if (e.target.id === 'modalVisualizacao') fecharModalVisualizacao(); };
 
-    carregarTema();
-    carregarDados();
+    carregarConfig();
 </script>
-
 </body>
 </html>
