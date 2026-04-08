@@ -34,6 +34,7 @@
         }
         body.dark-mode .barra-noticias {
             background: #0f172a;
+            border-bottom: 1px solid #334155;
         }
         body.dark-mode .barra-noticias .ticker-content span {
             background: rgba(255,255,255,0.1);
@@ -269,7 +270,7 @@
             transform: rotate(-45deg) translate(5px, -5px);
         }
 
-        /* ========== BARRA DE NOTÍCIAS ========== */
+        /* ========== BARRA DE NOTÍCIAS - CORRIGIDA PARA CELULAR ========== */
         .barra-noticias {
             position: fixed;
             top: 80px;
@@ -368,35 +369,46 @@
             vertical-align: middle;
         }
 
-        /* ========== CONTEÚDO PRINCIPAL ========== */
-        .conteudo {
-            width: 100%;
-            padding: 180px 5% 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ========== BANNER ========== */
+        /* ========== SLIDESHOW DO BANNER ========== */
         .hero {
+            position: relative;
             margin-bottom: 30px;
             border-radius: 24px;
             overflow: hidden;
+            min-height: 400px;
+        }
+        .slideshow-container {
             position: relative;
-            background-image: url('banner/banner1.png');
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+        }
+        .slideshow-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-size: cover;
             background-position: center;
-            min-height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+        .slideshow-slide.active {
+            opacity: 1;
         }
         .hero-content {
+            position: relative;
+            z-index: 10;
             padding: 60px 20px;
             color: white;
             max-width: 800px;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.5);
             border-radius: 24px;
+            margin: 0 auto;
+            text-align: center;
+            top: 50%;
+            transform: translateY(-50%);
         }
         .hero-content h1 {
             font-family: 'Montserrat';
@@ -427,6 +439,60 @@
         }
         .btn-prematricula:hover {
             transform: scale(1.05);
+        }
+        .slideshow-prev, .slideshow-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 20;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+        }
+        .slideshow-prev:hover, .slideshow-next:hover {
+            background: rgba(0,0,0,0.8);
+            transform: translateY(-50%) scale(1.05);
+        }
+        .slideshow-prev {
+            left: 20px;
+        }
+        .slideshow-next {
+            right: 20px;
+        }
+        .slideshow-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 20;
+        }
+        .slideshow-dots .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .slideshow-dots .dot.active {
+            background: #00aaff;
+            transform: scale(1.2);
+        }
+
+        /* ========== CONTEÚDO PRINCIPAL ========== */
+        .conteudo {
+            width: 100%;
+            padding: 180px 5% 20px;
+            position: relative;
+            z-index: 1;
         }
 
         /* ========== INDICADORES ========== */
@@ -851,30 +917,97 @@
             transform: translateX(0);
         }
 
-        /* ========== RESPONSIVO ========== */
+        /* ========== RESPONSIVO - BARRA DE NOTÍCIAS CORRIGIDA ========== */
         @media (max-width: 768px) {
-            .conteudo { padding-top: 160px; }
-            .indicadores-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-            .grid-categorias { grid-template-columns: repeat(2, 1fr); }
-            .valores-grid { grid-template-columns: 1fr; }
-            .barra-noticias { top: 70px; }
-            .hero { min-height: 300px; }
-            .hero-content h1 { font-size: 1.5rem; }
-            .hero-content p { font-size: 0.9rem; }
-            .btn-prematricula { padding: 10px 25px; font-size: 0.9rem; }
-            .indicador-card .valor { font-size: 1.8rem; }
-            .card h2, .categorias-container h2, .patrocinadores h2 { font-size: 1.4rem; }
-            .chat-container { max-width: 100%; }
-            .patrocinador-item img { max-width: 130px; }
-            .clima-widget { padding: 5px 12px; font-size: 0.8rem; }
-            .btn-acessibilidade, .btn-tema, .hamburger { width: 38px; height: 38px; }
-            .logo-jacare { font-size: 1.8rem; }
-            .titulo-site { font-size: 0.9rem; }
+            .barra-noticias {
+                position: relative;
+                top: 0;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+            .conteudo {
+                padding-top: 120px;
+            }
+            .hero {
+                min-height: 300px;
+            }
+            .slideshow-container {
+                min-height: 300px;
+            }
+            .hero-content {
+                padding: 30px 15px;
+            }
+            .hero-content h1 {
+                font-size: 1.5rem;
+            }
+            .hero-content p {
+                font-size: 0.9rem;
+            }
+            .indicadores-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .grid-categorias {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .valores-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn-prematricula {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+            }
+            .indicador-card .valor {
+                font-size: 1.8rem;
+            }
+            .card h2, .categorias-container h2, .patrocinadores h2 {
+                font-size: 1.4rem;
+            }
+            .chat-container {
+                max-width: 100%;
+            }
+            .patrocinador-item img {
+                max-width: 130px;
+            }
+            .clima-widget {
+                padding: 5px 12px;
+                font-size: 0.8rem;
+            }
+            .btn-acessibilidade, .btn-tema, .hamburger {
+                width: 38px;
+                height: 38px;
+            }
+            .logo-jacare {
+                font-size: 1.8rem;
+            }
+            .titulo-site {
+                font-size: 0.9rem;
+            }
+            .slideshow-prev, .slideshow-next {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            .ticker-content span {
+                font-size: 0.7rem;
+                padding: 3px 10px;
+                margin-right: 25px;
+            }
+            .selo-ao-vivo {
+                font-size: 0.65rem;
+                padding: 3px 8px;
+            }
         }
         @media (min-width: 1200px) {
-            .conteudo { padding: 180px 8% 20px; }
-            .chat-container { max-width: 1000px; }
-            .patrocinador-item img { max-width: 250px; }
+            .conteudo {
+                padding: 180px 8% 20px;
+            }
+            .chat-container {
+                max-width: 1000px;
+            }
+            .patrocinador-item img {
+                max-width: 250px;
+            }
         }
     </style>
 </head>
@@ -927,7 +1060,7 @@
     </div>
 </div>
 
-<!-- BARRA DE NOTÍCIAS -->
+<!-- BARRA DE NOTÍCIAS - AGORA APARECE NO CELULAR -->
 <div class="barra-noticias">
     <div class="container-noticias">
         <div class="selo-ao-vivo">
@@ -942,17 +1075,23 @@
     </div>
 </div>
 
+<!-- SLIDESHOW BANNER -->
+<div class="hero">
+    <div class="slideshow-container" id="slideshowContainer">
+        <!-- As imagens serão carregadas dinamicamente via JavaScript -->
+    </div>
+    <button class="slideshow-prev" id="prevBtn">❮</button>
+    <button class="slideshow-next" id="nextBtn">❯</button>
+    <div class="slideshow-dots" id="dotsContainer"></div>
+    <div class="hero-content">
+        <h1>🐊 ESCOLINHA DO JACARÉ - ALVORADA</h1>
+        <p>"Desde 15 de abril de 1998 formando cidadãos através do esporte"</p>
+        <a href="prematricula.html" class="btn-prematricula">📝 FAZER PRÉ-MATRÍCULA</a>
+    </div>
+</div>
+
 <!-- CONTEÚDO PRINCIPAL -->
 <div class="conteudo">
-
-    <!-- BANNER HERO -->
-    <div class="hero">
-        <div class="hero-content">
-            <h1>🐊 ESCOLINHA DO JACARÉ - ALVORADA</h1>
-            <p>"Desde 15 de abril de 1998 formando cidadãos através do esporte"</p>
-            <a href="prematricula.html" class="btn-prematricula">📝 FAZER PRÉ-MATRÍCULA</a>
-        </div>
-    </div>
 
     <!-- INDICADORES -->
     <div class="indicadores-grid" id="indicadoresGrid">
@@ -1040,7 +1179,7 @@
                 • 📝 <strong>Matrícula e pré-matrícula</strong><br>
                 • 👕 <strong>Uniforme</strong> (doado pela escola)<br>
                 • 📞 <strong>Contato</strong> (WhatsApp e presencial)<br><br>
-                <strong>Pergunte à vontade! Estou aqui para ayudar.</strong>
+                <strong>Pergunte à vontade! Estou aqui para ajudar.</strong>
             </div>
         </div>
         <div class="chat-input-area">
@@ -1124,6 +1263,74 @@
         }
     }
 
+    // ========== SLIDESHOW BANNER ==========
+    // Lista de imagens da pasta banner/
+    const imagensBanner = [
+        'banner/banner1.png',
+        'banner/banner2.png',
+        'banner/banner3.png',
+        'banner/banner4.png',
+        'banner/banner5.png'
+    ];
+    
+    let slideIndex = 0;
+    let slideInterval;
+    
+    function criarSlideshow() {
+        const container = document.getElementById('slideshowContainer');
+        const dotsContainer = document.getElementById('dotsContainer');
+        
+        // Criar slides
+        imagensBanner.forEach((img, index) => {
+            const slide = document.createElement('div');
+            slide.className = 'slideshow-slide';
+            if (index === 0) slide.classList.add('active');
+            slide.style.backgroundImage = `url('${img}')`;
+            container.appendChild(slide);
+            
+            // Criar bolinha
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => irParaSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+    }
+    
+    function mostrarSlide(n) {
+        const slides = document.querySelectorAll('.slideshow-slide');
+        const dots = document.querySelectorAll('.dot');
+        
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        
+        slideIndex = (n + slides.length) % slides.length;
+        slides[slideIndex].classList.add('active');
+        dots[slideIndex].classList.add('active');
+    }
+    
+    function proximoSlide() {
+        mostrarSlide(slideIndex + 1);
+    }
+    
+    function slideAnterior() {
+        mostrarSlide(slideIndex - 1);
+    }
+    
+    function irParaSlide(n) {
+        mostrarSlide(n);
+        reiniciarIntervalo();
+    }
+    
+    function iniciarIntervalo() {
+        slideInterval = setInterval(proximoSlide, 7000); // 7 segundos
+    }
+    
+    function reiniciarIntervalo() {
+        clearInterval(slideInterval);
+        iniciarIntervalo();
+    }
+    
     // ========== CARREGAR DADOS DA PLANILHA ==========
     async function carregarDadosDaPlanilha() {
         try {
@@ -1300,15 +1507,20 @@
     });
     document.getElementById('btnAcessibilidade')?.addEventListener('click', alternarAcessibilidade);
     
-    // Botões SEM preventDefault (para funcionar)
-    document.querySelectorAll('.btn-mapa, .btn-prematricula').forEach(link => {
-        link.addEventListener('click', (e) => { 
-            // NÃO faz preventDefault - deixa o link funcionar
-        });
+    document.getElementById('prevBtn')?.addEventListener('click', () => {
+        slideAnterior();
+        reiniciarIntervalo();
+    });
+    document.getElementById('nextBtn')?.addEventListener('click', () => {
+        proximoSlide();
+        reiniciarIntervalo();
     });
 
     // ========== INICIALIZAÇÃO ==========
     window.addEventListener('load', () => {
+        criarSlideshow();
+        iniciarIntervalo();
+        
         buscarClima();
         buscarNoticiasFutebol();
         carregarDadosDaPlanilha();
