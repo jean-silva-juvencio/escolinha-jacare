@@ -329,7 +329,7 @@
             color: #003399;
         }
 
-        /* ========== MENU MOBILE (SEM OVERLAY) ========== */
+        /* ========== MENU MOBILE ========== */
         .menu-mobile {
             position: fixed;
             top: 0;
@@ -382,7 +382,7 @@
             border-radius: 24px;
             overflow: hidden;
             position: relative;
-            background-image: url('banners/banner1.png');
+            background-image: url('banner/banner1.png');
             background-size: cover;
             background-position: center;
             min-height: 400px;
@@ -880,7 +880,7 @@
 </head>
 <body>
 
-<!-- MENU MOBILE (SEM OVERLAY) -->
+<!-- MENU MOBILE -->
 <div class="menu-mobile" id="menuMobile">
     <a href="index.html">🏠 INÍCIO</a>
     <a href="diretoria.html">📊 DIRETORIA</a>
@@ -1040,7 +1040,7 @@
                 • 📝 <strong>Matrícula e pré-matrícula</strong><br>
                 • 👕 <strong>Uniforme</strong> (doado pela escola)<br>
                 • 📞 <strong>Contato</strong> (WhatsApp e presencial)<br><br>
-                <strong>Pergunte à vontade! Estou aqui para ajudar.</strong>
+                <strong>Pergunte à vontade! Estou aqui para ayudar.</strong>
             </div>
         </div>
         <div class="chat-input-area">
@@ -1110,7 +1110,7 @@
     let tickerSpeed = 0.6;
     let tickerRunning = true;
 
-    // ========== MENU HAMBÚRGUER (SEM OVERLAY) ==========
+    // ========== MENU HAMBÚRGUER ==========
     function toggleMenu() {
         var menu = document.getElementById('menuMobile');
         var hamburger = document.getElementById('hamburger');
@@ -1299,11 +1299,11 @@
         });
     });
     document.getElementById('btnAcessibilidade')?.addEventListener('click', alternarAcessibilidade);
-    document.querySelectorAll('.btn-mapa, .btn-prematricula, #footerEmail, #footerWhatsapp, #patrocinioEmail').forEach(link => {
+    
+    // Botões SEM preventDefault (para funcionar)
+    document.querySelectorAll('.btn-mapa, .btn-prematricula').forEach(link => {
         link.addEventListener('click', (e) => { 
-            if (link.id !== 'footerWhatsapp' && link.id !== 'patrocinioEmail' && link.id !== 'footerEmail') {
-                e.preventDefault(); 
-            }
+            // NÃO faz preventDefault - deixa o link funcionar
         });
     });
 
