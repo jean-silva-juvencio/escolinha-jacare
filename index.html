@@ -378,34 +378,21 @@
             z-index: 1;
         }
 
-        /* ========== SLIDESHOW DO BANNER ========== */
+        /* ========== BANNER FIXO COM IMAGEM ÚNICA E MAIOR ========== */
         .hero {
             position: relative;
             margin-top: 20px;
             margin-bottom: 30px;
             border-radius: 24px;
             overflow: hidden;
-            min-height: 500px;
-        }
-        .slideshow-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            min-height: 400px;
-        }
-        .slideshow-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            min-height: 600px;
+            background-image: url('banner/banner5.png');
             background-size: cover;
             background-position: center;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-        }
-        .slideshow-slide.active {
-            opacity: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
         .hero-content {
             position: relative;
@@ -417,8 +404,6 @@
             border-radius: 24px;
             margin: 0 auto;
             text-align: center;
-            top: 50%;
-            transform: translateY(-50%);
         }
         .hero-content h1 {
             font-family: 'Montserrat';
@@ -449,52 +434,6 @@
         }
         .btn-prematricula:hover {
             transform: scale(1.05);
-        }
-        .slideshow-prev, .slideshow-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 20;
-            font-size: 1.3rem;
-            transition: all 0.3s;
-        }
-        .slideshow-prev:hover, .slideshow-next:hover {
-            background: rgba(0,0,0,0.8);
-            transform: translateY(-50%) scale(1.05);
-        }
-        .slideshow-prev {
-            left: 20px;
-        }
-        .slideshow-next {
-            right: 20px;
-        }
-        .slideshow-dots {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            z-index: 20;
-        }
-        .slideshow-dots .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .slideshow-dots .dot.active {
-            background: #00aaff;
-            transform: scale(1.2);
         }
 
         /* ========== INDICADORES ========== */
@@ -932,11 +871,8 @@
                 margin-bottom: 10px;
             }
             .hero {
+                min-height: 450px;
                 margin-top: 10px;
-                min-height: 350px;
-            }
-            .slideshow-container {
-                min-height: 350px;
             }
             .hero-content {
                 padding: 30px 15px;
@@ -986,11 +922,6 @@
             }
             .titulo-site {
                 font-size: 0.9rem;
-            }
-            .slideshow-prev, .slideshow-next {
-                width: 35px;
-                height: 35px;
-                font-size: 1rem;
             }
             .ticker-content span {
                 font-size: 0.7rem;
@@ -1079,14 +1010,8 @@
     </div>
 </div>
 
-<!-- SLIDESHOW BANNER -->
+<!-- BANNER FIXO COM IMAGEM ÚNICA (banner5.png) -->
 <div class="hero">
-    <div class="slideshow-container" id="slideshowContainer">
-        <!-- As imagens serão carregadas dinamicamente via JavaScript -->
-    </div>
-    <button class="slideshow-prev" id="prevBtn">❮</button>
-    <button class="slideshow-next" id="nextBtn">❯</button>
-    <div class="slideshow-dots" id="dotsContainer"></div>
     <div class="hero-content">
         <h1>🐊 ESCOLINHA DO JACARÉ - ALVORADA</h1>
         <p>"Desde 15 de abril de 1998 formando cidadãos através do esporte"</p>
@@ -1267,73 +1192,6 @@
         }
     }
 
-    // ========== SLIDESHOW BANNER COM IMAGEM DESCENDO (75%) ==========
-    const imagensBanner = [
-        'banner/banner1.png',
-        'banner/banner2.png',
-        'banner/banner3.png',
-        'banner/banner4.png',
-        'banner/banner5.png'
-    ];
-    
-    let slideIndex = 0;
-    let slideInterval;
-    
-    function criarSlideshow() {
-        const container = document.getElementById('slideshowContainer');
-        const dotsContainer = document.getElementById('dotsContainer');
-        
-        imagensBanner.forEach((img, index) => {
-            const slide = document.createElement('div');
-            slide.className = 'slideshow-slide';
-            if (index === 0) slide.classList.add('active');
-            slide.style.backgroundImage = `url('${img}')`;
-            slide.style.backgroundSize = 'cover';
-            slide.style.backgroundPosition = 'center 75%';
-            container.appendChild(slide);
-            
-            const dot = document.createElement('div');
-            dot.className = 'dot';
-            if (index === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => irParaSlide(index));
-            dotsContainer.appendChild(dot);
-        });
-    }
-    
-    function mostrarSlide(n) {
-        const slides = document.querySelectorAll('.slideshow-slide');
-        const dots = document.querySelectorAll('.dot');
-        
-        slides.forEach(slide => slide.classList.remove('active'));
-        dots.forEach(dot => dot.classList.remove('active'));
-        
-        slideIndex = (n + slides.length) % slides.length;
-        slides[slideIndex].classList.add('active');
-        dots[slideIndex].classList.add('active');
-    }
-    
-    function proximoSlide() {
-        mostrarSlide(slideIndex + 1);
-    }
-    
-    function slideAnterior() {
-        mostrarSlide(slideIndex - 1);
-    }
-    
-    function irParaSlide(n) {
-        mostrarSlide(n);
-        reiniciarIntervalo();
-    }
-    
-    function iniciarIntervalo() {
-        slideInterval = setInterval(proximoSlide, 7000);
-    }
-    
-    function reiniciarIntervalo() {
-        clearInterval(slideInterval);
-        iniciarIntervalo();
-    }
-    
     // ========== CARREGAR DADOS DA PLANILHA ==========
     async function carregarDadosDaPlanilha() {
         try {
@@ -1509,21 +1367,9 @@
         });
     });
     document.getElementById('btnAcessibilidade')?.addEventListener('click', alternarAcessibilidade);
-    
-    document.getElementById('prevBtn')?.addEventListener('click', () => {
-        slideAnterior();
-        reiniciarIntervalo();
-    });
-    document.getElementById('nextBtn')?.addEventListener('click', () => {
-        proximoSlide();
-        reiniciarIntervalo();
-    });
 
     // ========== INICIALIZAÇÃO ==========
     window.addEventListener('load', () => {
-        criarSlideshow();
-        iniciarIntervalo();
-        
         buscarClima();
         buscarNoticiasFutebol();
         carregarDadosDaPlanilha();
