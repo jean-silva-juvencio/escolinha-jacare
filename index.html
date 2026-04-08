@@ -270,7 +270,7 @@
             transform: rotate(-45deg) translate(5px, -5px);
         }
 
-        /* ========== BARRA DE NOTÍCIAS ========== */
+        /* ========== BARRA DE NOTÍCIAS - CORRIGIDA PARA CELULAR ========== */
         .barra-noticias {
             position: fixed;
             top: 80px;
@@ -369,7 +369,7 @@
             vertical-align: middle;
         }
 
-        /* ========== CONTEÚDO PRINCIPAL - CENTRALIZADO ========== */
+        /* ========== CONTEÚDO PRINCIPAL ========== */
         .conteudo {
             max-width: 80%;
             margin: 0 auto;
@@ -385,7 +385,7 @@
             margin-bottom: 30px;
             border-radius: 24px;
             overflow: hidden;
-            min-height: 500px;  /* Aumente de 400px para 500px */  
+            min-height: 500px;
         }
         .slideshow-container {
             position: relative;
@@ -400,7 +400,7 @@
             width: 100%;
             height: 100%;
             background-size: cover;
-            background-position: center 30%; 
+            background-position: center;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
         }
@@ -925,6 +925,7 @@
                 max-width: 95%;
                 padding: 120px 0 20px;
             }
+            /* BARRA DE NOTÍCIAS CORRIGIDA PARA APARECER NO CELULAR */
             .barra-noticias {
                 position: relative;
                 top: 0;
@@ -932,10 +933,11 @@
                 margin-bottom: 10px;
             }
             .hero {
-                min-height: 300px;
+                margin-top: 10px;
+                min-height: 350px;
             }
             .slideshow-container {
-                min-height: 300px;
+                min-height: 350px;
             }
             .hero-content {
                 padding: 30px 15px;
@@ -1063,7 +1065,7 @@
     </div>
 </div>
 
-<!-- BARRA DE NOTÍCIAS -->
+<!-- BARRA DE NOTÍCIAS - AGORA APARECE NO CELULAR -->
 <div class="barra-noticias">
     <div class="container-noticias">
         <div class="selo-ao-vivo">
@@ -1266,7 +1268,7 @@
         }
     }
 
-    // ========== SLIDESHOW BANNER ==========
+    // ========== SLIDESHOW BANNER COM IMAGEM DESCENDO ==========
     const imagensBanner = [
         'banner/banner1.png',
         'banner/banner2.png',
@@ -1287,6 +1289,8 @@
             slide.className = 'slideshow-slide';
             if (index === 0) slide.classList.add('active');
             slide.style.backgroundImage = `url('${img}')`;
+            slide.style.backgroundSize = 'cover';
+            slide.style.backgroundPosition = 'center 60%';  // ← IMAGEM DESCE 60%
             container.appendChild(slide);
             
             const dot = document.createElement('div');
