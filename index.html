@@ -270,7 +270,7 @@
             transform: rotate(-45deg) translate(5px, -5px);
         }
 
-        /* ========== BARRA DE NOTÍCIAS - CORRIGIDA PARA CELULAR ========== */
+        /* ========== BARRA DE NOTÍCIAS ========== */
         .barra-noticias {
             position: fixed;
             top: 80px;
@@ -925,7 +925,6 @@
                 max-width: 95%;
                 padding: 120px 0 20px;
             }
-            /* BARRA DE NOTÍCIAS CORRIGIDA PARA APARECER NO CELULAR */
             .barra-noticias {
                 position: relative;
                 top: 0;
@@ -1065,7 +1064,7 @@
     </div>
 </div>
 
-<!-- BARRA DE NOTÍCIAS - AGORA APARECE NO CELULAR -->
+<!-- BARRA DE NOTÍCIAS -->
 <div class="barra-noticias">
     <div class="container-noticias">
         <div class="selo-ao-vivo">
@@ -1268,7 +1267,7 @@
         }
     }
 
-    // ========== SLIDESHOW BANNER COM IMAGEM DESCENDO ==========
+    // ========== SLIDESHOW BANNER COM IMAGEM DESCENDO (75%) ==========
     const imagensBanner = [
         'banner/banner1.png',
         'banner/banner2.png',
@@ -1290,7 +1289,7 @@
             if (index === 0) slide.classList.add('active');
             slide.style.backgroundImage = `url('${img}')`;
             slide.style.backgroundSize = 'cover';
-            slide.style.backgroundPosition = 'center 60%';  // ← IMAGEM DESCE 60%
+            slide.style.backgroundPosition = 'center 75%';
             container.appendChild(slide);
             
             const dot = document.createElement('div');
