@@ -76,7 +76,6 @@
             color: #FFD700 !important;
             text-decoration: underline !important;
         }
-        /* Fonte maior no modo acessibilidade */
         body.acessibilidade {
             font-size: 1.2rem;
         }
@@ -166,7 +165,7 @@
             gap: 12px;
         }
         .logo-jacare {
-            font-size: 2.5rem;
+            font-size: 3rem;
             display: inline-block;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -181,11 +180,10 @@
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-3px); }
         }
-        /* Ícones sociais lado esquerdo */
         .icones-sociais {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
             margin-left: 15px;
         }
         .icones-sociais a {
@@ -198,8 +196,8 @@
             transform: scale(1.1);
         }
         .icones-sociais img {
-            width: 22px;
-            height: 22px;
+            width: 28px;
+            height: 28px;
         }
         .area-direita {
             display: flex;
@@ -211,18 +209,17 @@
             align-items: center;
             gap: 5px;
             background: rgba(0,71,171,0.1);
-            padding: 6px 12px;
+            padding: 8px 15px;
             border-radius: 40px;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-weight: 500;
         }
         body.dark-mode .clima-widget {
             background: rgba(59,130,246,0.2);
         }
-        /* Botão acessibilidade */
         .btn-acessibilidade {
-            width: 42px;
-            height: 42px;
+            width: 45px;
+            height: 45px;
             background: #f1f5f9;
             border: none;
             border-radius: 50%;
@@ -230,7 +227,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             transition: all 0.3s ease;
         }
         body.dark-mode .btn-acessibilidade {
@@ -241,8 +238,8 @@
             color: #000;
         }
         .btn-tema {
-            width: 42px;
-            height: 42px;
+            width: 45px;
+            height: 45px;
             background: #f1f5f9;
             border: none;
             border-radius: 50%;
@@ -250,7 +247,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             transition: all 0.3s ease;
         }
         body.dark-mode .btn-tema {
@@ -260,8 +257,8 @@
             transform: scale(1.05);
         }
         .hamburger {
-            width: 42px;
-            height: 42px;
+            width: 45px;
+            height: 45px;
             background: #0047AB;
             border: none;
             border-radius: 50%;
@@ -269,36 +266,36 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         .hamburger span {
-            width: 20px;
-            height: 2.5px;
+            width: 22px;
+            height: 3px;
             background: white;
             border-radius: 2px;
             transition: all 0.3s ease;
         }
         .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+            transform: rotate(45deg) translate(6px, 6px);
         }
         .hamburger.active span:nth-child(2) {
             opacity: 0;
         }
         .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
+            transform: rotate(-45deg) translate(6px, -6px);
         }
 
         /* ========== BARRA DE NOTÍCIAS ========== */
         .barra-noticias {
             position: fixed;
-            top: 78px;
+            top: 85px;
             left: 0;
             right: 0;
             z-index: 999;
             background: linear-gradient(135deg, #3b82f6, #2563eb);
-            padding: 10px 5%;
+            padding: 12px 5%;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             overflow: hidden;
         }
@@ -329,8 +326,8 @@
             background: #dc2626;
             color: white;
             font-weight: 700;
-            font-size: 0.7rem;
-            padding: 4px 10px;
+            font-size: 0.75rem;
+            padding: 5px 12px;
             border-radius: 30px;
             letter-spacing: 0.5px;
             white-space: nowrap;
@@ -338,8 +335,8 @@
             animation: pulseSelo 1.5s ease-in-out infinite;
         }
         .ponto-vivo {
-            width: 7px;
-            height: 7px;
+            width: 8px;
+            height: 8px;
             background: white;
             border-radius: 50%;
             animation: piscar 1s step-end infinite;
@@ -366,9 +363,9 @@
             display: inline-block;
             margin-right: 40px;
             background: rgba(255,255,255,0.15);
-            padding: 4px 15px;
+            padding: 5px 18px;
             border-radius: 40px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
             color: #ffffff;
         }
@@ -425,8 +422,8 @@
             margin: 15px 0;
         }
         .sidebar img {
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
         }
         .overlay {
             position: fixed;
@@ -450,8 +447,8 @@
             position: fixed;
             bottom: 90px;
             right: 20px;
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             background: linear-gradient(135deg, #0047AB, #003399);
             color: white;
             border: none;
@@ -460,7 +457,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             transition: all 0.3s;
             z-index: 999;
@@ -475,8 +472,8 @@
             position: fixed;
             bottom: 25px;
             right: 20px;
-            width: 58px;
-            height: 58px;
+            width: 62px;
+            height: 62px;
             background: linear-gradient(135deg, #25d366, #128C7E);
             color: white;
             border: none;
@@ -485,11 +482,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             transition: all 0.3s;
             z-index: 998;
             text-decoration: none;
+        }
+        .btn-whatsapp img {
+            width: 36px;
+            height: 36px;
         }
 
         /* Conteúdo principal */
@@ -534,14 +534,14 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background: rgba(0,0,0,0.5);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: white;
             cursor: pointer;
@@ -563,8 +563,8 @@
             z-index: 10;
         }
         .indicador {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background: rgba(255,255,255,0.5);
             cursor: pointer;
@@ -583,15 +583,18 @@
         }
         .card {
             background: white;
-            padding: 25px;
-            border-radius: 20px;
+            padding: 30px;
+            border-radius: 25px;
             width: 100%;
         }
         .card h2 {
             font-family: 'Montserrat';
             color: #003399;
             margin-bottom: 12px;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
+        }
+        .card p {
+            font-size: 1rem;
         }
 
         /* Botão pré-matrícula */
@@ -599,10 +602,10 @@
             background: linear-gradient(135deg, #ff9800, #f57c00);
             color: white;
             border: none;
-            padding: 14px 25px;
+            padding: 16px 30px;
             border-radius: 50px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
             margin: 20px auto;
             display: inline-flex;
@@ -620,7 +623,7 @@
         .faq-section {
             background: white;
             border-radius: 25px;
-            padding: 30px 5%;
+            padding: 35px 5%;
             margin: 25px 0;
             width: 100%;
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
@@ -628,28 +631,28 @@
         .faq-section h2 {
             font-family: 'Montserrat';
             color: #003399;
-            font-size: 1.5rem;
-            margin-bottom: 25px;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
             text-align: center;
         }
         .faq-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
         }
         .faq-item {
             background: #f8f9fa;
-            border-radius: 14px;
+            border-radius: 16px;
             overflow: hidden;
         }
         .faq-question {
             width: 100%;
-            padding: 14px 18px;
+            padding: 16px 20px;
             background: #f8f9fa;
             border: none;
             text-align: left;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: #003399;
             cursor: pointer;
             display: flex;
@@ -668,19 +671,19 @@
         }
         .faq-answer {
             max-height: 0;
-            padding: 0 18px;
+            padding: 0 20px;
             overflow: hidden;
             transition: max-height 0.3s ease, padding 0.3s ease;
             color: #666;
             line-height: 1.5;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
         .faq-item.active .faq-answer {
             max-height: 150px;
-            padding: 0 18px 14px 18px;
+            padding: 0 20px 16px 20px;
         }
 
-        /* CHAT JACARÉ IA - CENTRALIZADO */
+        /* CHAT JACARÉ IA */
         .chat-container {
             background: white;
             border-radius: 28px;
@@ -695,13 +698,13 @@
         }
         .chat-header {
             background: linear-gradient(135deg, #0047AB, #2563eb);
-            padding: 18px 24px;
+            padding: 20px 25px;
             display: flex;
             align-items: center;
             gap: 12px;
         }
         .chat-header .avatar {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
         .chat-header .titulo {
@@ -710,25 +713,25 @@
         .chat-header h3 {
             font-family: 'Montserrat';
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin: 0;
         }
         .chat-header p {
             color: rgba(255,255,255,0.85);
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             margin: 2px 0 0;
         }
         .chat-badge {
             background: rgba(255,255,255,0.2);
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 50px;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: 600;
             color: white;
         }
         .chat-messages {
-            padding: 20px 24px;
-            max-height: 350px;
+            padding: 25px 25px;
+            max-height: 400px;
             overflow-y: auto;
             background: rgba(248, 250, 252, 0.5);
             display: flex;
@@ -738,11 +741,11 @@
         .chat-message-bot {
             background: #e8f0fe;
             color: #1e293b;
-            padding: 12px 16px;
+            padding: 14px 18px;
             border-radius: 20px;
             border-bottom-left-radius: 4px;
             max-width: 85%;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             line-height: 1.4;
             align-self: center;
             text-align: center;
@@ -754,16 +757,16 @@
         .chat-message-user {
             background: linear-gradient(135deg, #0047AB, #2563eb);
             color: white;
-            padding: 12px 16px;
+            padding: 14px 18px;
             border-radius: 20px;
             border-bottom-right-radius: 4px;
             max-width: 85%;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             line-height: 1.4;
             align-self: flex-end;
         }
         .chat-input-area {
-            padding: 16px 24px 24px;
+            padding: 20px 25px 25px;
             background: white;
             border-top: 1px solid rgba(0,0,0,0.05);
         }
@@ -778,11 +781,11 @@
         }
         .chat-input {
             flex: 1;
-            padding: 12px 18px;
+            padding: 14px 20px;
             border: 1px solid #e2e8f0;
             border-radius: 50px;
             font-family: inherit;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             background: #f8fafc;
             transition: all 0.3s;
         }
@@ -799,11 +802,11 @@
         .chat-send {
             background: linear-gradient(135deg, #0047AB, #2563eb);
             border: none;
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             transition: all 0.3s;
             color: white;
         }
@@ -818,9 +821,9 @@
         .sugestao-btn {
             background: rgba(0,71,171,0.1);
             border: none;
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 50px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
@@ -836,13 +839,13 @@
             transform: translateY(-2px);
         }
         .chat-footer-note {
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             color: #888;
             text-align: center;
             margin-top: 10px;
         }
 
-        /* HORÁRIO - 100% LARGURA */
+        /* HORÁRIO */
         .horario-card {
             text-align: center;
             margin: 25px 0;
@@ -851,28 +854,32 @@
         .horario-content {
             background: linear-gradient(135deg, #0047AB, #003399);
             color: white;
-            padding: 25px;
+            padding: 30px;
             border-radius: 25px;
             width: 100%;
         }
         .horario-icone {
-            font-size: 1.8rem;
-            margin-bottom: 6px;
+            font-size: 2rem;
+            margin-bottom: 8px;
         }
         .horario-content h3 {
             font-family: 'Montserrat';
-            font-size: 1.1rem;
-            margin-bottom: 8px;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
         }
         .horario-hora {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 800;
         }
+        .horario-detalhe {
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
 
-        /* CATEGORIAS - MAIORES */
+        /* CATEGORIAS */
         .categorias-container {
             background: white;
-            padding: 40px 5%;
+            padding: 45px 5%;
             border-radius: 32px;
             margin: 30px 0;
             width: 100%;
@@ -882,16 +889,16 @@
             font-family: 'Montserrat';
             color: #003399;
             font-size: 2rem;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             text-align: center;
         }
         .categorias-container h2:after {
             content: '';
             display: block;
-            width: 60px;
+            width: 70px;
             height: 4px;
             background: linear-gradient(90deg, #0047AB, #00aaff);
-            margin: 10px auto 0;
+            margin: 12px auto 0;
             border-radius: 2px;
         }
         .grid-categorias {
@@ -915,7 +922,7 @@
         }
         .cat-item {
             background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            padding: 20px;
+            padding: 25px;
             border-radius: 24px;
             font-weight: 800;
             font-size: 1.2rem;
@@ -926,7 +933,7 @@
             gap: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
-            min-height: 100px;
+            min-height: 110px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
         .cat-item:hover {
@@ -935,22 +942,22 @@
             background: #f0f7ff;
         }
         .cat-item .emoji-cat {
-            font-size: 1.8rem;
+            font-size: 2rem;
         }
         @media (min-width: 1200px) {
             .cat-item {
-                padding: 25px;
+                padding: 28px;
                 font-size: 1.3rem;
-                min-height: 120px;
+                min-height: 130px;
             }
             .cat-item .emoji-cat {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
         }
         .info-idades {
             font-size: 1rem;
             color: #555;
-            padding: 20px;
+            padding: 22px;
             background: #f0f7ff;
             border-radius: 16px;
             text-align: center;
@@ -959,7 +966,7 @@
         /* PATROCINADORES */
         .patrocinadores {
             background: white;
-            padding: 30px 5%;
+            padding: 35px 5%;
             border-radius: 25px;
             margin: 25px 0;
             width: 100%;
@@ -968,18 +975,18 @@
         .patrocinadores h2 {
             font-family: 'Montserrat';
             color: #003399;
-            font-size: 1.8rem;
-            margin-bottom: 25px;
+            font-size: 2rem;
+            margin-bottom: 30px;
         }
         .patrocinadores-grid {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 50px;
             flex-wrap: wrap;
             align-items: center;
         }
         .patrocinador-item img {
-            max-width: 150px;
+            max-width: 180px;
             height: auto;
             transition: transform 0.3s;
         }
@@ -987,8 +994,8 @@
             transform: scale(1.05);
         }
         .chamada-patrocinio {
-            margin-top: 25px;
-            font-size: 0.9rem;
+            margin-top: 30px;
+            font-size: 1rem;
         }
         .chamada-patrocinio a {
             display: inline-flex;
@@ -998,35 +1005,40 @@
             color: #0047AB;
             font-weight: 600;
             margin: 5px 10px;
+            font-size: 0.95rem;
         }
         body.dark-mode .chamada-patrocinio a {
             color: #60a5fa;
         }
         .chamada-patrocinio img {
-            width: 20px;
+            width: 24px;
             vertical-align: middle;
         }
 
-        /* LOCALIZAÇÃO - MAPA MAIOR */
+        /* LOCALIZAÇÃO */
         .loc-card {
             background: #fff;
-            padding: 25px 5%;
+            padding: 30px 5%;
             border-radius: 25px;
             text-align: center;
             border: 3px solid #00aaff;
             margin: 25px 0;
             width: 100%;
         }
+        .loc-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
         .mapa-container {
             width: 100%;
-            height: 300px;
+            height: 350px;
             border-radius: 15px;
             overflow: hidden;
-            margin: 12px 0;
+            margin: 15px 0;
         }
         @media (min-width: 768px) {
             .mapa-container {
-                height: 400px;
+                height: 450px;
             }
         }
         .mapa-container iframe {
@@ -1038,14 +1050,14 @@
             background: #0047AB;
             color: white;
             text-decoration: none;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-radius: 40px;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            margin-top: 8px;
-            font-size: 0.85rem;
+            gap: 8px;
+            margin-top: 10px;
+            font-size: 0.9rem;
         }
 
         /* FOOTER - PONTA A PONTA */
@@ -1053,13 +1065,14 @@
             background: #003399;
             color: white;
             text-align: center;
-            padding: 30px 5%;
+            padding: 35px 5%;
             margin-top: 40px;
             width: 100%;
             position: relative;
             left: 0;
             right: 0;
             border-radius: 0;
+            font-size: 0.95rem;
         }
         footer a {
             color: white;
@@ -1069,20 +1082,26 @@
             text-decoration: underline;
         }
         .contato-footer {
-            margin-top: 15px;
+            margin-top: 20px;
             display: flex;
             justify-content: center;
-            gap: 25px;
+            gap: 35px;
             flex-wrap: wrap;
         }
         .contato-footer a {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            font-size: 0.95rem;
         }
         .contato-footer img {
-            width: 20px;
+            width: 24px;
             vertical-align: middle;
+        }
+        .rights {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            opacity: 0.9;
         }
 
         .toast {
@@ -1090,7 +1109,7 @@
             bottom: 100px;
             right: 20px;
             background: white;
-            padding: 8px 16px;
+            padding: 10px 18px;
             border-radius: 40px;
             display: flex;
             align-items: center;
@@ -1099,7 +1118,7 @@
             z-index: 1100;
             transform: translateX(120%);
             transition: transform 0.3s ease;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
         .toast.show {
             transform: translateX(0);
@@ -1117,15 +1136,15 @@
                 padding: 10px 4%;
             }
             .logo-jacare {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             .icones-sociais {
-                gap: 8px;
+                gap: 10px;
                 margin-left: 10px;
             }
             .icones-sociais img {
-                width: 18px;
-                height: 18px;
+                width: 22px;
+                height: 22px;
             }
             .barra-noticias {
                 padding: 10px 4%;
@@ -1150,7 +1169,10 @@
             .btn-whatsapp {
                 width: 52px;
                 height: 52px;
-                font-size: 1.6rem;
+            }
+            .btn-whatsapp img {
+                width: 30px;
+                height: 30px;
             }
             .btn-topo {
                 width: 45px;
@@ -1158,14 +1180,14 @@
                 font-size: 1.2rem;
             }
             .seta {
-                width: 30px;
-                height: 30px;
+                width: 32px;
+                height: 32px;
                 font-size: 0.9rem;
             }
             .seta-esquerda { left: 10px; }
             .seta-direita { right: 10px; }
             .chat-messages {
-                max-height: 280px;
+                max-height: 300px;
             }
             .chat-message-bot, .chat-message-user {
                 max-width: 95%;
@@ -1178,11 +1200,22 @@
             }
             .contato-footer {
                 flex-direction: column;
-                gap: 10px;
+                gap: 12px;
                 align-items: center;
             }
             .patrocinador-item img {
-                max-width: 100px;
+                max-width: 120px;
+            }
+            .card h2 {
+                font-size: 1.3rem;
+            }
+            .categorias-container h2 {
+                font-size: 1.6rem;
+            }
+            .cat-item {
+                padding: 18px;
+                font-size: 1rem;
+                min-height: 80px;
             }
         }
         @media (max-width: 650px) {
@@ -1190,6 +1223,9 @@
                 width: 28px;
                 height: 28px;
                 font-size: 0.8rem;
+            }
+            .patrocinador-item img {
+                max-width: 100px;
             }
         }
     </style>
@@ -1207,25 +1243,25 @@
     <a href="galerias.html">📸 GALERIAS</a>
     <div class="divider"></div>
     <a href="#" id="menuInstagram">
-        <img src="icones/instagram.png" alt="Instagram" width="22"> INSTAGRAM
+        <img src="icones/instagram.png" alt="Instagram"> INSTAGRAM
     </a>
     <a href="#" id="menuFacebook">
-        <img src="icones/facebook.png" alt="Facebook" width="22"> FACEBOOK
+        <img src="icones/facebook.png" alt="Facebook"> FACEBOOK
     </a>
     <a href="#" id="menuWhatsapp">
-        <img src="icones/whatsapp.png" alt="WhatsApp" width="22"> WHATSAPP
+        <img src="icones/whatsapp.png" alt="WhatsApp"> WHATSAPP
     </a>
     <a href="mailto:escolinhajacare98@gmail.com" id="menuEmail">
-        <img src="icones/gmail.png" alt="E-mail" width="22"> E-MAIL
+        <img src="icones/gmail.png" alt="E-mail"> E-MAIL
     </a>
     <a href="https://maps.google.com/?q=R.+São+Bernardo,+88+-+Alvorada+I,+Manaus+-+AM" target="_blank" id="menuMaps">
-        <img src="icones/maps.png" alt="Mapa" width="22"> LOCALIZAÇÃO
+        <img src="icones/maps.png" alt="Mapa"> LOCALIZAÇÃO
     </a>
 </div>
 
 <!-- BOTÃO FLUTUANTE WHATSAPP -->
 <a href="#" id="whatsappBtn" class="btn-whatsapp" target="_blank">
-    <img src="icones/whatsapp.png" alt="WhatsApp" width="32">
+    <img src="icones/whatsapp.png" alt="WhatsApp">
 </a>
 
 <!-- CONTEÚDO PRINCIPAL -->
@@ -1236,11 +1272,11 @@
             <div style="display: flex; align-items: center;">
                 <div class="logo-jacare">🐊</div>
                 <div class="icones-sociais">
-                    <a href="#" id="topInstagram"><img src="icones/instagram.png" alt="Instagram" width="22"></a>
-                    <a href="#" id="topFacebook"><img src="icones/facebook.png" alt="Facebook" width="22"></a>
-                    <a href="#" id="topWhatsapp"><img src="icones/whatsapp.png" alt="WhatsApp" width="22"></a>
-                    <a href="mailto:escolinhajacare98@gmail.com" id="topEmail"><img src="icones/gmail.png" alt="E-mail" width="22"></a>
-                    <a href="https://maps.google.com/?q=R.+São+Bernardo,+88+-+Alvorada+I,+Manaus+-+AM" target="_blank" id="topMaps"><img src="icones/maps.png" alt="Mapa" width="22"></a>
+                    <a href="#" id="topInstagram"><img src="icones/instagram.png" alt="Instagram"></a>
+                    <a href="#" id="topFacebook"><img src="icones/facebook.png" alt="Facebook"></a>
+                    <a href="#" id="topWhatsapp"><img src="icones/whatsapp.png" alt="WhatsApp"></a>
+                    <a href="mailto:escolinhajacare98@gmail.com" id="topEmail"><img src="icones/gmail.png" alt="E-mail"></a>
+                    <a href="https://maps.google.com/?q=R.+São+Bernardo,+88+-+Alvorada+I,+Manaus+-+AM" target="_blank" id="topMaps"><img src="icones/maps.png" alt="Mapa"></a>
                 </div>
             </div>
             <div class="area-direita">
@@ -1429,22 +1465,22 @@
     </div>
 
     <div class="patrocinadores">
-    <h2>🏆 NOSSOS PATROCINADORES</h2>
-    <div class="patrocinadores-grid">
-        <div class="patrocinador-item"><img src="dubom.png" alt="Dubom"></div>
-        <div class="patrocinador-item"><img src="sao-jose.png" alt="São José"></div>
+        <h2>🏆 NOSSOS PATROCINADORES</h2>
+        <div class="patrocinadores-grid">
+            <div class="patrocinador-item"><img src="dubom.png" alt="Dubom"></div>
+            <div class="patrocinador-item"><img src="sao-jose.png" alt="São José"></div>
+        </div>
+        <div class="chamada-patrocinio">
+            📢 <strong>Sua marca pode estar aqui!</strong><br>
+            Seja um patrocinador da Escolinha do Jacaré.<br>
+            <a href="mailto:escolinhajacare98@gmail.com" id="patrocinioEmail">
+                <img src="icones/gmail.png" alt="E-mail"> escolinhajacare98@gmail.com
+            </a>
+            <a href="#" id="patrocinioWhatsapp">
+                <img src="icones/whatsapp.png" alt="WhatsApp"> WhatsApp
+            </a>
+        </div>
     </div>
-    <div class="chamada-patrocinio">
-        📢 <strong>Sua marca pode estar aqui!</strong><br>
-        Seja um patrocinador da Escolinha do Jacaré.<br>
-        <a href="mailto:escolinhajacare98@gmail.com" id="patrocinioEmail">
-            <img src="icones/gmail.png" alt="E-mail" width="20"> escolinhajacare98@gmail.com
-        </a>
-        <a href="#" id="patrocinioWhatsapp">
-            <img src="icones/whatsapp.png" alt="WhatsApp" width="20">
-        </a>
-    </div>
-</div>
 
     <section id="localizacao">
         <div class="loc-card">
@@ -1470,14 +1506,14 @@
         ESCOLINHA DO JACARÉ - ALVORADA<br>
         Manaus/AM - Brasil
         <div class="contato-footer">
-            <a href="#" id="footerEmail">
+            <a href="mailto:escolinhajacare98@gmail.com" id="footerEmail">
                 <img src="icones/gmail.png" alt="E-mail"> escolinhajacare98@gmail.com
             </a>
             <a href="#" id="footerWhatsapp">
-                <img src="icones/whatsapp.png" alt="WhatsApp"> 
+                <img src="icones/whatsapp.png" alt="WhatsApp"> WhatsApp
             </a>
         </div>
-        <div class="rights" style="margin-top: 15px;">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</div>
+        <div class="rights">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</div>
     </footer>
 </div>
 
@@ -1747,7 +1783,6 @@
         document.getElementById('btnTema').innerHTML = isDark ? '🌙' : '🌞';
         localStorage.setItem('tema', isDark ? 'dark' : 'light');
         
-        // Se modo acessibilidade estiver ativo, mantém as cores de acessibilidade
         if (document.body.classList.contains('acessibilidade')) {
             // Não faz nada, mantém acessibilidade
         }
@@ -1800,18 +1835,15 @@
     }
 
     // ========== EVENTOS DE CONTATO ==========
-    // E-mail
     function abrirEmail() {
         window.location.href = 'mailto:escolinhajacare98@gmail.com';
         mostrarToast('📧 Abrindo e-mail...');
     }
     
-    // WhatsApp (em breve)
     function abrirWhatsApp() {
         mostrarToast('📱 Em breve WhatsApp estará disponível!');
     }
 
-    // Redes sociais (em breve)
     function abrirInstagram() {
         mostrarToast('📱 Em breve Instagram estará disponível!');
     }
@@ -1820,7 +1852,6 @@
         mostrarToast('📘 Em breve Facebook estará disponível!');
     }
 
-    // Adicionar eventos
     document.getElementById('menuEmail')?.addEventListener('click', (e) => { e.preventDefault(); abrirEmail(); });
     document.getElementById('menuWhatsapp')?.addEventListener('click', (e) => { e.preventDefault(); abrirWhatsApp(); });
     document.getElementById('menuInstagram')?.addEventListener('click', (e) => { e.preventDefault(); abrirInstagram(); });
@@ -1841,7 +1872,6 @@
         mostrarToast('⏳ Redirecionando para pré-matrícula...');
     });
 
-    // Botão acessibilidade
     document.getElementById('btnAcessibilidade')?.addEventListener('click', alternarAcessibilidade);
 
     // ========== INICIALIZAÇÃO ==========
@@ -1852,13 +1882,11 @@
         setInterval(buscarNoticiasFutebol, 300000);
         initFaq();
         
-        // Carregar tema salvo
         if (localStorage.getItem('tema') === 'dark') {
             document.body.classList.add('dark-mode');
             document.getElementById('btnTema').innerHTML = '🌙';
         }
         
-        // Carregar modo acessibilidade salvo
         if (localStorage.getItem('acessibilidade') === 'active') {
             document.body.classList.add('acessibilidade');
             document.getElementById('btnAcessibilidade').classList.add('ativo');
