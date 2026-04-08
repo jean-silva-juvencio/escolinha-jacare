@@ -270,7 +270,7 @@
             transform: rotate(-45deg) translate(5px, -5px);
         }
 
-        /* ========== BARRA DE NOTÍCIAS - CORRIGIDA PARA CELULAR ========== */
+        /* ========== BARRA DE NOTÍCIAS ========== */
         .barra-noticias {
             position: fixed;
             top: 80px;
@@ -367,6 +367,15 @@
             width: 22px;
             margin-right: 12px;
             vertical-align: middle;
+        }
+
+        /* ========== CONTEÚDO PRINCIPAL - CENTRALIZADO ========== */
+        .conteudo {
+            max-width: 80%;
+            margin: 0 auto;
+            padding: 180px 0 20px;
+            position: relative;
+            z-index: 1;
         }
 
         /* ========== SLIDESHOW DO BANNER ========== */
@@ -486,15 +495,6 @@
             background: #00aaff;
             transform: scale(1.2);
         }
-
-        /* ========== CONTEÚDO PRINCIPAL ========== */
-         .conteudo {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 180px 20px 20px;
-            position: relative;
-            z-index: 1;
-}
 
         /* ========== INDICADORES ========== */
         .indicadores-grid {
@@ -918,16 +918,17 @@
             transform: translateX(0);
         }
 
-        /* ========== RESPONSIVO - BARRA DE NOTÍCIAS CORRIGIDA ========== */
+        /* ========== RESPONSIVO ========== */
         @media (max-width: 768px) {
+            .conteudo {
+                max-width: 95%;
+                padding: 120px 0 20px;
+            }
             .barra-noticias {
                 position: relative;
                 top: 0;
                 margin-top: 10px;
                 margin-bottom: 10px;
-            }
-            .conteudo {
-                padding-top: 120px;
             }
             .hero {
                 min-height: 300px;
@@ -1001,7 +1002,7 @@
         }
         @media (min-width: 1200px) {
             .conteudo {
-                padding: 180px 8% 20px;
+                max-width: 70%;
             }
             .chat-container {
                 max-width: 1000px;
@@ -1061,7 +1062,7 @@
     </div>
 </div>
 
-<!-- BARRA DE NOTÍCIAS - AGORA APARECE NO CELULAR -->
+<!-- BARRA DE NOTÍCIAS -->
 <div class="barra-noticias">
     <div class="container-noticias">
         <div class="selo-ao-vivo">
@@ -1265,7 +1266,6 @@
     }
 
     // ========== SLIDESHOW BANNER ==========
-    // Lista de imagens da pasta banner/
     const imagensBanner = [
         'banner/banner1.png',
         'banner/banner2.png',
@@ -1281,7 +1281,6 @@
         const container = document.getElementById('slideshowContainer');
         const dotsContainer = document.getElementById('dotsContainer');
         
-        // Criar slides
         imagensBanner.forEach((img, index) => {
             const slide = document.createElement('div');
             slide.className = 'slideshow-slide';
@@ -1289,7 +1288,6 @@
             slide.style.backgroundImage = `url('${img}')`;
             container.appendChild(slide);
             
-            // Criar bolinha
             const dot = document.createElement('div');
             dot.className = 'dot';
             if (index === 0) dot.classList.add('active');
@@ -1324,7 +1322,7 @@
     }
     
     function iniciarIntervalo() {
-        slideInterval = setInterval(proximoSlide, 7000); // 7 segundos
+        slideInterval = setInterval(proximoSlide, 7000);
     }
     
     function reiniciarIntervalo() {
