@@ -20,74 +20,7 @@
             background: linear-gradient(135deg, #f0f7ff 0%, #e0ecf9 100%);
             min-height: 100vh;
             transition: background 0.3s ease, color 0.3s ease;
-            padding-top: 20px;
             overflow-x: hidden;
-        }
-
-        /* ========== MODO ACESSIBILIDADE ========== */
-        body.acessibilidade {
-            background: #000000 !important;
-            color: #FFD700 !important;
-        }
-        body.acessibilidade .barra-superior,
-        body.acessibilidade .card,
-        body.acessibilidade .categorias-container,
-        body.acessibilidade .patrocinadores,
-        body.acessibilidade .loc-card,
-        body.acessibilidade .faq-section,
-        body.acessibilidade .chat-container,
-        body.acessibilidade .horario-content,
-        body.acessibilidade footer {
-            background: #000000 !important;
-            color: #FFD700 !important;
-            border-color: #FFD700 !important;
-        }
-        body.acessibilidade .card h2,
-        body.acessibilidade .categorias-container h2,
-        body.acessibilidade .patrocinadores h2,
-        body.acessibilidade .faq-section h2 {
-            color: #FFD700 !important;
-        }
-        body.acessibilidade .cat-item,
-        body.acessibilidade .faq-question,
-        body.acessibilidade .faq-answer,
-        body.acessibilidade .chat-message-bot,
-        body.acessibilidade .chat-message-user {
-            background: #111111 !important;
-            color: #FFD700 !important;
-            border: 1px solid #FFD700 !important;
-        }
-        body.acessibilidade .btn-prematricula,
-        body.acessibilidade .btn-mapa,
-        body.acessibilidade .btn-tema,
-        body.acessibilidade .hamburger {
-            background: #FFD700 !important;
-            color: #000000 !important;
-        }
-        body.acessibilidade .btn-tema {
-            background: #FFD700 !important;
-            color: #000000 !important;
-        }
-        body.acessibilidade .clima-widget {
-            background: rgba(255,215,0,0.2) !important;
-            color: #FFD700 !important;
-        }
-        body.acessibilidade a {
-            color: #FFD700 !important;
-            text-decoration: underline !important;
-        }
-        body.acessibilidade {
-            font-size: 1.2rem;
-        }
-        body.acessibilidade .card h2,
-        body.acessibilidade .categorias-container h2,
-        body.acessibilidade .faq-section h2,
-        body.acessibilidade .patrocinadores h2 {
-            font-size: 1.8rem;
-        }
-        body.acessibilidade .cat-item {
-            font-size: 1.3rem;
-            padding: 20px;
         }
 
         /* ========== TEMA ESCURO ========== */
@@ -100,13 +33,16 @@
             backdrop-filter: blur(10px);
         }
         body.dark-mode .barra-noticias {
-            background: linear-gradient(135deg, #2563eb, #1e40af);
+            background: #0f172a;
+        }
+        body.dark-mode .barra-noticias .ticker-content span {
+            background: rgba(255,255,255,0.1);
+            color: #e2e8f0;
         }
         body.dark-mode .card,
         body.dark-mode .categorias-container,
         body.dark-mode .patrocinadores,
         body.dark-mode .loc-card,
-        body.dark-mode .faq-section,
         body.dark-mode .chat-container {
             background: #1e293b;
             color: #ffffff;
@@ -114,22 +50,12 @@
         body.dark-mode .card h2,
         body.dark-mode .categorias-container h2,
         body.dark-mode .patrocinadores h2,
-        body.dark-mode .faq-section h2,
         body.dark-mode .chat-container h3 {
             color: #60a5fa;
         }
         body.dark-mode .info-idades,
-        body.dark-mode .faq-item,
         body.dark-mode .chat-messages,
         body.dark-mode .chat-input-area {
-            background: #0f172a;
-            color: #cbd5e1;
-        }
-        body.dark-mode .faq-question {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
-        body.dark-mode .faq-answer {
             background: #0f172a;
             color: #cbd5e1;
         }
@@ -143,8 +69,87 @@
         body.dark-mode .chat-message-bot {
             background: #334155;
         }
+        body.dark-mode .indicador-card {
+            background: #0f172a;
+        }
 
-        /* ========== BARRA SUPERIOR (FIXA) ========== */
+        /* ========== MODO ACESSIBILIDADE ========== */
+        body.acessibilidade {
+            background: #000000 !important;
+            color: #FFD700 !important;
+            font-size: 1.1rem;
+        }
+        body.acessibilidade .barra-superior,
+        body.acessibilidade .card,
+        body.acessibilidade .categorias-container,
+        body.acessibilidade .patrocinadores,
+        body.acessibilidade .loc-card,
+        body.acessibilidade .chat-container,
+        body.acessibilidade footer {
+            background: #000000 !important;
+            color: #FFD700 !important;
+            border-color: #FFD700 !important;
+        }
+        body.acessibilidade .card h2,
+        body.acessibilidade .categorias-container h2,
+        body.acessibilidade .patrocinadores h2,
+        body.acessibilidade .chat-container h3 {
+            color: #FFD700 !important;
+        }
+        body.acessibilidade .cat-item,
+        body.acessibilidade .chat-message-bot,
+        body.acessibilidade .chat-message-user {
+            background: #111111 !important;
+            color: #FFD700 !important;
+            border: 1px solid #FFD700 !important;
+        }
+        body.acessibilidade .btn-prematricula,
+        body.acessibilidade .btn-mapa,
+        body.acessibilidade .btn-tema,
+        body.acessibilidade .hamburger {
+            background: #FFD700 !important;
+            color: #000000 !important;
+        }
+        body.acessibilidade .clima-widget {
+            background: rgba(255,215,0,0.2) !important;
+            color: #FFD700 !important;
+        }
+
+        /* ========== ANIMAÇÕES ========== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes pulseJump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        @keyframes piscar {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        @keyframes pulseSelo {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.4); }
+            50% { box-shadow: 0 0 0 3px rgba(220,38,38,0); }
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animate-fadeUp {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .stagger-item {
+            opacity: 0;
+        }
+
+        /* ========== BARRA SUPERIOR ========== */
         .barra-superior {
             background: rgba(255,255,255,0.95);
             backdrop-filter: blur(10px);
@@ -164,40 +169,28 @@
             flex-wrap: wrap;
             gap: 12px;
         }
+        .logo-titulo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
         .logo-jacare {
-            font-size: 3rem;
+            font-size: 2.2rem;
             display: inline-block;
             cursor: pointer;
             transition: all 0.3s ease;
             animation: pulseJump 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 5px rgba(0,71,171,0.5));
         }
         .logo-jacare:hover {
             transform: scale(1.05);
-            filter: drop-shadow(0 0 12px rgba(0,71,171,0.8));
         }
-        @keyframes pulseJump {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
-        }
-        .icones-sociais {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-left: 15px;
-        }
-        .icones-sociais a {
-            display: inline-flex;
-            align-items: center;
-            text-decoration: none;
-            transition: transform 0.2s;
-        }
-        .icones-sociais a:hover {
-            transform: scale(1.1);
-        }
-        .icones-sociais img {
-            width: 28px;
-            height: 28px;
+        .titulo-site {
+            font-family: 'Montserrat';
+            font-size: 1.2rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #003399, #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .area-direita {
             display: flex;
@@ -207,19 +200,16 @@
         .clima-widget {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             background: rgba(0,71,171,0.1);
-            padding: 8px 15px;
+            padding: 8px 16px;
             border-radius: 40px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 500;
         }
-        body.dark-mode .clima-widget {
-            background: rgba(59,130,246,0.2);
-        }
         .btn-acessibilidade {
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             background: #f1f5f9;
             border: none;
             border-radius: 50%;
@@ -227,19 +217,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             transition: all 0.3s ease;
-        }
-        body.dark-mode .btn-acessibilidade {
-            background: #334155;
         }
         .btn-acessibilidade.ativo {
             background: #FFD700;
             color: #000;
         }
         .btn-tema {
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             background: #f1f5f9;
             border: none;
             border-radius: 50%;
@@ -247,18 +234,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             transition: all 0.3s ease;
         }
-        body.dark-mode .btn-tema {
-            background: #334155;
-        }
-        .btn-tema:hover {
-            transform: scale(1.05);
-        }
         .hamburger {
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             background: #0047AB;
             border: none;
             border-radius: 50%;
@@ -269,49 +250,36 @@
             gap: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
+            z-index: 2000;
         }
         .hamburger span {
-            width: 22px;
-            height: 3px;
+            width: 20px;
+            height: 2.5px;
             background: white;
             border-radius: 2px;
             transition: all 0.3s ease;
         }
         .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
+            transform: rotate(45deg) translate(5px, 5px);
         }
         .hamburger.active span:nth-child(2) {
             opacity: 0;
         }
         .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
+            transform: rotate(-45deg) translate(5px, -5px);
         }
 
         /* ========== BARRA DE NOTÍCIAS ========== */
         .barra-noticias {
             position: fixed;
-            top: 85px;
+            top: 80px;
             left: 0;
             right: 0;
             z-index: 999;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            padding: 12px 5%;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: white;
+            padding: 8px 5%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             overflow: hidden;
-        }
-        @media (max-width: 768px) {
-            .barra-noticias {
-                top: auto;
-                bottom: auto;
-                position: relative;
-                margin-top: 10px;
-            }
-            body {
-                padding-top: 10px;
-            }
-            .barra-superior {
-                position: relative;
-            }
         }
         .container-noticias {
             width: 100%;
@@ -326,28 +294,19 @@
             background: #dc2626;
             color: white;
             font-weight: 700;
-            font-size: 0.75rem;
-            padding: 5px 12px;
+            font-size: 0.7rem;
+            padding: 4px 10px;
             border-radius: 30px;
-            letter-spacing: 0.5px;
             white-space: nowrap;
             flex-shrink: 0;
             animation: pulseSelo 1.5s ease-in-out infinite;
         }
         .ponto-vivo {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             background: white;
             border-radius: 50%;
             animation: piscar 1s step-end infinite;
-        }
-        @keyframes piscar {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-        @keyframes pulseSelo {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.4); }
-            50% { box-shadow: 0 0 0 3px rgba(220,38,38,0); }
         }
         .ticker-wrapper {
             flex: 1;
@@ -362,350 +321,285 @@
         .ticker-content span {
             display: inline-block;
             margin-right: 40px;
-            background: rgba(255,255,255,0.15);
-            padding: 5px 18px;
+            background: rgba(0,51,153,0.08);
+            padding: 4px 15px;
             border-radius: 40px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            color: #ffffff;
+            color: #003399;
         }
 
-        /* Menu Lateral */
-        .sidebar {
+        /* ========== MENU MOBILE (SEM OVERLAY) ========== */
+        .menu-mobile {
             position: fixed;
             top: 0;
             left: -280px;
             width: 280px;
             height: 100%;
             background: white;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-            z-index: 1100;
+            z-index: 9999;
             transition: left 0.3s ease;
             padding: 100px 20px 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
         }
-        body.dark-mode .sidebar {
+        body.dark-mode .menu-mobile {
             background: #1e293b;
         }
-        body.acessibilidade .sidebar {
-            background: #000000 !important;
-            border-right: 2px solid #FFD700 !important;
-        }
-        .sidebar.open {
-            left: 0;
-        }
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
+        .menu-mobile a {
+            display: block;
+            padding: 15px;
             text-decoration: none;
             color: #1e293b;
             font-weight: 600;
-            border-radius: 12px;
-            transition: all 0.2s;
+            border-bottom: 1px solid #e2e8f0;
         }
-        body.dark-mode .sidebar a {
+        body.dark-mode .menu-mobile a {
             color: #e2e8f0;
+            border-bottom-color: #334155;
         }
-        body.acessibilidade .sidebar a {
-            color: #FFD700 !important;
+        .menu-mobile a:hover {
+            background: #0047AB;
+            color: white;
+            border-radius: 12px;
         }
-        .sidebar a:hover {
-            background: #f1f5f9;
-        }
-        body.dark-mode .sidebar a:hover {
-            background: #334155;
-        }
-        .sidebar .divider {
-            height: 1px;
-            background: #e2e8f0;
-            margin: 15px 0;
-        }
-        .sidebar img {
-            width: 24px;
-            height: 24px;
-        }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1050;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
+        .menu-mobile img {
+            width: 22px;
+            margin-right: 12px;
+            vertical-align: middle;
         }
 
-        /* Botões flutuantes */
-        .btn-topo {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 55px;
-            height: 55px;
-            background: linear-gradient(135deg, #0047AB, #003399);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-        }
-        .btn-topo.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        .btn-whatsapp {
-            position: fixed;
-            bottom: 25px;
-            right: 20px;
-            width: 62px;
-            height: 62px;
-            background: linear-gradient(135deg, #25d366, #128C7E);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            transition: all 0.3s;
-            z-index: 998;
-            text-decoration: none;
-        }
-        .btn-whatsapp img {
-            width: 36px;
-            height: 36px;
-        }
-
-        /* Conteúdo principal */
+        /* ========== CONTEÚDO PRINCIPAL ========== */
         .conteudo {
             width: 100%;
-            padding: 20px 5%;
+            padding: 180px 5% 20px;
             position: relative;
             z-index: 1;
         }
 
-        /* SLIDER */
+        /* ========== BANNER ========== */
         .hero {
-            margin-top: 25px;
-            width: 100vw;
-            position: relative;
-            left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
-            background: #003399;
+            margin-bottom: 30px;
+            border-radius: 24px;
             overflow: hidden;
-        }
-        .slides-container {
             position: relative;
-            width: 100%;
-            overflow: hidden;
-        }
-        .slides {
-            display: flex;
-            width: 400%;
-            transition: 0.5s ease-in-out;
-        }
-        .slide {
-            width: 25%;
+            background-image: url('banners/banner1.png');
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
-            background-color: #003399;
-            aspect-ratio: 16/9;
-        }
-        .seta {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 45px;
-            height: 45px;
-            background: rgba(0,0,0,0.5);
-            border-radius: 50%;
+            min-height: 400px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s;
-        }
-        .seta:hover {
-            background: rgba(0,0,0,0.8);
-        }
-        .seta-esquerda { left: 20px; }
-        .seta-direita { right: 20px; }
-        .indicadores {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 10;
-        }
-        .indicador {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .indicador.ativo {
-            background: #00aaff;
-            transform: scale(1.2);
-        }
-
-        /* Cards */
-        section {
-            padding: 20px 0;
-            width: 100%;
             text-align: center;
         }
+        .hero-content {
+            padding: 60px 20px;
+            color: white;
+            max-width: 800px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 24px;
+        }
+        .hero-content h1 {
+            font-family: 'Montserrat';
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .hero-content p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .btn-prematricula {
+            background: linear-gradient(135deg, #ff9800, #f57c00, #ff9800);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s;
+        }
+        .btn-prematricula:hover {
+            transform: scale(1.05);
+        }
+
+        /* ========== INDICADORES ========== */
+        .indicadores-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .indicador-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        .indicador-card:hover {
+            transform: translateY(-5px);
+            animation-play-state: paused;
+            box-shadow: 0 15px 30px rgba(0,71,171,0.15);
+        }
+        .indicador-card .icone {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .indicador-card .valor {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: 'Montserrat';
+            color: #003399;
+        }
+        body.dark-mode .indicador-card .valor {
+            color: #60a5fa;
+        }
+        .indicador-card .label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        body.dark-mode .indicador-card .label {
+            color: #94a3b8;
+        }
+        .indicador-card .detalhe {
+            font-size: 0.7rem;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        /* ========== SEÇÕES GERAIS ========== */
         .card {
             background: white;
-            padding: 30px;
-            border-radius: 25px;
-            width: 100%;
+            border-radius: 24px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
         .card h2 {
             font-family: 'Montserrat';
             color: #003399;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .valores-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 25px;
+        }
+        .valor-item {
+            text-align: center;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        body.dark-mode .valor-item {
+            background: #0f172a;
+        }
+        .valor-item:hover {
+            transform: translateY(-5px);
+        }
+        .valor-item .emoji {
+            font-size: 2.5rem;
             margin-bottom: 12px;
-            font-size: 1.6rem;
+            display: block;
         }
-        .card p {
-            font-size: 1rem;
+        .valor-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #003399;
         }
-
-        /* Botão pré-matrícula */
-        .btn-prematricula {
-            background: linear-gradient(135deg, #ff9800, #f57c00);
-            color: white;
-            border: none;
-            padding: 16px 30px;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin: 20px auto;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            animation: pulseBotao 2s infinite;
-        }
-        @keyframes pulseBotao {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+        body.dark-mode .valor-item h3 {
+            color: #60a5fa;
         }
 
-        /* FAQ */
-        .faq-section {
+        /* ========== CATEGORIAS ========== */
+        .categorias-container {
             background: white;
-            border-radius: 25px;
-            padding: 35px 5%;
-            margin: 25px 0;
-            width: 100%;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            padding: 35px;
+            border-radius: 24px;
+            margin-bottom: 30px;
         }
-        .faq-section h2 {
+        .categorias-container h2 {
             font-family: 'Montserrat';
             color: #003399;
             font-size: 1.8rem;
             margin-bottom: 30px;
             text-align: center;
         }
-        .faq-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .grid-categorias {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
         }
-        .faq-item {
+        .cat-item {
             background: #f8f9fa;
-            border-radius: 16px;
-            overflow: hidden;
-        }
-        .faq-question {
-            width: 100%;
-            padding: 16px 20px;
-            background: #f8f9fa;
-            border: none;
-            text-align: left;
-            font-weight: 700;
-            font-size: 1rem;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 1.1rem;
             color: #003399;
+            transition: all 0.3s;
             cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
-        .faq-question:hover {
-            background: #e9ecef;
+        body.dark-mode .cat-item {
+            background: #0f172a;
         }
-        .faq-question .icone {
-            font-size: 1rem;
-            transition: transform 0.3s;
+        .cat-item:hover {
+            transform: translateY(-5px);
+            background: #0047AB;
+            color: white;
         }
-        .faq-item.active .faq-question .icone {
-            transform: rotate(180deg);
+        .cat-item .emoji-cat {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 10px;
         }
-        .faq-answer {
-            max-height: 0;
-            padding: 0 20px;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-            color: #666;
-            line-height: 1.5;
+        .info-idades {
+            background: #f0f7ff;
+            padding: 15px;
+            border-radius: 16px;
+            text-align: center;
             font-size: 0.9rem;
         }
-        .faq-item.active .faq-answer {
-            max-height: 150px;
-            padding: 0 20px 16px 20px;
+        body.dark-mode .info-idades {
+            background: #0f172a;
         }
 
-        /* CHAT JACARÉ IA */
+        /* ========== CHAT JACARÉ IA ========== */
         .chat-container {
             background: white;
             border-radius: 28px;
-            padding: 0;
-            margin: 25px 0;
-            width: 100%;
-            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
             overflow: hidden;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0,71,171,0.15);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .chat-header {
             background: linear-gradient(135deg, #0047AB, #2563eb);
-            padding: 20px 25px;
+            padding: 18px 24px;
             display: flex;
             align-items: center;
             gap: 12px;
         }
         .chat-header .avatar {
-            font-size: 2.5rem;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            font-size: 2.2rem;
         }
         .chat-header .titulo {
             flex: 1;
@@ -713,66 +607,52 @@
         .chat-header h3 {
             font-family: 'Montserrat';
             color: white;
-            font-size: 1.3rem;
-            margin: 0;
+            font-size: 1.2rem;
         }
         .chat-header p {
             color: rgba(255,255,255,0.85);
-            font-size: 0.75rem;
-            margin: 2px 0 0;
+            font-size: 0.7rem;
         }
         .chat-badge {
             background: rgba(255,255,255,0.2);
-            padding: 5px 12px;
+            padding: 4px 10px;
             border-radius: 50px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 600;
             color: white;
         }
         .chat-messages {
-            padding: 25px 25px;
-            max-height: 400px;
+            padding: 20px 24px;
+            max-height: 350px;
             overflow-y: auto;
-            background: rgba(248, 250, 252, 0.5);
+            background: rgba(248,250,252,0.5);
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
         .chat-message-bot {
             background: #e8f0fe;
-            color: #1e293b;
-            padding: 14px 18px;
+            padding: 12px 16px;
             border-radius: 20px;
             border-bottom-left-radius: 4px;
             max-width: 85%;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            align-self: center;
-            text-align: center;
-        }
-        body.dark-mode .chat-message-bot {
-            background: #1e293b;
-            color: #e2e8f0;
+            font-size: 0.85rem;
+            align-self: flex-start;
         }
         .chat-message-user {
             background: linear-gradient(135deg, #0047AB, #2563eb);
             color: white;
-            padding: 14px 18px;
+            padding: 12px 16px;
             border-radius: 20px;
             border-bottom-right-radius: 4px;
             max-width: 85%;
-            font-size: 0.9rem;
-            line-height: 1.4;
+            font-size: 0.85rem;
             align-self: flex-end;
         }
         .chat-input-area {
-            padding: 20px 25px 25px;
+            padding: 16px 24px 24px;
             background: white;
             border-top: 1px solid rgba(0,0,0,0.05);
-        }
-        body.dark-mode .chat-input-area {
-            background: #1e293b;
-            border-top-color: rgba(255,255,255,0.05);
         }
         .chat-input-wrapper {
             display: flex;
@@ -781,221 +661,80 @@
         }
         .chat-input {
             flex: 1;
-            padding: 14px 20px;
+            padding: 12px 18px;
             border: 1px solid #e2e8f0;
             border-radius: 50px;
             font-family: inherit;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             background: #f8fafc;
-            transition: all 0.3s;
-        }
-        body.dark-mode .chat-input {
-            background: #0f172a;
-            border-color: #334155;
-            color: white;
-        }
-        .chat-input:focus {
-            outline: none;
-            border-color: #0047AB;
-            box-shadow: 0 0 0 2px rgba(0,71,171,0.2);
         }
         .chat-send {
             background: linear-gradient(135deg, #0047AB, #2563eb);
             border: none;
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.3rem;
-            transition: all 0.3s;
+            font-size: 1.2rem;
             color: white;
-        }
-        .chat-send:hover {
-            transform: scale(1.02);
         }
         .chat-sugestoes {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
+            justify-content: center;
         }
         .sugestao-btn {
             background: rgba(0,71,171,0.1);
             border: none;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 50px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
             color: #0047AB;
-        }
-        body.dark-mode .sugestao-btn {
-            background: rgba(96,165,250,0.2);
-            color: #60a5fa;
         }
         .sugestao-btn:hover {
             background: #0047AB;
             color: white;
-            transform: translateY(-2px);
         }
         .chat-footer-note {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: #888;
             text-align: center;
             margin-top: 10px;
         }
 
-        /* HORÁRIO */
-        .horario-card {
-            text-align: center;
-            margin: 25px 0;
-            width: 100%;
-        }
-        .horario-content {
-            background: linear-gradient(135deg, #0047AB, #003399);
-            color: white;
-            padding: 30px;
-            border-radius: 25px;
-            width: 100%;
-        }
-        .horario-icone {
-            font-size: 2rem;
-            margin-bottom: 8px;
-        }
-        .horario-content h3 {
-            font-family: 'Montserrat';
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-        }
-        .horario-hora {
-            font-size: 1.5rem;
-            font-weight: 800;
-        }
-        .horario-detalhe {
-            font-size: 0.9rem;
-            margin-top: 8px;
-        }
-
-        /* CATEGORIAS */
-        .categorias-container {
-            background: white;
-            padding: 45px 5%;
-            border-radius: 32px;
-            margin: 30px 0;
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        }
-        .categorias-container h2 {
-            font-family: 'Montserrat';
-            color: #003399;
-            font-size: 2rem;
-            margin-bottom: 35px;
-            text-align: center;
-        }
-        .categorias-container h2:after {
-            content: '';
-            display: block;
-            width: 70px;
-            height: 4px;
-            background: linear-gradient(90deg, #0047AB, #00aaff);
-            margin: 12px auto 0;
-            border-radius: 2px;
-        }
-        .grid-categorias {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        @media (min-width: 768px) {
-            .grid-categorias {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 25px;
-            }
-        }
-        @media (min-width: 1200px) {
-            .grid-categorias {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 30px;
-            }
-        }
-        .cat-item {
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            padding: 25px;
-            border-radius: 24px;
-            font-weight: 800;
-            font-size: 1.2rem;
-            color: #003399;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-height: 110px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-        .cat-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,71,171,0.15);
-            background: #f0f7ff;
-        }
-        .cat-item .emoji-cat {
-            font-size: 2rem;
-        }
-        @media (min-width: 1200px) {
-            .cat-item {
-                padding: 28px;
-                font-size: 1.3rem;
-                min-height: 130px;
-            }
-            .cat-item .emoji-cat {
-                font-size: 2.2rem;
-            }
-        }
-        .info-idades {
-            font-size: 1rem;
-            color: #555;
-            padding: 22px;
-            background: #f0f7ff;
-            border-radius: 16px;
-            text-align: center;
-        }
-
-        /* PATROCINADORES */
+        /* ========== PATROCINADORES ========== */
         .patrocinadores {
             background: white;
-            padding: 35px 5%;
-            border-radius: 25px;
-            margin: 25px 0;
-            width: 100%;
+            padding: 35px;
+            border-radius: 24px;
+            margin-bottom: 30px;
             text-align: center;
         }
         .patrocinadores h2 {
             font-family: 'Montserrat';
             color: #003399;
-            font-size: 2rem;
-            margin-bottom: 30px;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
         }
         .patrocinadores-grid {
             display: flex;
             justify-content: center;
             gap: 50px;
             flex-wrap: wrap;
-            align-items: center;
+            margin-bottom: 20px;
         }
         .patrocinador-item img {
-            max-width: 180px;
-            height: auto;
+            max-width: 200px;
             transition: transform 0.3s;
         }
         .patrocinador-item img:hover {
             transform: scale(1.05);
         }
         .chamada-patrocinio {
-            margin-top: 30px;
-            font-size: 1rem;
+            margin-top: 20px;
         }
         .chamada-patrocinio a {
             display: inline-flex;
@@ -1004,30 +743,17 @@
             text-decoration: none;
             color: #0047AB;
             font-weight: 600;
-            margin: 5px 10px;
-            font-size: 0.95rem;
-        }
-        body.dark-mode .chamada-patrocinio a {
-            color: #60a5fa;
-        }
-        .chamada-patrocinio img {
-            width: 24px;
-            vertical-align: middle;
+            margin: 0 10px;
         }
 
-        /* LOCALIZAÇÃO */
+        /* ========== LOCALIZAÇÃO ========== */
         .loc-card {
-            background: #fff;
-            padding: 30px 5%;
-            border-radius: 25px;
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
             text-align: center;
             border: 3px solid #00aaff;
-            margin: 25px 0;
-            width: 100%;
-        }
-        .loc-card h2 {
-            font-size: 1.8rem;
-            margin-bottom: 15px;
+            margin-bottom: 30px;
         }
         .mapa-container {
             width: 100%;
@@ -1035,11 +761,6 @@
             border-radius: 15px;
             overflow: hidden;
             margin: 15px 0;
-        }
-        @media (min-width: 768px) {
-            .mapa-container {
-                height: 450px;
-            }
         }
         .mapa-container iframe {
             width: 100%;
@@ -1050,58 +771,67 @@
             background: #0047AB;
             color: white;
             text-decoration: none;
-            padding: 12px 25px;
+            padding: 10px 20px;
             border-radius: 40px;
-            font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             margin-top: 10px;
-            font-size: 0.9rem;
         }
 
-        /* FOOTER - PONTA A PONTA */
+        /* ========== RODAPÉ ========== */
         footer {
             background: #003399;
             color: white;
             text-align: center;
             padding: 35px 5%;
-            margin-top: 40px;
             width: 100%;
-            position: relative;
-            left: 0;
-            right: 0;
             border-radius: 0;
-            font-size: 0.95rem;
         }
         footer a {
             color: white;
             text-decoration: none;
         }
-        footer a:hover {
-            text-decoration: underline;
-        }
         .contato-footer {
             margin-top: 20px;
             display: flex;
             justify-content: center;
-            gap: 35px;
+            gap: 30px;
             flex-wrap: wrap;
         }
         .contato-footer a {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            font-size: 0.95rem;
-        }
-        .contato-footer img {
-            width: 24px;
-            vertical-align: middle;
+            gap: 8px;
         }
         .rights {
             margin-top: 20px;
             font-size: 0.8rem;
-            opacity: 0.9;
+            opacity: 0.8;
+        }
+
+        /* ========== BOTÃO TOPO ========== */
+        .btn-topo {
+            position: fixed;
+            bottom: 25px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #0047AB;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.4rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        .btn-topo.visible {
+            opacity: 1;
+            visibility: visible;
         }
 
         .toast {
@@ -1109,139 +839,55 @@
             bottom: 100px;
             right: 20px;
             background: white;
-            padding: 10px 18px;
+            padding: 8px 16px;
             border-radius: 40px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             z-index: 1100;
             transform: translateX(120%);
             transition: transform 0.3s ease;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
         .toast.show {
             transform: translateX(0);
         }
-        body.dark-mode .toast {
-            background: #1e293b;
-            color: white;
-        }
 
-        @media (max-width: 900px) {
-            body {
-                padding-top: 10px;
-            }
-            .barra-superior {
-                padding: 10px 4%;
-            }
-            .logo-jacare {
-                font-size: 2.2rem;
-            }
-            .icones-sociais {
-                gap: 10px;
-                margin-left: 10px;
-            }
-            .icones-sociais img {
-                width: 22px;
-                height: 22px;
-            }
-            .barra-noticias {
-                padding: 10px 4%;
-            }
-            .selo-ao-vivo {
-                padding: 4px 10px;
-                font-size: 0.65rem;
-            }
-            .ticker-content span {
-                font-size: 0.7rem;
-                padding: 3px 10px;
-                margin-right: 25px;
-            }
-            .btn-tema, .hamburger, .btn-acessibilidade {
-                width: 38px;
-                height: 38px;
-            }
-            .clima-widget {
-                font-size: 0.7rem;
-                padding: 4px 10px;
-            }
-            .btn-whatsapp {
-                width: 52px;
-                height: 52px;
-            }
-            .btn-whatsapp img {
-                width: 30px;
-                height: 30px;
-            }
-            .btn-topo {
-                width: 45px;
-                height: 45px;
-                font-size: 1.2rem;
-            }
-            .seta {
-                width: 32px;
-                height: 32px;
-                font-size: 0.9rem;
-            }
-            .seta-esquerda { left: 10px; }
-            .seta-direita { right: 10px; }
-            .chat-messages {
-                max-height: 300px;
-            }
-            .chat-message-bot, .chat-message-user {
-                max-width: 95%;
-            }
-            .chat-sugestoes {
-                justify-content: center;
-            }
-            .conteudo {
-                padding: 20px 4%;
-            }
-            .contato-footer {
-                flex-direction: column;
-                gap: 12px;
-                align-items: center;
-            }
-            .patrocinador-item img {
-                max-width: 120px;
-            }
-            .card h2 {
-                font-size: 1.3rem;
-            }
-            .categorias-container h2 {
-                font-size: 1.6rem;
-            }
-            .cat-item {
-                padding: 18px;
-                font-size: 1rem;
-                min-height: 80px;
-            }
+        /* ========== RESPONSIVO ========== */
+        @media (max-width: 768px) {
+            .conteudo { padding-top: 160px; }
+            .indicadores-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .grid-categorias { grid-template-columns: repeat(2, 1fr); }
+            .valores-grid { grid-template-columns: 1fr; }
+            .barra-noticias { top: 70px; }
+            .hero { min-height: 300px; }
+            .hero-content h1 { font-size: 1.5rem; }
+            .hero-content p { font-size: 0.9rem; }
+            .btn-prematricula { padding: 10px 25px; font-size: 0.9rem; }
+            .indicador-card .valor { font-size: 1.8rem; }
+            .card h2, .categorias-container h2, .patrocinadores h2 { font-size: 1.4rem; }
+            .chat-container { max-width: 100%; }
+            .patrocinador-item img { max-width: 130px; }
+            .clima-widget { padding: 5px 12px; font-size: 0.8rem; }
+            .btn-acessibilidade, .btn-tema, .hamburger { width: 38px; height: 38px; }
+            .logo-jacare { font-size: 1.8rem; }
+            .titulo-site { font-size: 0.9rem; }
         }
-        @media (max-width: 650px) {
-            .seta {
-                width: 28px;
-                height: 28px;
-                font-size: 0.8rem;
-            }
-            .patrocinador-item img {
-                max-width: 100px;
-            }
+        @media (min-width: 1200px) {
+            .conteudo { padding: 180px 8% 20px; }
+            .chat-container { max-width: 1000px; }
+            .patrocinador-item img { max-width: 250px; }
         }
     </style>
 </head>
 <body>
 
-<!-- Overlay -->
-<div id="overlay" class="overlay" onclick="fecharMenu()"></div>
-
-<!-- Menu Lateral -->
-<div id="sidebar" class="sidebar">
+<!-- MENU MOBILE (SEM OVERLAY) -->
+<div class="menu-mobile" id="menuMobile">
     <a href="index.html">🏠 INÍCIO</a>
     <a href="diretoria.html">📊 DIRETORIA</a>
     <a href="funcionarios.html">🔒 FUNCIONÁRIOS</a>
     <a href="galerias.html">📸 GALERIAS</a>
-    <div class="divider"></div>
+    <a href="prematricula.html">📝 PRÉ-MATRÍCULA</a>
+    <div style="height: 1px; background: #e2e8f0; margin: 15px 0;"></div>
     <a href="#" id="menuInstagram">
         <img src="icones/instagram.png" alt="Instagram"> INSTAGRAM
     </a>
@@ -1259,198 +905,108 @@
     </a>
 </div>
 
-<!-- BOTÃO FLUTUANTE WHATSAPP -->
-<a href="#" id="whatsappBtn" class="btn-whatsapp" target="_blank">
-    <img src="icones/whatsapp.png" alt="WhatsApp">
-</a>
+<!-- BARRA SUPERIOR -->
+<div class="barra-superior">
+    <div class="container-superior">
+        <div class="logo-titulo">
+            <div class="logo-jacare">🐊</div>
+            <div class="titulo-site">ESCOLINHA DO JACARÉ</div>
+        </div>
+        <div class="area-direita">
+            <div class="clima-widget" id="climaWidget">
+                <span id="climaIcone">🌡️</span>
+                <span id="climaTemp">--°C</span>
+                <span id="climaDesc">Manaus</span>
+            </div>
+            <button class="btn-acessibilidade" id="btnAcessibilidade" title="Modo Acessibilidade">♿</button>
+            <button class="btn-tema" id="btnTema" onclick="alternarTema()">🌞</button>
+            <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- BARRA DE NOTÍCIAS -->
+<div class="barra-noticias">
+    <div class="container-noticias">
+        <div class="selo-ao-vivo">
+            <span class="ponto-vivo"></span>
+            AO VIVO
+        </div>
+        <div class="ticker-wrapper">
+            <div class="ticker-content" id="tickerNoticias">
+                <span>🏆 Carregando notícias...</span>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- CONTEÚDO PRINCIPAL -->
 <div class="conteudo">
-    <!-- BARRA SUPERIOR -->
-    <div class="barra-superior">
-        <div class="container-superior">
-            <div style="display: flex; align-items: center;">
-                <div class="logo-jacare">🐊</div>
-                <div class="icones-sociais">
-                    <a href="#" id="topInstagram"><img src="icones/instagram.png" alt="Instagram"></a>
-                    <a href="#" id="topFacebook"><img src="icones/facebook.png" alt="Facebook"></a>
-                    <a href="#" id="topWhatsapp"><img src="icones/whatsapp.png" alt="WhatsApp"></a>
-                    <a href="mailto:escolinhajacare98@gmail.com" id="topEmail"><img src="icones/gmail.png" alt="E-mail"></a>
-                    <a href="https://maps.google.com/?q=R.+São+Bernardo,+88+-+Alvorada+I,+Manaus+-+AM" target="_blank" id="topMaps"><img src="icones/maps.png" alt="Mapa"></a>
-                </div>
-            </div>
-            <div class="area-direita">
-                <div class="clima-widget" id="climaWidget">
-                    <span id="climaIcone">🌡️</span>
-                    <span id="climaTemp">--°C</span>
-                    <span id="climaDesc">Manaus-AM</span>
-                </div>
-                <button class="btn-acessibilidade" id="btnAcessibilidade" title="Modo Acessibilidade">♿</button>
-                <button class="btn-tema" id="btnTema" onclick="alternarTema()">🌞</button>
-                <button class="hamburger" id="hamburger" onclick="toggleMenu()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </div>
 
-    <!-- BARRA DE NOTÍCIAS -->
-    <div class="barra-noticias">
-        <div class="container-noticias">
-            <div class="selo-ao-vivo">
-                <span class="ponto-vivo"></span>
-                AO VIVO
-            </div>
-            <div class="ticker-wrapper">
-                <div class="ticker-content" id="tickerNoticias">
-                    <span>🏆 Carregando notícias...</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SLIDER -->
+    <!-- BANNER HERO -->
     <div class="hero">
-        <div class="slides-container">
-            <div class="slides" id="slider">
-                <div class="slide" style="background-image: url('imagem1.jpg');"></div>
-                <div class="slide" style="background-image: url('imagem2.jpg');"></div>
-                <div class="slide" style="background-image: url('imagem3.jpg');"></div>
-                <div class="slide" style="background-image: url('./pascoa.jpg');"></div>
+        <div class="hero-content">
+            <h1>🐊 ESCOLINHA DO JACARÉ - ALVORADA</h1>
+            <p>"Desde 15 de abril de 1998 formando cidadãos através do esporte"</p>
+            <a href="prematricula.html" class="btn-prematricula">📝 FAZER PRÉ-MATRÍCULA</a>
+        </div>
+    </div>
+
+    <!-- INDICADORES -->
+    <div class="indicadores-grid" id="indicadoresGrid">
+        <div class="indicador-card stagger-item">
+            <div class="icone">🏆</div>
+            <div class="valor" id="anosHistoria">28</div>
+            <div class="label">Anos de história</div>
+            <div class="detalhe">desde 1998</div>
+        </div>
+        <div class="indicador-card stagger-item">
+            <div class="icone">👥</div>
+            <div class="valor" id="totalAlunos">0</div>
+            <div class="label">Alunos ativos</div>
+            <div class="detalhe"></div>
+        </div>
+        <div class="indicador-card stagger-item">
+            <div class="icone">⚽</div>
+            <div class="valor" id="totalModalidades">5</div>
+            <div class="label">Modalidades</div>
+            <div class="detalhe">Futebol, Taekwondo, Tênis de Mesa, Ginástica, Judô</div>
+        </div>
+        <div class="indicador-card stagger-item">
+            <div class="icone">🎂</div>
+            <div class="valor">1998</div>
+            <div class="label">Ano de fundação</div>
+            <div class="detalhe">15 de abril</div>
+        </div>
+    </div>
+
+    <!-- NOSSA HISTÓRIA -->
+    <div class="card">
+        <h2>📖 NOSSA HISTÓRIA</h2>
+        <p style="text-align: center; margin-bottom: 30px;">Fundada no coração do bairro Alvorada, a Escolinha do Jacaré nasceu do sonho de transformar vidas através do esporte. Mais que formar atletas, nosso objetivo é formar cidadãos com valores sólidos como respeito, disciplina e trabalho em equipe.</p>
+        <div class="valores-grid">
+            <div class="valor-item">
+                <span class="emoji">🏆</span>
+                <h3>Missão</h3>
+                <p>Formar cidadãos através do esporte, promovendo saúde, educação e cidadania.</p>
             </div>
-            <div class="seta seta-esquerda" onclick="mudarSlide(-1)">❮</div>
-            <div class="seta seta-direita" onclick="mudarSlide(1)">❯</div>
-            <div class="indicadores" id="indicadores">
-                <div class="indicador ativo" onclick="irParaSlide(0)"></div>
-                <div class="indicador" onclick="irParaSlide(1)"></div>
-                <div class="indicador" onclick="irParaSlide(2)"></div>
-                <div class="indicador" onclick="irParaSlide(3)"></div>
+            <div class="valor-item">
+                <span class="emoji">👁️</span>
+                <h3>Visão</h3>
+                <p>Ser referência em formação esportiva e educacional no bairro Alvorada.</p>
+            </div>
+            <div class="valor-item">
+                <span class="emoji">❤️</span>
+                <h3>Valores</h3>
+                <p>Respeito, disciplina, inclusão, trabalho em equipe e paixão pelo esporte.</p>
             </div>
         </div>
     </div>
 
-    <section id="sobre">
-        <div class="card">
-            <h2>Nossa Escola</h2>
-            <p>A maior tradição esportiva do bairro Alvorada. Formando cidadãos através do esporte.</p>
-        </div>
-    </section>
-
-    <div style="text-align: center; margin: 15px 0;">
-        <a href="prematricula.html" class="btn-prematricula" id="btnPrematricula">
-            📝 PRÉ-MATRÍCULA ONLINE
-        </a>
-        <p style="color: #666; margin-top: 8px; font-size: 0.75rem;">Faça sua solicitação de matrícula de forma rápida e segura</p>
-    </div>
-
-    <!-- JACARÉ IA - CHAT -->
-    <div class="chat-container">
-        <div class="chat-header">
-            <div class="avatar">🐊</div>
-            <div class="titulo">
-                <h3>JACARÉ IA</h3>
-                <p>Assistente Inteligente da Escolinha</p>
-            </div>
-            <div class="chat-badge">⚡ IA</div>
-        </div>
-        
-        <div class="chat-messages" id="chatMessages">
-            <div class="chat-message-bot">
-                🐊 <strong>Olá! Sou o Jacaré IA</strong>, o assistente virtual da Escolinha do Jacaré.<br><br>
-                Posso tirar suas dúvidas sobre:<br>
-                • 📋 <strong>Categorias</strong> (Sub-7, Sub-9, Sub-11, Sub-13, Sub-15)<br>
-                • 🕐 <strong>Horários</strong> dos treinos (sábados 7:30 às 12:00)<br>
-                • 📍 <strong>Localização</strong> e como chegar<br>
-                • 📝 <strong>Matrícula e pré-matrícula</strong><br>
-                • 👕 <strong>Uniforme</strong> (doado pela escola)<br>
-                • 📞 <strong>Contato</strong> (WhatsApp e presencial)<br><br>
-                <strong>Pergunte à vontade! Estou aqui para ajudar.</strong>
-            </div>
-        </div>
-        
-        <div class="chat-input-area">
-            <div class="chat-input-wrapper">
-                <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua pergunta...">
-                <button class="chat-send" id="chatSendBtn">▶</button>
-            </div>
-            <div class="chat-sugestoes">
-                <button class="sugestao-btn" data-pergunta="Quais são as categorias e idades?">📋 Categorias</button>
-                <button class="sugestao-btn" data-pergunta="Qual o horário dos treinos?">🕐 Horários</button>
-                <button class="sugestao-btn" data-pergunta="Onde fica a escolinha?">📍 Localização</button>
-                <button class="sugestao-btn" data-pergunta="Como faço a matrícula?">📝 Matrícula</button>
-                <button class="sugestao-btn" data-pergunta="Tem uniforme incluso?">👕 Uniforme</button>
-                <button class="sugestao-btn" data-pergunta="Qual o valor da mensalidade?">💰 Valores</button>
-            </div>
-            <div class="chat-footer-note">
-                🤖 Jacaré IA responde apenas sobre a Escolinha do Jacaré
-            </div>
-        </div>
-    </div>
-
-    <div class="horario-card">
-        <div class="horario-content">
-            <div class="horario-icone">🕐</div>
-            <h3>HORÁRIO DE ATENDIMENTO</h3>
-            <div class="horario-dia">📅 Sábado</div>
-            <div class="horario-hora">7:30 às 12:00</div>
-            <div class="horario-detalhe">📍 Atendimento presencial para matrículas e informações</div>
-        </div>
-    </div>
-
-    <div class="faq-section">
-        <h2>❓ PERGUNTAS FREQUENTES</h2>
-        <div class="faq-grid">
-            <div class="faq-item">
-                <button class="faq-question">
-                    Qual a idade mínima para participar?
-                    <span class="icone">▼</span>
-                </button>
-                <div class="faq-answer">
-                    Aceitamos crianças a partir de 5 anos até 17 anos. Temos categorias Sub-7, Sub-9, Sub-11, Sub-13 e Sub-15.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    Quais os dias e horários dos treinos?
-                    <span class="icone">▼</span>
-                </button>
-                <div class="faq-answer">
-                    Os treinos acontecem aos sábados, das 7:30 às 12:00. Cada turma tem um horário específico dentro desse período.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    Como funciona o uniforme?
-                    <span class="icone">▼</span>
-                </button>
-                <div class="faq-answer">
-                    O uniforme é doado pela escolinha para os alunos matriculados. Fazemos questão que todos tenham o mesmo kit para igualdade e pertencimento.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    Como faço a pré-matrícula?
-                    <span class="icone">▼</span>
-                </button>
-                <div class="faq-answer">
-                    Basta clicar no botão "PRÉ-MATRÍCULA ONLINE" no topo da página, preencher o formulário e aguardar o contato da diretoria.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    A quadra é coberta?
-                    <span class="icone">▼</span>
-                </button>
-                <div class="faq-answer">
-                    Sim! Nossa quadra é coberta, garantindo conforto e segurança mesmo em dias de chuva.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="categorias-container" id="atividades">
+    <!-- CATEGORIAS -->
+    <div class="categorias-container">
         <h2>🏆 CATEGORIAS</h2>
         <div class="grid-categorias">
             <div class="cat-item"><span class="emoji-cat">⚽</span><span>FUTEBOL</span></div>
@@ -1464,6 +1020,46 @@
         </div>
     </div>
 
+    <!-- JACARÉ IA -->
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="avatar">🐊</div>
+            <div class="titulo">
+                <h3>JACARÉ IA</h3>
+                <p>Assistente Inteligente da Escolinha</p>
+            </div>
+            <div class="chat-badge">⚡ IA</div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message-bot">
+                🐊 <strong>Olá! Sou o Jacaré IA</strong>, o assistente virtual da Escolinha do Jacaré.<br><br>
+                Posso tirar suas dúvidas sobre:<br>
+                • 📋 <strong>Categorias</strong> (Sub-7, Sub-9, Sub-11, Sub-13, Sub-15)<br>
+                • 🕐 <strong>Horários</strong> dos treinos (sábados 7:30 às 12:00)<br>
+                • 📍 <strong>Localização</strong> e como chegar<br>
+                • 📝 <strong>Matrícula e pré-matrícula</strong><br>
+                • 👕 <strong>Uniforme</strong> (doado pela escola)<br>
+                • 📞 <strong>Contato</strong> (WhatsApp e presencial)<br><br>
+                <strong>Pergunte à vontade! Estou aqui para ajudar.</strong>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <div class="chat-input-wrapper">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Digite sua pergunta...">
+                <button class="chat-send" id="chatSendBtn">▶</button>
+            </div>
+            <div class="chat-sugestoes">
+                <button class="sugestao-btn" data-pergunta="Quais são as categorias e idades?">📋 Categorias</button>
+                <button class="sugestao-btn" data-pergunta="Qual o horário dos treinos?">🕐 Horários</button>
+                <button class="sugestao-btn" data-pergunta="Onde fica a escolinha?">📍 Localização</button>
+                <button class="sugestao-btn" data-pergunta="Como faço a matrícula?">📝 Matrícula</button>
+                <button class="sugestao-btn" data-pergunta="Tem uniforme incluso?">👕 Uniforme</button>
+            </div>
+            <div class="chat-footer-note">🤖 Jacaré IA responde apenas sobre a Escolinha do Jacaré</div>
+        </div>
+    </div>
+
+    <!-- PATROCINADORES -->
     <div class="patrocinadores">
         <h2>🏆 NOSSOS PATROCINADORES</h2>
         <div class="patrocinadores-grid">
@@ -1473,38 +1069,30 @@
         <div class="chamada-patrocinio">
             📢 <strong>Sua marca pode estar aqui!</strong><br>
             Seja um patrocinador da Escolinha do Jacaré.<br>
-            <a href="mailto:escolinhajacare98@gmail.com" id="patrocinioEmail">
-                <img src="icones/gmail.png" alt="E-mail"> escolinhajacare98@gmail.com
-            </a>
-            <a href="#" id="patrocinioWhatsapp">
-                <img src="icones/whatsapp.png" alt="WhatsApp"> WhatsApp
-            </a>
+            <a href="#" id="patrocinioEmail">📧 escolinhajacare98@gmail.com</a>
         </div>
     </div>
 
-    <section id="localizacao">
-        <div class="loc-card">
-            <h2>📍 VENHA NOS CONHECER</h2>
-            <div class="mapa-container">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.203015457583!2d-60.028347!3d-3.091704!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x926c1bc79a881f0b%3A0x2b8f6e3d5c4a2f9!2sR.%20S%C3%A3o%20Bernardo%2C%2088%20-%20Alvorada%2C%20Manaus%20-%20AM%2C%2069043-180!5e0!3m2!1spt-BR!2sbr!4v1712345678901!5m2!1spt-BR!2sbr"
-                    allowfullscreen=""
-                    loading="lazy">
-                </iframe>
-            </div>
-            <div class="endereco-info">
-                <p><strong>Unidos do Alvorada</strong></p>
-                <p>R. São Bernardo, 88 - Alvorada I, Manaus - AM</p>
-            </div>
-            <a href="https://maps.app.goo.gl/Sz58rBrkoswb7wSq5" target="_blank" class="btn-mapa" id="mapaLink">
-                <span>📍</span> ABRIR NO GOOGLE MAPS
-            </a>
+    <!-- LOCALIZAÇÃO -->
+    <div class="loc-card">
+        <h2>📍 VENHA NOS CONHECER</h2>
+        <div class="mapa-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.203015457583!2d-60.028347!3d-3.091704!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x926c1bc79a881f0b%3A0x2b8f6e3d5c4a2f9!2sR.%20S%C3%A3o%20Bernardo%2C%2088%20-%20Alvorada%2C%20Manaus%20-%20AM%2C%2069043-180!5e0!3m2!1spt-BR!2sbr!4v1712345678901!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy"></iframe>
         </div>
-    </section>
+        <div class="endereco-info">
+            <p><strong>Unidos do Alvorada</strong></p>
+            <p>R. São Bernardo, 88 - Alvorada I, Manaus - AM</p>
+        </div>
+        <a href="https://maps.app.goo.gl/Sz58rBrkoswb7wSq5" target="_blank" class="btn-mapa">📍 ABRIR NO GOOGLE MAPS</a>
+    </div>
 
+    <!-- RODAPÉ -->
     <footer>
-        ESCOLINHA DO JACARÉ - ALVORADA<br>
+        🐊 ESCOLINHA DO JACARÉ - ALVORADA<br>
         Manaus/AM - Brasil
+        <div class="contato-footer">
+            <a href="#" id="footerEmail">📧 escolinhajacare98@gmail.com</a>
+            <a href="#" id="footerWhatsapp">💬 WhatsApp</a>
         </div>
         <div class="rights">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</div>
     </footer>
@@ -1514,44 +1102,70 @@
 <button id="btnTopo" class="btn-topo" title="Voltar ao topo">⬆️</button>
 
 <script>
-    // ========== SLIDER ==========
-    let slideIndex = 0;
-    const slides = document.getElementById('slider');
-    const totalSlides = 4;
-    const indicadores = document.querySelectorAll('.indicador');
-
-    function mudarSlide(n) {
-        slideIndex = (slideIndex + n + totalSlides) % totalSlides;
-        atualizarSlider();
-    }
-
-    function irParaSlide(n) {
-        slideIndex = n;
-        atualizarSlider();
-    }
-
-    function atualizarSlider() {
-        slides.style.transform = `translateX(-${slideIndex * 25}%)`;
-        indicadores.forEach((ind, i) => {
-            if (i === slideIndex) ind.classList.add('ativo');
-            else ind.classList.remove('ativo');
-        });
-    }
-
-    setInterval(() => { mudarSlide(1); }, 5000);
-
-    // ========== BARRA DE NOTÍCIAS ==========
-    let noticiasLista = [];
+    // ========== CONFIGURAÇÕES ==========
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz76grUCrYQoi6z9VAQt5YOtzo50AG3O-kLB-nON0o4uGoBGQoHrdo4QUOCRmoVgjAcFg/exec';
+    let alunos = [];
     let tickerAnimation = null;
     let tickerPosition = 0;
     let tickerSpeed = 0.6;
     let tickerRunning = true;
 
+    // ========== MENU HAMBÚRGUER (SEM OVERLAY) ==========
+    function toggleMenu() {
+        var menu = document.getElementById('menuMobile');
+        var hamburger = document.getElementById('hamburger');
+        
+        if (menu.style.left === '0px') {
+            menu.style.left = '-280px';
+            hamburger.classList.remove('active');
+        } else {
+            menu.style.left = '0px';
+            hamburger.classList.add('active');
+        }
+    }
+
+    // ========== CARREGAR DADOS DA PLANILHA ==========
+    async function carregarDadosDaPlanilha() {
+        try {
+            const response = await fetch(SCRIPT_URL);
+            const dados = await response.json();
+            alunos = dados.filter(item => item.status === 'aprovado');
+            const totalAlunosElement = document.getElementById('totalAlunos');
+            if (totalAlunosElement && alunos.length > 0) {
+                totalAlunosElement.innerText = alunos.length;
+            }
+        } catch (error) { console.error('Erro:', error); }
+    }
+
+    // ========== CLIMA ==========
+    async function buscarClima() {
+        try {
+            const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-3.1019&longitude=-60.0250&current_weather=true&timezone=America/Manaus');
+            const dados = await response.json();
+            const temp = Math.round(dados.current_weather.temperature);
+            const codigo = dados.current_weather.weathercode;
+            
+            let icone = '🌡️', desc = '';
+            if (codigo === 0) { icone = '☀️'; desc = 'Céu limpo'; }
+            else if (codigo === 1 || codigo === 2) { icone = '⛅'; desc = 'Parcialmente nublado'; }
+            else if (codigo === 3) { icone = '☁️'; desc = 'Nublado'; }
+            else if (codigo >= 45 && codigo <= 48) { icone = '🌫️'; desc = 'Nevoeiro'; }
+            else if ((codigo >= 51 && codigo <= 55) || (codigo >= 61 && codigo <= 65) || (codigo >= 80 && codigo <= 82)) { icone = '🌧️'; desc = 'Chuva'; }
+            else if (codigo >= 95 && codigo <= 99) { icone = '⛈️'; desc = 'Tempestade'; }
+            else { icone = '🌡️'; desc = 'Manaus'; }
+            
+            document.getElementById('climaTemp').innerHTML = `${temp}°C`;
+            document.getElementById('climaDesc').innerHTML = `Manaus • ${desc}`;
+            document.getElementById('climaIcone').innerHTML = icone;
+        } catch (error) { console.log('Erro clima:', error); }
+    }
+
+    // ========== BARRA DE NOTÍCIAS ==========
+    let noticiasLista = [];
     async function buscarNoticiasFutebol() {
         try {
             const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://ge.globo.com/rss/ge/');
             const dados = await response.json();
-            
             if (dados.items && dados.items.length > 0) {
                 noticiasLista = dados.items.slice(0, 12).map(item => {
                     let titulo = item.title;
@@ -1561,32 +1175,9 @@
                 atualizarTicker();
                 return;
             }
-        } catch (error) {
-            console.log('Globo falhou, tentando Lance...');
-        }
+        } catch (error) { console.log('Globo falhou'); }
         
-        try {
-            const response = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.lance.com.br/feed/');
-            const dados = await response.json();
-            
-            if (dados.items && dados.items.length > 0) {
-                noticiasLista = dados.items.slice(0, 12).map(item => {
-                    let titulo = item.title;
-                    if (titulo.length > 70) titulo = titulo.substring(0, 67) + '...';
-                    return `⚽ ${titulo}`;
-                });
-                atualizarTicker();
-                return;
-            }
-        } catch (error) {
-            console.log('Lance falhou, usando fallback');
-        }
-        
-        noticiasLista = [
-            "🏆 Campeonato Brasileiro: líder vence e mantém vantagem na ponta",
-            "⚽ Craque do time se destaca na rodada com dois gols",
-            "🎉 Seleção brasileira se prepara para próximo amistoso"
-        ];
+        noticiasLista = ["🏆 Campeonato Brasileiro: líder vence e mantém vantagem", "⚽ Craque do time se destaca na rodada", "🎉 Seleção brasileira se prepara para próximo amistoso"];
         atualizarTicker();
     }
 
@@ -1595,7 +1186,6 @@
         if (tickerDiv && noticiasLista.length > 0) {
             const conteudo = noticiasLista.map(noticia => `<span>${noticia}</span>`).join('');
             tickerDiv.innerHTML = conteudo + conteudo + conteudo;
-            
             if (tickerAnimation) cancelAnimationFrame(tickerAnimation);
             tickerPosition = 0;
             iniciarAnimacaoTicker();
@@ -1605,82 +1195,39 @@
     function iniciarAnimacaoTicker() {
         const ticker = document.getElementById('tickerNoticias');
         if (!ticker) return;
-        
         const larguraTotal = ticker.scrollWidth / 3;
-        
         function animar() {
-            if (!tickerRunning) {
-                tickerAnimation = requestAnimationFrame(animar);
-                return;
-            }
-            
+            if (!tickerRunning) { tickerAnimation = requestAnimationFrame(animar); return; }
             tickerPosition += tickerSpeed;
-            
-            if (tickerPosition >= larguraTotal) {
-                tickerPosition = 0;
-            }
-            
+            if (tickerPosition >= larguraTotal) tickerPosition = 0;
             ticker.style.transform = `translateX(-${tickerPosition}px)`;
             tickerAnimation = requestAnimationFrame(animar);
         }
-        
         if (tickerAnimation) cancelAnimationFrame(tickerAnimation);
         tickerAnimation = requestAnimationFrame(animar);
-    }
-
-    function pararAnimacaoTicker() {
-        tickerRunning = false;
-    }
-
-    function reiniciarAnimacaoTicker() {
-        tickerRunning = true;
     }
 
     // ========== JACARÉ IA ==========
     const conhecimentoEscolinha = {
         categorias: "A Escolinha do Jacaré tem as categorias: Sub-7 (5-7 anos), Sub-9 (7-9 anos), Sub-11 (9-11 anos), Sub-13 (11-13 anos) e Sub-15 (13-15 anos). Também oferecemos Taekwondo, Tênis de Mesa e Ginástica.",
-        idade: "Aceitamos crianças a partir de 5 anos até 17 anos. As categorias são divididas por idade: Sub-7, Sub-9, Sub-11, Sub-13 e Sub-15.",
-        horarios: "Os treinos acontecem aos sábados, das 7:30 às 12:00. Cada turma tem um horário específico dentro desse período. O atendimento presencial para matrículas também é neste horário.",
-        localizacao: "Ficamos na Rua São Bernardo, 88 - Alvorada I, Manaus - AM. É ao lado do campo do Unidos do Alvorada.",
-        matricula: "Para fazer a pré-matrícula, clique no botão 'PRÉ-MATRÍCULA ONLINE' no topo da página. Preencha o formulário e aguarde nosso contato.",
+        idade: "Aceitamos crianças a partir de 5 anos até 17 anos.",
+        horarios: "Os treinos acontecem aos sábados, das 7:30 às 12:00.",
+        localizacao: "Ficamos na Rua São Bernardo, 88 - Alvorada I, Manaus - AM.",
+        matricula: "Clique no botão 'PRÉ-MATRÍCULA ONLINE' no topo da página.",
         uniforme: "O uniforme é doado pela escolinha para todos os alunos matriculados.",
-        contato: "Você pode falar conosco pelo WhatsApp (botão flutuante verde) ou nos visitar aos sábados das 7:30 às 12:00.",
-        patrocinadores: "Nossos patrocinadores atuais são Dubom e São José.",
-        valores: "Para informações sobre valores e mensalidades, entre em contato conosco pelo WhatsApp."
+        contato: "Fale conosco pelo WhatsApp ou nos visite aos sábados."
     };
 
     function responderPergunta(pergunta) {
-        const p = pergunta.toLowerCase().trim();
-        
-        if (p.includes('categoria') || p.includes('sub')) {
-            return `🐊 ${conhecimentoEscolinha.categorias}`;
-        }
-        if (p.includes('idade') || p.includes('anos')) {
-            return `🐊 ${conhecimentoEscolinha.idade}`;
-        }
-        if (p.includes('horario') || p.includes('horário') || p.includes('treino') || p.includes('sábado')) {
-            return `🐊 ${conhecimentoEscolinha.horarios}`;
-        }
-        if (p.includes('local') || p.includes('endereço') || p.includes('onde fica')) {
-            return `🐊 ${conhecimentoEscolinha.localizacao}`;
-        }
-        if (p.includes('matricula') || p.includes('matrícula') || p.includes('inscrever')) {
-            return `🐊 ${conhecimentoEscolinha.matricula}`;
-        }
-        if (p.includes('uniforme') || p.includes('camisa')) {
-            return `🐊 ${conhecimentoEscolinha.uniforme}`;
-        }
-        if (p.includes('contato') || p.includes('whatsapp')) {
-            return `🐊 ${conhecimentoEscolinha.contato}`;
-        }
-        if (p.includes('patrocinador')) {
-            return `🐊 ${conhecimentoEscolinha.patrocinadores}`;
-        }
-        if (p.includes('valor') || p.includes('mensalidade')) {
-            return `🐊 ${conhecimentoEscolinha.valores}`;
-        }
-        
-        return `🐊 Desculpe, só posso responder perguntas sobre a Escolinha do Jacaré. Que tal perguntar sobre horários, categorias, matrícula ou localização?`;
+        const p = pergunta.toLowerCase();
+        if (p.includes('categoria') || p.includes('sub')) return `🐊 ${conhecimentoEscolinha.categorias}`;
+        if (p.includes('idade') || p.includes('anos')) return `🐊 ${conhecimentoEscolinha.idade}`;
+        if (p.includes('horario') || p.includes('horário') || p.includes('treino')) return `🐊 ${conhecimentoEscolinha.horarios}`;
+        if (p.includes('local') || p.includes('endereço') || p.includes('onde fica')) return `🐊 ${conhecimentoEscolinha.localizacao}`;
+        if (p.includes('matricula') || p.includes('matrícula')) return `🐊 ${conhecimentoEscolinha.matricula}`;
+        if (p.includes('uniforme')) return `🐊 ${conhecimentoEscolinha.uniforme}`;
+        if (p.includes('contato')) return `🐊 ${conhecimentoEscolinha.contato}`;
+        return `🐊 Desculpe, só posso responder perguntas sobre a Escolinha do Jacaré.`;
     }
 
     function adicionarMensagem(texto, isUser = false) {
@@ -1696,102 +1243,27 @@
         const input = document.getElementById('chatInput');
         const pergunta = input.value.trim();
         if (!pergunta) return;
-        
         adicionarMensagem(pergunta, true);
         input.value = '';
-        
-        setTimeout(() => {
-            const resposta = responderPergunta(pergunta);
-            adicionarMensagem(resposta, false);
-        }, 300);
+        setTimeout(() => { adicionarMensagem(responderPergunta(pergunta), false); }, 300);
     }
 
-    // ========== CLIMA ==========
-    async function buscarClima() {
-        try {
-            const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-3.1019&longitude=-60.0250&current_weather=true&timezone=America/Manaus');
-            const dados = await response.json();
-            
-            const temp = Math.round(dados.current_weather.temperature);
-            const codigo = dados.current_weather.weathercode;
-            
-            let iconeEmoji = '🌡️';
-            let desc = '';
-            
-            if (codigo === 0) { iconeEmoji = '☀️'; desc = 'Céu limpo'; }
-            else if (codigo === 1 || codigo === 2) { iconeEmoji = '⛅'; desc = 'Parcialmente nublado'; }
-            else if (codigo === 3) { iconeEmoji = '☁️'; desc = 'Nublado'; }
-            else if (codigo >= 45 && codigo <= 48) { iconeEmoji = '🌫️'; desc = 'Nevoeiro'; }
-            else if ((codigo >= 51 && codigo <= 55) || (codigo >= 61 && codigo <= 65) || (codigo >= 80 && codigo <= 82)) { 
-                iconeEmoji = '🌧️'; desc = 'Chuva'; 
-            }
-            else if (codigo >= 95 && codigo <= 99) { iconeEmoji = '⛈️'; desc = 'Tempestade'; }
-            else { iconeEmoji = '🌡️'; desc = 'Manaus'; }
-            
-            document.getElementById('climaTemp').innerHTML = `${temp}°C`;
-            document.getElementById('climaDesc').innerHTML = `Manaus, AM • ${desc}`;
-            document.getElementById('climaIcone').innerHTML = iconeEmoji;
-            
-        } catch (error) {
-            console.log('Erro ao buscar clima:', error);
-        }
-    }
-
-    // ========== FAQ ==========
-    function initFaq() {
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            const questionBtn = item.querySelector('.faq-question');
-            questionBtn.addEventListener('click', () => {
-                item.classList.toggle('active');
-            });
-        });
-    }
-
-    // ========== MENU HAMBURGUER ==========
-    function toggleMenu() {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-        const hamburger = document.getElementById('hamburger');
-        
-        sidebar.classList.toggle('open');
-        overlay.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    }
-
-    function fecharMenu() {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-        const hamburger = document.getElementById('hamburger');
-        
-        sidebar.classList.remove('open');
-        overlay.classList.remove('active');
-        hamburger.classList.remove('active');
-    }
-
-    // ========== TEMA ESCURO/CLARO ==========
+    // ========== TEMA ==========
     function alternarTema() {
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
         document.getElementById('btnTema').innerHTML = isDark ? '🌙' : '🌞';
         localStorage.setItem('tema', isDark ? 'dark' : 'light');
-        
-        if (document.body.classList.contains('acessibilidade')) {
-            // Não faz nada, mantém acessibilidade
-        }
     }
 
-    // ========== MODO ACESSIBILIDADE ==========
+    // ========== ACESSIBILIDADE ==========
     function alternarAcessibilidade() {
-        const body = document.body;
+        document.body.classList.toggle('acessibilidade');
         const btn = document.getElementById('btnAcessibilidade');
-        
-        body.classList.toggle('acessibilidade');
-        
-        if (body.classList.contains('acessibilidade')) {
+        if (document.body.classList.contains('acessibilidade')) {
             btn.classList.add('ativo');
             localStorage.setItem('acessibilidade', 'active');
-            mostrarToast('♿ Modo acessibilidade ativado - Fonte maior e alto contraste');
+            mostrarToast('♿ Modo acessibilidade ativado');
         } else {
             btn.classList.remove('ativo');
             localStorage.setItem('acessibilidade', 'inactive');
@@ -1799,20 +1271,13 @@
         }
     }
 
-    // ========== BOTÃO VOLTAR AO TOPO ==========
+    // ========== BOTÃO TOPO ==========
     const btnTopo = document.getElementById('btnTopo');
-    
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 250) {
-            btnTopo.classList.add('visible');
-        } else {
-            btnTopo.classList.remove('visible');
-        }
+        if (window.scrollY > 300) btnTopo.classList.add('visible');
+        else btnTopo.classList.remove('visible');
     });
-    
-    btnTopo.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    btnTopo.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
     // ========== TOAST ==========
     function mostrarToast(mensagem) {
@@ -1821,83 +1286,65 @@
         toast.innerHTML = `✅ ${mensagem}`;
         document.body.appendChild(toast);
         setTimeout(() => toast.classList.add('show'), 10);
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 300);
-        }, 2500);
+        setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 2500);
     }
 
-    // ========== EVENTOS DE CONTATO ==========
-    function abrirEmail() {
-        window.location.href = 'mailto:escolinhajacare98@gmail.com';
-        mostrarToast('📧 Abrindo e-mail...');
-    }
-    
-    function abrirWhatsApp() {
-        mostrarToast('📱 Em breve WhatsApp estará disponível!');
-    }
-
-    function abrirInstagram() {
-        mostrarToast('📱 Em breve Instagram estará disponível!');
-    }
-    
-    function abrirFacebook() {
-        mostrarToast('📘 Em breve Facebook estará disponível!');
-    }
-
-    document.getElementById('menuEmail')?.addEventListener('click', (e) => { e.preventDefault(); abrirEmail(); });
-    document.getElementById('menuWhatsapp')?.addEventListener('click', (e) => { e.preventDefault(); abrirWhatsApp(); });
-    document.getElementById('menuInstagram')?.addEventListener('click', (e) => { e.preventDefault(); abrirInstagram(); });
-    document.getElementById('menuFacebook')?.addEventListener('click', (e) => { e.preventDefault(); abrirFacebook(); });
-    
-    document.getElementById('topEmail')?.addEventListener('click', (e) => { e.preventDefault(); abrirEmail(); });
-    document.getElementById('topWhatsapp')?.addEventListener('click', (e) => { e.preventDefault(); abrirWhatsApp(); });
-    document.getElementById('topInstagram')?.addEventListener('click', (e) => { e.preventDefault(); abrirInstagram(); });
-    document.getElementById('topFacebook')?.addEventListener('click', (e) => { e.preventDefault(); abrirFacebook(); });
-    
-    document.getElementById('whatsappBtn')?.addEventListener('click', (e) => { e.preventDefault(); abrirWhatsApp(); });
-    document.getElementById('footerEmail')?.addEventListener('click', (e) => { e.preventDefault(); abrirEmail(); });
-    document.getElementById('footerWhatsapp')?.addEventListener('click', (e) => { e.preventDefault(); abrirWhatsApp(); });
-    document.getElementById('patrocinioEmail')?.addEventListener('click', (e) => { e.preventDefault(); abrirEmail(); });
-    document.getElementById('patrocinioWhatsapp')?.addEventListener('click', (e) => { e.preventDefault(); abrirWhatsApp(); });
-
-    document.getElementById('btnPrematricula')?.addEventListener('click', () => {
-        mostrarToast('⏳ Redirecionando para pré-matrícula...');
+    // ========== EVENTOS ==========
+    document.getElementById('chatSendBtn')?.addEventListener('click', enviarPergunta);
+    document.getElementById('chatInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') enviarPergunta(); });
+    document.querySelectorAll('.sugestao-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.getElementById('chatInput').value = btn.getAttribute('data-pergunta');
+            enviarPergunta();
+        });
+    });
+    document.getElementById('btnAcessibilidade')?.addEventListener('click', alternarAcessibilidade);
+    document.querySelectorAll('.btn-mapa, .btn-prematricula, #footerEmail, #footerWhatsapp, #patrocinioEmail').forEach(link => {
+        link.addEventListener('click', (e) => { 
+            if (link.id !== 'footerWhatsapp' && link.id !== 'patrocinioEmail' && link.id !== 'footerEmail') {
+                e.preventDefault(); 
+            }
+        });
     });
 
-    document.getElementById('btnAcessibilidade')?.addEventListener('click', alternarAcessibilidade);
-
     // ========== INICIALIZAÇÃO ==========
-    window.addEventListener('load', function() {
+    window.addEventListener('load', () => {
         buscarClima();
         buscarNoticiasFutebol();
+        carregarDadosDaPlanilha();
         setInterval(buscarClima, 600000);
         setInterval(buscarNoticiasFutebol, 300000);
-        initFaq();
+        
+        const staggerItems = document.querySelectorAll('.stagger-item');
+        staggerItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.style.opacity = '1';
+                item.style.animation = 'fadeInUp 0.5s ease forwards';
+            }, index * 150);
+        });
         
         if (localStorage.getItem('tema') === 'dark') {
             document.body.classList.add('dark-mode');
             document.getElementById('btnTema').innerHTML = '🌙';
         }
-        
         if (localStorage.getItem('acessibilidade') === 'active') {
             document.body.classList.add('acessibilidade');
             document.getElementById('btnAcessibilidade').classList.add('ativo');
         }
         
-        document.querySelectorAll('.sidebar a').forEach(link => {
-            link.addEventListener('click', fecharMenu);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.card, .categorias-container, .patrocinadores, .loc-card, .chat-container').forEach(el => {
+            el.style.opacity = '0';
+            observer.observe(el);
         });
-        
-        const tickerWrapper = document.querySelector('.ticker-wrapper');
-        if (tickerWrapper) {
-            tickerWrapper.addEventListener('mouseenter', pararAnimacaoTicker);
-            tickerWrapper.addEventListener('mouseleave', reiniciarAnimacaoTicker);
-            tickerWrapper.addEventListener('touchstart', pararAnimacaoTicker);
-            tickerWrapper.addEventListener('touchend', reiniciarAnimacaoTicker);
-        }
     });
 </script>
-
 </body>
 </html>
