@@ -378,7 +378,7 @@
             z-index: 1;
         }
 
-        /* ========== BANNER FIXO COM IMAGEM ÚNICA E MAIOR ========== */
+        /* ========== BANNER FIXO COM IMAGEM ÚNICA ========== */
         .hero {
             position: relative;
             margin-top: 20px;
@@ -388,7 +388,7 @@
             min-height: 600px;
             background-image: url('banner/banner5.png');
             background-size: cover;
-            background-position: center;
+            background-position: center 80%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -858,79 +858,184 @@
             transform: translateX(0);
         }
 
-        /* ========== RESPONSIVO ========== */
+        /* ========== RESPONSIVO - CELULAR ========== */
         @media (max-width: 768px) {
             .conteudo {
                 max-width: 95%;
                 padding: 120px 0 20px;
             }
+            /* BARRA DE NOTÍCIAS FICA RELATIVA NO CELULAR */
             .barra-noticias {
                 position: relative;
                 top: 0;
                 margin-top: 10px;
                 margin-bottom: 10px;
             }
+            /* BANNER MENOR E MAIS BAIXO NO CELULAR */
             .hero {
-                min-height: 450px;
-                margin-top: 10px;
+                min-height: 320px;
+                margin-top: 5px;
+                margin-bottom: 20px;
+                background-position: center 65%;
             }
             .hero-content {
-                padding: 30px 15px;
+                padding: 15px 12px;
             }
             .hero-content h1 {
-                font-size: 1.5rem;
+                font-size: 1.1rem;
+                margin-bottom: 8px;
             }
             .hero-content p {
-                font-size: 0.9rem;
+                font-size: 0.7rem;
+                margin-bottom: 12px;
+            }
+            .btn-prematricula {
+                padding: 6px 16px;
+                font-size: 0.7rem;
             }
             .indicadores-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+                gap: 12px;
+                margin-bottom: 25px;
+            }
+            .indicador-card {
+                padding: 15px 10px;
+            }
+            .indicador-card .valor {
+                font-size: 1.5rem;
+            }
+            .indicador-card .label {
+                font-size: 0.7rem;
+            }
+            .indicador-card .detalhe {
+                font-size: 0.6rem;
             }
             .grid-categorias {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .cat-item {
+                padding: 15px;
+                font-size: 0.9rem;
+            }
+            .cat-item .emoji-cat {
+                font-size: 1.5rem;
             }
             .valores-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
             }
-            .btn-prematricula {
-                padding: 10px 25px;
-                font-size: 0.9rem;
+            .valor-item {
+                padding: 18px;
             }
-            .indicador-card .valor {
-                font-size: 1.8rem;
+            .card {
+                padding: 20px;
+                margin-bottom: 20px;
             }
-            .card h2, .categorias-container h2, .patrocinadores h2 {
-                font-size: 1.4rem;
+            .card h2 {
+                font-size: 1.3rem;
+                margin-bottom: 12px;
+            }
+            .card p {
+                font-size: 0.85rem;
             }
             .chat-container {
                 max-width: 100%;
+                margin-bottom: 20px;
             }
-            .patrocinador-item img {
-                max-width: 130px;
+            .chat-header {
+                padding: 12px 16px;
             }
-            .clima-widget {
-                padding: 5px 12px;
-                font-size: 0.8rem;
-            }
-            .btn-acessibilidade, .btn-tema, .hamburger {
-                width: 38px;
-                height: 38px;
-            }
-            .logo-jacare {
+            .chat-header .avatar {
                 font-size: 1.8rem;
             }
+            .chat-header h3 {
+                font-size: 1rem;
+            }
+            .chat-messages {
+                padding: 12px;
+                max-height: 250px;
+            }
+            .chat-message-bot, .chat-message-user {
+                padding: 8px 12px;
+                font-size: 0.75rem;
+            }
+            .chat-input-area {
+                padding: 12px;
+            }
+            .chat-input {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            .chat-send {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+            .sugestao-btn {
+                padding: 4px 10px;
+                font-size: 0.65rem;
+            }
+            .patrocinadores {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .patrocinadores h2 {
+                font-size: 1.3rem;
+                margin-bottom: 15px;
+            }
+            .patrocinadores-grid {
+                gap: 20px;
+            }
+            .patrocinador-item img {
+                max-width: 100px;
+            }
+            .loc-card {
+                padding: 20px;
+                margin-bottom: 20px;
+            }
+            .loc-card h2 {
+                font-size: 1.3rem;
+            }
+            .mapa-container {
+                height: 250px;
+            }
+            .btn-mapa {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+            .clima-widget {
+                padding: 4px 10px;
+                font-size: 0.7rem;
+            }
+            .btn-acessibilidade, .btn-tema, .hamburger {
+                width: 34px;
+                height: 34px;
+                font-size: 1.1rem;
+            }
+            .logo-jacare {
+                font-size: 1.5rem;
+            }
             .titulo-site {
-                font-size: 0.9rem;
+                font-size: 0.8rem;
             }
             .ticker-content span {
-                font-size: 0.7rem;
-                padding: 3px 10px;
-                margin-right: 25px;
+                font-size: 0.65rem;
+                padding: 2px 8px;
+                margin-right: 15px;
             }
             .selo-ao-vivo {
-                font-size: 0.65rem;
-                padding: 3px 8px;
+                font-size: 0.6rem;
+                padding: 2px 6px;
+            }
+            .contato-footer {
+                gap: 15px;
+            }
+            .contato-footer a {
+                font-size: 0.7rem;
+            }
+            .rights {
+                font-size: 0.6rem;
             }
         }
         @media (min-width: 1200px) {
