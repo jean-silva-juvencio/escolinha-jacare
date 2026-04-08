@@ -24,21 +24,85 @@
             overflow-x: hidden;
         }
 
+        /* ========== MODO ACESSIBILIDADE ========== */
+        body.acessibilidade {
+            background: #000000 !important;
+            color: #FFD700 !important;
+        }
+        body.acessibilidade .barra-superior,
+        body.acessibilidade .card,
+        body.acessibilidade .categorias-container,
+        body.acessibilidade .patrocinadores,
+        body.acessibilidade .loc-card,
+        body.acessibilidade .faq-section,
+        body.acessibilidade .chat-container,
+        body.acessibilidade .horario-content,
+        body.acessibilidade footer {
+            background: #000000 !important;
+            color: #FFD700 !important;
+            border-color: #FFD700 !important;
+        }
+        body.acessibilidade .card h2,
+        body.acessibilidade .categorias-container h2,
+        body.acessibilidade .patrocinadores h2,
+        body.acessibilidade .faq-section h2 {
+            color: #FFD700 !important;
+        }
+        body.acessibilidade .cat-item,
+        body.acessibilidade .faq-question,
+        body.acessibilidade .faq-answer,
+        body.acessibilidade .chat-message-bot,
+        body.acessibilidade .chat-message-user {
+            background: #111111 !important;
+            color: #FFD700 !important;
+            border: 1px solid #FFD700 !important;
+        }
+        body.acessibilidade .btn-prematricula,
+        body.acessibilidade .btn-mapa,
+        body.acessibilidade .btn-tema,
+        body.acessibilidade .hamburger {
+            background: #FFD700 !important;
+            color: #000000 !important;
+        }
+        body.acessibilidade .btn-tema {
+            background: #FFD700 !important;
+            color: #000000 !important;
+        }
+        body.acessibilidade .clima-widget {
+            background: rgba(255,215,0,0.2) !important;
+            color: #FFD700 !important;
+        }
+        body.acessibilidade a {
+            color: #FFD700 !important;
+            text-decoration: underline !important;
+        }
+        /* Fonte maior no modo acessibilidade */
+        body.acessibilidade {
+            font-size: 1.2rem;
+        }
+        body.acessibilidade .card h2,
+        body.acessibilidade .categorias-container h2,
+        body.acessibilidade .faq-section h2,
+        body.acessibilidade .patrocinadores h2 {
+            font-size: 1.8rem;
+        }
+        body.acessibilidade .cat-item {
+            font-size: 1.3rem;
+            padding: 20px;
+        }
+
         /* ========== TEMA ESCURO ========== */
         body.dark-mode {
             background: linear-gradient(135deg, #0f172a 0%, #1e1a3a 100%);
             color: #ffffff;
         }
-
         body.dark-mode .barra-superior {
             background: rgba(30,41,59,0.95);
             backdrop-filter: blur(10px);
         }
-
         body.dark-mode .barra-noticias {
             background: linear-gradient(135deg, #2563eb, #1e40af);
         }
-
         body.dark-mode .card,
         body.dark-mode .categorias-container,
         body.dark-mode .patrocinadores,
@@ -48,7 +112,6 @@
             background: #1e293b;
             color: #ffffff;
         }
-
         body.dark-mode .card h2,
         body.dark-mode .categorias-container h2,
         body.dark-mode .patrocinadores h2,
@@ -56,7 +119,6 @@
         body.dark-mode .chat-container h3 {
             color: #60a5fa;
         }
-
         body.dark-mode .info-idades,
         body.dark-mode .faq-item,
         body.dark-mode .chat-messages,
@@ -64,26 +126,21 @@
             background: #0f172a;
             color: #cbd5e1;
         }
-
         body.dark-mode .faq-question {
             background: #0f172a;
             color: #e2e8f0;
         }
-
         body.dark-mode .faq-answer {
             background: #0f172a;
             color: #cbd5e1;
         }
-
         body.dark-mode .cat-item {
             background: #0f172a;
             color: #e2e8f0;
         }
-
         body.dark-mode .chat-message-user {
             background: #2563eb;
         }
-
         body.dark-mode .chat-message-bot {
             background: #334155;
         }
@@ -98,19 +155,16 @@
             right: 0;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 12px 20px;
+            padding: 12px 5%;
         }
-
         .container-superior {
-            max-width: 1400px;
-            margin: 0 auto;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 12px;
         }
-
         .logo-jacare {
             font-size: 2.5rem;
             display: inline-block;
@@ -119,23 +173,39 @@
             animation: pulseJump 2s ease-in-out infinite;
             filter: drop-shadow(0 0 5px rgba(0,71,171,0.5));
         }
-
         .logo-jacare:hover {
             transform: scale(1.05);
             filter: drop-shadow(0 0 12px rgba(0,71,171,0.8));
         }
-
         @keyframes pulseJump {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-3px); }
         }
-
+        /* Ícones sociais lado esquerdo */
+        .icones-sociais {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: 15px;
+        }
+        .icones-sociais a {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+        .icones-sociais a:hover {
+            transform: scale(1.1);
+        }
+        .icones-sociais img {
+            width: 22px;
+            height: 22px;
+        }
         .area-direita {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
         .clima-widget {
             display: flex;
             align-items: center;
@@ -146,11 +216,30 @@
             font-size: 0.75rem;
             font-weight: 500;
         }
-
         body.dark-mode .clima-widget {
             background: rgba(59,130,246,0.2);
         }
-
+        /* Botão acessibilidade */
+        .btn-acessibilidade {
+            width: 42px;
+            height: 42px;
+            background: #f1f5f9;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+        body.dark-mode .btn-acessibilidade {
+            background: #334155;
+        }
+        .btn-acessibilidade.ativo {
+            background: #FFD700;
+            color: #000;
+        }
         .btn-tema {
             width: 42px;
             height: 42px;
@@ -164,15 +253,12 @@
             font-size: 1.3rem;
             transition: all 0.3s ease;
         }
-
         body.dark-mode .btn-tema {
             background: #334155;
         }
-
         .btn-tema:hover {
             transform: scale(1.05);
         }
-
         .hamburger {
             width: 42px;
             height: 42px;
@@ -187,7 +273,6 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-
         .hamburger span {
             width: 20px;
             height: 2.5px;
@@ -195,15 +280,12 @@
             border-radius: 2px;
             transition: all 0.3s ease;
         }
-
         .hamburger.active span:nth-child(1) {
             transform: rotate(45deg) translate(5px, 5px);
         }
-
         .hamburger.active span:nth-child(2) {
             opacity: 0;
         }
-
         .hamburger.active span:nth-child(3) {
             transform: rotate(-45deg) translate(5px, -5px);
         }
@@ -216,12 +298,10 @@
             right: 0;
             z-index: 999;
             background: linear-gradient(135deg, #3b82f6, #2563eb);
-            padding: 10px 20px;
+            padding: 10px 5%;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             overflow: hidden;
         }
-
-        /* Ajuste para celular */
         @media (max-width: 768px) {
             .barra-noticias {
                 top: auto;
@@ -236,15 +316,12 @@
                 position: relative;
             }
         }
-
         .container-noticias {
-            max-width: 1400px;
-            margin: 0 auto;
+            width: 100%;
             display: flex;
             align-items: center;
             gap: 12px;
         }
-
         .selo-ao-vivo {
             display: inline-flex;
             align-items: center;
@@ -260,7 +337,6 @@
             flex-shrink: 0;
             animation: pulseSelo 1.5s ease-in-out infinite;
         }
-
         .ponto-vivo {
             width: 7px;
             height: 7px;
@@ -268,29 +344,24 @@
             border-radius: 50%;
             animation: piscar 1s step-end infinite;
         }
-
         @keyframes piscar {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.3; }
         }
-
         @keyframes pulseSelo {
             0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.4); }
             50% { box-shadow: 0 0 0 3px rgba(220,38,38,0); }
         }
-
         .ticker-wrapper {
             flex: 1;
             overflow: hidden;
             position: relative;
         }
-
         .ticker-content {
             display: inline-block;
             white-space: nowrap;
             will-change: transform;
         }
-
         .ticker-content span {
             display: inline-block;
             margin-right: 40px;
@@ -313,17 +384,18 @@
             box-shadow: 2px 0 10px rgba(0,0,0,0.1);
             z-index: 1100;
             transition: left 0.3s ease;
-            padding: 120px 20px 20px;
+            padding: 100px 20px 20px;
         }
-
         body.dark-mode .sidebar {
             background: #1e293b;
         }
-
+        body.acessibilidade .sidebar {
+            background: #000000 !important;
+            border-right: 2px solid #FFD700 !important;
+        }
         .sidebar.open {
             left: 0;
         }
-
         .sidebar a {
             display: flex;
             align-items: center;
@@ -335,25 +407,27 @@
             border-radius: 12px;
             transition: all 0.2s;
         }
-
         body.dark-mode .sidebar a {
             color: #e2e8f0;
         }
-
+        body.acessibilidade .sidebar a {
+            color: #FFD700 !important;
+        }
         .sidebar a:hover {
             background: #f1f5f9;
         }
-
         body.dark-mode .sidebar a:hover {
             background: #334155;
         }
-
         .sidebar .divider {
             height: 1px;
             background: #e2e8f0;
             margin: 15px 0;
         }
-
+        .sidebar img {
+            width: 22px;
+            height: 22px;
+        }
         .overlay {
             position: fixed;
             top: 0;
@@ -366,7 +440,6 @@
             visibility: hidden;
             transition: all 0.3s ease;
         }
-
         .overlay.active {
             opacity: 1;
             visibility: visible;
@@ -394,12 +467,10 @@
             opacity: 0;
             visibility: hidden;
         }
-
         .btn-topo.visible {
             opacity: 1;
             visibility: visible;
         }
-
         .btn-whatsapp {
             position: fixed;
             bottom: 25px;
@@ -423,9 +494,8 @@
 
         /* Conteúdo principal */
         .conteudo {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            width: 100%;
+            padding: 20px 5%;
             position: relative;
             z-index: 1;
         }
@@ -442,19 +512,16 @@
             background: #003399;
             overflow: hidden;
         }
-
         .slides-container {
             position: relative;
             width: 100%;
             overflow: hidden;
         }
-
         .slides {
             display: flex;
             width: 400%;
             transition: 0.5s ease-in-out;
         }
-
         .slide {
             width: 25%;
             background-size: cover;
@@ -463,7 +530,6 @@
             background-color: #003399;
             aspect-ratio: 16/9;
         }
-
         .seta {
             position: absolute;
             top: 50%;
@@ -482,14 +548,11 @@
             z-index: 10;
             transition: all 0.3s;
         }
-
         .seta:hover {
             background: rgba(0,0,0,0.8);
         }
-
         .seta-esquerda { left: 20px; }
         .seta-direita { right: 20px; }
-
         .indicadores {
             position: absolute;
             bottom: 20px;
@@ -499,7 +562,6 @@
             gap: 10px;
             z-index: 10;
         }
-
         .indicador {
             width: 10px;
             height: 10px;
@@ -508,316 +570,31 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-
         .indicador.ativo {
             background: #00aaff;
             transform: scale(1.2);
         }
 
-        /* FAQ */
-        .faq-section {
-            background: white;
-            border-radius: 25px;
-            padding: 30px 20px;
-            margin: 25px auto;
-            max-width: 800px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-        }
-
-        .faq-section h2 {
-            font-family: 'Montserrat';
-            color: #003399;
-            font-size: 1.5rem;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .faq-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .faq-item {
-            background: #f8f9fa;
-            border-radius: 14px;
-            overflow: hidden;
-        }
-
-        .faq-question {
+        /* Cards */
+        section {
+            padding: 20px 0;
             width: 100%;
-            padding: 14px 18px;
-            background: #f8f9fa;
-            border: none;
-            text-align: left;
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #003399;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: center;
         }
-
-        .faq-question:hover {
-            background: #e9ecef;
-        }
-
-        .faq-question .icone {
-            font-size: 1rem;
-            transition: transform 0.3s;
-        }
-
-        .faq-item.active .faq-question .icone {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            padding: 0 18px;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-            color: #666;
-            line-height: 1.5;
-            font-size: 0.85rem;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 150px;
-            padding: 0 18px 14px 18px;
-        }
-
-        /* CHAT JACARÉ IA - AZUL */
-        .chat-container {
+        .card {
             background: white;
-            border-radius: 28px;
-            padding: 0;
-            margin: 25px auto;
-            max-width: 800px;
-            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.15);
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0,71,171,0.15);
+            padding: 25px;
+            border-radius: 20px;
+            width: 100%;
         }
-
-        .chat-header {
-            background: linear-gradient(135deg, #0047AB, #2563eb);
-            padding: 18px 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .chat-header .avatar {
-            font-size: 2.2rem;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-        }
-
-        .chat-header .titulo {
-            flex: 1;
-        }
-
-        .chat-header h3 {
+        .card h2 {
             font-family: 'Montserrat';
-            color: white;
-            font-size: 1.2rem;
-            margin: 0;
-        }
-
-        .chat-header p {
-            color: rgba(255,255,255,0.85);
-            font-size: 0.7rem;
-            margin: 2px 0 0;
-        }
-
-        .chat-badge {
-            background: rgba(255,255,255,0.2);
-            padding: 4px 10px;
-            border-radius: 50px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: white;
-        }
-
-        .chat-messages {
-            padding: 20px 24px;
-            max-height: 350px;
-            overflow-y: auto;
-            background: rgba(248, 250, 252, 0.5);
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .chat-message-bot {
-            background: #e8f0fe;
-            color: #1e293b;
-            padding: 12px 16px;
-            border-radius: 20px;
-            border-bottom-left-radius: 4px;
-            max-width: 85%;
-            font-size: 0.85rem;
-            line-height: 1.4;
-            align-self: flex-start;
-        }
-
-        body.dark-mode .chat-message-bot {
-            background: #1e293b;
-            color: #e2e8f0;
-        }
-
-        .chat-message-user {
-            background: linear-gradient(135deg, #0047AB, #2563eb);
-            color: white;
-            padding: 12px 16px;
-            border-radius: 20px;
-            border-bottom-right-radius: 4px;
-            max-width: 85%;
-            font-size: 0.85rem;
-            line-height: 1.4;
-            align-self: flex-end;
-        }
-
-        .chat-input-area {
-            padding: 16px 24px 24px;
-            background: white;
-            border-top: 1px solid rgba(0,0,0,0.05);
-        }
-
-        body.dark-mode .chat-input-area {
-            background: #1e293b;
-            border-top-color: rgba(255,255,255,0.05);
-        }
-
-        .chat-input-wrapper {
-            display: flex;
-            gap: 10px;
+            color: #003399;
             margin-bottom: 12px;
+            font-size: 1.4rem;
         }
 
-        .chat-input {
-            flex: 1;
-            padding: 12px 18px;
-            border: 1px solid #e2e8f0;
-            border-radius: 50px;
-            font-family: inherit;
-            font-size: 0.85rem;
-            background: #f8fafc;
-            transition: all 0.3s;
-        }
-
-        body.dark-mode .chat-input {
-            background: #0f172a;
-            border-color: #334155;
-            color: white;
-        }
-
-        .chat-input:focus {
-            outline: none;
-            border-color: #0047AB;
-            box-shadow: 0 0 0 2px rgba(0,71,171,0.2);
-        }
-
-        .chat-send {
-            background: linear-gradient(135deg, #0047AB, #2563eb);
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-            color: white;
-        }
-
-        .chat-send:hover {
-            transform: scale(1.02);
-        }
-
-        .chat-sugestoes {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .sugestao-btn {
-            background: rgba(0,71,171,0.1);
-            border: none;
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: #0047AB;
-        }
-
-        body.dark-mode .sugestao-btn {
-            background: rgba(96,165,250,0.2);
-            color: #60a5fa;
-        }
-
-        .sugestao-btn:hover {
-            background: #0047AB;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .chat-footer-note {
-            font-size: 0.65rem;
-            color: #888;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        /* CATEGORIAS */
-        .categorias-container {
-            background: white;
-            padding: 30px 20px;
-            border-radius: 25px;
-            margin: 25px auto;
-            max-width: 1200px;
-        }
-        
-        .categorias-container h2 {
-            font-family: 'Montserrat';
-            color: #003399;
-            font-size: 1.5rem;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .grid-categorias {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-        
-        .cat-item {
-            background: #f8f9fa;
-            padding: 14px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 1rem;
-            color: #003399;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-        
-        .info-idades {
-            font-size: 0.9rem;
-            color: #555;
-            padding: 15px;
-            background: #f0f7ff;
-            border-radius: 12px;
-            text-align: center;
-        }
-
+        /* Botão pré-matrícula */
         .btn-prematricula {
             background: linear-gradient(135deg, #ff9800, #f57c00);
             color: white;
@@ -834,22 +611,249 @@
             text-decoration: none;
             animation: pulseBotao 2s infinite;
         }
-        
         @keyframes pulseBotao {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.02); }
         }
-        
+
+        /* FAQ */
+        .faq-section {
+            background: white;
+            border-radius: 25px;
+            padding: 30px 5%;
+            margin: 25px 0;
+            width: 100%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        .faq-section h2 {
+            font-family: 'Montserrat';
+            color: #003399;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .faq-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .faq-item {
+            background: #f8f9fa;
+            border-radius: 14px;
+            overflow: hidden;
+        }
+        .faq-question {
+            width: 100%;
+            padding: 14px 18px;
+            background: #f8f9fa;
+            border: none;
+            text-align: left;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #003399;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+        .faq-question .icone {
+            font-size: 1rem;
+            transition: transform 0.3s;
+        }
+        .faq-item.active .faq-question .icone {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            padding: 0 18px;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: #666;
+            line-height: 1.5;
+            font-size: 0.85rem;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 150px;
+            padding: 0 18px 14px 18px;
+        }
+
+        /* CHAT JACARÉ IA - CENTRALIZADO */
+        .chat-container {
+            background: white;
+            border-radius: 28px;
+            padding: 0;
+            margin: 25px 0;
+            width: 100%;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.15);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,71,171,0.15);
+        }
+        .chat-header {
+            background: linear-gradient(135deg, #0047AB, #2563eb);
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .chat-header .avatar {
+            font-size: 2.2rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+        .chat-header .titulo {
+            flex: 1;
+        }
+        .chat-header h3 {
+            font-family: 'Montserrat';
+            color: white;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        .chat-header p {
+            color: rgba(255,255,255,0.85);
+            font-size: 0.7rem;
+            margin: 2px 0 0;
+        }
+        .chat-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: white;
+        }
+        .chat-messages {
+            padding: 20px 24px;
+            max-height: 350px;
+            overflow-y: auto;
+            background: rgba(248, 250, 252, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .chat-message-bot {
+            background: #e8f0fe;
+            color: #1e293b;
+            padding: 12px 16px;
+            border-radius: 20px;
+            border-bottom-left-radius: 4px;
+            max-width: 85%;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            align-self: center;
+            text-align: center;
+        }
+        body.dark-mode .chat-message-bot {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+        .chat-message-user {
+            background: linear-gradient(135deg, #0047AB, #2563eb);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 20px;
+            border-bottom-right-radius: 4px;
+            max-width: 85%;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            align-self: flex-end;
+        }
+        .chat-input-area {
+            padding: 16px 24px 24px;
+            background: white;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        body.dark-mode .chat-input-area {
+            background: #1e293b;
+            border-top-color: rgba(255,255,255,0.05);
+        }
+        .chat-input-wrapper {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .chat-input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 1px solid #e2e8f0;
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            background: #f8fafc;
+            transition: all 0.3s;
+        }
+        body.dark-mode .chat-input {
+            background: #0f172a;
+            border-color: #334155;
+            color: white;
+        }
+        .chat-input:focus {
+            outline: none;
+            border-color: #0047AB;
+            box-shadow: 0 0 0 2px rgba(0,71,171,0.2);
+        }
+        .chat-send {
+            background: linear-gradient(135deg, #0047AB, #2563eb);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            color: white;
+        }
+        .chat-send:hover {
+            transform: scale(1.02);
+        }
+        .chat-sugestoes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .sugestao-btn {
+            background: rgba(0,71,171,0.1);
+            border: none;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #0047AB;
+        }
+        body.dark-mode .sugestao-btn {
+            background: rgba(96,165,250,0.2);
+            color: #60a5fa;
+        }
+        .sugestao-btn:hover {
+            background: #0047AB;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .chat-footer-note {
+            font-size: 0.65rem;
+            color: #888;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* HORÁRIO - 100% LARGURA */
         .horario-card {
             text-align: center;
-            margin: 25px auto;
-            max-width: 380px;
+            margin: 25px 0;
+            width: 100%;
         }
         .horario-content {
             background: linear-gradient(135deg, #0047AB, #003399);
             color: white;
-            padding: 18px;
+            padding: 25px;
             border-radius: 25px;
+            width: 100%;
         }
         .horario-icone {
             font-size: 1.8rem;
@@ -864,42 +868,166 @@
             font-size: 1.3rem;
             font-weight: 800;
         }
- 
+
+        /* CATEGORIAS - MAIORES */
+        .categorias-container {
+            background: white;
+            padding: 40px 5%;
+            border-radius: 32px;
+            margin: 30px 0;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .categorias-container h2 {
+            font-family: 'Montserrat';
+            color: #003399;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .categorias-container h2:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #0047AB, #00aaff);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+        .grid-categorias {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        @media (min-width: 768px) {
+            .grid-categorias {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+        }
+        @media (min-width: 1200px) {
+            .grid-categorias {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 30px;
+            }
+        }
+        .cat-item {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 20px;
+            border-radius: 24px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #003399;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 100px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .cat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,71,171,0.15);
+            background: #f0f7ff;
+        }
+        .cat-item .emoji-cat {
+            font-size: 1.8rem;
+        }
+        @media (min-width: 1200px) {
+            .cat-item {
+                padding: 25px;
+                font-size: 1.3rem;
+                min-height: 120px;
+            }
+            .cat-item .emoji-cat {
+                font-size: 2rem;
+            }
+        }
+        .info-idades {
+            font-size: 1rem;
+            color: #555;
+            padding: 20px;
+            background: #f0f7ff;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        /* PATROCINADORES */
         .patrocinadores {
             background: white;
-            padding: 30px 20px;
+            padding: 30px 5%;
             border-radius: 25px;
-            margin: 25px auto;
-            max-width: 1200px;
+            margin: 25px 0;
+            width: 100%;
             text-align: center;
         }
         .patrocinadores h2 {
             font-family: 'Montserrat';
             color: #003399;
-            font-size: 1.4rem;
-            margin-bottom: 20px;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
         }
         .patrocinadores-grid {
             display: flex;
             justify-content: center;
-            gap: 25px;
+            gap: 40px;
             flex-wrap: wrap;
+            align-items: center;
+        }
+        .patrocinador-item img {
+            max-width: 150px;
+            height: auto;
+            transition: transform 0.3s;
+        }
+        .patrocinador-item img:hover {
+            transform: scale(1.05);
+        }
+        .chamada-patrocinio {
+            margin-top: 25px;
+            font-size: 0.9rem;
+        }
+        .chamada-patrocinio a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #0047AB;
+            font-weight: 600;
+            margin: 5px 10px;
+        }
+        body.dark-mode .chamada-patrocinio a {
+            color: #60a5fa;
+        }
+        .chamada-patrocinio img {
+            width: 20px;
+            vertical-align: middle;
         }
 
+        /* LOCALIZAÇÃO - MAPA MAIOR */
         .loc-card {
             background: #fff;
-            padding: 25px 20px;
+            padding: 25px 5%;
             border-radius: 25px;
             text-align: center;
             border: 3px solid #00aaff;
-            margin: 20px;
+            margin: 25px 0;
+            width: 100%;
         }
         .mapa-container {
             width: 100%;
-            height: 250px;
+            height: 300px;
             border-radius: 15px;
             overflow: hidden;
             margin: 12px 0;
+        }
+        @media (min-width: 768px) {
+            .mapa-container {
+                height: 400px;
+            }
         }
         .mapa-container iframe {
             width: 100%;
@@ -920,33 +1048,41 @@
             font-size: 0.85rem;
         }
 
+        /* FOOTER - PONTA A PONTA */
         footer {
             background: #003399;
             color: white;
             text-align: center;
-            padding: 25px 20px;
-            margin-top: 35px;
-            border-radius: 20px;
-            font-size: 0.7rem;
+            padding: 30px 5%;
+            margin-top: 40px;
+            width: 100%;
+            position: relative;
+            left: 0;
+            right: 0;
+            border-radius: 0;
         }
-
-        section {
-            padding: 20px 15px;
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
+        footer a {
+            color: white;
+            text-decoration: none;
         }
-        
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
+        footer a:hover {
+            text-decoration: underline;
         }
-        .card h2 {
-            font-family: 'Montserrat';
-            color: #003399;
-            margin-bottom: 12px;
-            font-size: 1.4rem;
+        .contato-footer {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .contato-footer a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .contato-footer img {
+            width: 20px;
+            vertical-align: middle;
         }
 
         .toast {
@@ -973,26 +1109,26 @@
             color: white;
         }
 
-        @media (min-width: 768px) {
-            .grid-categorias {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-            }
-        }
-        
         @media (max-width: 900px) {
             body {
                 padding-top: 10px;
             }
             .barra-superior {
-                padding: 10px 16px;
+                padding: 10px 4%;
             }
             .logo-jacare {
                 font-size: 2rem;
             }
+            .icones-sociais {
+                gap: 8px;
+                margin-left: 10px;
+            }
+            .icones-sociais img {
+                width: 18px;
+                height: 18px;
+            }
             .barra-noticias {
-                padding: 10px 16px;
+                padding: 10px 4%;
             }
             .selo-ao-vivo {
                 padding: 4px 10px;
@@ -1003,7 +1139,7 @@
                 padding: 3px 10px;
                 margin-right: 25px;
             }
-            .btn-tema, .hamburger {
+            .btn-tema, .hamburger, .btn-acessibilidade {
                 width: 38px;
                 height: 38px;
             }
@@ -1037,8 +1173,18 @@
             .chat-sugestoes {
                 justify-content: center;
             }
+            .conteudo {
+                padding: 20px 4%;
+            }
+            .contato-footer {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+            .patrocinador-item img {
+                max-width: 100px;
+            }
         }
-        
         @media (max-width: 650px) {
             .seta {
                 width: 28px;
@@ -1060,26 +1206,46 @@
     <a href="funcionarios.html">🔒 FUNCIONÁRIOS</a>
     <a href="galerias.html">📸 GALERIAS</a>
     <div class="divider"></div>
-    <a href="#" id="menuInstagram">📱 INSTAGRAM</a>
-    <a href="#" id="menuFacebook">📘 FACEBOOK</a>
-    <a href="#" id="menuWhatsapp">💬 CONTATOS</a>
+    <a href="#" id="menuInstagram">
+        <img src="icones/instagram-icon.png" alt="Instagram"> INSTAGRAM
+    </a>
+    <a href="#" id="menuFacebook">
+        <img src="icones/facebook-icon.png" alt="Facebook"> FACEBOOK
+    </a>
+    <a href="#" id="menuWhatsapp">
+        <img src="icones/whatsapp-icon.png" alt="WhatsApp"> WHATSAPP
+    </a>
+    <a href="#" id="menuEmail">
+        <img src="icones/gmail-icon.png" alt="E-mail"> E-MAIL
+    </a>
 </div>
 
 <!-- BOTÃO FLUTUANTE WHATSAPP -->
-<a href="#" id="whatsappBtn" class="btn-whatsapp" target="_blank">💬</a>
+<a href="#" id="whatsappBtn" class="btn-whatsapp" target="_blank">
+    <img src="icones/whatsapp-icon.png" alt="WhatsApp" width="32">
+</a>
 
 <!-- CONTEÚDO PRINCIPAL -->
 <div class="conteudo">
     <!-- BARRA SUPERIOR -->
     <div class="barra-superior">
         <div class="container-superior">
-            <div class="logo-jacare">🐊</div>
+            <div style="display: flex; align-items: center;">
+                <div class="logo-jacare">🐊</div>
+                <div class="icones-sociais">
+                    <a href="#" id="topInstagram"><img src="icones/instagram-icon.png" alt="Instagram"></a>
+                    <a href="#" id="topFacebook"><img src="icones/facebook-icon.png" alt="Facebook"></a>
+                    <a href="#" id="topWhatsapp"><img src="icones/whatsapp-icon.png" alt="WhatsApp"></a>
+                    <a href="#" id="topEmail"><img src="icones/gmail-icon.png" alt="E-mail"></a>
+                </div>
+            </div>
             <div class="area-direita">
                 <div class="clima-widget" id="climaWidget">
                     <span id="climaIcone">🌡️</span>
                     <span id="climaTemp">--°C</span>
                     <span id="climaDesc">Manaus, AM</span>
                 </div>
+                <button class="btn-acessibilidade" id="btnAcessibilidade" title="Modo Acessibilidade">♿</button>
                 <button class="btn-tema" id="btnTema" onclick="alternarTema()">🌞</button>
                 <button class="hamburger" id="hamburger" onclick="toggleMenu()">
                     <span></span>
@@ -1139,7 +1305,7 @@
         <p style="color: #666; margin-top: 8px; font-size: 0.75rem;">Faça sua solicitação de matrícula de forma rápida e segura</p>
     </div>
 
-    <!-- JACARÉ IA - CHAT FIXO -->
+    <!-- JACARÉ IA - CHAT -->
     <div class="chat-container">
         <div class="chat-header">
             <div class="avatar">🐊</div>
@@ -1261,13 +1427,18 @@
     <div class="patrocinadores">
         <h2>🏆 NOSSOS PATROCINADORES</h2>
         <div class="patrocinadores-grid">
-            <div class="patrocinador-item"><img src="./dubom.png" alt="Dubom" style="max-width: 100px;"></div>
-            <div class="patrocinador-item"><img src="./sao-jose.png" alt="São José" style="max-width: 100px;"></div>
+            <div class="patrocinador-item"><img src="./dubom.png" alt="Dubom"></div>
+            <div class="patrocinador-item"><img src="./sao-jose.png" alt="São José"></div>
         </div>
         <div class="chamada-patrocinio">
             📢 <strong>Sua marca pode estar aqui!</strong><br>
             Seja um patrocinador da Escolinha do Jacaré.<br>
-            <a href="#" id="patrocinioLink">📱 Fale conosco</a>
+            <a href="#" id="patrocinioEmail">
+                <img src="icones/gmail-icon.png" alt="E-mail"> escolinhajacare98@gmail.com
+            </a>
+            <a href="#" id="patrocinioWhatsapp">
+                <img src="icones/whatsapp-icon.png" alt="WhatsApp"> (92) 9XXXX-XXXX
+            </a>
         </div>
     </div>
 
@@ -1294,7 +1465,15 @@
     <footer>
         ESCOLINHA DO JACARÉ - ALVORADA<br>
         Manaus/AM - Brasil
-        <div class="rights">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</div>
+        <div class="contato-footer">
+            <a href="#" id="footerEmail">
+                <img src="icones/gmail-icon.png" alt="E-mail"> escolinhajacare98@gmail.com
+            </a>
+            <a href="#" id="footerWhatsapp">
+                <img src="icones/whatsapp-icon.png" alt="WhatsApp"> (92) 9XXXX-XXXX
+            </a>
+        </div>
+        <div class="rights" style="margin-top: 15px;">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</div>
     </footer>
 </div>
 
@@ -1563,6 +1742,29 @@
         const isDark = document.body.classList.contains('dark-mode');
         document.getElementById('btnTema').innerHTML = isDark ? '🌙' : '🌞';
         localStorage.setItem('tema', isDark ? 'dark' : 'light');
+        
+        // Se modo acessibilidade estiver ativo, mantém as cores de acessibilidade
+        if (document.body.classList.contains('acessibilidade')) {
+            // Não faz nada, mantém acessibilidade
+        }
+    }
+
+    // ========== MODO ACESSIBILIDADE ==========
+    function alternarAcessibilidade() {
+        const body = document.body;
+        const btn = document.getElementById('btnAcessibilidade');
+        
+        body.classList.toggle('acessibilidade');
+        
+        if (body.classList.contains('acessibilidade')) {
+            btn.classList.add('ativo');
+            localStorage.setItem('acessibilidade', 'active');
+            mostrarToast('♿ Modo acessibilidade ativado - Fonte maior e alto contraste');
+        } else {
+            btn.classList.remove('ativo');
+            localStorage.setItem('acessibilidade', 'inactive');
+            mostrarToast('♿ Modo acessibilidade desativado');
+        }
     }
 
     // ========== BOTÃO VOLTAR AO TOPO ==========
@@ -1593,48 +1795,50 @@
         }, 2500);
     }
 
-    // ========== EVENTOS ==========
-    document.getElementById('chatSendBtn')?.addEventListener('click', enviarPergunta);
-    document.getElementById('chatInput')?.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') enviarPergunta();
-    });
+    // ========== EVENTOS DE CONTATO ==========
+    // E-mail
+    function abrirEmail() {
+        window.location.href = 'mailto:escolinhajacare98@gmail.com';
+        mostrarToast('📧 Abrindo e-mail...');
+    }
     
-    document.querySelectorAll('.sugestao-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const pergunta = btn.getAttribute('data-pergunta');
-            document.getElementById('chatInput').value = pergunta;
-            enviarPergunta();
-        });
-    });
+    // WhatsApp (em breve)
+    function abrirWhatsApp() {
+        mostrarToast('📱 Em breve WhatsApp estará disponível!');
+    }
 
-    document.getElementById('menuInstagram')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarToast('📸 Abrindo Instagram...');
-    });
+    // Redes sociais (em breve)
+    function abrirInstagram() {
+        mostrarToast('📱 Em breve Instagram estará disponível!');
+    }
     
-    document.getElementById('menuFacebook')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarToast('📘 Abrindo Facebook...');
-    });
+    function abrirFacebook() {
+        mostrarToast('📘 Em breve Facebook estará disponível!');
+    }
+
+    // Adicionar eventos
+    document.getElementById('menuEmail')?.addEventListener('click', (e) => { e.preventDefault(); abrirEmail(); });
+    document.getElementById('menuWhatsapp')?.addEventListener('click', (e) => { e.preventDefault(); abrirWhatsApp(); });
+    document.getElementById('menuInstagram')?.addEventListener('click', (e) => { e.preventDefault(); abrirInstagram(); });
+    document.getElementById('menuFacebook')?.addEventListener('click', (e) => { e.preventDefault(); abrirFacebook(); });
     
-    document.getElementById('menuWhatsapp')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarToast('📱 Abrindo WhatsApp...');
-    });
-
-    document.getElementById('whatsappBtn')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarToast('📱 Abrindo WhatsApp...');
-    });
-
-    document.getElementById('patrocinioLink')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        mostrarToast('📱 Fale conosco pelo WhatsApp');
-    });
+    document.getElementById('topEmail')?.addEventListener('click', (e) => { e.preventDefault(); abrirEmail(); });
+    document.getElementById('topWhatsapp')?.addEventListener('click', (e) => { e.preventDefault(); abrirWhatsApp(); });
+    document.getElementById('topInstagram')?.addEventListener('click', (e) => { e.preventDefault(); abrirInstagram(); });
+    document.getElementById('topFacebook')?.addEventListener('click', (e) => { e.preventDefault(); abrirFacebook(); });
+    
+    document.getElementById('whatsappBtn')?.addEventListener('click', (e) => { e.preventDefault(); abrirWhatsApp(); });
+    document.getElementById('footerEmail')?.addEventListener('click', (e) => { e.preventDefault(); abrirEmail(); });
+    document.getElementById('footerWhatsapp')?.addEventListener('click', (e) => { e.preventDefault(); abrirWhatsApp(); });
+    document.getElementById('patrocinioEmail')?.addEventListener('click', (e) => { e.preventDefault(); abrirEmail(); });
+    document.getElementById('patrocinioWhatsapp')?.addEventListener('click', (e) => { e.preventDefault(); abrirWhatsApp(); });
 
     document.getElementById('btnPrematricula')?.addEventListener('click', () => {
         mostrarToast('⏳ Redirecionando para pré-matrícula...');
     });
+
+    // Botão acessibilidade
+    document.getElementById('btnAcessibilidade')?.addEventListener('click', alternarAcessibilidade);
 
     // ========== INICIALIZAÇÃO ==========
     window.addEventListener('load', function() {
@@ -1644,16 +1848,22 @@
         setInterval(buscarNoticiasFutebol, 300000);
         initFaq();
         
+        // Carregar tema salvo
         if (localStorage.getItem('tema') === 'dark') {
             document.body.classList.add('dark-mode');
             document.getElementById('btnTema').innerHTML = '🌙';
+        }
+        
+        // Carregar modo acessibilidade salvo
+        if (localStorage.getItem('acessibilidade') === 'active') {
+            document.body.classList.add('acessibilidade');
+            document.getElementById('btnAcessibilidade').classList.add('ativo');
         }
         
         document.querySelectorAll('.sidebar a').forEach(link => {
             link.addEventListener('click', fecharMenu);
         });
         
-        // Pausa a animação ao tocar na tela (celular)
         const tickerWrapper = document.querySelector('.ticker-wrapper');
         if (tickerWrapper) {
             tickerWrapper.addEventListener('mouseenter', pararAnimacaoTicker);
