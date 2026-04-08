@@ -378,17 +378,17 @@
             z-index: 1;
         }
 
-        /* ========== BANNER FIXO COM IMAGEM ÚNICA ========== */
+        /* ========== BANNER FIXO - 100px ABAIXO DA BARRA ========== */
         .hero {
             position: relative;
-            margin-top: 20px;
+            margin-top: 100px;
             margin-bottom: 30px;
             border-radius: 24px;
             overflow: hidden;
-            min-height: 600px;
+            min-height: 400px;
             background-image: url('banner/banner5.png');
             background-size: cover;
-            background-position: center 80%;
+            background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -858,44 +858,40 @@
             transform: translateX(0);
         }
 
-        /* ========== RESPONSIVO - CELULAR ========== */
+        /* ========== RESPONSIVO ========== */
         @media (max-width: 768px) {
             .conteudo {
                 max-width: 95%;
                 padding: 120px 0 20px;
             }
-            /* BARRA DE NOTÍCIAS FICA RELATIVA NO CELULAR */
             .barra-noticias {
                 position: relative;
                 top: 0;
                 margin-top: 10px;
                 margin-bottom: 10px;
             }
-            /* BANNER MENOR E MAIS BAIXO NO CELULAR */
             .hero {
-                min-height: 320px;
-                margin-top: 5px;
-                margin-bottom: 20px;
-                background-position: center 65%;
+                margin-top: 60px;
+                min-height: 280px;
             }
             .hero-content {
-                padding: 15px 12px;
+                padding: 20px 15px;
             }
             .hero-content h1 {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
                 margin-bottom: 8px;
             }
             .hero-content p {
-                font-size: 0.7rem;
+                font-size: 0.8rem;
                 margin-bottom: 12px;
             }
             .btn-prematricula {
-                padding: 6px 16px;
-                font-size: 0.7rem;
+                padding: 8px 20px;
+                font-size: 0.8rem;
             }
             .indicadores-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
+                gap: 15px;
                 margin-bottom: 25px;
             }
             .indicador-card {
@@ -907,9 +903,6 @@
             .indicador-card .label {
                 font-size: 0.7rem;
             }
-            .indicador-card .detalhe {
-                font-size: 0.6rem;
-            }
             .grid-categorias {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
@@ -918,15 +911,9 @@
                 padding: 15px;
                 font-size: 0.9rem;
             }
-            .cat-item .emoji-cat {
-                font-size: 1.5rem;
-            }
             .valores-grid {
                 grid-template-columns: 1fr;
                 gap: 15px;
-            }
-            .valor-item {
-                padding: 18px;
             }
             .card {
                 padding: 20px;
@@ -934,75 +921,12 @@
             }
             .card h2 {
                 font-size: 1.3rem;
-                margin-bottom: 12px;
-            }
-            .card p {
-                font-size: 0.85rem;
             }
             .chat-container {
                 max-width: 100%;
-                margin-bottom: 20px;
-            }
-            .chat-header {
-                padding: 12px 16px;
-            }
-            .chat-header .avatar {
-                font-size: 1.8rem;
-            }
-            .chat-header h3 {
-                font-size: 1rem;
-            }
-            .chat-messages {
-                padding: 12px;
-                max-height: 250px;
-            }
-            .chat-message-bot, .chat-message-user {
-                padding: 8px 12px;
-                font-size: 0.75rem;
-            }
-            .chat-input-area {
-                padding: 12px;
-            }
-            .chat-input {
-                padding: 8px 12px;
-                font-size: 0.8rem;
-            }
-            .chat-send {
-                width: 36px;
-                height: 36px;
-                font-size: 1rem;
-            }
-            .sugestao-btn {
-                padding: 4px 10px;
-                font-size: 0.65rem;
-            }
-            .patrocinadores {
-                padding: 20px;
-                margin-bottom: 20px;
-            }
-            .patrocinadores h2 {
-                font-size: 1.3rem;
-                margin-bottom: 15px;
-            }
-            .patrocinadores-grid {
-                gap: 20px;
             }
             .patrocinador-item img {
                 max-width: 100px;
-            }
-            .loc-card {
-                padding: 20px;
-                margin-bottom: 20px;
-            }
-            .loc-card h2 {
-                font-size: 1.3rem;
-            }
-            .mapa-container {
-                height: 250px;
-            }
-            .btn-mapa {
-                padding: 8px 16px;
-                font-size: 0.8rem;
             }
             .clima-widget {
                 padding: 4px 10px;
@@ -1027,15 +951,6 @@
             .selo-ao-vivo {
                 font-size: 0.6rem;
                 padding: 2px 6px;
-            }
-            .contato-footer {
-                gap: 15px;
-            }
-            .contato-footer a {
-                font-size: 0.7rem;
-            }
-            .rights {
-                font-size: 0.6rem;
             }
         }
         @media (min-width: 1200px) {
@@ -1115,7 +1030,7 @@
     </div>
 </div>
 
-<!-- BANNER FIXO COM IMAGEM ÚNICA (banner5.png) -->
+<!-- BANNER - 100px ABAIXO DA BARRA DE NOTÍCIAS -->
 <div class="hero">
     <div class="hero-content">
         <h1>🐊 ESCOLINHA DO JACARÉ - ALVORADA</h1>
