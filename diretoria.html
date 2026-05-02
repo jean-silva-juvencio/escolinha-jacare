@@ -301,6 +301,94 @@
             line-height: 1.2;
         }
 
+        /* ========== CSS NOVO PARA CARDS DE UNIFORME ========== */
+        .uniforme-cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 12px;
+        }
+        .card-tamanho-uniforme {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: 20px;
+            padding: 15px 12px;
+            text-align: center;
+            flex: 1;
+            min-width: 85px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: default;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        body.dark-mode .card-tamanho-uniforme {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-color: #334155;
+        }
+        .card-tamanho-uniforme:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .card-tamanho-uniforme .icone-tamanho {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        .card-tamanho-uniforme .tamanho {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #003399;
+            margin-bottom: 5px;
+        }
+        body.dark-mode .card-tamanho-uniforme .tamanho {
+            color: #60a5fa;
+        }
+        .card-tamanho-uniforme .quantidade {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #0047AB;
+            margin: 5px 0;
+        }
+        body.dark-mode .card-tamanho-uniforme .quantidade {
+            color: #3b82f6;
+        }
+        .card-tamanho-uniforme .percentual {
+            font-size: 0.75rem;
+            color: #666;
+            background: rgba(0,71,171,0.1);
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 20px;
+            margin-top: 5px;
+        }
+        body.dark-mode .card-tamanho-uniforme .percentual {
+            color: #94a3b8;
+            background: rgba(59,130,246,0.2);
+        }
+        .card-tamanho-uniforme .barra-container {
+            width: 100%;
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        body.dark-mode .card-tamanho-uniforme .barra-container {
+            background: #334155;
+        }
+        .card-tamanho-uniforme .barra {
+            height: 100%;
+            background: linear-gradient(90deg, #0047AB, #00aaff);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+        .card-tamanho-uniforme.p-zero {
+            opacity: 0.6;
+        }
+        .card-tamanho-uniforme.p-zero .quantidade {
+            color: #999;
+        }
+        /* ========== FIM DO CSS NOVO ========== */
+
         .filtros-container {
             background: white;
             border-radius: 20px;
@@ -1000,6 +1088,15 @@
         <div class="grafico-card"><h3>📈 Evolução Mensal de Matrículas</h3><canvas id="graficoEvolucao"></canvas></div>
         <div class="grafico-card"><h3>⚠️ Alunos com Deficiência</h3><canvas id="graficoDeficiencia"></canvas></div>
         <div class="grafico-card"><h3>💊 Remédio Controlado</h3><canvas id="graficoRemedio"></canvas></div>
+        
+        <!-- NOVO: CARDS HORIZONTAIS DE UNIFORMES -->
+        <div class="grafico-card">
+            <h3>👕 QUANTIDADE DE CAMISAS POR TAMANHO</h3>
+            <div id="cardsUniforme" class="uniforme-cards-container">
+                <!-- Os cards vão aparecer aqui via JavaScript -->
+            </div>
+        </div>
+        
         <div class="grafico-card"><h3>📢 Como conheceu a Escolinha (%)</h3><canvas id="graficoOrigem"></canvas></div>
         <div class="grafico-card full-width"><h3>📊 Alunos por Faixa Etária (Sub)</h3><canvas id="graficoSub"></canvas></div>
     </div>
@@ -1081,7 +1178,6 @@
 
 <script>
     // ========== CONFIGURAÇÕES ==========
-    // URL DO GOOGLE APPS SCRIPT (com a função doGetLogin)
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz76grUCrYQoi6z9VAQt5YOtzo50AG3O-kLB-nON0o4uGoBGQoHrdo4QUOCRmoVgjAcFg/exec';
     
     let usuarioLogado = null;
@@ -1154,6 +1250,76 @@
         return { class: '', texto: '🆕 Novato' };
     }
 
+    // ========== NOVA FUNÇÃO: CARDS HORIZONTAIS DE UNIFORME ==========
+    function atualizarCardsUniformeHorizontal() {
+        const dados = alunosFiltrados;
+        
+        // Ordem dos tamanhos
+        const tamanhosOrdem = ['PP', 'P', 'M', 'G', 'GG', 'GGG', 'XGG'];
+        
+        // Contar cada tamanho
+        const contagem = {};
+        tamanhosOrdem.forEach(t => contagem[t] = 0);
+        
+        let totalComUniforme = 0;
+        
+        dados.forEach(aluno => {
+            let tamanho = (aluno.uniforme || '').toUpperCase().trim();
+            if (tamanho === 'PP') { contagem['PP']++; totalComUniforme++; }
+            else if (tamanho === 'P') { contagem['P']++; totalComUniforme++; }
+            else if (tamanho === 'M') { contagem['M']++; totalComUniforme++; }
+            else if (tamanho === 'G') { contagem['G']++; totalComUniforme++; }
+            else if (tamanho === 'GG') { contagem['GG']++; totalComUniforme++; }
+            else if (tamanho === 'GGG') { contagem['GGG']++; totalComUniforme++; }
+            else if (tamanho === 'XGG') { contagem['XGG']++; totalComUniforme++; }
+        });
+        
+        // Gerar os cards
+        const container = document.getElementById('cardsUniforme');
+        if (!container) return;
+        
+        if (totalComUniforme === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:20px; color:#999; width:100%;">👕 Nenhum uniforme cadastrado</div>';
+            return;
+        }
+        
+        let cardsHTML = '';
+        
+        tamanhosOrdem.forEach(tamanho => {
+            const quantidade = contagem[tamanho];
+            const percentual = totalComUniforme > 0 ? ((quantidade / totalComUniforme) * 100).toFixed(1) : 0;
+            const temZero = quantidade === 0;
+            
+            // Emojis diferentes para cada tamanho
+            let emoji = '👕';
+            if (tamanho === 'PP') emoji = '🟣';
+            if (tamanho === 'P') emoji = '🔵';
+            if (tamanho === 'M') emoji = '🟢';
+            if (tamanho === 'G') emoji = '🟠';
+            if (tamanho === 'GG') emoji = '🔴';
+            if (tamanho === 'GGG') emoji = '🟤';
+            if (tamanho === 'XGG') emoji = '⚫';
+            
+            cardsHTML += `
+                <div class="card-tamanho-uniforme ${temZero ? 'p-zero' : ''}">
+                    <div class="icone-tamanho">${emoji}</div>
+                    <div class="tamanho">${tamanho}</div>
+                    <div class="quantidade">${quantidade}</div>
+                    <div class="percentual">${percentual}%</div>
+                    <div class="barra-container">
+                        <div class="barra" style="width: ${percentual}%;"></div>
+                    </div>
+                    <div style="font-size: 0.65rem; color: #999; margin-top: 5px;">
+                        ${quantidade} ${quantidade === 1 ? 'pessoa' : 'pessoas'}
+                    </div>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = cardsHTML;
+    }
+    // ========== FIM DA FUNÇÃO DE UNIFORME ==========
+
     function aplicarFiltros() {
         const nome = document.getElementById('filtroNome').value.toLowerCase();
         const responsavel = document.getElementById('filtroResponsavel').value.toLowerCase();
@@ -1173,6 +1339,7 @@
         });
         
         atualizarTodosGraficos();
+        atualizarCardsUniformeHorizontal(); // NOVO: atualiza os cards
         atualizarUltimosAlunos();
         atualizarVeteranos();
     }
@@ -1288,7 +1455,7 @@
     function atualizarTodosGraficos() {
         const dados = alunosFiltrados;
         
-        // Gráfico de Turmas (barras horizontais)
+        // Gráfico de Turmas
         const turmasCount = TURMAS.map(t => dados.filter(a => a.turma === t).length);
         const labelsAbreviadas = TURMAS.map(t => t === 'Taekwondo' ? 'Taekw.' : t);
         
@@ -1299,7 +1466,7 @@
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, scales: { y: { ticks: { font: { size: 11 } } } }, plugins: { legend: { display: false } } }
         });
         
-        // GRÁFICO DE PIZZA COM PORCENTAGEM DENTRO DAS FATIAS
+        // Gráfico de Pizza
         const totalTurmas = turmasCount.reduce((a, b) => a + b, 0);
         if (graficos.pizza) graficos.pizza.destroy();
         graficos.pizza = new Chart(document.getElementById('graficoPizza'), {
@@ -1412,7 +1579,7 @@
             options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
         });
         
-        // GRÁFICO DE ORIGEM - BARRAS VERTICAIS
+        // Gráfico de Origem
         const origemMap = new Map();
         dados.forEach(a => { 
             if (a.origem && a.origem.trim() !== '') {
@@ -1535,11 +1702,11 @@
             <div class="detalhe-item"><div class="detalhe-label">📍 Bairro</div><div class="detalhe-valor">${aluno.bairro || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">🆔 RG</div><div class="detalhe-valor">${aluno.rg || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">💊 Remédio</div><div class="detalhe-valor">${aluno.remedio || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">👕 Uniforme</div><div class="detalhe-valor">${aluno.uniforme || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">👤 Sexo</div><div class="detalhe-valor">${aluno.sexo || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">⚖️ Peso</div><div class="detalhe-valor">${aluno.peso ? aluno.peso + ' kg' : '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">📏 Altura</div><div class="detalhe-valor">${aluno.altura ? aluno.altura + ' cm' : '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">👟 Calçado</div><div class="detalhe-valor">${aluno.calcado || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">👕 Uniforme</div><div class="detalhe-valor">${aluno.uniforme || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">⚠️ Deficiência</div><div class="detalhe-valor">${aluno.deficiencia || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">🏙️ Município</div><div class="detalhe-valor">${aluno.municipio || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">📌 UF</div><div class="detalhe-valor">${aluno.uf || '-'}</div></div>
@@ -1647,7 +1814,6 @@
     document.getElementById('filtroCategoria').addEventListener('change', aplicarFiltros);
     document.getElementById('filtroBairro').addEventListener('input', aplicarFiltros);
 
-    // ========== FUNÇÃO DE LOGIN ATUALIZADA (VIA PLANILHA) ==========
     async function verificarLogin() {
         const email = document.getElementById('emailLogin').value.trim();
         const senha = document.getElementById('senhaLogin').value;
@@ -1688,24 +1854,22 @@
     }
 
     function logout() {
-    // Registra o último acesso ao clicar em SAIR
-    if (usuarioLogado && usuarioLogado.email) {
-        const senha = document.getElementById('senhaLogin').value;
-        if (senha) {
-            fetch(`${SCRIPT_URL}?email=${encodeURIComponent(usuarioLogado.email)}&senha=${encodeURIComponent(senha)}`)
-                .then(() => console.log('✅ Acesso registrado ao sair'))
-                .catch(err => console.error('Erro:', err));
+        if (usuarioLogado && usuarioLogado.email) {
+            const senha = document.getElementById('senhaLogin').value;
+            if (senha) {
+                fetch(`${SCRIPT_URL}?email=${encodeURIComponent(usuarioLogado.email)}&senha=${encodeURIComponent(senha)}`)
+                    .then(() => console.log('✅ Acesso registrado ao sair'))
+                    .catch(err => console.error('Erro:', err));
+            }
         }
+        
+        document.getElementById('telaLogin').style.display = 'flex';
+        document.getElementById('painelAnalise').style.display = 'none';
+        document.getElementById('emailLogin').value = '';
+        document.getElementById('senhaLogin').value = '';
+        document.getElementById('erroLogin').innerText = '';
+        usuarioLogado = null;
     }
-    
-    // Faz o logout normal
-    document.getElementById('telaLogin').style.display = 'flex';
-    document.getElementById('painelAnalise').style.display = 'none';
-    document.getElementById('emailLogin').value = '';
-    document.getElementById('senhaLogin').value = '';
-    document.getElementById('erroLogin').innerText = '';
-    usuarioLogado = null;
-}
 
     setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') atualizarTimestamp(); }, 1000);
 </script>
