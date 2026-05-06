@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Pré-Matrícula | Escolinha do Jacaré</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --azul-escuro: #003399;
+            --azul-premium: #0047AB;
+            --azul-claro: #00aaff;
+            --laranja-destaque: #ff9800;
+            --vermelho-erro: #ff4444;
+            --verde-sucesso: #4caf50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e0ecf9 100%);
+            min-height: 100vh;
+            padding: 110px 16px 50px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1a3a 100%);
+        }
+
+        body.dark-mode,
+        body.dark-mode .form-grupo label,
+        body.dark-mode .secao-titulo,
+        body.dark-mode .subtitulo,
+        body.dark-mode .radio-group label,
+        body.dark-mode .checkbox-group label,
+        body.dark-mode .tabela-referencia h4,
+        body.dark-mode .tamanho-resultado,
+        body.dark-mode .info-idade,
+        body.dark-mode .observacao,
+        body.dark-mode .form-grupo input,
+        body.dark-mode .form-grupo select,
+        body.dark-mode .form-grupo textarea,
+        body.dark-mode .form-grupo input::placeholder,
+        body.dark-mode .form-grupo select::placeholder,
+        body.dark-mode .form-grupo textarea::placeholder {
+            color: #ffffff !important;
+        }
+
+        body.dark-mode .nav-bar {
+            background: #1e293b;
+        }
+
+        body.dark-mode .form-card {
+            background: #1e293b;
+        }
+
+        body.dark-mode .form-card h1 {
+            color: #60a5fa;
+        }
+
+        body.dark-mode .btn-enviar {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+        }
+
+        body.dark-mode footer {
+            background: #0f172a;
+        }
+
+        body.dark-mode .tabela-referencia {
+            background: #0f172a;
+            border-color: #334155;
+        }
+
+        body.dark-mode .aba {
+            background: #0f172a;
+            border-color: #334155;
+        }
+
+        .nav-bar {
+            background: white;
+            border-radius: 60px;
+            padding: 10px 20px;
+            margin: 0 auto 20px;
+            max-width: 900px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: fixed;
+            top: 16px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            width: calc(100% - 32px);
+        }
+
+        .logo-text {
+            text-decoration: none;
+            font-family: 'Montserrat';
+            font-weight: 900;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #003399, #00aaff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        body.dark-mode .nav-link {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .btn-tema {
+            background: #0047AB;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            width: 45px;
+            height: 45px;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 32px;
+            padding: 28px 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: background 0.3s;
+        }
+
+        .form-card h1 {
+            font-family: 'Montserrat';
+            color: var(--azul-escuro);
+            text-align: center;
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        .form-card .subtitulo {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 0.85rem;
+        }
+
+        .secao {
+            margin-bottom: 28px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .secao:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .secao-titulo {
+            font-weight: 800;
+            color: var(--azul-escuro);
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .secao-titulo .numero {
+            background: var(--azul-premium);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .abas-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        .aba {
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            background: #f0f0f0;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .aba {
+            background: #334155;
+        }
+
+        .aba.ativa {
+            background: var(--azul-premium);
+            color: white;
+        }
+
+        .conteudo-aba {
+            display: none;
+        }
+
+        .conteudo-aba.ativa {
+            display: block;
+        }
+
+        .form-grupo {
+            margin-bottom: 16px;
+        }
+
+        .form-grupo label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #333;
+            font-size: 0.85rem;
+        }
+
+        .form-grupo label .obrigatorio {
+            color: var(--vermelho-erro);
+            margin-left: 3px;
+        }
+
+        .form-grupo input,
+        .form-grupo select,
+        .form-grupo textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: 'Open Sans', sans-serif;
+            background: white;
+        }
+
+        .form-grupo textarea {
+            resize: vertical;
+        }
+
+        .form-grupo input:focus,
+        .form-grupo select:focus,
+        .form-grupo textarea:focus {
+            outline: none;
+            border-color: var(--azul-claro);
+        }
+
+        .form-linha {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-linha-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .info-idade {
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 50px;
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: var(--azul-premium);
+            font-weight: 600;
+            display: none;
+        }
+
+        .tamanho-resultado {
+            background: #e8f0fe;
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .tabela-referencia {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .tabela-referencia h4 {
+            margin-bottom: 10px;
+            color: var(--azul-premium);
+        }
+
+        .tabela-referencia-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            font-size: 0.8rem;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 8px 0;
+        }
+
+        .radio-group label, .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: normal;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .radio-group input, .checkbox-group input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .deficiencia-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .deficiencia-opcoes {
+            margin-left: 20px;
+            padding-left: 15px;
+            border-left: 2px solid #e0e0e0;
+        }
+
+        .deficiencia-opcoes.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .btn-enviar {
+            background: linear-gradient(135deg, var(--laranja-destaque), #f57c00);
+            color: white;
+            border: none;
+            padding: 16px 20px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-enviar:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .buscar-cep {
+            background: var(--azul-premium);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+            width: 100%;
+        }
+
+        .mensagem-erro {
+            color: var(--vermelho-erro);
+            font-size: 0.7rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 1100;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .toast.success { border-left: 4px solid #4caf50; }
+        .toast.error { border-left: 4px solid #f44336; }
+
+        .mensagem-sucesso {
+            background: linear-gradient(135deg, var(--verde-sucesso), #45a049);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        footer {
+            background: var(--azul-escuro);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 700px) {
+            .form-linha, .form-linha-3 { grid-template-columns: 1fr; }
+            .radio-group, .checkbox-group { gap: 12px; }
+            .tabela-referencia-grid { grid-template-columns: 1fr; }
+            .abas-container { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="nav-bar">
+    <a href="index.html" class="logo-text">🐊 ESCOLINHA DO JACARÉ</a>
+    <div class="nav-links">
+        <a href="index.html" class="nav-link">🏠 INÍCIO</a>
+        <a href="diretoria.html" class="nav-link">📊 DIRETORIA</a>
+        <a href="funcionarios.html" class="nav-link">🔒 FUNCIONÁRIOS</a>
+        <button class="btn-tema" onclick="alternarTema()">🌞</button>
+    </div>
+</div>
+
+<div class="form-container">
+    <div id="formularioContainer">
+        <div class="form-card">
+            <h1>📝 PRÉ-MATRÍCULA</h1>
+            <div class="subtitulo">
+                Preencha todos os campos <strong>obrigatórios (*)</strong> para solicitar sua matrícula
+            </div>
+
+            <form id="formPrematricula">
+                <!-- SEÇÃO 1: DADOS DO ALUNO -->
+                <div class="secao">
+                    <div class="secao-titulo">
+                        <span class="numero">1</span> DADOS DO ALUNO
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Nome completo do aluno <span class="obrigatorio">*</span></label>
+                        <input type="text" id="nomeAluno" placeholder="Digite o nome completo">
+                        <div class="mensagem-erro" id="erroNome">Campo obrigatório</div>
+                    </div>
+
+                    <div class="form-linha">
+                        <div class="form-grupo">
+                            <label>Data de nascimento <span class="obrigatorio">*</span></label>
+                            <input type="date" id="dataNasc">
+                            <div class="mensagem-erro" id="erroData">Campo obrigatório</div>
+                            <div id="infoIdade" class="info-idade"></div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Sexo <span class="obrigatorio">*</span></label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="sexo" value="Masculino"> Masculino</label>
+                                <label><input type="radio" name="sexo" value="Feminino"> Feminino</label>
+                            </div>
+                            <div class="mensagem-erro" id="erroSexo">Selecione o sexo</div>
+                        </div>
+                    </div>
+
+                    <!-- ABAS UNIFORME -->
+                    <div class="abas-container">
+                        <div class="aba ativa" data-aba="crianca">👶 CRIANÇA (até 14 anos)</div>
+                        <div class="aba" data-aba="adulto">👨 ADULTO (15+ anos)</div>
+                    </div>
+
+                    <!-- ABA CRIANÇA -->
+                    <div id="abaCrianca" class="conteudo-aba ativa">
+                        <div class="form-grupo">
+                            <label>Idade da criança <span class="obrigatorio">*</span></label>
+                            <input type="number" id="idadeCrianca" min="8" max="14" placeholder="Ex: 8">
+                            <div class="mensagem-erro" id="erroIdade">Campo obrigatório (8 a 14 anos)</div>
+                        </div>
+                        <div class="tamanho-resultado" id="tamanhoCriancaResultado">
+                            👕 Tamanho da camisa: <strong>-</strong>
+                        </div>
+                        <div class="tabela-referencia">
+                            <h4>📏 Tabela de referência (Idade → Tamanho da camisa)</h4>
+                            <div class="tabela-referencia-grid">
+                                <span>📌 8 anos → Tamanho <strong>8</strong></span>
+                                <span>📌 9 anos → Tamanho <strong>9</strong></span>
+                                <span>📌 10 anos → Tamanho <strong>10</strong></span>
+                                <span>📌 11 anos → Tamanho <strong>11</strong></span>
+                                <span>📌 12 anos → Tamanho <strong>12</strong></span>
+                                <span>📌 13 anos → Tamanho <strong>13</strong></span>
+                                <span>📌 14 anos → Tamanho <strong>14</strong></span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="tamanhoCamisaCrianca">
+                    </div>
+
+                    <!-- ABA ADULTO -->
+                    <div id="abaAdulto" class="conteudo-aba">
+                        <div class="form-grupo">
+                            <label>Escolha o tamanho da camisa <span class="obrigatorio">*</span></label>
+                            <select id="tamanhoAdulto">
+                                <option value="">Selecione...</option>
+                                <option value="PP">PP</option>
+                                <option value="P">P</option>
+                                <option value="M">M</option>
+                                <option value="G">G</option>
+                                <option value="GG">GG</option>
+                                <option value="GGG">GGG</option>
+                                <option value="XGG">XGG</option>
+                            </select>
+                            <div class="mensagem-erro" id="erroTamanhoAdulto">Selecione o tamanho da camisa</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>👕 Já possui a camisa da Escolinha? <span class="obrigatorio">*</span></label>
+                        <select id="possuiUniforme">
+                            <option value="">Selecione...</option>
+                            <option value="sim">✅ SIM - Já tenho a camisa</option>
+                            <option value="nao">❌ NÃO - Preciso da camisa</option>
+                        </select>
+                        <div class="mensagem-erro" id="erroPossuiUniforme">Selecione se já possui a camisa</div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Turma desejada <span class="obrigatorio">*</span></label>
+                        <select id="turma">
+                            <option value="">Selecione...</option>
+                            <option value="Futebol">⚽ Futebol</option>
+                            <option value="Taekwondo">🥋 Taekwondo</option>
+                            <option value="Ginástica">🤸 Ginástica</option>
+                            <option value="Tênis de Mesa">🏓 Tênis de Mesa</option>
+                            <option value="Judô">🥋 Judô</option>
+                        </select>
+                        <div class="mensagem-erro" id="erroTurma">Campo obrigatório</div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <div class="deficiencia-header">
+                            <label>Deficiência</label>
+                            <label><input type="checkbox" id="semDeficiencia"> Não possui deficiência</label>
+                        </div>
+                        <div id="deficienciaOpcoes" class="deficiencia-opcoes">
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" class="deficiencia-check" value="Visual"> Visual</label>
+                                <label><input type="checkbox" class="deficiencia-check" value="Auditiva"> Auditiva</label>
+                                <label><input type="checkbox" class="deficiencia-check" value="Física"> Física</label>
+                                <label><input type="checkbox" class="deficiencia-check" value="Mental"> Mental</label>
+                                <label><input type="checkbox" class="deficiencia-check" value="Motora"> Motora</label>
+                            </div>
+                            <div class="form-grupo">
+                                <label>Outra:</label>
+                                <input type="text" id="outraDeficiencia" placeholder="Especifique outra deficiência">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Faz uso de remédio controlado? <span class="obrigatorio">*</span></label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="remedio" value="Não" checked> Não</label>
+                            <label><input type="radio" name="remedio" value="Sim"> Sim</label>
+                        </div>
+                        <input type="text" id="remedioDesc" placeholder="Se sim, qual remédio?" style="margin-top: 10px; display: none;">
+                        <div class="mensagem-erro" id="erroRemedioDesc">Informe qual remédio</div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO 2: DADOS DO RESPONSÁVEL -->
+                <div class="secao">
+                    <div class="secao-titulo">
+                        <span class="numero">2</span> DADOS DO RESPONSÁVEL
+                    </div>
+
+                    <!-- NOVOS CAMPOS: TIPO DE VÍNCULO E SEXO DO RESPONSÁVEL -->
+                    <div class="form-linha">
+                        <div class="form-grupo">
+                            <label>Tipo de vínculo com o aluno <span class="obrigatorio">*</span></label>
+                            <select id="tipoVinculo">
+                                <option value="">Selecione...</option>
+                                <option value="Pai">👨 Pai</option>
+                                <option value="Mãe">👩 Mãe</option>
+                                <option value="Tio">👨 Tio</option>
+                                <option value="Tia">👩 Tia</option>
+                                <option value="Avô">👨 Avô</option>
+                                <option value="Avó">👩 Avó</option>
+                                <option value="Responsável legal">⚖️ Responsável legal</option>
+                                <option value="Outro">📝 Outro</option>
+                            </select>
+                            <div class="mensagem-erro" id="erroVinculo">Campo obrigatório</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Sexo do responsável <span class="obrigatorio">*</span></label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="sexoResponsavel" value="M"> 👨 Masculino</label>
+                                <label><input type="radio" name="sexoResponsavel" value="F"> 👩 Feminino</label>
+                            </div>
+                            <div class="mensagem-erro" id="erroSexoResponsavel">Selecione o sexo</div>
+                        </div>
+                    </div>
+
+                    <div class="form-linha">
+                        <div class="form-grupo">
+                            <label>RG do responsável <span class="obrigatorio">*</span></label>
+                            <input type="text" id="rgResponsavel" placeholder="Apenas números">
+                            <div class="mensagem-erro" id="erroRG">Campo obrigatório</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Nome do responsável <span class="obrigatorio">*</span></label>
+                            <input type="text" id="responsavel" placeholder="Nome completo">
+                            <div class="mensagem-erro" id="erroResponsavel">Campo obrigatório</div>
+                        </div>
+                    </div>
+
+                    <div class="form-linha">
+                        <div class="form-grupo">
+                            <label>Telefone (WhatsApp) <span class="obrigatorio">*</span></label>
+                            <input type="tel" id="telefone" placeholder="(92) 9xxxx-xxxx">
+                            <div class="mensagem-erro" id="erroTelefone">Digite um telefone válido</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>E-mail <span class="obrigatorio">*</span></label>
+                            <input type="email" id="email" placeholder="seuemail@exemplo.com">
+                            <div class="mensagem-erro" id="erroEmail">Digite um e-mail válido</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO 3: ENDEREÇO -->
+                <div class="secao">
+                    <div class="secao-titulo">
+                        <span class="numero">3</span> ENDEREÇO
+                    </div>
+
+                    <div class="form-linha">
+                        <div class="form-grupo">
+                            <label>CEP</label>
+                            <input type="text" id="cep" placeholder="Digite o CEP" maxlength="9">
+                            <button type="button" class="buscar-cep" onclick="buscarCEP()">🔍 BUSCAR ENDEREÇO</button>
+                        </div>
+                    </div>
+
+                    <div class="form-linha-3">
+                        <div class="form-grupo">
+                            <label>Endereço <span class="obrigatorio">*</span></label>
+                            <input type="text" id="endereco" placeholder="Rua/Avenida">
+                            <div class="mensagem-erro" id="erroEndereco">Campo obrigatório</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Número <span class="obrigatorio">*</span></label>
+                            <input type="text" id="numero" placeholder="Número">
+                            <div class="mensagem-erro" id="erroNumero">Campo obrigatório</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Bairro <span class="obrigatorio">*</span></label>
+                            <input type="text" id="bairro" placeholder="Bairro">
+                            <div class="mensagem-erro" id="erroBairro">Campo obrigatório</div>
+                        </div>
+                    </div>
+
+                    <div class="form-linha">
+                        <div class="form-grupo">
+                            <label>Município <span class="obrigatorio">*</span></label>
+                            <input type="text" id="municipio" placeholder="Cidade">
+                            <div class="mensagem-erro" id="erroMunicipio">Campo obrigatório</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>UF <span class="obrigatorio">*</span></label>
+                            <select id="uf">
+                                <option value="">Selecione</option>
+                                <option value="AC">AC</option><option value="AL">AL</option><option value="AM">AM</option>
+                                <option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option>
+                                <option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option>
+                                <option value="MG">MG</option><option value="MS">MS</option><option value="MT">MT</option>
+                                <option value="PA">PA</option><option value="PB">PB</option><option value="PE">PE</option>
+                                <option value="PI">PI</option><option value="PR">PR</option><option value="RJ">RJ</option>
+                                <option value="RN">RN</option><option value="RO">RO</option><option value="RR">RR</option>
+                                <option value="RS">RS</option><option value="SC">SC</option><option value="SE">SE</option>
+                                <option value="SP">SP</option><option value="TO">TO</option>
+                            </select>
+                            <div class="mensagem-erro" id="erroUF">Campo obrigatório</div>
+                        </div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Quantas pessoas moram na sua casa? <span class="obrigatorio">*</span></label>
+                        <input type="number" id="moradores" min="1" max="20" placeholder="Número de moradores">
+                        <div class="mensagem-erro" id="erroMoradores">Campo obrigatório</div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO 4: ESCOLARIDADE -->
+                <div class="secao">
+                    <div class="secao-titulo">
+                        <span class="numero">4</span> ESCOLARIDADE
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Escola onde estuda <span class="obrigatorio">*</span></label>
+                        <input type="text" id="escola" placeholder="Nome da escola">
+                        <div class="mensagem-erro" id="erroEscola">Campo obrigatório</div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Série <span class="obrigatorio">*</span></label>
+                        <select id="serie">
+                            <option value="">Selecione...</option>
+                            <option value="1º Ano EF">1º Ano - Ensino Fundamental</option>
+                            <option value="2º Ano EF">2º Ano - Ensino Fundamental</option>
+                            <option value="3º Ano EF">3º Ano - Ensino Fundamental</option>
+                            <option value="4º Ano EF">4º Ano - Ensino Fundamental</option>
+                            <option value="5º Ano EF">5º Ano - Ensino Fundamental</option>
+                            <option value="6º Ano EF">6º Ano - Ensino Fundamental</option>
+                            <option value="7º Ano EF">7º Ano - Ensino Fundamental</option>
+                            <option value="8º Ano EF">8º Ano - Ensino Fundamental</option>
+                            <option value="9º Ano EF">9º Ano - Ensino Fundamental</option>
+                            <option value="1º Ano EM">1º Ano - Ensino Médio</option>
+                            <option value="2º Ano EM">2º Ano - Ensino Médio</option>
+                            <option value="3º Ano EM">3º Ano - Ensino Médio</option>
+                            <option value="Não estuda">Não estuda</option>
+                            <option value="Formado">Formado</option>
+                        </select>
+                        <div class="mensagem-erro" id="erroSerie">Campo obrigatório</div>
+                    </div>
+                </div>
+
+                <!-- SEÇÃO 5: INFORMAÇÕES ADICIONAIS (OPCIONAL) -->
+                <div class="secao">
+                    <div class="secao-titulo">
+                        <span class="numero">5</span> INFORMAÇÕES ADICIONAIS
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>Como conheceu a Escolinha do Jacaré?</label>
+                        <select id="origem">
+                            <option value="">Selecione...</option>
+                            <option value="Instagram">📱 Instagram</option>
+                            <option value="Facebook">📘 Facebook</option>
+                            <option value="Amigo/Indicação">👥 Amigo/Indicação</option>
+                            <option value="Panfleto">📄 Panfleto</option>
+                            <option value="Passou em frente">🚶 Passou em frente</option>
+                            <option value="Outros">📢 Outros</option>
+                        </select>
+                    </div>
+
+                    <!-- FEEDBACK -->
+                    <div class="form-grupo">
+                        <label>⭐ Avalie a Escolinha (opcional)</label>
+                        <div class="radio-group" id="estrelas">
+                            <label><input type="radio" name="estrelas" value="1"> ⭐ 1</label>
+                            <label><input type="radio" name="estrelas" value="2"> ⭐⭐ 2</label>
+                            <label><input type="radio" name="estrelas" value="3"> ⭐⭐⭐ 3</label>
+                            <label><input type="radio" name="estrelas" value="4"> ⭐⭐⭐⭐ 4</label>
+                            <label><input type="radio" name="estrelas" value="5"> ⭐⭐⭐⭐⭐ 5</label>
+                        </div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>📝 O que você quer deixar? (opcional)</label>
+                        <div class="radio-group" id="feedbackRadios">
+                            <label><input type="radio" name="tipoFeedback" value="Elogio"> 💬 Elogio</label>
+                            <label><input type="radio" name="tipoFeedback" value="Sugestão"> 💡 Sugestão</label>
+                            <label><input type="radio" name="tipoFeedback" value="Observação"> 👁️ Observação</label>
+                            <label><input type="radio" name="tipoFeedback" value="Crítica"> 🤔 Crítica construtiva</label>
+                            <label><input type="radio" name="tipoFeedback" value="Outro"> 📝 Outro</label>
+                        </div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>✏️ Sua mensagem (opcional)</label>
+                        <textarea id="mensagemFeedback" rows="3" placeholder="Escreva aqui seu elogio, sugestão, observação ou crítica..."></textarea>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="declaracao">
+                        <label for="declaracao">Declaro que as informações são verdadeiras. <span class="obrigatorio">*</span></label>
+                    </div>
+                    <div class="mensagem-erro" id="erroDeclaracao">Você precisa confirmar esta declaração</div>
+                </div>
+
+                <button type="button" class="btn-enviar" onclick="enviarCadastro()">
+                    ✅ ENVIAR SOLICITAÇÃO
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MENSAGEM DE SUCESSO -->
+    <div id="mensagemSucesso" class="mensagem-sucesso hidden">
+        <h2>🎉 SOLICITAÇÃO ENVIADA!</h2>
+        <p>Recebemos sua pré-matrícula com sucesso!</p>
+        <div id="protocoloDiv" class="protocolo"></div>
+        <p><strong>Aguarde o contato da diretoria.</strong></p>
+        <div style="margin-top: 20px;">
+            <a href="index.html" style="background: white; color: #003399; display: inline-block; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-weight: bold;">← VOLTAR AO INÍCIO</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    ESCOLINHA DO JACARÉ - ALVORADA<br>
+    Manaus/AM - Brasil
+    <div class="rights">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</div>
+</footer>
+
+<script>
+    // ========== TEMA ESCURO ==========
+    function alternarTema() {
+        document.body.classList.toggle('dark-mode');
+        const btn = document.querySelector('.btn-tema');
+        const isDark = document.body.classList.contains('dark-mode');
+        btn.innerHTML = isDark ? '🌙' : '🌞';
+        localStorage.setItem('tema_prematricula', isDark ? 'dark' : 'light');
+    }
+
+    if (localStorage.getItem('tema_prematricula') === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.querySelector('.btn-tema').innerHTML = '🌙';
+    }
+
+    // ========== TOAST ==========
+    function mostrarToast(mensagem, tipo = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${tipo}`;
+        toast.innerHTML = `${tipo === 'success' ? '✅' : '❌'} ${mensagem}`;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+
+    // ========== CONTROLE DAS ABAS ==========
+    function alternarAba(abaId) {
+        document.querySelectorAll('.aba').forEach(aba => {
+            aba.classList.remove('ativa');
+        });
+        document.querySelector(`.aba[data-aba="${abaId}"]`).classList.add('ativa');
+        
+        document.querySelectorAll('.conteudo-aba').forEach(conteudo => {
+            conteudo.classList.remove('ativa');
+        });
+        document.getElementById(`aba${abaId.charAt(0).toUpperCase() + abaId.slice(1)}`).classList.add('ativa');
+    }
+
+    document.querySelectorAll('.aba').forEach(aba => {
+        aba.addEventListener('click', () => {
+            alternarAba(aba.dataset.aba);
+        });
+    });
+
+    // ========== CALCULAR IDADE ==========
+    function calcularIdade() {
+        const dataNasc = document.getElementById('dataNasc').value;
+        if (!dataNasc) return null;
+        const hoje = new Date();
+        const nasc = new Date(dataNasc);
+        let idade = hoje.getFullYear() - nasc.getFullYear();
+        const mes = hoje.getMonth() - nasc.getMonth();
+        if (mes < 0 || (mes === 0 && hoje.getDate() < nasc.getDate())) idade--;
+        return idade;
+    }
+
+    // ========== MOSTRAR IDADE E SUGERIR ==========
+    function mostrarIdade() {
+        const idade = calcularIdade();
+        const infoDiv = document.getElementById('infoIdade');
+        
+        if (idade !== null && idade >= 0) {
+            infoDiv.innerHTML = `📊 Idade calculada: <strong>${idade} anos</strong>`;
+            infoDiv.style.display = 'block';
+            
+            // Sugerir idade automaticamente na aba CRIANÇA
+            const abaAtiva = document.querySelector('.aba.ativa')?.dataset.aba;
+            const idadeCriancaInput = document.getElementById('idadeCrianca');
+            if (abaAtiva === 'crianca' && idadeCriancaInput && !idadeCriancaInput.value && idade >= 8 && idade <= 14) {
+                idadeCriancaInput.value = idade;
+                atualizarTamanhoCrianca();
+            }
+        } else {
+            infoDiv.style.display = 'none';
+        }
+    }
+
+    // ========== IDADE PARA TAMANHO (CRIANÇA) ==========
+    function idadeParaTamanhoCrianca(idade) {
+        if (!idade) return '';
+        if (idade >= 8 && idade <= 14) return idade.toString();
+        return '';
+    }
+
+    function atualizarTamanhoCrianca() {
+        const idade = parseInt(document.getElementById('idadeCrianca').value);
+        const tamanho = idadeParaTamanhoCrianca(idade);
+        const resultadoDiv = document.getElementById('tamanhoCriancaResultado');
+        const campoOculto = document.getElementById('tamanhoCamisaCrianca');
+        
+        if (tamanho) {
+            resultadoDiv.innerHTML = `👕 Tamanho da camisa: <strong>${tamanho}</strong> (equivalente à idade ${idade} anos)`;
+            campoOculto.value = tamanho;
+        } else if (idade) {
+            resultadoDiv.innerHTML = `⚠️ Idade ${idade} anos fora da tabela (8 a 14 anos)`;
+            campoOculto.value = '';
+        } else {
+            resultadoDiv.innerHTML = `👕 Tamanho da camisa: <strong>-</strong>`;
+            campoOculto.value = '';
+        }
+    }
+
+    // ========== BUSCAR CEP ==========
+    async function buscarCEP() {
+        const cep = document.getElementById('cep').value.replace(/\D/g, '');
+        if (cep.length !== 8) {
+            mostrarToast('Digite um CEP válido com 8 dígitos!', 'error');
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+            const dados = await response.json();
+
+            if (!dados.erro) {
+                document.getElementById('endereco').value = dados.logradouro || '';
+                document.getElementById('bairro').value = dados.bairro || '';
+                document.getElementById('municipio').value = dados.localidade || '';
+                document.getElementById('uf').value = dados.uf || '';
+                mostrarToast('✅ Endereço encontrado!', 'success');
+            } else {
+                mostrarToast('CEP não encontrado!', 'error');
+            }
+        } catch (error) {
+            mostrarToast('Erro ao buscar CEP', 'error');
+        }
+    }
+
+    // ========== MOSTRAR ERRO ==========
+    function mostrarErro(erroId, campoId) {
+        const erroDiv = document.getElementById(erroId);
+        if (erroDiv) erroDiv.style.display = 'block';
+        if (campoId) {
+            const campo = document.getElementById(campoId);
+            if (campo) campo.classList.add('erro');
+            setTimeout(() => {
+                if (campo) campo.classList.remove('erro');
+                if (erroDiv) erroDiv.style.display = 'none';
+            }, 3000);
+        }
+    }
+
+    // ========== ENVIAR CADASTRO ==========
+    async function enviarCadastro() {
+        // Coletar dados - ALUNO
+        const nomeAluno = document.getElementById('nomeAluno').value.trim();
+        const dataNasc = document.getElementById('dataNasc').value;
+        const sexo = document.querySelector('input[name="sexo"]:checked')?.value;
+        
+        // Verificar qual aba está ativa (uniforme)
+        const abaAtiva = document.querySelector('.aba.ativa').dataset.aba;
+        let tamanhoUniforme = '';
+        let idadeCrianca = null;
+        
+        if (abaAtiva === 'crianca') {
+            idadeCrianca = document.getElementById('idadeCrianca').value;
+            tamanhoUniforme = document.getElementById('tamanhoCamisaCrianca').value;
+        } else {
+            tamanhoUniforme = document.getElementById('tamanhoAdulto').value;
+        }
+        
+        const possuiUniforme = document.getElementById('possuiUniforme').value;
+        const turma = document.getElementById('turma').value;
+        
+        const semDeficiencia = document.getElementById('semDeficiencia').checked;
+        let deficienciaTexto = '';
+        if (!semDeficiencia) {
+            const selecionadas = Array.from(document.querySelectorAll('.deficiencia-check:checked')).map(cb => cb.value);
+            const outra = document.getElementById('outraDeficiencia').value.trim();
+            if (outra) selecionadas.push(`Outra: ${outra}`);
+            deficienciaTexto = selecionadas.length > 0 ? selecionadas.join(', ') : 'Nenhuma';
+        } else {
+            deficienciaTexto = 'Nenhuma';
+        }
+        
+        const remedioSelecionado = document.querySelector('input[name="remedio"]:checked')?.value;
+        const remedioDesc = remedioSelecionado === 'Sim' ? document.getElementById('remedioDesc').value.trim() : '';
+        
+        // DADOS DO RESPONSÁVEL (com novos campos)
+        const tipoVinculo = document.getElementById('tipoVinculo').value;
+        const sexoResponsavel = document.querySelector('input[name="sexoResponsavel"]:checked')?.value;
+        const rgResponsavel = document.getElementById('rgResponsavel').value.trim().replace(/\D/g, '');
+        const responsavel = document.getElementById('responsavel').value.trim();
+        const telefone = document.getElementById('telefone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        
+        const endereco = document.getElementById('endereco').value.trim();
+        const numero = document.getElementById('numero').value.trim();
+        const bairro = document.getElementById('bairro').value.trim();
+        const municipio = document.getElementById('municipio').value.trim();
+        const uf = document.getElementById('uf').value;
+        const moradores = document.getElementById('moradores').value.trim();
+        
+        const escola = document.getElementById('escola').value.trim();
+        const serie = document.getElementById('serie').value;
+        const origem = document.getElementById('origem').value;
+        const declaracao = document.getElementById('declaracao').checked;
+
+        // Feedback
+        const tipoFeedback = document.querySelector('input[name="tipoFeedback"]:checked')?.value;
+        const estrelas = document.querySelector('input[name="estrelas"]:checked')?.value;
+        const mensagemFeedback = document.getElementById('mensagemFeedback').value.trim();
+
+        // Validações
+        let isValid = true;
+        
+        if (!nomeAluno) { mostrarErro('erroNome', 'nomeAluno'); isValid = false; }
+        if (!dataNasc) { mostrarErro('erroData', 'dataNasc'); isValid = false; }
+        if (!sexo) { mostrarErro('erroSexo', null); isValid = false; }
+        
+        if (abaAtiva === 'crianca') {
+            if (!idadeCrianca) { mostrarErro('erroIdade', 'idadeCrianca'); isValid = false; }
+        } else {
+            if (!tamanhoUniforme) { mostrarErro('erroTamanhoAdulto', 'tamanhoAdulto'); isValid = false; }
+        }
+        
+        if (!possuiUniforme) { mostrarErro('erroPossuiUniforme', null); isValid = false; }
+        if (!turma) { mostrarErro('erroTurma', 'turma'); isValid = false; }
+        
+        // Validações do responsável
+        if (!tipoVinculo) { mostrarErro('erroVinculo', 'tipoVinculo'); isValid = false; }
+        if (!sexoResponsavel) { mostrarErro('erroSexoResponsavel', null); isValid = false; }
+        if (!rgResponsavel) { mostrarErro('erroRG', 'rgResponsavel'); isValid = false; }
+        if (!responsavel) { mostrarErro('erroResponsavel', 'responsavel'); isValid = false; }
+        
+        const numeros = telefone.replace(/\D/g, '');
+        if (numeros.length < 10 || numeros.length > 11) { mostrarErro('erroTelefone', 'telefone'); isValid = false; }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) { mostrarErro('erroEmail', 'email'); isValid = false; }
+        
+        if (!endereco) { mostrarErro('erroEndereco', 'endereco'); isValid = false; }
+        if (!numero) { mostrarErro('erroNumero', 'numero'); isValid = false; }
+        if (!bairro) { mostrarErro('erroBairro', 'bairro'); isValid = false; }
+        if (!municipio) { mostrarErro('erroMunicipio', 'municipio'); isValid = false; }
+        if (!uf) { mostrarErro('erroUF', 'uf'); isValid = false; }
+        if (!moradores || parseInt(moradores) < 1) { mostrarErro('erroMoradores', 'moradores'); isValid = false; }
+        if (!escola) { mostrarErro('erroEscola', 'escola'); isValid = false; }
+        if (!serie) { mostrarErro('erroSerie', 'serie'); isValid = false; }
+        if (!declaracao) { mostrarErro('erroDeclaracao', null); isValid = false; }
+        
+        if (remedioSelecionado === 'Sim' && !remedioDesc) {
+            mostrarErro('erroRemedioDesc', 'remedioDesc');
+            isValid = false;
+        }
+
+        if (!isValid) {
+            mostrarToast('⚠️ Preencha todos os campos obrigatórios!', 'error');
+            return;
+        }
+
+        const btn = document.querySelector('.btn-enviar');
+        btn.disabled = true;
+        btn.innerHTML = '⏳ ENVIANDO...';
+
+        try {
+            const protocolo = `JAC-${Date.now()}`;
+            const dataEnvio = new Date().toLocaleString('pt-BR');
+            const enderecoCompleto = `${endereco}, ${numero} - ${bairro}, ${municipio}/${uf}`;
+            const remedioFinal = remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não';
+
+            // Montar observacao completa (feedback + estrelas + mensagem)
+            let observacaoFinal = '';
+            if (estrelas) {
+                observacaoFinal = `⭐ ${estrelas} estrelas. `;
+            }
+            if (tipoFeedback && mensagemFeedback) {
+                observacaoFinal += `[${tipoFeedback}] ${mensagemFeedback}`;
+            } else if (tipoFeedback && !mensagemFeedback) {
+                observacaoFinal += `[${tipoFeedback}]`;
+            } else if (!tipoFeedback && mensagemFeedback) {
+                observacaoFinal += mensagemFeedback;
+            }
+
+            const dados = {
+                protocolo: protocolo,
+                dataEnvio: dataEnvio,
+                nomeAluno: nomeAluno,
+                dataNasc: dataNasc,
+                idade: (abaAtiva === 'crianca' && idadeCrianca) ? parseInt(idadeCrianca) : 0,
+                turma: turma,
+                categoria: '',
+                responsavel: responsavel,
+                tipo_vinculo: tipoVinculo,
+                sexo_responsavel: sexoResponsavel,
+                telefone: telefone,
+                email: email,
+                endereco: enderecoCompleto,
+                bairro: bairro,
+                moradores: moradores === '' ? 1 : parseInt(moradores),
+                remedio: remedioFinal,
+                origem: origem,
+                rg: rgResponsavel,
+                sexo: sexo,
+                peso: 0,
+                altura: 0,
+                calcado: '',
+                tamanho_uniforme: tamanhoUniforme,
+                possui_uniforme: possuiUniforme,
+                deficiencia: deficienciaTexto,
+                municipio: municipio,
+                uf: uf,
+                escola: escola,
+                serie: serie,
+                observacao: observacaoFinal,
+                estrelas: estrelas || null
+            };
+
+            console.log('Enviando dados:', dados);
+
+            const response = await fetch('http://localhost:5000/api/prematricula', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dados)
+            });
+
+            const resultado = await response.json();
+
+            if (response.ok) {
+                mostrarToast('✅ Solicitação enviada com sucesso!', 'success');
+                document.getElementById('protocoloDiv').innerHTML = `🔑 PROTOCOLO: ${protocolo}`;
+                document.getElementById('formularioContainer').classList.add('hidden');
+                document.getElementById('mensagemSucesso').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                mostrarToast(resultado.erro || '❌ Erro ao enviar solicitação', 'error');
+            }
+
+        } catch (error) {
+            console.error('Erro:', error);
+            mostrarToast('❌ Erro de conexão com o servidor. Verifique se o backend está rodando.', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '✅ ENVIAR SOLICITAÇÃO';
+        }
+    }
+
+    // ========== EVENTOS ==========
+    document.getElementById('dataNasc').addEventListener('change', mostrarIdade);
+    document.getElementById('dataNasc').addEventListener('input', mostrarIdade);
+    document.getElementById('idadeCrianca').addEventListener('input', atualizarTamanhoCrianca);
+    document.getElementById('idadeCrianca').addEventListener('change', atualizarTamanhoCrianca);
+
+    // Controle de deficiência
+    document.getElementById('semDeficiencia').addEventListener('change', function() {
+        const opcoes = document.getElementById('deficienciaOpcoes');
+        const checks = document.querySelectorAll('.deficiencia-check');
+        const outraInput = document.getElementById('outraDeficiencia');
+        
+        if (this.checked) {
+            opcoes.classList.add('disabled');
+            checks.forEach(c => { c.checked = false; c.disabled = true; });
+            outraInput.disabled = true;
+            outraInput.value = '';
+        } else {
+            opcoes.classList.remove('disabled');
+            checks.forEach(c => c.disabled = false);
+            outraInput.disabled = false;
+        }
+    });
+
+    // Controle de remédio
+    document.querySelectorAll('input[name="remedio"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const descField = document.getElementById('remedioDesc');
+            descField.style.display = this.value === 'Sim' ? 'block' : 'none';
+        });
+    });
+</script>
+
+</body>
+</html>
