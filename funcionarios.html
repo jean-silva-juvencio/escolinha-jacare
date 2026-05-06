@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Funcionários | Escolinha do Jacaré</title>
-    <link rel="manifest" href="manifest.json">
+        <link rel="manifest" href="manifest.json">
     <script>
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')
@@ -381,8 +381,7 @@ if ('serviceWorker' in navigator) {
         }
     }
 
-    // FUNÇÃO CORRIGIDA COM RETRY
-    async function carregarDados(tentativa = 1) {
+    async function carregarDados() {
         document.getElementById('loadingDados').style.display = 'block';
         try {
             const response = await fetch(`${API_URL}/alunos`);
@@ -399,13 +398,8 @@ if ('serviceWorker' in navigator) {
                 mostrarToast('Erro: formato de dados inválido', 'error');
             }
         } catch (error) {
-            console.error('Erro ao carregar:', error);
-            if (tentativa < 3) {
-                mostrarToast(`⏳ Tentando conectar ao servidor... (tentativa ${tentativa}/3)`, 'info');
-                setTimeout(() => carregarDados(tentativa + 1), 5000);
-            } else {
-                mostrarToast('❌ Erro ao carregar dados. Verifique o backend.', 'error');
-            }
+            console.error('Erro:', error);
+            mostrarToast('❌ Erro ao carregar dados. Verifique o backend.', 'error');
         } finally {
             document.getElementById('loadingDados').style.display = 'none';
         }

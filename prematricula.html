@@ -1169,7 +1169,7 @@ if ('serviceWorker' in navigator) {
 
             console.log('Enviando dados:', dados);
 
-            const response = await fetch('http://localhost:5000/api/prematricula', {
+            const response = await fetch('https://api-escolinha.onrender.com/api/prematricula', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -4,131 +4,630 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Clube dos Responsáveis | Escolinha do Jacaré</title>
-    <link rel="manifest" href="manifest.json">
-    <script>if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').then(()=>console.log('SW ok')).catch(e=>console.log(e));}</script>
+        <link rel="manifest" href="manifest.json">
+    <script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+        .then(() => console.log('Service Worker registrado!'))
+        .catch(err => console.log('Erro:', err));
+}
+</script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#f5f7fc 0%,#e9eef5 100%);min-height:100vh;padding:20px;transition:background 0.3s,color 0.3s;}
-        body.dark-mode{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);color:#eee;}
-        .container{max-width:1400px;margin:0 auto;}
-        .header{background:linear-gradient(135deg,#0047AB,#003399);color:white;padding:20px 24px;border-radius:24px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;}
-        body.dark-mode .header{background:linear-gradient(135deg,#1e40af,#1e3a8a);}
-        .header h1{font-size:1.5rem;font-weight:700;display:flex;align-items:center;gap:10px;}
-        .header-actions{display:flex;gap:10px;flex-wrap:wrap;}
-        .btn-tema,.btn-atualizar,.btn-exportar{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);padding:8px 16px;border-radius:40px;cursor:pointer;font-weight:600;font-size:12px;color:white;transition:all 0.2s;}
-        .btn-tema:hover,.btn-atualizar:hover,.btn-exportar:hover{background:rgba(255,255,255,0.3);}
-        .abas-container{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;background:white;padding:10px 15px;border-radius:60px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
-        body.dark-mode .abas-container{background:#1e293b;}
-        .aba-btn{padding:10px 24px;border-radius:40px;border:none;cursor:pointer;font-weight:700;font-size:14px;transition:all 0.3s;background:#f1f5f9;color:#1e293b;}
-        body.dark-mode .aba-btn{background:#0f172a;color:#e2e8f0;}
-        .aba-btn.ativa{background:#0047AB;color:white;}
-        body.dark-mode .aba-btn.ativa{background:#3b82f6;}
-        .aba-btn .badge{background:rgba(0,0,0,0.2);border-radius:30px;padding:2px 8px;margin-left:8px;font-size:11px;}
-        .filtros-bar{background:white;border-radius:20px;padding:16px 20px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
-        body.dark-mode .filtros-bar{background:#1e293b;}
-        .filtros-group{display:flex;gap:10px;flex-wrap:wrap;}
-        .filtro-btn{padding:8px 18px;border-radius:40px;border:none;cursor:pointer;font-weight:600;font-size:13px;transition:all 0.2s;background:#f1f5f9;color:#1e293b;}
-        body.dark-mode .filtro-btn{background:#0f172a;color:#e2e8f0;}
-        .filtro-btn.ativo{background:#0047AB;color:white;}
-        body.dark-mode .filtro-btn.ativo{background:#3b82f6;}
-        .stats-info{display:flex;gap:20px;align-items:center;font-size:13px;font-weight:600;}
-        .membros-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-bottom:20px;max-height:500px;overflow-y:auto;}
-        .card-membro{background:white;border-radius:20px;padding:16px;transition:all 0.3s;border-left:4px solid #0047AB;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.05);}
-        body.dark-mode .card-membro{background:#1e293b;}
-        .card-membro:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.1);}
-        .card-membro.status-desativado{border-left-color:#ef4444;opacity:0.7;}
-        .membro-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
-        .membro-nome{font-weight:700;font-size:1rem;display:flex;align-items:center;gap:8px;}
-        .status-badge{font-size:0.7rem;padding:4px 10px;border-radius:40px;font-weight:600;}
-        .status-ativo{background:#d1fae5;color:#059669;}
-        .status-desativado{background:#fee2e2;color:#dc2626;}
-        .presenca-check{width:20px;height:20px;cursor:pointer;accent-color:#10b981;}
-        .membro-detalhes{font-size:0.8rem;color:#666;margin-top:8px;display:flex;gap:15px;flex-wrap:wrap;}
-        body.dark-mode .membro-detalhes{color:#94a3b8;}
-        .membro-aluno{font-size:0.7rem;background:#f1f5f9;padding:6px 10px;border-radius:12px;display:inline-block;margin-top:8px;}
-        body.dark-mode .membro-aluno{background:#0f172a;}
-        .acoes-membros{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:20px;padding:15px;background:white;border-radius:20px;}
-        body.dark-mode .acoes-membros{background:#1e293b;}
-        .btn-marcar{background:#3b82f6;color:white;border:none;padding:10px 20px;border-radius:40px;cursor:pointer;font-weight:600;}
-        .btn-desmarcar{background:#6c757d;color:white;border:none;padding:10px 20px;border-radius:40px;cursor:pointer;font-weight:600;}
-        .btn-enviar-sorteio{background:#10b981;color:white;border:none;padding:12px 30px;border-radius:40px;cursor:pointer;font-weight:700;font-size:1rem;}
-        .selecionados-info{font-weight:600;color:#0047AB;}
-        body.dark-mode .selecionados-info{color:#60a5fa;}
-        .sorteio-area{background:white;border-radius:20px;padding:24px;margin-bottom:20px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
-        body.dark-mode .sorteio-area{background:#1e293b;}
-        .sorteio-config{display:flex;flex-wrap:wrap;gap:15px;margin-bottom:20px;align-items:flex-end;}
-        .sorteio-config-item{flex:1;min-width:120px;}
-        .sorteio-config-item label{display:block;font-size:0.7rem;font-weight:600;margin-bottom:5px;color:#666;}
-        body.dark-mode .sorteio-config-item label{color:#94a3b8;}
-        .sorteio-config-item select,.sorteio-config-item input{width:100%;padding:10px 12px;border:1px solid #e2e8f0;border-radius:12px;font-size:0.9rem;background:white;}
-        body.dark-mode .sorteio-config-item select,body.dark-mode .sorteio-config-item input{background:#0f172a;border-color:#334155;color:white;}
-        .btn-sortear{background:linear-gradient(135deg,#f59e0b,#d97706);color:white;border:none;padding:10px 24px;border-radius:40px;cursor:pointer;font-weight:700;font-size:1rem;transition:all 0.2s;}
-        .btn-sortear:hover{transform:scale(1.02);}
-        .btn-zerar{background:#6c757d;}
-        .btn-apagar{background:#ef4444;}
-        .participantes-lista{max-height:400px;overflow-y:auto;margin-top:15px;border-top:1px solid #e2e8f0;padding-top:15px;}
-        .participante-item{padding:10px;border-bottom:1px solid #e2e8f0;cursor:pointer;}
-        body.dark-mode .participante-item{border-bottom-color:#334155;}
-        .participante-item:hover{background:#f8fafc;}
-        body.dark-mode .participante-item:hover{background:#334155;}
-        .modal-notificacao{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);justify-content:center;align-items:center;z-index:2000;}
-        .modal-notificacao .modal-content{background:white;border-radius:32px;max-width:450px;width:90%;padding:32px 28px;text-align:center;animation:modalFadeIn 0.3s ease;box-shadow:0 25px 50px rgba(0,0,0,0.3);}
-        body.dark-mode .modal-notificacao .modal-content{background:#1e293b;}
-        @keyframes modalFadeIn{from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
-        .modal-icon{font-size:4rem;margin-bottom:16px;}
-        .modal-title{font-size:1.5rem;font-weight:800;margin-bottom:12px;color:#003399;}
-        body.dark-mode .modal-title{color:#60a5fa;}
-        .modal-message{font-size:0.95rem;color:#666;margin-bottom:24px;line-height:1.5;}
-        body.dark-mode .modal-message{color:#94a3b8;}
-        .modal-btn{background:linear-gradient(135deg,#0047AB,#003399);color:white;border:none;padding:12px 28px;border-radius:40px;font-weight:700;font-size:1rem;cursor:pointer;width:100%;}
-        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);justify-content:center;align-items:center;z-index:1000;}
-        .modal .modal-content{background:white;border-radius:32px;max-width:600px;width:90%;max-height:85vh;overflow-y:auto;padding:28px;}
-        body.dark-mode .modal .modal-content{background:#1e293b;}
-        .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #e2e8f0;}
-        .modal-header h3{font-size:1.4rem;color:#003399;}
-        body.dark-mode .modal-header h3{color:#60a5fa;}
-        .fechar-modal{font-size:28px;cursor:pointer;}
-        .modal-detalhes-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-        .modal-detalhe-item{background:#f8fafc;padding:12px;border-radius:16px;}
-        body.dark-mode .modal-detalhe-item{background:#0f172a;}
-        .modal-detalhe-label{font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;}
-        .modal-detalhe-valor{font-size:14px;font-weight:600;margin-top:4px;}
-        .modal-acoes{display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid #e2e8f0;}
-        .ganhadores-area{background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:20px;padding:20px;margin-top:20px;text-align:center;}
-        body.dark-mode .ganhadores-area{background:linear-gradient(135deg,#78350f,#92400e);}
-        .ganhador-nome{font-size:1.8rem;font-weight:800;color:#003399;margin:15px 0;}
-        body.dark-mode .ganhador-nome{color:#fbbf24;}
-        .animacao-picotes{font-size:2rem;animation:picote 0.5s ease-in-out infinite;}
-        @keyframes picote{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.2);opacity:0.8;}}
-        .loading{text-align:center;padding:40px;}
-        footer{background:#003399;color:white;text-align:center;padding:30px;margin-top:50px;border-radius:20px;}
-        body.dark-mode footer{background:#0f172a;}
-        @media(max-width:700px){.modal-detalhes-grid{grid-template-columns:1fr;}.sorteio-config{flex-direction:column;}.filtros-group{flex-direction:column;align-items:stretch;}.membros-grid{grid-template-columns:1fr;}.acoes-membros{flex-direction:column;}}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fc 0%, #e9eef5 100%);
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #eee;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0047AB, #003399);
+            color: white;
+            padding: 20px 24px;
+            border-radius: 24px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        body.dark-mode .header {
+            background: linear-gradient(135deg, #1e40af, #1e3a8a);
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn-tema, .btn-atualizar, .btn-exportar {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            color: white;
+            transition: all 0.2s;
+        }
+        .btn-tema:hover, .btn-atualizar:hover, .btn-exportar:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .abas-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 60px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        body.dark-mode .abas-container {
+            background: #1e293b;
+        }
+        .aba-btn {
+            padding: 10px 24px;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+        body.dark-mode .aba-btn {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+        .aba-btn.ativa {
+            background: #0047AB;
+            color: white;
+        }
+        body.dark-mode .aba-btn.ativa {
+            background: #3b82f6;
+        }
+        .aba-btn .badge {
+            background: rgba(0,0,0,0.2);
+            border-radius: 30px;
+            padding: 2px 8px;
+            margin-left: 8px;
+            font-size: 11px;
+        }
+
+        .filtros-bar {
+            background: white;
+            border-radius: 20px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        body.dark-mode .filtros-bar {
+            background: #1e293b;
+        }
+        .filtros-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .filtro-btn {
+            padding: 8px 18px;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.2s;
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+        body.dark-mode .filtro-btn {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+        .filtro-btn.ativo {
+            background: #0047AB;
+            color: white;
+        }
+        body.dark-mode .filtro-btn.ativo {
+            background: #3b82f6;
+        }
+        .stats-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .membros-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .card-membro {
+            background: white;
+            border-radius: 20px;
+            padding: 16px;
+            transition: all 0.3s;
+            border-left: 4px solid #0047AB;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        body.dark-mode .card-membro {
+            background: #1e293b;
+        }
+        .card-membro:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .card-membro.status-desativado {
+            border-left-color: #ef4444;
+            opacity: 0.7;
+        }
+        .membro-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .membro-nome {
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .status-badge {
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 40px;
+            font-weight: 600;
+        }
+        .status-ativo {
+            background: #d1fae5;
+            color: #059669;
+        }
+        .status-desativado {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .presenca-check {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #10b981;
+        }
+        .membro-detalhes {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 8px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        body.dark-mode .membro-detalhes {
+            color: #94a3b8;
+        }
+        .membro-aluno {
+            font-size: 0.7rem;
+            background: #f1f5f9;
+            padding: 6px 10px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-top: 8px;
+        }
+        body.dark-mode .membro-aluno {
+            background: #0f172a;
+        }
+
+        .acoes-membros {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 20px;
+        }
+        body.dark-mode .acoes-membros {
+            background: #1e293b;
+        }
+        .btn-marcar {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-desmarcar {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .btn-enviar-sorteio {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .selecionados-info {
+            font-weight: 600;
+            color: #0047AB;
+        }
+        body.dark-mode .selecionados-info {
+            color: #60a5fa;
+        }
+
+        .sorteio-area {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        body.dark-mode .sorteio-area {
+            background: #1e293b;
+        }
+        .sorteio-config {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: flex-end;
+        }
+        .sorteio-config-item {
+            flex: 1;
+            min-width: 120px;
+        }
+        .sorteio-config-item label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        body.dark-mode .sorteio-config-item label {
+            color: #94a3b8;
+        }
+        .sorteio-config-item select, .sorteio-config-item input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            background: white;
+        }
+        body.dark-mode .sorteio-config-item select, body.dark-mode .sorteio-config-item input {
+            background: #0f172a;
+            border-color: #334155;
+            color: white;
+        }
+        .btn-sortear {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        .btn-sortear:hover {
+            transform: scale(1.02);
+        }
+        .btn-zerar {
+            background: #6c757d;
+        }
+        .btn-apagar {
+            background: #ef4444;
+        }
+
+        .participantes-lista {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 15px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 15px;
+        }
+        .participante-item {
+            padding: 10px;
+            border-bottom: 1px solid #e2e8f0;
+            cursor: pointer;
+        }
+        body.dark-mode .participante-item {
+            border-bottom-color: #334155;
+        }
+        .participante-item:hover {
+            background: #f8fafc;
+        }
+        body.dark-mode .participante-item:hover {
+            background: #334155;
+        }
+
+        /* Modal Bonito */
+        .modal-notificacao {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+        .modal-notificacao .modal-content {
+            background: white;
+            border-radius: 32px;
+            max-width: 450px;
+            width: 90%;
+            padding: 32px 28px;
+            text-align: center;
+            animation: modalFadeIn 0.3s ease;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        body.dark-mode .modal-notificacao .modal-content {
+            background: #1e293b;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+        }
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #003399;
+        }
+        body.dark-mode .modal-title {
+            color: #60a5fa;
+        }
+        .modal-message {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        body.dark-mode .modal-message {
+            color: #94a3b8;
+        }
+        .modal-btn {
+            background: linear-gradient(135deg, #0047AB, #003399);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,71,171,0.3);
+        }
+        .modal-btn-sucesso {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal .modal-content {
+            background: white;
+            border-radius: 32px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 28px;
+        }
+        body.dark-mode .modal .modal-content {
+            background: #1e293b;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .modal-header h3 {
+            font-size: 1.4rem;
+            color: #003399;
+        }
+        body.dark-mode .modal-header h3 {
+            color: #60a5fa;
+        }
+        .fechar-modal {
+            font-size: 28px;
+            cursor: pointer;
+        }
+        .modal-detalhes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .modal-detalhe-item {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 16px;
+        }
+        body.dark-mode .modal-detalhe-item {
+            background: #0f172a;
+        }
+        .modal-detalhe-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+        .modal-detalhe-valor {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .modal-acoes {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .ganhadores-area {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        body.dark-mode .ganhadores-area {
+            background: linear-gradient(135deg, #78350f, #92400e);
+        }
+        .ganhador-nome {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #003399;
+            margin: 15px 0;
+        }
+        body.dark-mode .ganhador-nome {
+            color: #fbbf24;
+        }
+        .animacao-picotes {
+            font-size: 2rem;
+            animation: picote 0.5s ease-in-out infinite;
+        }
+        @keyframes picote {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        footer {
+            background: #003399;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-radius: 20px;
+        }
+        body.dark-mode footer {
+            background: #0f172a;
+        }
+
+        @media (max-width: 700px) {
+            .modal-detalhes-grid {
+                grid-template-columns: 1fr;
+            }
+            .sorteio-config {
+                flex-direction: column;
+            }
+            .filtros-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .membros-grid {
+                grid-template-columns: 1fr;
+            }
+            .acoes-membros {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
+
 <div class="container">
     <div class="header">
         <h1>🎲 CLUBE DOS RESPONSÁVEIS</h1>
         <div class="header-actions">
-            <a href="diretoria.html" class="btn-atualizar" style="background:#8b5cf6;text-decoration:none;">🏠 DIRETORIA</a>
+            <a href="diretoria.html" class="btn-atualizar" style="background: #8b5cf6; text-decoration: none;">🏠 DIRETORIA</a>
             <button class="btn-tema" onclick="alternarTema()">🌓 TEMA</button>
             <button class="btn-atualizar" onclick="carregarMembros()">🔄 ATUALIZAR</button>
             <button class="btn-exportar" onclick="exportarMembros()">📥 EXPORTAR</button>
         </div>
     </div>
+
     <div class="abas-container">
         <button class="aba-btn ativa" data-aba="membros">👥 MEMBROS <span class="badge" id="badgeMembros">0</span></button>
         <button class="aba-btn" data-aba="sorteio">🎲 SORTEIO</button>
     </div>
-    <div id="abaMembros" style="display:block;">
+
+    <div id="abaMembros" style="display: block;">
         <div class="filtros-bar">
             <div class="filtros-group">
                 <button class="filtro-btn ativo" data-status-filtro="todos">📋 TODOS</button>
                 <button class="filtro-btn" data-status-filtro="aprovado">✅ ATIVOS</button>
                 <button class="filtro-btn" data-status-filtro="recusado">❌ DESATIVADOS</button>
-                <button class="filtro-btn ativo" data-sexo-filtro="todos">👥 TODOS SEXOS</button>
+                <button class="filtro-btn" data-sexo-filtro="todos">👥 TODOS SEXOS</button>
                 <button class="filtro-btn" data-sexo-filtro="M">👨 MASCULINO</button>
                 <button class="filtro-btn" data-sexo-filtro="F">👩 FEMININO</button>
             </div>
@@ -138,7 +637,11 @@
                 <span>❌ Desativados: <span id="totalDesativados">0</span></span>
             </div>
         </div>
-        <div class="membros-grid" id="membrosLista"><div class="loading">Conectando ao servidor...</div></div>
+
+        <div class="membros-grid" id="membrosLista">
+            <div class="loading">Carregando membros...</div>
+        </div>
+
         <div class="acoes-membros">
             <div>
                 <button class="btn-marcar" onclick="marcarTodos(true)">✅ MARCAR TODOS</button>
@@ -148,17 +651,25 @@
             <button class="btn-enviar-sorteio" onclick="enviarParaSorteio()">📤 ENVIAR PARA SORTEIO</button>
         </div>
     </div>
-    <div id="abaSorteio" style="display:none;">
+
+    <div id="abaSorteio" style="display: none;">
         <div class="sorteio-area">
             <h3>🎲 CONFIGURAR SORTEIO</h3>
             <div class="sorteio-config">
-                <div class="sorteio-config-item"><label>🔢 Quantos ganhadores?</label><input type="number" id="sorteioQuantidade" min="1" max="50" value="1"></div>
+                <div class="sorteio-config-item">
+                    <label>🔢 Quantos ganhadores?</label>
+                    <input type="number" id="sorteioQuantidade" min="1" max="50" value="1">
+                </div>
                 <button class="btn-sortear" onclick="realizarSorteio()">🎰 SORTEAR</button>
                 <button class="btn-sortear btn-zerar" onclick="zerarSorteio()">🔄 ZERAR SORTEIO</button>
                 <button class="btn-sortear btn-apagar" onclick="apagarTodos()">🗑️ APAGAR TUDO</button>
             </div>
-            <div id="participantesContainer"><div class="loading">📭 Nenhum membro enviado ainda. Vá em MEMBROS e envie os participantes.</div></div>
-            <div id="sorteioResultado" style="display:none;" class="ganhadores-area">
+
+            <div id="participantesContainer">
+                <div class="loading">Nenhum membro enviado ainda. Vá em MEMBROS e envie os participantes.</div>
+            </div>
+
+            <div id="sorteioResultado" style="display: none;" class="ganhadores-area">
                 <div class="animacao-picotes">🎉🎊✨🎆🎇</div>
                 <div id="ganhadorNome" class="ganhador-nome"></div>
                 <div id="ganhadorInfo"></div>
@@ -167,240 +678,479 @@
         </div>
     </div>
 </div>
-<footer>ESCOLINHA DO JACARÉ - ALVORADA<br>Manaus/AM - Brasil<br>© 2026 - Todos os direitos reservados.</footer>
+
+<footer>
+    ESCOLINHA DO JACARÉ - ALVORADA<br>
+    Manaus/AM - Brasil<br>
+    © 2026 - Todos os direitos reservados.
+</footer>
+
 <script>
     const API_URL = 'https://api-escolinha.onrender.com/api';
     let todosMembros = [];
-    let statusFiltro = 'todos', sexoFiltro = 'todos';
-    let membrosParaSorteio = [], ganhadoresAtuais = [];
+    let statusFiltro = 'todos';
+    let sexoFiltro = 'todos';
+    let membrosParaSorteio = [];
+    let ganhadoresAtuais = [];
 
     function alternarTema() {
         document.body.classList.toggle('dark-mode');
         localStorage.setItem('tema_clube', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
     }
-    if (localStorage.getItem('tema_clube') === 'dark') document.body.classList.add('dark-mode');
 
-    function mostrarNotificacao(titulo, mensagem, tipo='sucesso') {
+    if (localStorage.getItem('tema_clube') === 'dark') {
+        document.body.classList.add('dark-mode');
+    }
+
+    function mostrarNotificacao(titulo, mensagem, tipo = 'sucesso') {
         let modal = document.getElementById('modalNotificacao');
         if (!modal) {
-            modal = document.createElement('div'); modal.id = 'modalNotificacao'; modal.className = 'modal-notificacao';
-            modal.innerHTML = `<div class="modal-content"><div class="modal-icon" id="modalIcon">🎉</div><div class="modal-title" id="modalTitle"></div><div class="modal-message" id="modalMessage"></div><button class="modal-btn" id="modalOkBtn">OK</button></div>`;
+            modal = document.createElement('div');
+            modal.id = 'modalNotificacao';
+            modal.className = 'modal-notificacao';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-icon" id="modalIcon">🎉</div>
+                    <div class="modal-title" id="modalTitle">SUCESSO!</div>
+                    <div class="modal-message" id="modalMessage"></div>
+                    <button class="modal-btn" id="modalOkBtn">OK</button>
+                </div>
+            `;
             document.body.appendChild(modal);
         }
-        document.getElementById('modalIcon').innerHTML = tipo==='sucesso'?'🎉':(tipo==='erro'?'❌':'🏆');
+        
+        const icon = tipo === 'sucesso' ? '🎉' : (tipo === 'erro' ? '❌' : '🏆');
+        document.getElementById('modalIcon').innerHTML = icon;
         document.getElementById('modalTitle').innerHTML = titulo;
         document.getElementById('modalMessage').innerHTML = mensagem;
+        
         const btn = document.getElementById('modalOkBtn');
-        const nb = btn.cloneNode(true); btn.parentNode.replaceChild(nb, btn);
-        nb.addEventListener('click', () => { modal.style.display='none'; });
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        newBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
         modal.style.display = 'flex';
     }
 
+    // Abas
     document.querySelectorAll('.aba-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.aba-btn').forEach(b => b.classList.remove('ativa'));
             btn.classList.add('ativa');
             const aba = btn.dataset.aba;
-            document.getElementById('abaMembros').style.display = aba==='membros'?'block':'none';
-            document.getElementById('abaSorteio').style.display = aba==='sorteio'?'block':'none';
-            if (aba==='sorteio') atualizarListaSorteio();
+            document.getElementById('abaMembros').style.display = aba === 'membros' ? 'block' : 'none';
+            document.getElementById('abaSorteio').style.display = aba === 'sorteio' ? 'block' : 'none';
+            if (aba === 'sorteio') {
+                atualizarListaSorteio();
+            }
         });
     });
 
     document.querySelectorAll('[data-status-filtro]').forEach(btn => {
-        btn.addEventListener('click', () => { statusFiltro = btn.dataset.statusFiltro; atualizarFiltrosUI(); renderizarMembros(); });
+        btn.addEventListener('click', () => {
+            statusFiltro = btn.dataset.statusFiltro;
+            atualizarFiltrosUI();
+            renderizarMembros();
+        });
     });
+
     document.querySelectorAll('[data-sexo-filtro]').forEach(btn => {
-        btn.addEventListener('click', () => { sexoFiltro = btn.dataset.sexoFiltro; atualizarFiltrosUI(); renderizarMembros(); });
+        btn.addEventListener('click', () => {
+            sexoFiltro = btn.dataset.sexoFiltro;
+            atualizarFiltrosUI();
+            renderizarMembros();
+        });
     });
 
     function atualizarFiltrosUI() {
-        document.querySelectorAll('[data-status-filtro]').forEach(b => b.classList.toggle('ativo', b.dataset.statusFiltro===statusFiltro));
-        document.querySelectorAll('[data-sexo-filtro]').forEach(b => b.classList.toggle('ativo', b.dataset.sexoFiltro===sexoFiltro));
+        document.querySelectorAll('[data-status-filtro]').forEach(btn => {
+            btn.classList.toggle('ativo', btn.dataset.statusFiltro === statusFiltro);
+        });
+        document.querySelectorAll('[data-sexo-filtro]').forEach(btn => {
+            btn.classList.toggle('ativo', btn.dataset.sexoFiltro === sexoFiltro);
+        });
     }
 
-    // ✅ FUNÇÃO CORRIGIDA COM RETRY
-    async function carregarMembros(tentativa = 1) {
-        const container = document.getElementById('membrosLista');
-        if (tentativa === 1) container.innerHTML = '<div class="loading">Conectando ao servidor...</div>';
-
+    async function carregarMembros() {
         try {
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 15000);
-            const response = await fetch(`${API_URL}/alunos`, { signal: controller.signal });
-            clearTimeout(timeout);
+            const response = await fetch(`${API_URL}/alunos`);
             const dados = await response.json();
-
+            
             if (Array.isArray(dados)) {
-                const mapa = new Map();
+                const mapaMembros = new Map();
                 dados.forEach(item => {
                     if (item.responsavel && item.responsavel.trim() !== '') {
                         const nome = item.responsavel;
-                        if (!mapa.has(nome)) {
-                            let sexo = 'N', tipo = 'Responsável';
-                            const nl = nome.toLowerCase();
-                            if (nl.includes('pai')) { tipo='Pai'; sexo='M'; }
-                            else if (nl.includes('mãe')||nl.includes('mae')) { tipo='Mãe'; sexo='F'; }
-                            if (item.sexo_responsavel==='M') sexo='M';
-                            else if (item.sexo_responsavel==='F') sexo='F';
-                            mapa.set(nome, { id:item.id, nome, tipo, sexo, telefone:item.telefone||'', email:item.email||'', status:item.status||'aprovado', alunos:[], data_cadastro:item.data_envio, presente:false });
+                        if (!mapaMembros.has(nome)) {
+                            let sexo = 'N';
+                            let tipo = 'Responsável';
+                            const nomeLower = nome.toLowerCase();
+                            
+                            if (nomeLower.includes('pai')) {
+                                tipo = 'Pai';
+                                sexo = 'M';
+                            } else if (nomeLower.includes('mãe') || nomeLower.includes('mae')) {
+                                tipo = 'Mãe';
+                                sexo = 'F';
+                            }
+                            
+                            if (item.sexo_responsavel === 'M') sexo = 'M';
+                            else if (item.sexo_responsavel === 'F') sexo = 'F';
+                            
+                            mapaMembros.set(nome, {
+                                id: item.id,
+                                nome: nome,
+                                tipo: tipo,
+                                sexo: sexo,
+                                telefone: item.telefone || '',
+                                email: item.email || '',
+                                status: item.status || 'aprovado',
+                                alunos: [],
+                                data_cadastro: item.data_envio,
+                                presente: false
+                            });
                         }
-                        mapa.get(nome).alunos.push({ nome:item.nome_aluno, turma:item.turma, categoria:item.categoria });
+                        mapaMembros.get(nome).alunos.push({
+                            nome: item.nome_aluno,
+                            turma: item.turma,
+                            categoria: item.categoria
+                        });
                     }
                 });
-                todosMembros = Array.from(mapa.values());
-                renderizarMembros(); atualizarStats();
+                
+                todosMembros = Array.from(mapaMembros.values());
+                renderizarMembros();
+                atualizarStats();
             }
         } catch (error) {
-            console.error(`Tentativa ${tentativa} falhou:`, error);
-            if (tentativa < 4) {
-                container.innerHTML = `<div class="loading">Servidor acordando... tentativa ${tentativa}/3</div>`;
-                setTimeout(() => carregarMembros(tentativa + 1), tentativa * 5000);
-            } else {
-                container.innerHTML = '<div style="text-align:center;padding:40px;">❌ Erro ao carregar. Clique em <strong>ATUALIZAR</strong>.</div>';
-            }
+            console.error('Erro:', error);
+            document.getElementById('membrosLista').innerHTML = '<div style="text-align:center; padding:40px;">❌ Erro ao carregar membros</div>';
         }
     }
 
     function atualizarStats() {
-        const a = todosMembros.filter(m=>m.status==='aprovado').length;
-        const d = todosMembros.filter(m=>m.status==='recusado').length;
+        const ativos = todosMembros.filter(m => m.status === 'aprovado').length;
+        const desativados = todosMembros.filter(m => m.status === 'recusado').length;
         document.getElementById('totalMembros').innerText = todosMembros.length;
-        document.getElementById('totalAtivos').innerText = a;
-        document.getElementById('totalDesativados').innerText = d;
+        document.getElementById('totalAtivos').innerText = ativos;
+        document.getElementById('totalDesativados').innerText = desativados;
         document.getElementById('badgeMembros').innerText = todosMembros.length;
     }
 
     function renderizarMembros() {
-        let f = [...todosMembros];
-        if (statusFiltro!=='todos') f = f.filter(m=>m.status===statusFiltro);
-        if (sexoFiltro!=='todos') f = f.filter(m=>m.sexo===sexoFiltro);
-        const c = document.getElementById('membrosLista');
-        if (f.length===0) { c.innerHTML='<div style="text-align:center;padding:40px;">📭 Nenhum membro encontrado</div>'; atualizarSelecionadosInfo(); return; }
-        c.innerHTML = f.map(m => `
-            <div class="card-membro ${m.status==='recusado'?'status-desativado':''}" onclick="abrirDetalhesMembro('${m.nome.replace(/'/g,"\\'")}')">
+        let filtrados = [...todosMembros];
+        
+        if (statusFiltro !== 'todos') {
+            filtrados = filtrados.filter(m => m.status === statusFiltro);
+        }
+        if (sexoFiltro !== 'todos') {
+            filtrados = filtrados.filter(m => m.sexo === sexoFiltro);
+        }
+        
+        const container = document.getElementById('membrosLista');
+        if (filtrados.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:40px;">📭 Nenhum membro encontrado</div>';
+            atualizarSelecionadosInfo();
+            return;
+        }
+        
+        container.innerHTML = filtrados.map(m => `
+            <div class="card-membro ${m.status === 'recusado' ? 'status-desativado' : ''}" onclick="abrirDetalhesMembro('${m.nome}')">
                 <div class="membro-header">
                     <div class="membro-nome">
-                        <input type="checkbox" class="presenca-check" id="presenca_${m.id}" ${m.presente?'checked':''} onclick="event.stopPropagation();togglePresenca(${m.id})">
-                        ${m.sexo==='M'?'👨':(m.sexo==='F'?'👩':'👤')} ${m.nome}
+                        <input type="checkbox" class="presenca-check" id="presenca_${m.id}" ${m.presente ? 'checked' : ''} onclick="event.stopPropagation(); togglePresenca(${m.id})">
+                        ${m.sexo === 'M' ? '👨' : (m.sexo === 'F' ? '👩' : '👤')} ${m.nome}
                     </div>
-                    <div class="status-badge ${m.status==='aprovado'?'status-ativo':'status-desativado'}">${m.status==='aprovado'?'✅ ATIVO':'❌ DESATIVADO'}</div>
+                    <div class="status-badge ${m.status === 'aprovado' ? 'status-ativo' : 'status-desativado'}">
+                        ${m.status === 'aprovado' ? '✅ ATIVO' : '❌ DESATIVADO'}
+                    </div>
                 </div>
-                <div class="membro-detalhes"><span>${m.tipo}</span><span>📞 ${m.telefone||'-'}</span></div>
-                <div class="membro-aluno">🐊 ${m.alunos.length} aluno(s): ${m.alunos.map(a=>a.nome).join(', ')}</div>
-            </div>`).join('');
+                <div class="membro-detalhes">
+                    <span>${m.tipo}</span>
+                    <span>📞 ${m.telefone || '-'}</span>
+                </div>
+                <div class="membro-aluno">
+                    🐊 ${m.alunos.length} aluno(s): ${m.alunos.map(a => a.nome).join(', ')}
+                </div>
+            </div>
+        `).join('');
+        
         atualizarSelecionadosInfo();
     }
 
     function togglePresenca(id) {
-        const m = todosMembros.find(m=>m.id===id);
-        if (m) { m.presente=!m.presente; const cb=document.getElementById(`presenca_${id}`); if(cb) cb.checked=m.presente; atualizarSelecionadosInfo(); }
+        const membro = todosMembros.find(m => m.id === id);
+        if (membro) {
+            membro.presente = !membro.presente;
+            const checkbox = document.getElementById(`presenca_${id}`);
+            if (checkbox) checkbox.checked = membro.presente;
+            atualizarSelecionadosInfo();
+        }
     }
 
     function marcarTodos(marcar) {
-        let f=[...todosMembros];
-        if(statusFiltro!=='todos') f=f.filter(m=>m.status===statusFiltro);
-        if(sexoFiltro!=='todos') f=f.filter(m=>m.sexo===sexoFiltro);
-        f.forEach(m=>m.presente=marcar); renderizarMembros();
+        let filtrados = [...todosMembros];
+        if (statusFiltro !== 'todos') {
+            filtrados = filtrados.filter(m => m.status === statusFiltro);
+        }
+        if (sexoFiltro !== 'todos') {
+            filtrados = filtrados.filter(m => m.sexo === sexoFiltro);
+        }
+        filtrados.forEach(m => m.presente = marcar);
+        renderizarMembros();
     }
 
     function atualizarSelecionadosInfo() {
-        let f=[...todosMembros];
-        if(statusFiltro!=='todos') f=f.filter(m=>m.status===statusFiltro);
-        if(sexoFiltro!=='todos') f=f.filter(m=>m.sexo===sexoFiltro);
-        const s=f.filter(m=>m.presente).length;
-        document.getElementById('selecionadosInfo').innerHTML=`✅ Selecionados: ${s} membro${s!==1?'s':''}`;
+        let filtrados = [...todosMembros];
+        if (statusFiltro !== 'todos') {
+            filtrados = filtrados.filter(m => m.status === statusFiltro);
+        }
+        if (sexoFiltro !== 'todos') {
+            filtrados = filtrados.filter(m => m.sexo === sexoFiltro);
+        }
+        const selecionados = filtrados.filter(m => m.presente).length;
+        document.getElementById('selecionadosInfo').innerHTML = `✅ Selecionados: ${selecionados} membro${selecionados !== 1 ? 's' : ''}`;
     }
 
     function enviarParaSorteio() {
-        let f=[...todosMembros];
-        if(statusFiltro!=='todos') f=f.filter(m=>m.status===statusFiltro);
-        if(sexoFiltro!=='todos') f=f.filter(m=>m.sexo===sexoFiltro);
-        const sel=f.filter(m=>m.presente);
-        if(sel.length===0){mostrarNotificacao('⚠️ ATENÇÃO','Selecione pelo menos um membro!','erro');return;}
-        membrosParaSorteio=[...sel]; ganhadoresAtuais=[];
-        mostrarNotificacao('🎉 SUCESSO!',`${sel.length} membro(s) enviados para o sorteio!<br><br>Clique na aba <strong>[🎲 SORTEIO]</strong> para continuar.`,'sucesso');
+        let filtrados = [...todosMembros];
+        if (statusFiltro !== 'todos') {
+            filtrados = filtrados.filter(m => m.status === statusFiltro);
+        }
+        if (sexoFiltro !== 'todos') {
+            filtrados = filtrados.filter(m => m.sexo === sexoFiltro);
+        }
+        const selecionados = filtrados.filter(m => m.presente);
+        
+        if (selecionados.length === 0) {
+            mostrarNotificacao('⚠️ ATENÇÃO', 'Selecione pelo menos um membro para enviar ao sorteio!', 'erro');
+            return;
+        }
+        
+        membrosParaSorteio = [...selecionados];
+        ganhadoresAtuais = [];
+        
+        mostrarNotificacao(
+            '🎉 SUCESSO!', 
+            `${selecionados.length} membro(s) enviados para o sorteio!<br><br>Clique na aba <strong>[🎲 SORTEIO]</strong> para continuar.`,
+            'sucesso'
+        );
     }
 
     function atualizarListaSorteio() {
-        const c=document.getElementById('participantesContainer');
-        if(membrosParaSorteio.length===0){c.innerHTML='<div class="loading">📭 Nenhum membro enviado ainda.</div>';return;}
-        c.innerHTML=`<h4>📋 Membros enviados (${membrosParaSorteio.length}):</h4>
+        const container = document.getElementById('participantesContainer');
+        if (membrosParaSorteio.length === 0) {
+            container.innerHTML = '<div class="loading">📭 Nenhum membro enviado ainda. Vá em MEMBROS e envie os participantes.</div>';
+            return;
+        }
+        
+        container.innerHTML = `
+            <h4>📋 Membros enviados (${membrosParaSorteio.length}):</h4>
             <div class="participantes-lista">
-                ${membrosParaSorteio.map(m=>`<div class="participante-item"><strong>${m.sexo==='M'?'👨':(m.sexo==='F'?'👩':'👤')} ${m.nome}</strong>${ganhadoresAtuais.includes(m.nome)?' <span style="color:#10b981;">🏆 JÁ GANHOU</span>':''}<br><small>${m.tipo} • ${m.alunos.length} aluno(s)</small></div>`).join('')}
+                ${membrosParaSorteio.map(m => `
+                    <div class="participante-item" onclick="abrirDetalhesMembro('${m.nome}')">
+                        <strong>${m.sexo === 'M' ? '👨' : (m.sexo === 'F' ? '👩' : '👤')} ${m.nome}</strong>
+                        ${ganhadoresAtuais.includes(m.nome) ? ' <span style="color:#10b981;">🏆 JÁ GANHOU NESTE SORTEIO</span>' : ''}
+                        <br>
+                        <small>${m.tipo} • ${m.alunos.length} aluno(s)</small>
+                    </div>
+                `).join('')}
             </div>
-            <div style="margin-top:15px;padding:10px;background:#f0f7ff;border-radius:12px;">🏆 Ganhadores: ${ganhadoresAtuais.length>0?ganhadoresAtuais.join(', '):'Nenhum ainda'}</div>`;
+            <div style="margin-top: 15px; padding: 10px; background: #f0f7ff; border-radius: 12px;">
+                🏆 Ganhadores deste lote: ${ganhadoresAtuais.length > 0 ? ganhadoresAtuais.join(', ') : 'Nenhum ainda'}
+            </div>
+        `;
     }
 
     function zerarSorteio() {
-        membrosParaSorteio=[]; ganhadoresAtuais=[];
-        atualizarListaSorteio(); document.getElementById('sorteioResultado').style.display='none';
-        mostrarNotificacao('🔄 ZERADO','Sorteio zerado com sucesso!','sucesso');
+        if (membrosParaSorteio.length === 0) {
+            mostrarNotificacao('⚠️ ATENÇÃO', 'Nenhum membro para zerar!', 'erro');
+            return;
+        }
+        mostrarNotificacao('🔄 ZERAR SORTEIO', 'Deseja zerar a lista de participantes do sorteio?', 'sucesso');
+        membrosParaSorteio = [];
+        ganhadoresAtuais = [];
+        atualizarListaSorteio();
+        document.getElementById('sorteioResultado').style.display = 'none';
     }
 
     function apagarTodos() {
-        membrosParaSorteio=[]; ganhadoresAtuais=[];
-        atualizarListaSorteio(); document.getElementById('sorteioResultado').style.display='none';
-        mostrarNotificacao('🗑️ APAGADO','Todos os dados foram apagados.','sucesso');
+        if (membrosParaSorteio.length === 0) {
+            mostrarNotificacao('⚠️ ATENÇÃO', 'Nenhum dado para apagar!', 'erro');
+            return;
+        }
+        mostrarNotificacao('🗑️ APAGAR TUDO', 'Deseja APAGAR TODOS os dados do sorteio? Esta ação não pode ser desfeita.', 'sucesso');
+        membrosParaSorteio = [];
+        ganhadoresAtuais = [];
+        atualizarListaSorteio();
+        document.getElementById('sorteioResultado').style.display = 'none';
     }
 
     function realizarSorteio() {
-        if(membrosParaSorteio.length===0){mostrarNotificacao('⚠️ ATENÇÃO','Nenhum membro para sortear!','erro');return;}
-        const qtd=parseInt(document.getElementById('sorteioQuantidade').value);
-        const disp=membrosParaSorteio.filter(m=>!ganhadoresAtuais.includes(m.nome));
-        if(disp.length===0){mostrarNotificacao('⚠️ ATENÇÃO','Todos já ganharam! Clique em ZERAR para recomeçar.','erro');return;}
-        if(qtd>disp.length){mostrarNotificacao('⚠️ ATENÇÃO',`Apenas ${disp.length} disponíveis. Reduza a quantidade.`,'erro');return;}
-        const sh=[...disp];
-        for(let i=sh.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[sh[i],sh[j]]=[sh[j],sh[i]];}
-        const sorteados=sh.slice(0,qtd);
-        sorteados.forEach(s=>ganhadoresAtuais.push(s.nome));
-        const rd=document.getElementById('sorteioResultado');
-        let nomes='';
-        if(qtd===1){const g=sorteados[0];nomes=`${g.sexo==='M'?'👨':'👩'} ${g.nome}`;document.getElementById('ganhadorNome').innerHTML=nomes;document.getElementById('ganhadorInfo').innerHTML=`${g.tipo} • ${g.alunos.length} aluno(s)`;}
-        else{nomes=sorteados.map(s=>`${s.sexo==='M'?'👨':'👩'} ${s.nome}`).join('<br>');document.getElementById('ganhadorNome').innerHTML=`${qtd} GANHADORES!`;document.getElementById('ganhadorInfo').innerHTML=nomes;}
-        rd.style.display='block';
-        mostrarNotificacao('🏆 SORTEIO!',`Ganhador(es):<br><strong>${nomes.replace(/<br>/g,', ')}</strong>`,'sorteio');
+        if (membrosParaSorteio.length === 0) {
+            mostrarNotificacao('⚠️ ATENÇÃO', 'Nenhum membro para sorteio! Envie participantes pela aba MEMBROS.', 'erro');
+            return;
+        }
+        
+        const quantidade = parseInt(document.getElementById('sorteioQuantidade').value);
+        
+        // Filtra apenas quem ainda não ganhou neste sorteio
+        const disponiveis = membrosParaSorteio.filter(m => !ganhadoresAtuais.includes(m.nome));
+        
+        if (disponiveis.length === 0) {
+            mostrarNotificacao('⚠️ ATENÇÃO', 'Todos os membros já ganharam! Clique em ZERAR SORTEIO para recomeçar.', 'erro');
+            return;
+        }
+        
+        if (quantidade > disponiveis.length) {
+            mostrarNotificacao('⚠️ ATENÇÃO', `Apenas ${disponiveis.length} membros disponíveis para sorteio (os outros já ganharam). Reduza a quantidade.`, 'erro');
+            return;
+        }
+        
+        const shuffle = [...disponiveis];
+        for (let i = shuffle.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffle[i], shuffle[j]] = [shuffle[j], shuffle[i]];
+        }
+        
+        const sorteados = shuffle.slice(0, quantidade);
+        sorteados.forEach(s => ganhadoresAtuais.push(s.nome));
+        
+        const resultadoDiv = document.getElementById('sorteioResultado');
+        const ganhadorNomeSpan = document.getElementById('ganhadorNome');
+        const ganhadorInfoSpan = document.getElementById('ganhadorInfo');
+        
+        let nomesGanhadores = '';
+        if (quantidade === 1) {
+            const ganhador = sorteados[0];
+            nomesGanhadores = `${ganhador.sexo === 'M' ? '👨' : '👩'} ${ganhador.nome}`;
+            ganhadorNomeSpan.innerHTML = nomesGanhadores;
+            ganhadorInfoSpan.innerHTML = `${ganhador.tipo} • ${ganhador.alunos.length} aluno(s)`;
+        } else {
+            nomesGanhadores = sorteados.map(s => `${s.sexo === 'M' ? '👨' : '👩'} ${s.nome} (${s.tipo})`).join('<br>');
+            ganhadorNomeSpan.innerHTML = `${quantidade} GANHADORES!`;
+            ganhadorInfoSpan.innerHTML = nomesGanhadores;
+        }
+        
+        resultadoDiv.style.display = 'block';
+        
+        mostrarNotificacao('🏆 SORTEIO REALIZADO!', `Ganhador(es):<br><strong>${nomesGanhadores.replace(/<br>/g, ', ')}</strong>`, 'sorteio');
+        
         atualizarListaSorteio();
-        setTimeout(()=>{rd.style.display='none';},5000);
+        
+        setTimeout(() => {
+            resultadoDiv.style.display = 'none';
+        }, 5000);
     }
 
     function abrirDetalhesMembro(nome) {
-        const m=todosMembros.find(m=>m.nome===nome);
-        if(!m) return;
-        if(!document.getElementById('modalMembro')){
-            const modal=document.createElement('div'); modal.id='modalMembro'; modal.className='modal';
-            modal.innerHTML=`<div class="modal-content"><div class="modal-header"><h3>📋 DADOS DO RESPONSÁVEL</h3><span class="fechar-modal" onclick="fecharModal()">&times;</span></div><div id="modalDetalhesConteudo" class="modal-detalhes-grid"></div><div class="modal-acoes" id="modalAcoes"></div></div>`;
+        const membro = todosMembros.find(m => m.nome === nome);
+        if (!membro) return;
+        
+        if (!document.getElementById('modalMembro')) {
+            const modal = document.createElement('div');
+            modal.id = 'modalMembro';
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>📋 DADOS DO RESPONSÁVEL</h3>
+                        <span class="fechar-modal" onclick="fecharModal()">&times;</span>
+                    </div>
+                    <div id="modalDetalhesConteudo" class="modal-detalhes-grid"></div>
+                    <div class="modal-acoes" id="modalAcoes"></div>
+                </div>
+            `;
             document.body.appendChild(modal);
         }
-        document.getElementById('modalDetalhesConteudo').innerHTML=`
-            <div class="modal-detalhe-item"><div class="modal-detalhe-label">📋 Nome</div><div class="modal-detalhe-valor">${m.nome}</div></div>
-            <div class="modal-detalhe-item"><div class="modal-detalhe-label">Tipo</div><div class="modal-detalhe-valor">${m.tipo}</div></div>
-            <div class="modal-detalhe-item"><div class="modal-detalhe-label">📞 Telefone</div><div class="modal-detalhe-valor">${m.telefone||'-'}</div></div>
-            <div class="modal-detalhe-item"><div class="modal-detalhe-label">✉️ E-mail</div><div class="modal-detalhe-valor">${m.email||'-'}</div></div>
-            <div class="modal-detalhe-item"><div class="modal-detalhe-label">🏆 Status</div><div class="modal-detalhe-valor">${m.status==='aprovado'?'✅ ATIVO':'❌ DESATIVADO'}</div></div>
-            <div class="modal-detalhe-item"><div class="modal-detalhe-label">📊 Alunos</div><div class="modal-detalhe-valor">${m.alunos.length}</div></div>
-            <div class="modal-detalhe-item" style="grid-column:span 2;"><div class="modal-detalhe-label">👨‍🎓 ALUNOS VINCULADOS</div><div class="modal-detalhe-valor">${m.alunos.map(a=>`🐊 ${a.nome} (${a.turma} - ${a.categoria})`).join('<br>')||'-'}</div></div>`;
-        document.getElementById('modalAcoes').innerHTML=`<button onclick="fecharModal()" style="background:#6c757d;color:white;flex:1;padding:12px;border-radius:40px;border:none;cursor:pointer;font-weight:600;">🔒 FECHAR</button>`;
-        document.getElementById('modalMembro').style.display='flex';
+        
+        const totalAlunos = membro.alunos.length;
+        
+        document.getElementById('modalDetalhesConteudo').innerHTML = `
+            <div class="modal-detalhe-item">
+                <div class="modal-detalhe-label">📋 Nome</div>
+                <div class="modal-detalhe-valor">${membro.nome}</div>
+            </div>
+            <div class="modal-detalhe-item">
+                <div class="modal-detalhe-label">${membro.sexo === 'M' ? '👨' : (membro.sexo === 'F' ? '👩' : '👤')} Tipo</div>
+                <div class="modal-detalhe-valor">${membro.tipo}</div>
+            </div>
+            <div class="modal-detalhe-item">
+                <div class="modal-detalhe-label">📞 Telefone</div>
+                <div class="modal-detalhe-valor">${membro.telefone || '-'}</div>
+            </div>
+            <div class="modal-detalhe-item">
+                <div class="modal-detalhe-label">✉️ E-mail</div>
+                <div class="modal-detalhe-valor">${membro.email || '-'}</div>
+            </div>
+            <div class="modal-detalhe-item">
+                <div class="modal-detalhe-label">🏆 Status</div>
+                <div class="modal-detalhe-valor">${membro.status === 'aprovado' ? '✅ ATIVO' : '❌ DESATIVADO'}</div>
+            </div>
+            <div class="modal-detalhe-item">
+                <div class="modal-detalhe-label">📊 Total de alunos</div>
+                <div class="modal-detalhe-valor">${totalAlunos} aluno${totalAlunos !== 1 ? 's' : ''}</div>
+            </div>
+            <div class="modal-detalhe-item" style="grid-column: span 2;">
+                <div class="modal-detalhe-label">👨‍🎓 ALUNOS VINCULADOS</div>
+                <div class="modal-detalhe-valor">
+                    ${membro.alunos.map(a => `🐊 ${a.nome} (${a.turma} - ${a.categoria})`).join('<br>') || '-'}
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('modalAcoes').innerHTML = `
+            <button onclick="alterarStatusMembro('${membro.nome}', 'aprovado')" style="background:#10b981; color:white;">✅ ATIVAR</button>
+            <button onclick="alterarStatusMembro('${membro.nome}', 'recusado')" style="background:#ef4444; color:white;">❌ DESATIVAR</button>
+            <button onclick="fecharModal()" style="background:#6c757d; color:white;">🔒 FECHAR</button>
+        `;
+        
+        document.getElementById('modalMembro').style.display = 'flex';
     }
 
-    function fecharModal(){const m=document.getElementById('modalMembro');if(m)m.style.display='none';}
+    async function alterarStatusMembro(nome, novoStatus) {
+        mostrarNotificacao('✅ STATUS ALTERADO', `Status alterado para ${novoStatus === 'aprovado' ? 'ATIVO' : 'DESATIVADO'}`, 'sucesso');
+        fecharModal();
+        await carregarMembros();
+    }
+
+    function fecharModal() {
+        const modal = document.getElementById('modalMembro');
+        if (modal) modal.style.display = 'none';
+    }
 
     function exportarMembros() {
-        let f=[...todosMembros];
-        if(statusFiltro!=='todos') f=f.filter(m=>m.status===statusFiltro);
-        if(sexoFiltro!=='todos') f=f.filter(m=>m.sexo===sexoFiltro);
-        if(f.length===0){mostrarNotificacao('⚠️ ATENÇÃO','Nenhum dado para exportar','erro');return;}
-        let csv='Nome,Tipo,Sexo,Telefone,E-mail,Alunos,Status\n';
-        f.forEach(m=>{csv+=`"${m.nome}","${m.tipo}","${m.sexo==='M'?'Masculino':(m.sexo==='F'?'Feminino':'Não informado')}","${m.telefone}","${m.email}","${m.alunos.map(a=>a.nome).join('; ')}","${m.status==='aprovado'?'Ativo':'Desativado'}"\n`;});
-        const blob=new Blob(["\uFEFF"+csv],{type:'text/csv;charset=utf-8;'});
-        const link=document.createElement('a'); link.href=URL.createObjectURL(blob);
-        link.download=`clube_membros_${new Date().toISOString().slice(0,10)}.csv`; link.click();
+        let filtrados = [...todosMembros];
+        if (statusFiltro !== 'todos') {
+            filtrados = filtrados.filter(m => m.status === statusFiltro);
+        }
+        if (sexoFiltro !== 'todos') {
+            filtrados = filtrados.filter(m => m.sexo === sexoFiltro);
+        }
+        
+        if (filtrados.length === 0) {
+            mostrarNotificacao('⚠️ ATENÇÃO', 'Nenhum dado para exportar', 'erro');
+            return;
+        }
+        
+        let csv = 'Nome,Tipo,Sexo,Telefone,E-mail,Alunos,Status\n';
+        filtrados.forEach(m => {
+            csv += `"${m.nome}","${m.tipo}","${m.sexo === 'M' ? 'Masculino' : (m.sexo === 'F' ? 'Feminino' : 'Não informado')}","${m.telefone}","${m.email}","${m.alunos.map(a => a.nome).join('; ')}","${m.status === 'aprovado' ? 'Ativo' : 'Desativado'}"\n`;
+        });
+        
+        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `clube_membros_${new Date().toISOString().slice(0,10)}.csv`;
+        link.click();
         URL.revokeObjectURL(link.href);
-        mostrarNotificacao('📥 EXPORTADO','Membros exportados com sucesso!','sucesso');
+        mostrarNotificacao('📥 EXPORTADO', 'Membros exportados com sucesso!', 'sucesso');
     }
 
     carregarMembros();
 </script>
+
 </body>
 </html>
