@@ -27,6 +27,7 @@ if ('serviceWorker' in navigator) {
         .nav-link:hover { transform: translateY(-2px); }
         .nav-link.ativo { background: #0047AB; color: white; }
         body.dark-mode .nav-link.ativo { background: #3b82f6; }
+        
         .login-box { background: white; max-width: 420px; margin: 40px auto; padding: 40px; border-radius: 32px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.1); transition: background 0.3s; }
         body.dark-mode .login-box { background: #1e293b; }
         .login-box h2 { color: #003399; margin-bottom: 8px; font-size: 28px; }
@@ -57,15 +58,10 @@ if ('serviceWorker' in navigator) {
         }
         body.dark-mode .header { background: linear-gradient(135deg, #1e40af, #1e3a8a); }
         
-        .header h1 { 
-            font-size: 1.5rem; 
-            font-weight: 700; 
-            color: white;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-        }
+        .header h1 { font-size: 1.5rem; font-weight: 700; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
         .header-info { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .ultima-atualizacao { background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 40px; font-size: 11px; color: white; }
-        .btn-tema, .btn-exportar, .btn-atualizar, .btn-cadastrar, .btn-planilha { 
+        .btn-tema, .btn-exportar, .btn-atualizar, .btn-cadastrar, .btn-relatorio { 
             background: rgba(255,255,255,0.2); 
             border: 1px solid rgba(255,255,255,0.3); 
             padding: 8px 14px; 
@@ -76,28 +72,56 @@ if ('serviceWorker' in navigator) {
             transition: all 0.2s;
             color: white;
         }
-        .btn-tema:hover, .btn-exportar:hover, .btn-atualizar:hover, .btn-cadastrar:hover, .btn-planilha:hover { background: rgba(255,255,255,0.3); }
-        .btn-sair { 
-            background: rgba(255,255,255,0.2); 
-            border: 1px solid rgba(255,255,255,0.3); 
-            padding: 8px 20px; 
-            border-radius: 40px; 
-            cursor: pointer; 
-            font-weight: 600;
-            color: white;
-        }
+        .btn-tema:hover, .btn-exportar:hover, .btn-atualizar:hover, .btn-cadastrar:hover, .btn-relatorio:hover { background: rgba(255,255,255,0.3); }
+        .btn-sair { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); padding: 8px 20px; border-radius: 40px; cursor: pointer; font-weight: 600; color: white; }
         .btn-sair:hover { background: rgba(255,255,255,0.3); }
         .btn-cadastrar { background: #10b981; border-color: #10b981; color: white; }
         .btn-cadastrar:hover { background: #059669; }
         
-        .vertical-layout { display: flex; flex-direction: column; gap: 30px; }
-        .secao { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: background 0.3s; }
+        .abas-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .aba-btn {
+            padding: 12px 24px;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+        body.dark-mode .aba-btn {
+            background: #334155;
+            color: #e2e8f0;
+        }
+        .aba-btn.ativa {
+            background: #0047AB;
+            color: white;
+        }
+        body.dark-mode .aba-btn.ativa {
+            background: #3b82f6;
+        }
+        .aba-btn .badge {
+            background: rgba(0,0,0,0.2);
+            border-radius: 30px;
+            padding: 2px 8px;
+            margin-left: 8px;
+            font-size: 11px;
+        }
+        
+        .secao { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: background 0.3s; margin-bottom: 30px; }
         body.dark-mode .secao { background: #1e293b; }
         .secao-header { background: linear-gradient(135deg, #f8fafc, #f1f5f9); padding: 18px 20px; border-bottom: 2px solid #e2e8f0; transition: background 0.3s; }
         body.dark-mode .secao-header { background: #0f172a; border-bottom-color: #334155; }
         .secao-header h2 { font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
         .secao-header .badge { background: #0047AB; color: white; padding: 2px 10px; border-radius: 40px; font-size: 12px; }
         .secao-content { padding: 20px; }
+        
         .filtros { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
         .filtro-group { flex: 1; min-width: 140px; }
         .filtro-group label { display: block; font-size: 11px; font-weight: 600; color: #64748b; margin-bottom: 4px; text-transform: uppercase; }
@@ -124,6 +148,8 @@ if ('serviceWorker' in navigator) {
         tr:hover { background: #f8fafc; }
         body.dark-mode tr:hover { background: #334155; }
         .status-pendente { background: #fef3c7; color: #d97706; padding: 4px 10px; border-radius: 40px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .status-aprovado { background: #d1fae5; color: #059669; padding: 4px 10px; border-radius: 40px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .status-recusado { background: #fee2e2; color: #dc2626; padding: 4px 10px; border-radius: 40px; font-size: 11px; font-weight: 600; display: inline-block; }
         .btn-acao { padding: 5px 12px; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 11px; margin: 0 3px; transition: all 0.2s; }
         .btn-aprovar { background: #10b981; color: white; }
         .btn-aprovar:hover { background: #059669; transform: scale(1.02); }
@@ -135,6 +161,7 @@ if ('serviceWorker' in navigator) {
         .skeleton-loader { padding: 20px; text-align: center; }
         .spinner { display: inline-block; width: 30px; height: 30px; border: 3px solid #e2e8f0; border-top-color: #0047AB; border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
+        
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: white; border-radius: 32px; max-width: 800px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 28px; animation: modalFadeIn 0.3s ease; transition: background 0.3s; }
         body.dark-mode .modal-content { background: #1e293b; }
@@ -172,6 +199,7 @@ if ('serviceWorker' in navigator) {
         .modal-acoes { display: flex; gap: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0; }
         body.dark-mode .modal-acoes { border-top-color: #334155; }
         .modal-acoes button { flex: 1; padding: 12px; border-radius: 40px; font-weight: 600; cursor: pointer; border: none; }
+        
         @media (max-width: 900px) {
             .detalhes-grid { grid-template-columns: 1fr; }
             .toast { bottom: 20px; right: 20px; left: 20px; border-radius: 16px; }
@@ -219,140 +247,82 @@ if ('serviceWorker' in navigator) {
                 <button class="btn-atualizar" onclick="forcarAtualizacao()">🔄 ATUALIZAR</button>
                 <button class="btn-exportar" onclick="exportarDados()">📥 EXPORTAR</button>
                 <button class="btn-cadastrar" onclick="abrirModalCadastro()">➕ CADASTRAR ALUNO</button>
-                <button class="btn-planilha" onclick="abrirPlanilha()">📊 PLANILHA</button>
+                <button class="btn-relatorio" onclick="exportarDados()">📊 RELATÓRIO</button>
                 <button class="btn-tema" onclick="alternarTema()">🌓 TEMA</button>
                 <span class="ultima-atualizacao" id="ultimaAtualizacao">🕐 Carregando...</span>
                 <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
             </div>
         </div>
 
-        <div class="vertical-layout">
-            <!-- Seção ALUNOS (aprovados) -->
-            <div class="secao">
-                <div class="secao-header">
-                    <h2>👥 ALUNOS <span class="badge" id="totalAlunosBadge">0</span></h2>
-                </div>
-                <div class="secao-content">
-                    <div class="filtros">
-                        <div class="filtro-group">
-                            <label>🔍 BUSCAR</label>
-                            <input type="text" id="buscaAluno" placeholder="Nome..." class="busca-input">
-                        </div>
-                        <div class="filtro-group">
-                            <label>⚽ TURMA</label>
-                            <select id="filtroTurmaAluno">
-                                <option value="">Todas</option>
-                                <option value="Futebol">Futebol</option>
-                                <option value="Taekwondo">Taekwondo</option>
-                                <option value="Ginástica">Ginástica</option>
-                                <option value="Tênis de Mesa">Tênis de Mesa</option>
-                                <option value="Judô">Judô</option>
-                            </select>
-                        </div>
-                        <div class="filtro-group">
-                            <label>🏆 CATEGORIA</label>
-                            <select id="filtroCategoriaAluno">
-                                <option value="">Todas</option>
-                                <option value="Sub-5">Sub-5</option>
-                                <option value="Sub-7">Sub-7</option>
-                                <option value="Sub-9">Sub-9</option>
-                                <option value="Sub-11">Sub-11</option>
-                                <option value="Sub-13">Sub-13</option>
-                                <option value="Sub-15">Sub-15</option>
-                                <option value="Sub-17">Sub-17</option>
-                                <option value="Acima-17">Acima-17</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="resultados-info" id="resultadosAlunosInfo">Mostrando 0 de 0 registros</div>
-                    <div class="acoes-massa">
-                        <label class="selecionar-todos">
-                            <input type="checkbox" id="selecionarTodosAlunos" class="checkbox"> Selecionar todos
-                        </label>
-                        <button class="btn-excluir-massa" onclick="excluirSelecionados('alunos')">🗑️ Excluir selecionados</button>
-                    </div>
-                    <div class="tabela-container">
-                        <div id="loadingAlunos" class="skeleton-loader" style="display: none;"><div class="spinner"></div> Carregando...</div>
-                        <table id="tabelaAlunos">
-                            <thead>
-                                <tr>
-                                    <th style="width:30px"></th>
-                                    <th onclick="ordenarAlunos('nome')">Nome ⬍</th>
-                                    <th onclick="ordenarAlunos('turma')">Turma ⬍</th>
-                                    <th onclick="ordenarAlunos('categoria')">Categoria ⬍</th>
-                                    <th onclick="ordenarAlunos('idade')">Idade ⬍</th>
-                                    <th>Responsável</th>
-                                    <th>Telefone</th>
-                                </tr>
-                            </thead>
-                            <tbody id="listaAlunos"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <!-- ABAS -->
+        <div class="abas-container">
+            <button class="aba-btn ativa" data-aba="aprovado">✅ ATIVOS <span class="badge" id="badgeAprovado">0</span></button>
+            <button class="aba-btn" data-aba="pendente">⏳ PENDENTES <span class="badge" id="badgePendente">0</span></button>
+            <button class="aba-btn" data-aba="recusado">❌ DESATIVADOS <span class="badge" id="badgeRecusado">0</span></button>
+        </div>
 
-            <!-- Seção SOLICITAÇÕES (pendentes) -->
-            <div class="secao">
-                <div class="secao-header">
-                    <h2>📋 SOLICITAÇÕES <span class="badge" id="totalPendentesBadge">0</span></h2>
+        <!-- CONTEÚDO DAS ABAS -->
+        <div class="secao">
+            <div class="secao-header">
+                <h2 id="secaoTitulo">👥 ALUNOS ATIVOS</h2>
+            </div>
+            <div class="secao-content">
+                <div class="filtros">
+                    <div class="filtro-group">
+                        <label>🔍 BUSCAR</label>
+                        <input type="text" id="buscaAluno" placeholder="Nome..." class="busca-input">
+                    </div>
+                    <div class="filtro-group">
+                        <label>⚽ TURMA</label>
+                        <select id="filtroTurma">
+                            <option value="">Todas</option>
+                            <option value="Futebol">Futebol</option>
+                            <option value="Taekwondo">Taekwondo</option>
+                            <option value="Ginástica">Ginástica</option>
+                            <option value="Tênis de Mesa">Tênis de Mesa</option>
+                            <option value="Judô">Judô</option>
+                        </select>
+                    </div>
+                    <div class="filtro-group">
+                        <label>🏆 CATEGORIA</label>
+                        <select id="filtroCategoria">
+                            <option value="">Todas</option>
+                            <option value="Sub-5">Sub-5</option>
+                            <option value="Sub-7">Sub-7</option>
+                            <option value="Sub-9">Sub-9</option>
+                            <option value="Sub-11">Sub-11</option>
+                            <option value="Sub-13">Sub-13</option>
+                            <option value="Sub-15">Sub-15</option>
+                            <option value="Sub-17">Sub-17</option>
+                            <option value="Acima-17">Acima-17</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="secao-content">
-                    <div class="filtros">
-                        <div class="filtro-group">
-                            <label>🔍 BUSCAR</label>
-                            <input type="text" id="buscaSolicitacao" placeholder="Nome..." class="busca-input">
-                        </div>
-                        <div class="filtro-group">
-                            <label>⚽ TURMA</label>
-                            <select id="filtroTurmaSolicitacao">
-                                <option value="">Todas</option>
-                                <option value="Futebol">Futebol</option>
-                                <option value="Taekwondo">Taekwondo</option>
-                                <option value="Ginástica">Ginástica</option>
-                                <option value="Tênis de Mesa">Tênis de Mesa</option>
-                                <option value="Judô">Judô</option>
-                            </select>
-                        </div>
-                        <div class="filtro-group">
-                            <label>🏆 CATEGORIA</label>
-                            <select id="filtroCategoriaSolicitacao">
-                                <option value="">Todas</option>
-                                <option value="Sub-5">Sub-5</option>
-                                <option value="Sub-7">Sub-7</option>
-                                <option value="Sub-9">Sub-9</option>
-                                <option value="Sub-11">Sub-11</option>
-                                <option value="Sub-13">Sub-13</option>
-                                <option value="Sub-15">Sub-15</option>
-                                <option value="Sub-17">Sub-17</option>
-                                <option value="Acima-17">Acima-17</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="resultados-info" id="resultadosSolicitacoesInfo">Mostrando 0 de 0 registros</div>
-                    <div class="acoes-massa">
-                        <label class="selecionar-todos">
-                            <input type="checkbox" id="selecionarTodosSolicitacoes" class="checkbox"> Selecionar todos
-                        </label>
-                        <button class="btn-excluir-massa" onclick="excluirSelecionados('solicitacoes')">🗑️ Excluir selecionados</button>
-                    </div>
-                    <div class="tabela-container">
-                        <div id="loadingSolicitacoes" class="skeleton-loader" style="display: none;"><div class="spinner"></div> Carregando...</div>
-                        <table id="tabelaSolicitacoes">
-                            <thead>
-                                <tr>
-                                    <th style="width:30px"></th>
-                                    <th onclick="ordenarSolicitacoes('nome')">Nome ⬍</th>
-                                    <th onclick="ordenarSolicitacoes('turma')">Turma ⬍</th>
-                                    <th onclick="ordenarSolicitacoes('categoria')">Categoria ⬍</th>
-                                    <th onclick="ordenarSolicitacoes('idade')">Idade ⬍</th>
-                                    <th>Responsável</th>
-                                    <th>Status</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody id="listaSolicitacoes"></tbody>
-                        </table>
-                    </div>
+                <div class="resultados-info" id="resultadosInfo">Mostrando 0 de 0 registros</div>
+                <div class="acoes-massa">
+                    <label class="selecionar-todos">
+                        <input type="checkbox" id="selecionarTodos" class="checkbox"> Selecionar todos
+                    </label>
+                    <button class="btn-excluir-massa" onclick="excluirSelecionados()">🗑️ Excluir selecionados</button>
+                </div>
+                <div class="tabela-container">
+                    <div id="loadingDados" class="skeleton-loader" style="display: none;"><div class="spinner"></div> Carregando...</div>
+                    <table id="tabelaDados">
+                        <thead>
+                            <tr>
+                                <th style="width:30px"></th>
+                                <th onclick="ordenarDados('nome_aluno')">Nome ⬍</th>
+                                <th onclick="ordenarDados('turma')">Turma ⬍</th>
+                                <th onclick="ordenarDados('categoria')">Categoria ⬍</th>
+                                <th onclick="ordenarDados('idade')">Idade ⬍</th>
+                                <th>Responsável</th>
+                                <th>Telefone</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listaDados"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -366,28 +336,13 @@ if ('serviceWorker' in navigator) {
 <div id="modalCadastro" class="modal"><div class="modal-content"><div class="modal-header"><h3>➕ CADASTRAR ALUNO</h3><span class="fechar-modal" onclick="fecharModalCadastro()">&times;</span></div><form id="formCadastroAluno"><div class="form-linha"><div class="form-grupo"><label>Nome completo *</label><input type="text" id="cadNome" required></div><div class="form-grupo"><label>Data Nascimento *</label><input type="date" id="cadDataNasc" required></div></div><div class="form-linha"><div class="form-grupo"><label>Sexo *</label><div class="radio-group"><label><input type="radio" name="cadSexo" value="Masculino"> Masculino</label><label><input type="radio" name="cadSexo" value="Feminino"> Feminino</label></div></div><div class="form-grupo"><label>Turma *</label><select id="cadTurma" required><option value="">Selecione</option><option value="Futebol">Futebol</option><option value="Taekwondo">Taekwondo</option><option value="Ginástica">Ginástica</option><option value="Tênis de Mesa">Tênis de Mesa</option><option value="Judô">Judô</option></select></div></div><div class="form-grupo"><label>🏆 Categoria / Sub *</label><select id="cadCategoria" required><option value="">Selecione a categoria</option><option value="Sub-5">Sub-5 (até 5 anos)</option><option value="Sub-7">Sub-7 (6 a 7 anos)</option><option value="Sub-9">Sub-9 (8 a 9 anos)</option><option value="Sub-11">Sub-11 (10 a 11 anos)</option><option value="Sub-13">Sub-13 (12 a 13 anos)</option><option value="Sub-15">Sub-15 (14 a 15 anos)</option><option value="Sub-17">Sub-17 (16 a 17 anos)</option><option value="Acima-17">Acima de 17 anos (consultar diretoria)</option></select><div class="observacao" style="margin-top: 8px; font-size: 0.7rem; color: #666;">💡 Acima de 17 anos, a matrícula será analisada pela diretoria.</div></div><div class="form-linha-3"><div class="form-grupo"><label>Peso (kg)</label><input type="number" id="cadPeso" step="0.1"></div><div class="form-grupo"><label>Altura (cm)</label><input type="number" id="cadAltura"></div><div class="form-grupo"><label>Calçado</label><input type="text" id="cadCalcado"></div></div><div class="form-linha"><div class="form-grupo"><label>Uniforme</label><select id="cadUniforme"><option value="">Selecione</option><option value="PP">PP</option><option value="P">P</option><option value="M">M</option><option value="G">G</option><option value="GG">GG</option><option value="XG">XG</option><option value="XXG">XXG</option></select></div><div class="form-grupo"><label>Deficiência</label><input type="text" id="cadDeficiencia" placeholder="Nenhuma"></div></div><div class="form-grupo"><label>Responsável *</label><input type="text" id="cadResponsavel" required></div><div class="form-linha"><div class="form-grupo"><label>RG *</label><input type="text" id="cadRG" required></div><div class="form-grupo"><label>Telefone</label><input type="text" id="cadTelefone"></div></div><div class="form-linha"><div class="form-grupo"><label>Email</label><input type="email" id="cadEmail"></div><div class="form-grupo"><label>Moradores</label><input type="number" id="cadMoradores" value="1"></div></div><div class="form-grupo"><label>Endereço</label><input type="text" id="cadEndereco"></div><div class="form-linha"><div class="form-grupo"><label>Bairro</label><input type="text" id="cadBairro"></div><div class="form-grupo"><label>Município</label><input type="text" id="cadMunicipio"></div><div class="form-grupo"><label>UF</label><select id="cadUF"><option value="">Selecione</option><option value="AC">AC</option><option value="AL">AL</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MG">MG</option><option value="MS">MS</option><option value="MT">MT</option><option value="PA">PA</option><option value="PB">PB</option><option value="PE">PE</option><option value="PI">PI</option><option value="PR">PR</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RO">RO</option><option value="RR">RR</option><option value="RS">RS</option><option value="SC">SC</option><option value="SE">SE</option><option value="SP">SP</option><option value="TO">TO</option></select></div></div><div class="form-linha"><div class="form-grupo"><label>Escola</label><input type="text" id="cadEscola"></div><div class="form-grupo"><label>Série</label><select id="cadSerie"><option value="">Selecione</option><option value="1º Ano EF">1º Ano EF</option><option value="2º Ano EF">2º Ano EF</option><option value="3º Ano EF">3º Ano EF</option><option value="4º Ano EF">4º Ano EF</option><option value="5º Ano EF">5º Ano EF</option><option value="6º Ano EF">6º Ano EF</option><option value="7º Ano EF">7º Ano EF</option><option value="8º Ano EF">8º Ano EF</option><option value="9º Ano EF">9º Ano EF</option><option value="1º Ano EM">1º Ano EM</option><option value="2º Ano EM">2º Ano EM</option><option value="3º Ano EM">3º Ano EM</option><option value="Não estuda">Não estuda</option><option value="Formado">Formado</option></select></div></div><div class="form-grupo"><label>Remédio Controlado</label><div class="radio-group"><label><input type="radio" name="cadRemedio" value="Não" checked> Não</label><label><input type="radio" name="cadRemedio" value="Sim"> Sim</label></div><input type="text" id="cadRemedioDesc" placeholder="Se sim, qual?" style="margin-top: 8px; display: none;"></div><div class="form-grupo"><label>Como conheceu</label><select id="cadOrigem"><option value="">Selecione</option><option value="Instagram">Instagram</option><option value="Facebook">Facebook</option><option value="Amigo/Indicação">Amigo/Indicação</option><option value="Panfleto">Panfleto</option><option value="Passou em frente">Passou em frente</option><option value="Outros">Outros</option></select></div><button type="button" class="btn-salvar" onclick="salvarCadastroManual()">💾 SALVAR ALUNO</button></form></div></div>
 
 <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz76grUCrYQoi6z9VAQt5YOtzo50AG3O-kLB-nON0o4uGoBGQoHrdo4QUOCRmoVgjAcFg/exec';
+    const API_URL = 'http://localhost:5000/api';
     
-    let cacheDados = null;
-    let ultimoFetch = null;
-    const TEMPO_CACHE = 30000;
-    let solicitacoes = [];
-    let alunos = [];
-    let solicitacoesFiltradas = [];
-    let alunosFiltrados = [];
+    let todosAlunos = [];
+    let dadosFiltrados = [];
+    let abaAtual = 'aprovado';
+    let ordem = { campo: 'nome_aluno', direcao: 'asc' };
     let ultimaAtualizacao = null;
-    let ordemAlunos = { campo: 'nome', direcao: 'asc' };
-    let ordemSolicitacoes = { campo: 'nome', direcao: 'asc' };
-
-    function abrirPlanilha() {
-        window.open('https://docs.google.com/spreadsheets/d/1O48gLWV9zb_dtDFpz9MtIMLZ4Cx8jibtTjWlE922bAw/edit?gid=0#gid=0', '_blank');
-        mostrarToast('📊 Abrindo planilha...', 'info');
-    }
-
-    function formatarData(dataStr) {
-        if (!dataStr) return '-';
-        try { let data = new Date(dataStr); if (isNaN(data.getTime())) return dataStr; return data.toLocaleDateString('pt-BR'); } catch { return dataStr; }
-    }
 
     function alternarTema() {
         document.body.classList.toggle('dark-mode');
@@ -403,6 +358,22 @@ if ('serviceWorker' in navigator) {
         setTimeout(() => toast.remove(), 3000);
     }
 
+    function formatarData(dataStr) {
+        if (!dataStr) return '-';
+        try { 
+            if (dataStr.includes('-')) {
+                let partes = dataStr.split(' ');
+                let dataParte = partes[0].split('-');
+                if (dataParte.length === 3) {
+                    return `${dataParte[2]}/${dataParte[1]}/${dataParte[0]}`;
+                }
+            }
+            let data = new Date(dataStr); 
+            if (isNaN(data.getTime())) return dataStr; 
+            return data.toLocaleDateString('pt-BR'); 
+        } catch { return dataStr; }
+    }
+
     function atualizarTimestamp() {
         if (ultimaAtualizacao) {
             const diff = Math.floor((new Date() - ultimaAtualizacao) / 1000);
@@ -410,194 +381,158 @@ if ('serviceWorker' in navigator) {
         }
     }
 
-    async function carregarDados(forcarAtualizacao = false) {
-        if (forcarAtualizacao) { cacheDados = null; ultimoFetch = null; }
-        if (!forcarAtualizacao && cacheDados && ultimoFetch && (Date.now() - ultimoFetch < TEMPO_CACHE)) {
-            const dados = cacheDados;
-            solicitacoes = dados.filter(item => item.status === 'pendente');
-            alunos = dados.filter(item => item.status === 'aprovado');
-            atualizarInterface();
-            return;
-        }
-        document.getElementById('loadingAlunos').style.display = 'block';
-        document.getElementById('loadingSolicitacoes').style.display = 'block';
+    async function carregarDados() {
+        document.getElementById('loadingDados').style.display = 'block';
         try {
-            const response = await fetch(SCRIPT_URL);
+            const response = await fetch(`${API_URL}/alunos`);
             const dados = await response.json();
-            cacheDados = dados;
-            ultimoFetch = Date.now();
-            solicitacoes = dados.filter(item => item.status === 'pendente');
-            alunos = dados.filter(item => item.status === 'aprovado');
-            atualizarInterface();
-            ultimaAtualizacao = new Date();
-            atualizarTimestamp();
+            
+            if (Array.isArray(dados)) {
+                todosAlunos = dados;
+                ultimaAtualizacao = new Date();
+                atualizarTimestamp();
+                atualizarAbas();
+                filtrarEOrdenar();
+                mostrarToast(`✅ ${dados.length} registros carregados`, 'success');
+            } else {
+                mostrarToast('Erro: formato de dados inválido', 'error');
+            }
         } catch (error) {
             console.error('Erro:', error);
-            mostrarToast('Erro ao carregar dados', 'error');
+            mostrarToast('❌ Erro ao carregar dados. Verifique o backend.', 'error');
         } finally {
-            document.getElementById('loadingAlunos').style.display = 'none';
-            document.getElementById('loadingSolicitacoes').style.display = 'none';
+            document.getElementById('loadingDados').style.display = 'none';
         }
     }
 
-    function atualizarInterface() {
-        document.getElementById('totalPendentesBadge').innerText = solicitacoes.length;
-        document.getElementById('totalAlunosBadge').innerText = alunos.length;
-        filtrarESolicitacoes();
-        filtrarEAlunos();
+    function atualizarAbas() {
+        const aprovados = todosAlunos.filter(a => a.status === 'aprovado').length;
+        const pendentes = todosAlunos.filter(a => a.status === 'pendente').length;
+        const recusados = todosAlunos.filter(a => a.status === 'recusado').length;
+        
+        document.getElementById('badgeAprovado').innerText = aprovados;
+        document.getElementById('badgePendente').innerText = pendentes;
+        document.getElementById('badgeRecusado').innerText = recusados;
     }
 
-    function forcarAtualizacao() { mostrarToast('Atualizando dados...', 'info'); carregarDados(true); }
-
-    function ordenarAlunos(campo) {
-        if (ordemAlunos.campo === campo) ordemAlunos.direcao = ordemAlunos.direcao === 'asc' ? 'desc' : 'asc';
-        else { ordemAlunos.campo = campo; ordemAlunos.direcao = 'asc'; }
-        ordenarLista(alunosFiltrados, ordemAlunos);
-        renderizarAlunos(alunosFiltrados);
-    }
-
-    function ordenarSolicitacoes(campo) {
-        if (ordemSolicitacoes.campo === campo) ordemSolicitacoes.direcao = ordemSolicitacoes.direcao === 'asc' ? 'desc' : 'asc';
-        else { ordemSolicitacoes.campo = campo; ordemSolicitacoes.direcao = 'asc'; }
-        ordenarLista(solicitacoesFiltradas, ordemSolicitacoes);
-        renderizarSolicitacoes(solicitacoesFiltradas);
-    }
-
-    function ordenarLista(lista, ordem) {
-        lista.sort((a, b) => {
-            let valA = a[ordem.campo === 'nome' ? 'nomeAluno' : ordem.campo] || '';
-            let valB = b[ordem.campo === 'nome' ? 'nomeAluno' : ordem.campo] || '';
+    function filtrarEOrdenar() {
+        let filtrados = todosAlunos.filter(a => a.status === abaAtual);
+        
+        const busca = document.getElementById('buscaAluno').value.toLowerCase();
+        const turma = document.getElementById('filtroTurma').value;
+        const categoria = document.getElementById('filtroCategoria').value;
+        
+        filtrados = filtrados.filter(item => {
+            if (busca && !item.nome_aluno?.toLowerCase().includes(busca)) return false;
+            if (turma && item.turma !== turma) return false;
+            if (categoria && item.categoria !== categoria) return false;
+            return true;
+        });
+        
+        filtrados.sort((a, b) => {
+            let valA = a[ordem.campo] || '';
+            let valB = b[ordem.campo] || '';
             if (ordem.campo === 'idade') { valA = parseInt(valA) || 0; valB = parseInt(valB) || 0; }
             if (valA < valB) return ordem.direcao === 'asc' ? -1 : 1;
             if (valA > valB) return ordem.direcao === 'asc' ? 1 : -1;
             return 0;
         });
+        
+        dadosFiltrados = filtrados;
+        renderizarTabela();
+        
+        const titulos = { 'aprovado': '👥 ALUNOS ATIVOS', 'pendente': '⏳ SOLICITAÇÕES PENDENTES', 'recusado': '❌ ALUNOS DESATIVADOS' };
+        document.getElementById('secaoTitulo').innerHTML = titulos[abaAtual];
+        document.getElementById('resultadosInfo').innerHTML = `Mostrando ${filtrados.length} de ${todosAlunos.filter(a => a.status === abaAtual).length} registros`;
     }
 
-    function exportarDados() {
-        const dados = [...alunos, ...solicitacoes];
-        if (dados.length === 0) { mostrarToast('Nenhum dado para exportar', 'error'); return; }
-        const cabecalhos = ['Nome', 'Turma', 'Categoria', 'Idade', 'Responsável', 'Telefone', 'Status', 'Email', 'Endereço', 'Bairro', 'RG', 'Remédio', 'Data Nasc', 'Sexo', 'Peso', 'Altura', 'Calçado', 'Uniforme', 'Deficiência', 'Município', 'UF', 'Escola', 'Série'];
-        const linhas = dados.map(item => [item.nomeAluno || '', item.turma || '', item.categoria || '', item.idade || '', item.responsavel || '', item.telefone || '', item.status || '', item.email || '', item.endereco || '', item.bairro || '', item.rg || '', item.remedio || '', formatarData(item.dataNasc), item.sexo || '', item.peso || '', item.altura || '', item.calcado || '', item.uniforme || '', item.deficiencia || '', item.municipio || '', item.uf || '', item.escola || '', item.serie || '']);
-        const csv = [cabecalhos, ...linhas].map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
-        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        const url = URL.createObjectURL(blob);
-        link.href = url;
-        link.download = `escolinha_dados_${new Date().toISOString().slice(0,10)}.csv`;
-        link.click();
-        URL.revokeObjectURL(url);
-        mostrarToast('Dados exportados!', 'success');
-    }
-
-    function filtrarESolicitacoes() {
-        const busca = document.getElementById('buscaSolicitacao').value.toLowerCase();
-        const turma = document.getElementById('filtroTurmaSolicitacao').value;
-        const categoria = document.getElementById('filtroCategoriaSolicitacao').value;
-        solicitacoesFiltradas = solicitacoes.filter(s => {
-            if (busca && !s.nomeAluno?.toLowerCase().includes(busca)) return false;
-            if (turma && s.turma !== turma) return false;
-            if (categoria && s.categoria !== categoria) return false;
-            return true;
-        });
-        ordenarLista(solicitacoesFiltradas, ordemSolicitacoes);
-        renderizarSolicitacoes(solicitacoesFiltradas);
-        document.getElementById('resultadosSolicitacoesInfo').innerHTML = `Mostrando ${solicitacoesFiltradas.length} de ${solicitacoes.length} registros`;
-    }
-
-    function filtrarEAlunos() {
-        const busca = document.getElementById('buscaAluno').value.toLowerCase();
-        const turma = document.getElementById('filtroTurmaAluno').value;
-        const categoria = document.getElementById('filtroCategoriaAluno').value;
-        alunosFiltrados = alunos.filter(a => {
-            if (busca && !a.nomeAluno?.toLowerCase().includes(busca)) return false;
-            if (turma && a.turma !== turma) return false;
-            if (categoria && a.categoria !== categoria) return false;
-            return true;
-        });
-        ordenarLista(alunosFiltrados, ordemAlunos);
-        renderizarAlunos(alunosFiltrados);
-        document.getElementById('resultadosAlunosInfo').innerHTML = `Mostrando ${alunosFiltrados.length} de ${alunos.length} registros`;
-    }
-
-    function renderizarSolicitacoes(lista) {
-        const tbody = document.getElementById('listaSolicitacoes');
-        if (lista.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:40px;">📭 Nenhuma solicitação pendente</td></tr>';
+    function renderizarTabela() {
+        const tbody = document.getElementById('listaDados');
+        if (dadosFiltrados.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:40px;">📭 Nenhum registro encontrado</td></tr>';
             return;
         }
-        tbody.innerHTML = lista.map(s => `
-            <tr onclick="abrirDetalhes('${s.protocolo}', 'solicitacao')">
-                <td onclick="event.stopPropagation()"><input type="checkbox" class="checkbox sel-solicitacao" value="${s.protocolo}"></td>
-                <td><strong>${s.nomeAluno || '-'}</strong></td>
-                <td>${s.turma || '-'}</td>
-                <td><span style="background: #f0f7ff; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem;">${s.categoria || '-'}</span></td>
-                <td>${s.idade || '-'}</td>
-                <td>${s.responsavel || '-'}</td>
-                <td><span class="status-pendente">Pendente</span></td>
-                <td onclick="event.stopPropagation()">
-                    <button class="btn-acao btn-aprovar" onclick="atualizarStatus('${s.protocolo}', 'aprovado')">✅ Aprovar</button>
-                    <button class="btn-acao btn-recusar" onclick="atualizarStatus('${s.protocolo}', 'recusado')">❌ Recusar</button>
-                    <button class="btn-acao btn-ver" onclick="abrirDetalhes('${s.protocolo}', 'solicitacao')">👁️ Ver</button>
-                </td>
+        
+        const getStatusHtml = (status) => {
+            if (status === 'pendente') return '<span class="status-pendente">Pendente</span>';
+            if (status === 'aprovado') return '<span class="status-aprovado">Aprovado</span>';
+            return '<span class="status-recusado">Desativado</span>';
+        };
+        
+        const getAcoesHtml = (item) => {
+            if (item.status === 'pendente') {
+                return `<button class="btn-acao btn-aprovar" onclick="event.stopPropagation(); atualizarStatus('${item.protocolo}', 'aprovado')">✅ Aprovar</button>
+                        <button class="btn-acao btn-recusar" onclick="event.stopPropagation(); atualizarStatus('${item.protocolo}', 'recusado')">❌ Recusar</button>
+                        <button class="btn-acao btn-ver" onclick="abrirDetalhes('${item.protocolo}')">👁️ Ver</button>`;
+            } else if (item.status === 'aprovado') {
+                return `<button class="btn-acao btn-recusar" onclick="event.stopPropagation(); atualizarStatus('${item.protocolo}', 'recusado')">🚫 Desativar</button>
+                        <button class="btn-acao btn-ver" onclick="abrirDetalhes('${item.protocolo}')">👁️ Ver</button>`;
+            } else {
+                return `<button class="btn-acao btn-aprovar" onclick="event.stopPropagation(); atualizarStatus('${item.protocolo}', 'aprovado')">🔄 Reativar</button>
+                        <button class="btn-acao btn-ver" onclick="abrirDetalhes('${item.protocolo}')">👁️ Ver</button>`;
+            }
+        };
+        
+        tbody.innerHTML = dadosFiltrados.map(item => `
+            <tr onclick="abrirDetalhes('${item.protocolo}')">
+                <td onclick="event.stopPropagation()"><input type="checkbox" class="checkbox sel-item" value="${item.protocolo}"></td>
+                <td><strong>${item.nome_aluno || '-'}</strong></td>
+                <td>${item.turma || '-'}</td>
+                <td><span style="background: #f0f7ff; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem;">${item.categoria || '-'}</span></td>
+                <td>${item.idade || '-'} anos</td>
+                <td>${item.responsavel || '-'}</td>
+                <td>${item.telefone || '-'}</td>
+                <td>${getStatusHtml(item.status)}</td>
+                <td onclick="event.stopPropagation()">${getAcoesHtml(item)}</td>
             </tr>
         `).join('');
+        
+        document.getElementById('selecionarTodos').checked = false;
     }
 
-    function renderizarAlunos(lista) {
-        const tbody = document.getElementById('listaAlunos');
-        if (lista.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:40px;">👥 Nenhum aluno aprovado</td></tr>';
-            return;
+    function ordenarDados(campo) {
+        if (ordem.campo === campo) {
+            ordem.direcao = ordem.direcao === 'asc' ? 'desc' : 'asc';
+        } else {
+            ordem.campo = campo;
+            ordem.direcao = 'asc';
         }
-        tbody.innerHTML = lista.map(a => `
-            <tr onclick="abrirDetalhes('${a.protocolo}', 'aluno')">
-                <td onclick="event.stopPropagation()"><input type="checkbox" class="checkbox sel-aluno" value="${a.protocolo}"></td>
-                <td><strong>${a.nomeAluno || '-'}</strong></td>
-                <td>${a.turma || '-'}</td>
-                <td><span style="background: #f0f7ff; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem;">${a.categoria || '-'}</span></td>
-                <td>${a.idade || '-'}</td>
-                <td>${a.responsavel || '-'}</td>
-                <td>${a.telefone || '-'}</td>
-            </tr>
-        `).join('');
+        filtrarEOrdenar();
     }
 
     async function atualizarStatus(protocolo, novoStatus) {
-        const acao = novoStatus === 'aprovado' ? 'Aprovando' : 'Recusando';
+        const acao = novoStatus === 'aprovado' ? (abaAtual === 'recusado' ? 'Reativando' : 'Aprovando') : (novoStatus === 'recusado' ? (abaAtual === 'aprovado' ? 'Desativando' : 'Recusando') : '');
         mostrarToast(`${acao} matrícula...`, 'info');
         
         try {
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
+            const response = await fetch(`${API_URL}/aluno/${protocolo}`, {
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ acao: 'atualizar_status', protocolo, status: novoStatus })
+                body: JSON.stringify({ status: novoStatus })
             });
             
-            cacheDados = null;
-            ultimoFetch = null;
-            
-            setTimeout(async () => {
-                await carregarDados(true);
-                mostrarToast(novoStatus === 'aprovado' ? '✅ Matrícula aprovada!' : '❌ Matrícula recusada!', 'success');
-            }, 1500);
-            
+            if (response.ok) {
+                await carregarDados();
+                mostrarToast(novoStatus === 'aprovado' ? '✅ Matrícula aprovada/reativada!' : '❌ Matrícula recusada/desativada!', 'success');
+            } else {
+                mostrarToast('Erro ao atualizar status', 'error');
+            }
         } catch (error) {
             console.error('Erro:', error);
-            mostrarToast('Erro ao atualizar status', 'error');
+            mostrarToast('Erro ao conectar com o servidor', 'error');
         }
     }
 
-    function abrirDetalhes(protocolo, tipo) {
-        const dados = tipo === 'solicitacao' ? solicitacoes : alunos;
-        const item = dados.find(i => i.protocolo == protocolo);
+    function abrirDetalhes(protocolo) {
+        const item = todosAlunos.find(i => i.protocolo === protocolo);
         if (!item) return;
+        
         const conteudo = document.getElementById('detalhesConteudo');
         const modalAcoes = document.getElementById('modalAcoes');
+        
         conteudo.innerHTML = `
-            <div class="detalhe-item"><div class="detalhe-label">📋 Nome</div><div class="detalhe-valor">${item.nomeAluno || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">🎂 Data Nasc</div><div class="detalhe-valor">${formatarData(item.dataNasc)}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">📋 Nome</div><div class="detalhe-valor">${item.nome_aluno || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">🎂 Data Nasc</div><div class="detalhe-valor">${formatarData(item.data_nasc)}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">📊 Idade</div><div class="detalhe-valor">${item.idade || '-'} anos</div></div>
             <div class="detalhe-item"><div class="detalhe-label">⚽ Turma</div><div class="detalhe-valor">${item.turma || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">🏆 Categoria</div><div class="detalhe-valor"><strong>${item.categoria || '-'}</strong></div></div>
@@ -609,72 +544,65 @@ if ('serviceWorker' in navigator) {
             <div class="detalhe-item"><div class="detalhe-label">🆔 RG</div><div class="detalhe-valor">${item.rg || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">💊 Remédio</div><div class="detalhe-valor">${item.remedio || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">👤 Sexo</div><div class="detalhe-valor">${item.sexo || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">⚖️ Peso</div><div class="detalhe-valor">${item.peso ? item.peso + ' kg' : '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📏 Altura</div><div class="detalhe-valor">${item.altura ? item.altura + ' cm' : '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">👟 Calçado</div><div class="detalhe-valor">${item.calcado || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">👕 Uniforme</div><div class="detalhe-valor">${item.uniforme || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">👕 Uniforme</div><div class="detalhe-valor">${item.tamanho_uniforme || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">⚠️ Deficiência</div><div class="detalhe-valor">${item.deficiencia || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">🏙️ Município</div><div class="detalhe-valor">${item.municipio || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">📌 UF</div><div class="detalhe-valor">${item.uf || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">🏫 Escola</div><div class="detalhe-valor">${item.escola || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">📚 Série</div><div class="detalhe-valor">${item.serie || '-'}</div></div>
             <div class="detalhe-item"><div class="detalhe-label">📢 Como conheceu</div><div class="detalhe-valor">${item.origem || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">📝 Observação</div><div class="detalhe-valor">${item.observacao || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">👨‍👩‍👧 Vínculo com o aluno</div><div class="detalhe-valor">${item.tipo_vinculo || '-'}</div></div>
+            <div class="detalhe-item"><div class="detalhe-label">👤 Sexo do responsável</div><div class="detalhe-valor">${item.sexo_responsavel === 'M' ? '👨 Masculino' : (item.sexo_responsavel === 'F' ? '👩 Feminino' : '-')}</div></div>
         `;
-        if (tipo === 'solicitacao') {
-            modalAcoes.innerHTML = `<button class="btn-acao btn-aprovar" onclick="atualizarStatus('${protocolo}', 'aprovado'); fecharModal();">✅ APROVAR</button><button class="btn-acao btn-recusar" onclick="atualizarStatus('${protocolo}', 'recusado'); fecharModal();">❌ RECUSAR</button>`;
-        } else {
-            modalAcoes.innerHTML = `<button class="btn-acao btn-ver" onclick="fecharModal()">🔒 FECHAR</button>`;
-        }
+        
+        modalAcoes.innerHTML = `<button class="btn-acao btn-ver" onclick="fecharModal()">🔒 FECHAR</button>`;
         document.getElementById('modalDetalhes').style.display = 'flex';
     }
 
     function fecharModal() { document.getElementById('modalDetalhes').style.display = 'none'; }
+    function fecharModalCadastro() { document.getElementById('modalCadastro').style.display = 'none'; }
+    function abrirModalCadastro() { document.getElementById('modalCadastro').style.display = 'flex'; document.getElementById('formCadastroAluno').reset(); }
 
-    function excluirSelecionados(tipo) {
-        let selecionados = [];
-        if (tipo === 'solicitacoes') {
-            selecionados = Array.from(document.querySelectorAll('.sel-solicitacao:checked')).map(cb => cb.value);
-            if (selecionados.length === 0) { mostrarToast('Selecione pelo menos uma solicitação', 'error'); return; }
-            if (confirm(`Excluir ${selecionados.length} solicitação(ões)?`)) {
-                solicitacoes = solicitacoes.filter(s => !selecionados.includes(s.protocolo));
-                cacheDados = null;
-                filtrarESolicitacoes();
-                mostrarToast(`${selecionados.length} solicitação(ões) excluída(s)`, 'success');
-            }
-        } else {
-            selecionados = Array.from(document.querySelectorAll('.sel-aluno:checked')).map(cb => cb.value);
-            if (selecionados.length === 0) { mostrarToast('Selecione pelo menos um aluno', 'error'); return; }
-            if (confirm(`Excluir ${selecionados.length} aluno(s)?`)) {
-                alunos = alunos.filter(a => !selecionados.includes(a.protocolo));
-                cacheDados = null;
-                filtrarEAlunos();
-                mostrarToast(`${selecionados.length} aluno(s) excluído(s)`, 'success');
-            }
+    function excluirSelecionados() {
+        const selecionados = Array.from(document.querySelectorAll('.sel-item:checked')).map(cb => cb.value);
+        if (selecionados.length === 0) { mostrarToast('Selecione pelo menos um registro', 'error'); return; }
+        if (confirm(`Excluir ${selecionados.length} registro(s)? Esta ação não pode ser desfeita.`)) {
+            todosAlunos = todosAlunos.filter(a => !selecionados.includes(a.protocolo));
+            filtrarEOrdenar();
+            mostrarToast(`${selecionados.length} registro(s) excluído(s)`, 'success');
         }
-        document.getElementById(`selecionarTodos${tipo === 'solicitacoes' ? 'Solicitacoes' : 'Alunos'}`).checked = false;
     }
 
-    function configurarSelecionarTodos() {
-        document.getElementById('selecionarTodosSolicitacoes').addEventListener('change', (e) => { document.querySelectorAll('.sel-solicitacao').forEach(cb => cb.checked = e.target.checked); });
-        document.getElementById('selecionarTodosAlunos').addEventListener('change', (e) => { document.querySelectorAll('.sel-aluno').forEach(cb => cb.checked = e.target.checked); });
+    function exportarDados() {
+        if (dadosFiltrados.length === 0) { mostrarToast('Nenhum dado para exportar', 'error'); return; }
+        const cabecalhos = ['Nome', 'Turma', 'Categoria', 'Idade', 'Responsável', 'Telefone', 'Status', 'Email', 'Endereço', 'Bairro', 'RG', 'Remédio', 'Data Nasc', 'Sexo', 'Uniforme', 'Deficiência', 'Município', 'UF', 'Escola', 'Série', 'Observação'];
+        const linhas = dadosFiltrados.map(item => [item.nome_aluno || '', item.turma || '', item.categoria || '', item.idade || '', item.responsavel || '', item.telefone || '', item.status || '', item.email || '', item.endereco || '', item.bairro || '', item.rg || '', item.remedio || '', formatarData(item.data_nasc), item.sexo || '', item.tamanho_uniforme || '', item.deficiencia || '', item.municipio || '', item.uf || '', item.escola || '', item.serie || '', item.observacao || '']);
+        const csv = [cabecalhos, ...linhas].map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
+        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `relatorio_${abaAtual}_${new Date().toISOString().slice(0,10)}.csv`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+        mostrarToast('Relatório exportado!', 'success');
     }
 
-    document.querySelectorAll('input[name="cadRemedio"]').forEach(radio => {
-        radio.addEventListener('change', function() { document.getElementById('cadRemedioDesc').style.display = this.value === 'Sim' ? 'block' : 'none'; });
+    function forcarAtualizacao() { carregarDados(); }
+
+    document.querySelectorAll('.aba-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.aba-btn').forEach(b => b.classList.remove('ativa'));
+            btn.classList.add('ativa');
+            abaAtual = btn.dataset.aba;
+            filtrarEOrdenar();
+        });
     });
 
-    function abrirModalCadastro() { document.getElementById('modalCadastro').style.display = 'flex'; document.getElementById('formCadastroAluno').reset(); document.getElementById('cadRemedioDesc').style.display = 'none'; }
-    function fecharModalCadastro() { document.getElementById('modalCadastro').style.display = 'none'; }
-
-    function calcularIdade(dataNasc) {
-        if (!dataNasc) return null;
-        const hoje = new Date();
-        const nasc = new Date(dataNasc);
-        let idade = hoje.getFullYear() - nasc.getFullYear();
-        const m = hoje.getMonth() - nasc.getMonth();
-        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
-        return idade;
-    }
+    document.getElementById('buscaAluno').addEventListener('input', () => filtrarEOrdenar());
+    document.getElementById('filtroTurma').addEventListener('change', () => filtrarEOrdenar());
+    document.getElementById('filtroCategoria').addEventListener('change', () => filtrarEOrdenar());
+    document.getElementById('selecionarTodos').addEventListener('change', (e) => { document.querySelectorAll('.sel-item').forEach(cb => cb.checked = e.target.checked); });
 
     async function salvarCadastroManual() {
         const nomeAluno = document.getElementById('cadNome').value.trim();
@@ -690,108 +618,51 @@ if ('serviceWorker' in navigator) {
             return; 
         }
         
-        const idade = calcularIdade(dataNasc);
+        const idade = (() => { const hoje = new Date(); const nasc = new Date(dataNasc); let idade = hoje.getFullYear() - nasc.getFullYear(); const m = hoje.getMonth() - nasc.getMonth(); if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--; return idade; })();
         const protocolo = `JAC-MANUAL-${Date.now()}`;
-        const dataEnvio = new Date().toLocaleString('pt-BR');
+        let dataEnvio = new Date().toLocaleString('pt-BR');
+        try { const partes = dataEnvio.split(/[/, :]+/); if (partes.length >= 6) { dataEnvio = `${partes[2]}-${partes[1]}-${partes[0]} ${partes[3]}:${partes[4]}:${partes[5]}`; } } catch(e) {}
         const enderecoCompleto = `${document.getElementById('cadEndereco').value || ''}, ${document.getElementById('cadBairro').value || ''}, ${document.getElementById('cadMunicipio').value || ''}/${document.getElementById('cadUF').value || ''}`;
         
         const dados = { 
             protocolo, dataEnvio, nomeAluno, dataNasc, idade, turma, categoria,
-            responsavel, telefone: document.getElementById('cadTelefone').value || '', 
-            email: document.getElementById('cadEmail').value || '', endereco: enderecoCompleto, 
+            responsavel, telefone: document.getElementById('cadTelefone').value || '', email: document.getElementById('cadEmail').value || '', endereco: enderecoCompleto, 
             bairro: document.getElementById('cadBairro').value || '', moradores: document.getElementById('cadMoradores').value || '1', 
             remedio: document.querySelector('input[name="cadRemedio"]:checked')?.value === 'Sim' ? `Sim - ${document.getElementById('cadRemedioDesc').value}` : 'Não', 
             origem: document.getElementById('cadOrigem').value || 'Cadastro manual', rg, sexo, 
-            peso: document.getElementById('cadPeso').value || '', altura: document.getElementById('cadAltura').value || '', 
-            calcado: document.getElementById('cadCalcado').value || '', uniforme: document.getElementById('cadUniforme').value || '', 
+            peso: document.getElementById('cadPeso').value || '0', altura: document.getElementById('cadAltura').value || '0', 
+            calcado: document.getElementById('cadCalcado').value || '', tamanho_uniforme: document.getElementById('cadUniforme').value || '', 
             deficiencia: document.getElementById('cadDeficiencia').value || 'Nenhuma', 
             municipio: document.getElementById('cadMunicipio').value || '', uf: document.getElementById('cadUF').value || '', 
             escola: document.getElementById('cadEscola').value || '', serie: document.getElementById('cadSerie').value || '', 
-            status: 'pendente'
+            status: 'pendente', observacao: ''
         };
         
         try { 
-            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(dados) }); 
-            cacheDados = null; 
-            await carregarDados(true); 
-            fecharModalCadastro(); 
-            mostrarToast('✅ Aluno cadastrado com sucesso!', 'success'); 
-        } catch (error) { 
-            mostrarToast('❌ Erro ao cadastrar', 'error'); 
-        }
+            const response = await fetch(`${API_URL}/prematricula`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dados) });
+            if (response.ok) { await carregarDados(); fecharModalCadastro(); mostrarToast('✅ Aluno cadastrado com sucesso!', 'success'); } 
+            else { mostrarToast('❌ Erro ao cadastrar', 'error'); }
+        } catch (error) { mostrarToast('❌ Erro ao cadastrar', 'error'); }
     }
 
-    document.addEventListener('keydown', (e) => { if (e.ctrlKey && e.key === 'f') { e.preventDefault(); document.querySelector('.busca-input')?.focus(); } if (e.key === 'Escape') { fecharModal(); fecharModalCadastro(); } if (e.ctrlKey && e.key === 'r') { e.preventDefault(); forcarAtualizacao(); } });
-
-    document.getElementById('buscaSolicitacao').addEventListener('input', filtrarESolicitacoes);
-    document.getElementById('filtroTurmaSolicitacao').addEventListener('change', filtrarESolicitacoes);
-    document.getElementById('filtroCategoriaSolicitacao').addEventListener('change', filtrarESolicitacoes);
-    document.getElementById('buscaAluno').addEventListener('input', filtrarEAlunos);
-    document.getElementById('filtroTurmaAluno').addEventListener('change', filtrarEAlunos);
-    document.getElementById('filtroCategoriaAluno').addEventListener('change', filtrarEAlunos);
+    document.querySelectorAll('input[name="cadRemedio"]').forEach(radio => {
+        radio.addEventListener('change', function() { document.getElementById('cadRemedioDesc').style.display = this.value === 'Sim' ? 'block' : 'none'; });
+    });
 
     async function verificarSenha() {
-    const email = document.getElementById('nomeUsuario').value.trim();
-    const senha = document.getElementById('senhaInput').value;
-    const btn = document.querySelector('#telaLogin button');
-    
-    if (!email || !senha) {
-        document.getElementById('erroLogin').innerText = 'Digite e-mail e senha!';
-        return;
+        document.getElementById('telaLogin').style.display = 'none';
+        document.getElementById('painelInterno').style.display = 'block';
+        if (localStorage.getItem('tema') === 'dark') document.body.classList.add('dark-mode');
+        carregarDados();
+        setInterval(() => carregarDados(), 60000);
     }
-
-    btn.disabled = true;
-    btn.innerHTML = '⏳ VERIFICANDO...';
-    document.getElementById('erroLogin').innerText = '';
-
-    try {
-        const response = await fetch(`${SCRIPT_URL}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`);
-        const resultado = await response.json();
-
-        if (resultado.valido) {
-            document.getElementById('telaLogin').style.display = 'none';
-            document.getElementById('painelInterno').style.display = 'block';
-            if (localStorage.getItem('tema') === 'dark') document.body.classList.add('dark-mode');
-            carregarDados();
-            setInterval(() => carregarDados(), 60000);
-            setInterval(atualizarTimestamp, 1000);
-            configurarSelecionarTodos();
-        } else {
-            document.getElementById('erroLogin').innerText = resultado.erro || 'E-mail ou senha incorretos!';
-        }
-    } catch (error) {
-        console.error(error);
-        document.getElementById('erroLogin').innerText = 'Erro ao conectar com o servidor. Tente novamente.';
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = 'ACESSAR';
-    }
-}
 
     function logout() {
-    // Registra o último acesso ao clicar em SAIR
-    const email = document.getElementById('nomeUsuario').value;
-    const senha = document.getElementById('senhaInput').value;
-    
-    if (email && senha) {
-        fetch(`${SCRIPT_URL}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`)
-            .then(() => console.log('✅ Acesso registrado ao sair'))
-            .catch(err => console.error('Erro:', err));
+        document.getElementById('painelInterno').style.display = 'none';
+        document.getElementById('telaLogin').style.display = 'block';
+        document.getElementById('senhaInput').value = '';
+        document.getElementById('nomeUsuario').value = '';
     }
-    
-    // Faz o logout normal
-    document.getElementById('painelInterno').style.display = 'none';
-    document.getElementById('telaLogin').style.display = 'block';
-    document.getElementById('senhaInput').value = '';
-    document.getElementById('nomeUsuario').value = '';
-    document.getElementById('erroLogin').innerText = '';
-    cacheDados = null;
-    
-    if (document.getElementById('buscaSolicitacao')) { 
-        document.getElementById('buscaSolicitacao').value = ''; 
-        document.getElementById('buscaAluno').value = ''; 
-    }
-}
 </script>
 </body>
 </html>

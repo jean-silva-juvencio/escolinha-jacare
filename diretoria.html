@@ -2,9 +2,9 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Diretoria | Escolinha do Jacaré</title>
-    <link rel="manifest" href="manifest.json">
+        <link rel="manifest" href="manifest.json">
     <script>
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')
@@ -22,12 +22,6 @@ if ('serviceWorker' in navigator) {
             --azul-escuro: #003399;
             --azul-premium: #0047AB;
             --azul-claro: #00aaff;
-            --verde-whatsapp: #25d366;
-            --laranja-destaque: #ff9800;
-            --rosa-aniversario: #ff69b4;
-            --ouro: #FFD700;
-            --prata: #C0C0C0;
-            --bronze: #CD7F32;
             --cinza-claro: #f8fafc;
             --cinza-borda: #e2e8f0;
         }
@@ -47,8 +41,6 @@ if ('serviceWorker' in navigator) {
         body.dark-mode .card,
         body.dark-mode .grafico-card,
         body.dark-mode .veteranos-section,
-        body.dark-mode .ultimos-alunos-section,
-        body.dark-mode .aniversariantes-section,
         body.dark-mode .modal-content {
             background: #1e293b;
         }
@@ -206,7 +198,7 @@ if ('serviceWorker' in navigator) {
             font-size: 0.8rem;
         }
         
-        .btn-atualizar, .btn-planilha, .btn-exportar-imagem, .btn-ver-todos {
+        .btn-atualizar, .btn-exportar-imagem, .btn-exportar {
             background: rgba(255,255,255,0.2);
             border: 1px solid rgba(255,255,255,0.5);
             color: white;
@@ -221,15 +213,7 @@ if ('serviceWorker' in navigator) {
             text-decoration: none;
         }
         
-        .btn-ver-todos {
-            background: #10b981;
-            border-color: #10b981;
-        }
-        .btn-ver-todos:hover {
-            background: #059669;
-        }
-        
-        .btn-atualizar:hover, .btn-planilha:hover, .btn-exportar-imagem:hover {
+        .btn-atualizar:hover, .btn-exportar-imagem:hover, .btn-exportar:hover {
             background: rgba(255,255,255,0.3);
             transform: scale(1.02);
         }
@@ -252,6 +236,53 @@ if ('serviceWorker' in navigator) {
         }
         body.dark-mode .info-atualizacao {
             color: #94a3b8;
+        }
+
+        /* ABAS DE NAVEGAÇÃO */
+        .abas-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 60px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        body.dark-mode .abas-nav {
+            background: #1e293b;
+        }
+        .aba-nav-btn {
+            padding: 10px 24px;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+        body.dark-mode .aba-nav-btn {
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+        .aba-nav-btn.ativa {
+            background: #0047AB;
+            color: white;
+        }
+        body.dark-mode .aba-nav-btn.ativa {
+            background: #3b82f6;
+        }
+        .aba-nav-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .aba-conteudo {
+            display: none;
+        }
+        .aba-conteudo.ativa {
+            display: block;
         }
 
         .cards-container {
@@ -309,94 +340,6 @@ if ('serviceWorker' in navigator) {
             line-height: 1.2;
         }
 
-        /* ========== CSS NOVO PARA CARDS DE UNIFORME ========== */
-        .uniforme-cards-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            gap: 12px;
-        }
-        .card-tamanho-uniforme {
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-            border-radius: 20px;
-            padding: 15px 12px;
-            text-align: center;
-            flex: 1;
-            min-width: 85px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: default;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        body.dark-mode .card-tamanho-uniforme {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border-color: #334155;
-        }
-        .card-tamanho-uniforme:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-        .card-tamanho-uniforme .icone-tamanho {
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
-        .card-tamanho-uniforme .tamanho {
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #003399;
-            margin-bottom: 5px;
-        }
-        body.dark-mode .card-tamanho-uniforme .tamanho {
-            color: #60a5fa;
-        }
-        .card-tamanho-uniforme .quantidade {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: #0047AB;
-            margin: 5px 0;
-        }
-        body.dark-mode .card-tamanho-uniforme .quantidade {
-            color: #3b82f6;
-        }
-        .card-tamanho-uniforme .percentual {
-            font-size: 0.75rem;
-            color: #666;
-            background: rgba(0,71,171,0.1);
-            display: inline-block;
-            padding: 3px 8px;
-            border-radius: 20px;
-            margin-top: 5px;
-        }
-        body.dark-mode .card-tamanho-uniforme .percentual {
-            color: #94a3b8;
-            background: rgba(59,130,246,0.2);
-        }
-        .card-tamanho-uniforme .barra-container {
-            width: 100%;
-            height: 4px;
-            background: #e2e8f0;
-            border-radius: 4px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-        body.dark-mode .card-tamanho-uniforme .barra-container {
-            background: #334155;
-        }
-        .card-tamanho-uniforme .barra {
-            height: 100%;
-            background: linear-gradient(90deg, #0047AB, #00aaff);
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 4px;
-        }
-        .card-tamanho-uniforme.p-zero {
-            opacity: 0.6;
-        }
-        .card-tamanho-uniforme.p-zero .quantidade {
-            color: #999;
-        }
-        /* ========== FIM DO CSS NOVO ========== */
-
         .filtros-container {
             background: white;
             border-radius: 20px;
@@ -409,7 +352,7 @@ if ('serviceWorker' in navigator) {
         }
         .filtros-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
             margin-bottom: 15px;
         }
@@ -536,13 +479,13 @@ if ('serviceWorker' in navigator) {
             background: #f1f5f9;
         }
         .veterano-medalha {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
         .medalha-ouro { background: linear-gradient(135deg, #FFD700, #FDB931); color: #fff; }
         .medalha-prata { background: linear-gradient(135deg, #C0C0C0, #A0A0A0); color: #fff; }
@@ -560,7 +503,7 @@ if ('serviceWorker' in navigator) {
             flex-wrap: wrap;
         }
         .veterano-detalhes {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #666;
             margin-top: 4px;
         }
@@ -601,7 +544,7 @@ if ('serviceWorker' in navigator) {
             background: #0f172a;
         }
         .stat-veterano .numero {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 800;
             color: #0047AB;
         }
@@ -616,348 +559,20 @@ if ('serviceWorker' in navigator) {
             color: #94a3b8;
         }
 
-        .ultimos-alunos-section {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        body.dark-mode .ultimos-alunos-section {
-            background: #1e293b;
-        }
-        .ultimos-alunos-section h2 {
-            font-family: 'Montserrat';
-            color: #003399;
-            margin-bottom: 20px;
-        }
-        body.dark-mode .ultimos-alunos-section h2 {
-            color: #60a5fa;
-        }
-        .tabela-ultimos {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .tabela-ultimos th, .tabela-ultimos td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        body.dark-mode .tabela-ultimos th, body.dark-mode .tabela-ultimos td {
-            border-bottom-color: #334155;
-        }
-        .tabela-ultimos th {
-            background: #f8fafc;
-            font-weight: 600;
-        }
-        body.dark-mode .tabela-ultimos th {
-            background: #0f172a;
-        }
-        .tabela-ultimos tr {
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .tabela-ultimos tr:hover {
-            background: #f1f5f9;
-        }
-        body.dark-mode .tabela-ultimos tr:hover {
-            background: #334155;
-        }
-        .ver-mais {
-            margin-top: 15px;
-            text-align: center;
-        }
-        .ver-mais button {
-            background: #0047AB;
-            color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-        }
-
-        .aniversariantes-section {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        body.dark-mode .aniversariantes-section {
-            background: #1e293b;
-        }
-        .aniversariantes-section h2 {
-            font-family: 'Montserrat';
-            color: #003399;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .aniversariantes-section h2 .badge-aniversario {
-            background: linear-gradient(135deg, #ff69b4, #ff1493);
-            color: white;
-            padding: 5px 14px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 800;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            animation: badgePulse 1.5s ease-in-out infinite, badgeGlow 2s ease-in-out infinite;
-            box-shadow: 0 0 10px rgba(255,105,180,0.5);
-            transition: all 0.3s;
-        }
-        
-        @keyframes badgePulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        @keyframes badgeGlow {
-            0% { box-shadow: 0 0 5px rgba(255,105,180,0.5); }
-            50% { box-shadow: 0 0 20px rgba(255,105,180,0.8); }
-            100% { box-shadow: 0 0 5px rgba(255,105,180,0.5); }
-        }
-        
-        .aniversariantes-section h2 .badge-aniversario:hover {
-            animation: none;
-            transform: scale(1.15);
-            cursor: default;
-        }
-        
-        .meses-botoes {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 25px;
-            justify-content: center;
-        }
-        .btn-mes {
-            background: #f0f0f0;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.2s;
-        }
-        body.dark-mode .btn-mes {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
-        .btn-mes:hover {
-            transform: translateY(-2px);
-        }
-        .btn-mes.ativo {
-            background: #0047AB;
-            color: white;
-        }
-        .btn-mes.hoje {
-            background: #ff69b4;
-            color: white;
-            animation: pulse 1s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        .aniversariantes-lista {
-            background: #f9f9f9;
-            border-radius: 15px;
-            padding: 20px;
-            min-height: 200px;
-        }
-        body.dark-mode .aniversariantes-lista {
-            background: #0f172a;
-        }
-        .item-aniversario {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 12px;
-            background: white;
-            border-radius: 12px;
-            border-left: 5px solid #ff69b4;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        body.dark-mode .item-aniversario {
-            background: #1e293b;
-        }
-        .item-aniversario:hover {
-            transform: translateX(5px);
-            background: #f1f5f9;
-        }
-        body.dark-mode .item-aniversario:hover {
-            background: #334155;
-        }
-        .sem-aniversariantes {
-            text-align: center;
-            padding: 40px;
-            color: #999;
-        }
-
-        .modal {
-            display: none;
+        .toast {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+            bottom: 30px;
+            right: 30px;
+            background: #10b981;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            z-index: 1100;
+            animation: slideIn 0.3s ease;
         }
-        .modal-content {
-            background: white;
-            border-radius: 32px;
-            max-width: 700px;
-            width: 90%;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 28px;
-            animation: modalFadeIn 0.3s ease;
-        }
-        body.dark-mode .modal-content {
-            background: #1e293b;
-        }
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #e2e8f0;
-        }
-        body.dark-mode .modal-header {
-            border-bottom-color: #334155;
-        }
-        .modal-header h3 {
-            font-size: 1.4rem;
-            color: #003399;
-        }
-        body.dark-mode .modal-header h3 {
-            color: #60a5fa;
-        }
-        .fechar-modal {
-            font-size: 28px;
-            cursor: pointer;
-            color: #94a3b8;
-        }
-        .detalhes-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .detalhe-item {
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 16px;
-        }
-        body.dark-mode .detalhe-item {
-            background: #0f172a;
-        }
-        .detalhe-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: #64748b;
-            text-transform: uppercase;
-        }
-        body.dark-mode .detalhe-label {
-            color: #94a3b8;
-        }
-        .detalhe-valor {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-top: 4px;
-            word-break: break-word;
-        }
-        body.dark-mode .detalhe-valor {
-            color: #e2e8f0;
-        }
-
-        .modal-todos {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .modal-todos .modal-content {
-            max-width: 1200px;
-            width: 95%;
-            max-height: 85vh;
-            padding: 24px;
-        }
-        .modal-tabela-container {
-            overflow-x: auto;
-            max-height: 65vh;
-            overflow-y: auto;
-            border-radius: 12px;
-        }
-        .modal-tabela {
-            width: 100%;
-            min-width: 1000px;
-            border-collapse: collapse;
-        }
-        .modal-tabela th, .modal-tabela td {
-            padding: 12px 16px;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 13px;
-            white-space: nowrap;
-        }
-        body.dark-mode .modal-tabela th, body.dark-mode .modal-tabela td {
-            border-bottom-color: #334155;
-        }
-        .modal-tabela th {
-            background: #f8fafc;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        body.dark-mode .modal-tabela th {
-            background: #0f172a;
-        }
-        .modal-tabela tr {
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .modal-tabela tr:hover {
-            background: #f1f5f9;
-        }
-        body.dark-mode .modal-tabela tr:hover {
-            background: #334155;
-        }
-        
-        @media (max-width: 900px) {
-            .modal-tabela th, .modal-tabela td {
-                white-space: normal;
-                min-width: 120px;
-            }
-            .modal-todos .modal-content {
-                width: 98%;
-                padding: 16px;
-            }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         footer {
@@ -982,7 +597,8 @@ if ('serviceWorker' in navigator) {
             .header-painel { flex-direction: column; text-align: center; }
             .stats-veteranos { grid-template-columns: 1fr; }
             .filtros-grid { grid-template-columns: 1fr; }
-            .detalhes-grid { grid-template-columns: 1fr; }
+            .abas-nav { justify-content: center; }
+            .aba-nav-btn { padding: 8px 16px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -1012,13 +628,13 @@ if ('serviceWorker' in navigator) {
 
 <div id="painelAnalise" class="painel">
     <div class="header-painel">
-        <h1>📊 DASHBOARD | ESCOLINHA DO JACARÉ</h1>
+        <h1>📊 DIRETORIA | ESCOLINHA DO JACARÉ</h1>
         <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
             <div class="info-usuario" id="infoUsuario"></div>
             <button class="btn-atualizar" onclick="atualizarDados()">🔄 ATUALIZAR</button>
-            <button class="btn-ver-todos" onclick="abrirModalTodosAlunos()">👥 VER TODOS OS ALUNOS</button>
-            <a href="https://docs.google.com/spreadsheets/d/1O48gLWV9zb_dtDFpz9MtIMLZ4Cx8jibtTjWlE922bAw/edit" target="_blank" class="btn-planilha">📊 VER PLANILHA</a>
+            <button class="btn-exportar" onclick="exportarDados()">📥 EXPORTAR</button>
             <button class="btn-exportar-imagem" onclick="exportarComoImagem()">📸 EXPORTAR IMAGEM</button>
+            <a href="club.html" class="aba-nav-btn" style="text-decoration: none;">🎲 CLUBE</a>
             <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
         </div>
     </div>
@@ -1027,154 +643,129 @@ if ('serviceWorker' in navigator) {
         <span id="ultimaAtualizacao">🕐 Última atualização: carregando...</span>
     </div>
 
-    <div class="cards-container">
-        <div class="card-analise">
-            <div class="icone">👥</div>
-            <div class="valor" id="totalAlunos">0</div>
-            <div class="label">Total de Alunos</div>
-            <div class="detalhe" id="novosAlunosMes">+0 este mês</div>
-        </div>
-        <div class="card-analise">
-            <div class="icone">📊</div>
-            <div class="valor" id="mediaIdade">0</div>
-            <div class="label">Média de Idade</div>
-            <div class="detalhe">anos</div>
-        </div>
-        <div class="card-analise">
-            <div class="icone">🏆</div>
-            <div class="valor" id="turmaMaisAlunos">-</div>
-            <div class="label">Turma com + Alunos</div>
-            <div class="detalhe" id="turmaPercentual">0% do total</div>
-        </div>
-        <div class="card-analise">
-            <div class="icone">🏘️</div>
-            <div class="valor" id="bairroMaisAlunos">-</div>
-            <div class="label">Bairro com + Alunos</div>
-            <div class="detalhe" id="bairroPercentual">0% do total</div>
-        </div>
+    <!-- ABAS DE NAVEGAÇÃO -->
+    <div class="abas-nav">
+        <button class="aba-nav-btn ativa" data-aba="dashboard">📈 DASHBOARD</button>
+        <button class="aba-nav-btn" data-aba="comentarios">💬 COMENTÁRIOS</button>
+        <button class="aba-nav-btn" data-aba="uniforme">👕 UNIFORMES</button>
+        <button class="aba-nav-btn" data-aba="aniversarios">🎂 ANIVERSÁRIOS</button>
     </div>
 
-    <div class="cards-container">
-        <div class="card-analise">
-            <div class="icone">⚠️</div>
-            <div class="valor" id="totalDeficiencia">0</div>
-            <div class="label">Alunos com Deficiência</div>
-            <div class="detalhe" id="tiposDeficiencia">-</div>
-        </div>
-        <div class="card-analise">
-            <div class="icone">💊</div>
-            <div class="valor" id="totalRemedio">0</div>
-            <div class="label">Remédio Controlado</div>
-            <div class="detalhe" id="percentRemedio">0%</div>
-            <div class="detalhe" id="numerosRemedio" style="font-size: 0.65rem;">0 alunos</div>
-        </div>
-        <div class="card-analise">
-            <div class="icone">📢</div>
-            <div class="valor" id="totalOrigem">0</div>
-            <div class="label">Como conheceu</div>
-            <div class="detalhe" id="principalOrigem">-</div>
-        </div>
-    </div>
-
-    <div class="filtros-container">
-        <div class="filtros-grid">
-            <div class="filtro-group"><label>🔍 NOME</label><input type="text" id="filtroNome" placeholder="Nome do aluno..."></div>
-            <div class="filtro-group"><label>👤 RESPONSÁVEL</label><input type="text" id="filtroResponsavel" placeholder="Nome do responsável..."></div>
-            <div class="filtro-group"><label>📞 TELEFONE</label><input type="text" id="filtroTelefone" placeholder="Telefone..."></div>
-            <div class="filtro-group"><label>⚽ TURMA</label><select id="filtroTurma"><option value="">Todas</option><option value="Futebol">Futebol</option><option value="Taekwondo">Taekwondo</option><option value="Ginástica">Ginástica</option><option value="Tênis de Mesa">Tênis de Mesa</option><option value="Judô">Judô</option></select></div>
-            <div class="filtro-group"><label>🏆 CATEGORIA</label><select id="filtroCategoria"><option value="">Todas</option><option value="Sub-5">Sub-5</option><option value="Sub-7">Sub-7</option><option value="Sub-9">Sub-9</option><option value="Sub-11">Sub-11</option><option value="Sub-13">Sub-13</option><option value="Sub-15">Sub-15</option><option value="Sub-17">Sub-17</option><option value="Acima-17">Acima-17</option></select></div>
-            <div class="filtro-group"><label>🏘️ BAIRRO</label><input type="text" id="filtroBairro" placeholder="Bairro..."></div>
-        </div>
-        <div class="filtros-acoes"><button class="btn-limpar-filtros" onclick="limparFiltros()">🗑️ LIMPAR FILTROS</button></div>
-    </div>
-
-    <div class="graficos-container">
-        <div class="grafico-card"><h3>⚽ Alunos por Turma</h3><canvas id="graficoTurmas"></canvas></div>
-        <div class="grafico-card"><h3>🥧 Distribuição por Turma (%)</h3><canvas id="graficoPizza"></canvas></div>
-        <div class="grafico-card"><h3>🏆 Alunos por Categoria</h3><canvas id="graficoCategoria"></canvas></div>
-        <div class="grafico-card"><h3>🏘️ Alunos por Bairro</h3><canvas id="graficoBairro"></canvas></div>
-        <div class="grafico-card"><h3>📈 Evolução Mensal de Matrículas</h3><canvas id="graficoEvolucao"></canvas></div>
-        <div class="grafico-card"><h3>⚠️ Alunos com Deficiência</h3><canvas id="graficoDeficiencia"></canvas></div>
-        <div class="grafico-card"><h3>💊 Remédio Controlado</h3><canvas id="graficoRemedio"></canvas></div>
-        
-        <!-- NOVO: CARDS HORIZONTAIS DE UNIFORMES -->
-        <div class="grafico-card">
-            <h3>👕 QUANTIDADE DE CAMISAS POR TAMANHO</h3>
-            <div id="cardsUniforme" class="uniforme-cards-container">
-                <!-- Os cards vão aparecer aqui via JavaScript -->
+    <!-- ABA DASHBOARD -->
+    <div id="abaDashboard" class="aba-conteudo ativa">
+        <!-- CARDS PRINCIPAIS -->
+        <div class="cards-container">
+            <div class="card-analise">
+                <div class="icone">👥</div>
+                <div class="valor" id="totalAlunos">0</div>
+                <div class="label">Total de Alunos</div>
+                <div class="detalhe" id="novosAlunosMes">+0 este mês</div>
+            </div>
+            <div class="card-analise">
+                <div class="icone">📊</div>
+                <div class="valor" id="mediaIdade">0</div>
+                <div class="label">Média de Idade</div>
+                <div class="detalhe">anos</div>
+            </div>
+            <div class="card-analise">
+                <div class="icone">🏆</div>
+                <div class="valor" id="turmaMaisAlunos">-</div>
+                <div class="label">Turma com + Alunos</div>
+                <div class="detalhe" id="turmaPercentual">0% do total</div>
+            </div>
+            <div class="card-analise">
+                <div class="icone">🏘️</div>
+                <div class="valor" id="bairroMaisAlunos">-</div>
+                <div class="label">Bairro com + Alunos</div>
+                <div class="detalhe" id="bairroPercentual">0% do total</div>
             </div>
         </div>
-        
-        <div class="grafico-card"><h3>📢 Como conheceu a Escolinha (%)</h3><canvas id="graficoOrigem"></canvas></div>
-        <div class="grafico-card full-width"><h3>📊 Alunos por Faixa Etária (Sub)</h3><canvas id="graficoSub"></canvas></div>
-    </div>
 
-    <div class="veteranos-section">
-        <h2>🏅 ALUNOS VETERANOS <span style="font-size: 0.8rem;">(mais tempo de casa)</span></h2>
-        <div class="ranking-veteranos" id="rankingVeteranos"><div class="skeleton-loader">Carregando veteranos...</div></div>
-        <div class="stats-veteranos" id="statsVeteranos">
-            <div class="stat-veterano"><div class="numero">0</div><div class="label">Veteranos (1+ ano)</div></div>
-            <div class="stat-veterano"><div class="numero">0</div><div class="label">Média de tempo</div></div>
-            <div class="stat-veterano"><div class="numero">0</div><div class="label">Maior tempo</div></div>
+        <div class="cards-container">
+            <div class="card-analise">
+                <div class="icone">⚠️</div>
+                <div class="valor" id="totalDeficiencia">0</div>
+                <div class="label">Alunos com Deficiência</div>
+                <div class="detalhe" id="tiposDeficiencia">-</div>
+            </div>
+            <div class="card-analise">
+                <div class="icone">💊</div>
+                <div class="valor" id="totalRemedio">0</div>
+                <div class="label">Remédio Controlado</div>
+                <div class="detalhe" id="percentRemedio">0%</div>
+                <div class="detalhe" id="numerosRemedio" style="font-size: 0.65rem;">0 alunos</div>
+            </div>
+            <div class="card-analise">
+                <div class="icone">📢</div>
+                <div class="valor" id="totalOrigem">0</div>
+                <div class="label">Como conheceu</div>
+                <div class="detalhe" id="principalOrigem">-</div>
+            </div>
+        </div>
+
+        <!-- FILTROS -->
+        <div class="filtros-container">
+            <div class="filtros-grid">
+                <div class="filtro-group"><label>🔍 NOME</label><input type="text" id="filtroNome" placeholder="Nome do aluno..."></div>
+                <div class="filtro-group"><label>👤 RESPONSÁVEL</label><input type="text" id="filtroResponsavel" placeholder="Nome do responsável..."></div>
+                <div class="filtro-group"><label>📞 TELEFONE</label><input type="text" id="filtroTelefone" placeholder="Telefone..."></div>
+                <div class="filtro-group"><label>⚽ TURMA</label><select id="filtroTurma"><option value="">Todas</option><option value="Futebol">Futebol</option><option value="Taekwondo">Taekwondo</option><option value="Ginástica">Ginástica</option><option value="Tênis de Mesa">Tênis de Mesa</option><option value="Judô">Judô</option></select></div>
+                <div class="filtro-group"><label>🏆 CATEGORIA</label><select id="filtroCategoria"><option value="">Todas</option><option value="Sub-5">Sub-5</option><option value="Sub-7">Sub-7</option><option value="Sub-9">Sub-9</option><option value="Sub-11">Sub-11</option><option value="Sub-13">Sub-13</option><option value="Sub-15">Sub-15</option><option value="Sub-17">Sub-17</option><option value="Acima-17">Acima-17</option></select></div>
+                <div class="filtro-group"><label>🏘️ BAIRRO</label><input type="text" id="filtroBairro" placeholder="Bairro..."></div>
+                <div class="filtro-group"><label>📋 STATUS</label><select id="filtroStatus"><option value="">Todos</option><option value="aprovado">✅ Ativos</option><option value="pendente">⏳ Pendentes</option><option value="recusado">❌ Desativados</option></select></div>
+            </div>
+            <div class="filtros-acoes"><button class="btn-limpar-filtros" onclick="limparFiltros()">🗑️ LIMPAR FILTROS</button></div>
+        </div>
+
+        <!-- GRÁFICOS -->
+        <div class="graficos-container">
+            <div class="grafico-card"><h3>⚽ Alunos por Turma</h3><canvas id="graficoTurmas"></canvas></div>
+            <div class="grafico-card"><h3>🥧 Distribuição por Turma (%)</h3><canvas id="graficoPizza"></canvas></div>
+            <div class="grafico-card"><h3>🏆 Alunos por Categoria</h3><canvas id="graficoCategoria"></canvas></div>
+            <div class="grafico-card"><h3>🏘️ Alunos por Bairro</h3><canvas id="graficoBairro"></canvas></div>
+            <div class="grafico-card"><h3>📈 Evolução Mensal de Matrículas</h3><canvas id="graficoEvolucao"></canvas></div>
+            <div class="grafico-card"><h3>⚠️ Alunos com Deficiência</h3><canvas id="graficoDeficiencia"></canvas></div>
+            <div class="grafico-card"><h3>💊 Remédio Controlado</h3><canvas id="graficoRemedio"></canvas></div>
+            <div class="grafico-card"><h3>📢 Como conheceu a Escolinha (%)</h3><canvas id="graficoOrigem"></canvas></div>
+            <div class="grafico-card full-width"><h3>📊 Alunos por Faixa Etária (Sub)</h3><canvas id="graficoSub"></canvas></div>
+        </div>
+
+        <!-- VETERANOS -->
+        <div class="veteranos-section">
+            <h2>🏅 ALUNOS VETERANOS <span style="font-size: 0.8rem;">(mais tempo de casa)</span></h2>
+            <div class="ranking-veteranos" id="rankingVeteranos"><div class="skeleton-loader">Carregando veteranos...</div></div>
+            <div class="stats-veteranos" id="statsVeteranos">
+                <div class="stat-veterano"><div class="numero">0</div><div class="label">Veteranos (1+ ano)</div></div>
+                <div class="stat-veterano"><div class="numero">0</div><div class="label">Média de tempo</div></div>
+                <div class="stat-veterano"><div class="numero">0</div><div class="label">Maior tempo</div></div>
+            </div>
         </div>
     </div>
 
-    <div class="ultimos-alunos-section">
-        <h2>🆕 ÚLTIMOS ALUNOS APROVADOS</h2>
-        <div style="overflow-x: auto;">
-            <table class="tabela-ultimos">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Turma</th>
-                        <th>Categoria</th>
-                        <th>Idade</th>
-                        <th>Responsável</th>
-                        <th>Telefone</th>
-                    </tr>
-                </thead>
-                <tbody id="listaUltimosAlunos"></tbody>
-            </table>
+    <!-- ABA COMENTÁRIOS -->
+    <div id="abaComentarios" class="aba-conteudo">
+        <div class="card" style="background: white; border-radius: 20px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            <h2 style="margin-bottom: 20px;">💬 COMENTÁRIOS E AVALIAÇÕES</h2>
+            <div id="comentariosCarregando" class="skeleton-loader">Carregando comentários...</div>
+            <div id="listaComentarios" style="display: none;"></div>
+            <button class="btn-exportar" onclick="exportarComentarios()" style="background: #10b981; margin-top: 20px;">📥 EXPORTAR COMENTÁRIOS</button>
         </div>
-        <div class="ver-mais"><button onclick="abrirModalTodosAlunos()">📋 VER TODOS OS ALUNOS</button></div>
     </div>
 
-    <div class="aniversariantes-section">
-        <h2>🎂 ANIVERSARIANTES <span class="badge-aniversario" id="totalAniversariantesMes">0</span></h2>
-        <div class="meses-botoes" id="mesesBotoes"></div>
-        <div id="aniversariantesLista" class="aniversariantes-lista"><div class="sem-aniversariantes">Selecione um mês</div></div>
-    </div>
-</div>
-
-<div id="modalDetalhesAluno" class="modal">
-    <div class="modal-content">
-        <div class="modal-header"><h3>📄 FICHA DO ALUNO</h3><span class="fechar-modal" onclick="fecharModalDetalhes()">&times;</span></div>
-        <div id="detalhesAlunoConteudo" class="detalhes-grid"></div>
-        <div style="display: flex; justify-content: flex-end; margin-top: 20px;"><button onclick="fecharModalDetalhes()" style="background: #0047AB; color: white; border: none; padding: 8px 20px; border-radius: 30px;">FECHAR</button></div>
-    </div>
-</div>
-
-<div id="modalTodosAlunos" class="modal-todos">
-    <div class="modal-content">
-        <div class="modal-header"><h3>📋 TODOS OS ALUNOS</h3><span class="fechar-modal" onclick="fecharModalTodos()">&times;</span></div>
-        <div class="modal-tabela-container">
-            <table class="modal-tabela">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Turma</th>
-                        <th>Categoria</th>
-                        <th>Idade</th>
-                        <th>Responsável</th>
-                        <th>Telefone</th>
-                        <th>Bairro</th>
-                        <th>Data Matrícula</th>
-                    </tr>
-                </thead>
-                <tbody id="listaTodosAlunosModal"></tbody>
-            </table>
+    <!-- ABA UNIFORMES -->
+    <div id="abaUniforme" class="aba-conteudo">
+        <div class="card" style="background: white; border-radius: 20px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center;">
+            <h2>👕 UNIFORMES</h2>
+            <iframe src="uniforme.html" style="width: 100%; height: 600px; border: none; border-radius: 20px;"></iframe>
         </div>
-        <div style="text-align:right; margin-top:15px;"><button onclick="fecharModalTodos()" style="background: #0047AB; color: white; border: none; padding: 8px 20px; border-radius: 30px;">FECHAR</button></div>
+    </div>
+
+    <!-- ABA ANIVERSÁRIOS -->
+    <div id="abaAniversarios" class="aba-conteudo">
+        <div class="card" style="background: white; border-radius: 20px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center;">
+            <h2>🎂 ANIVERSARIANTES</h2>
+            <iframe src="aniversario.html" style="width: 100%; height: 600px; border: none; border-radius: 20px;"></iframe>
+        </div>
     </div>
 </div>
 
@@ -1185,24 +776,118 @@ if ('serviceWorker' in navigator) {
 </footer>
 
 <script>
-    // ========== CONFIGURAÇÕES ==========
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz76grUCrYQoi6z9VAQt5YOtzo50AG3O-kLB-nON0o4uGoBGQoHrdo4QUOCRmoVgjAcFg/exec';
+    const API_URL = 'http://localhost:5000/api';
     
     let usuarioLogado = null;
-    let alunos = [];
+    let todosAlunos = [];
     let alunosFiltrados = [];
     let graficos = {};
-    let mesSelecionado = new Date().getMonth();
     let ultimaAtualizacao = new Date();
 
-    const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
     const TURMAS = ['Futebol', 'Taekwondo', 'Ginástica', 'Tênis de Mesa', 'Judô'];
     const CATEGORIAS = ['Sub-5', 'Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Acima-17'];
     const SUBS = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Sub-20', 'Sub-30'];
 
-    function atualizarTimestamp() {
-        const diff = Math.floor((new Date() - ultimaAtualizacao) / 1000);
-        document.getElementById('ultimaAtualizacao').innerHTML = `🕐 Última atualização: ${diff < 60 ? `há ${diff} segundos` : `há ${Math.floor(diff / 60)} minutos`}`;
+    function alternarAba(abaId) {
+        document.querySelectorAll('.aba-nav-btn').forEach(btn => btn.classList.remove('ativa'));
+        document.querySelector(`.aba-nav-btn[data-aba="${abaId}"]`).classList.add('ativa');
+        document.querySelectorAll('.aba-conteudo').forEach(conteudo => conteudo.classList.remove('ativa'));
+        document.getElementById(`aba${abaId.charAt(0).toUpperCase() + abaId.slice(1)}`).classList.add('ativa');
+        
+        if (abaId === 'comentarios') {
+            carregarComentarios();
+        }
+    }
+
+    document.querySelectorAll('.aba-nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => alternarAba(btn.dataset.aba));
+    });
+
+    async function carregarComentarios() {
+        const container = document.getElementById('listaComentarios');
+        const loading = document.getElementById('comentariosCarregando');
+        
+        loading.style.display = 'block';
+        container.style.display = 'none';
+        
+        try {
+            const response = await fetch(`${API_URL}/alunos`);
+            const dados = await response.json();
+            
+            if (Array.isArray(dados)) {
+                const comentarios = dados.filter(item => item.observacao && item.observacao.trim().length > 0);
+                
+                if (comentarios.length === 0) {
+                    container.innerHTML = '<div style="text-align:center; padding:40px;">📭 Nenhum comentário encontrado</div>';
+                } else {
+                    container.innerHTML = comentarios.map(item => {
+                        let estrelas = '';
+                        if (item.estrelas && item.estrelas > 0) {
+                            estrelas = '⭐'.repeat(item.estrelas) + '☆'.repeat(5 - item.estrelas);
+                        }
+                        return `
+                            <div style="background: #f8fafc; border-radius: 16px; padding: 15px; margin-bottom: 12px;">
+                                <div style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 8px;">
+                                    <span style="font-weight: 600;">👤 ${item.nome_aluno || 'Anônimo'}</span>
+                                    <span style="color: #ff9800;">${estrelas}</span>
+                                    <span style="font-size: 0.7rem; color: #666;">${formatarData(item.data_envio)}</span>
+                                </div>
+                                <div style="margin-top: 8px;">"${item.observacao}"</div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+                loading.style.display = 'none';
+                container.style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            container.innerHTML = '<div style="text-align:center; padding:40px;">❌ Erro ao carregar comentários</div>';
+            loading.style.display = 'none';
+            container.style.display = 'block';
+        }
+    }
+
+    function exportarComentarios() {
+        const comentarios = document.querySelectorAll('#listaComentarios > div');
+        if (comentarios.length === 0) {
+            mostrarToast('Nenhum comentário para exportar', 'error');
+            return;
+        }
+        
+        let csv = 'Nome,Comentário,Data,Estrelas\n';
+        comentarios.forEach(div => {
+            const nome = div.querySelector('span:first-child')?.innerText?.replace('👤 ', '') || '';
+            const estrelasSpan = div.querySelector('span:nth-child(2)');
+            const estrelas = estrelasSpan?.innerText?.match(/⭐/g)?.length || 0;
+            const data = div.querySelector('span:last-child')?.innerText || '';
+            const texto = div.querySelector('div:last-child')?.innerText?.replace(/"/g, '""') || '';
+            csv += `"${nome}","${texto}","${data}","${estrelas}"\n`;
+        });
+        
+        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `comentarios_${new Date().toISOString().slice(0,10)}.csv`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+        mostrarToast('📥 Comentários exportados!');
+    }
+
+    function mostrarToast(mensagem, tipo = 'success') {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = mensagem;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+
+    function formatarData(dataStr) {
+        if (!dataStr) return '-';
+        try {
+            const d = new Date(dataStr);
+            return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`;
+        } catch { return dataStr; }
     }
 
     function capitalizar(str) {
@@ -1210,12 +895,9 @@ if ('serviceWorker' in navigator) {
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     }
 
-    function formatarDataSimples(dataStr) {
-        if (!dataStr) return '-';
-        try {
-            const d = new Date(dataStr);
-            return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`;
-        } catch { return dataStr; }
+    function atualizarTimestamp() {
+        const diff = Math.floor((new Date() - ultimaAtualizacao) / 1000);
+        document.getElementById('ultimaAtualizacao').innerHTML = `🕐 Última atualização: ${diff < 60 ? `há ${diff} segundos` : `há ${Math.floor(diff / 60)} minutos`}`;
     }
 
     function calcularTempoCasa(dataMatricula) {
@@ -1230,12 +912,8 @@ if ('serviceWorker' in navigator) {
     function formatarTempoCasa(meses) {
         if (meses === 0) return 'Menos de 1 mês';
         const dias = Math.floor(meses * 30.44);
-        const semanas = Math.floor(dias / 7);
         if (dias < 30) return `${dias} ${dias === 1 ? 'dia' : 'dias'}`;
-        if (meses < 12) {
-            if (semanas > 0) return `${meses} ${meses === 1 ? 'mês' : 'meses'} (${semanas} ${semanas === 1 ? 'semana' : 'semanas'})`;
-            return `${meses} ${meses === 1 ? 'mês' : 'meses'}`;
-        }
+        if (meses < 12) return `${meses} ${meses === 1 ? 'mês' : 'meses'}`;
         const anos = Math.floor(meses / 12);
         const mesesRestantes = meses % 12;
         if (mesesRestantes === 0) return `${anos} ${anos === 1 ? 'ano' : 'anos'}`;
@@ -1258,193 +936,78 @@ if ('serviceWorker' in navigator) {
         return { class: '', texto: '🆕 Novato' };
     }
 
-    // ========== NOVA FUNÇÃO: CARDS HORIZONTAIS DE UNIFORME ==========
-    function atualizarCardsUniformeHorizontal() {
-        const dados = alunosFiltrados;
-        
-        // Ordem dos tamanhos
-        const tamanhosOrdem = ['PP', 'P', 'M', 'G', 'GG', 'GGG', 'XGG'];
-        
-        // Contar cada tamanho
-        const contagem = {};
-        tamanhosOrdem.forEach(t => contagem[t] = 0);
-        
-        let totalComUniforme = 0;
-        
-        dados.forEach(aluno => {
-            let tamanho = (aluno.uniforme || '').toUpperCase().trim();
-            if (tamanho === 'PP') { contagem['PP']++; totalComUniforme++; }
-            else if (tamanho === 'P') { contagem['P']++; totalComUniforme++; }
-            else if (tamanho === 'M') { contagem['M']++; totalComUniforme++; }
-            else if (tamanho === 'G') { contagem['G']++; totalComUniforme++; }
-            else if (tamanho === 'GG') { contagem['GG']++; totalComUniforme++; }
-            else if (tamanho === 'GGG') { contagem['GGG']++; totalComUniforme++; }
-            else if (tamanho === 'XGG') { contagem['XGG']++; totalComUniforme++; }
-        });
-        
-        // Gerar os cards
-        const container = document.getElementById('cardsUniforme');
-        if (!container) return;
-        
-        if (totalComUniforme === 0) {
-            container.innerHTML = '<div style="text-align:center; padding:20px; color:#999; width:100%;">👕 Nenhum uniforme cadastrado</div>';
-            return;
-        }
-        
-        let cardsHTML = '';
-        
-        tamanhosOrdem.forEach(tamanho => {
-            const quantidade = contagem[tamanho];
-            const percentual = totalComUniforme > 0 ? ((quantidade / totalComUniforme) * 100).toFixed(1) : 0;
-            const temZero = quantidade === 0;
-            
-            // Emojis diferentes para cada tamanho
-            let emoji = '👕';
-            if (tamanho === 'PP') emoji = '🟣';
-            if (tamanho === 'P') emoji = '🔵';
-            if (tamanho === 'M') emoji = '🟢';
-            if (tamanho === 'G') emoji = '🟠';
-            if (tamanho === 'GG') emoji = '🔴';
-            if (tamanho === 'GGG') emoji = '🟤';
-            if (tamanho === 'XGG') emoji = '⚫';
-            
-            cardsHTML += `
-                <div class="card-tamanho-uniforme ${temZero ? 'p-zero' : ''}">
-                    <div class="icone-tamanho">${emoji}</div>
-                    <div class="tamanho">${tamanho}</div>
-                    <div class="quantidade">${quantidade}</div>
-                    <div class="percentual">${percentual}%</div>
-                    <div class="barra-container">
-                        <div class="barra" style="width: ${percentual}%;"></div>
-                    </div>
-                    <div style="font-size: 0.65rem; color: #999; margin-top: 5px;">
-                        ${quantidade} ${quantidade === 1 ? 'pessoa' : 'pessoas'}
-                    </div>
-                </div>
-            `;
-        });
-        
-        container.innerHTML = cardsHTML;
-    }
-    // ========== FIM DA FUNÇÃO DE UNIFORME ==========
-
-    function aplicarFiltros() {
-        const nome = document.getElementById('filtroNome').value.toLowerCase();
-        const responsavel = document.getElementById('filtroResponsavel').value.toLowerCase();
-        const telefone = document.getElementById('filtroTelefone').value.toLowerCase();
-        const turma = document.getElementById('filtroTurma').value;
-        const categoria = document.getElementById('filtroCategoria').value;
-        const bairro = document.getElementById('filtroBairro').value.toLowerCase();
-        
-        alunosFiltrados = alunos.filter(a => {
-            if (nome && !a.nome.toLowerCase().includes(nome)) return false;
-            if (responsavel && !a.responsavel.toLowerCase().includes(responsavel)) return false;
-            if (telefone && !a.telefone.includes(telefone)) return false;
-            if (turma && a.turma !== turma) return false;
-            if (categoria && a.categoria !== categoria) return false;
-            if (bairro && !a.bairro.toLowerCase().includes(bairro)) return false;
-            return true;
-        });
-        
-        atualizarTodosGraficos();
-        atualizarCardsUniformeHorizontal(); // NOVO: atualiza os cards
-        atualizarUltimosAlunos();
-        atualizarVeteranos();
-    }
-
-    function limparFiltros() {
-        document.getElementById('filtroNome').value = '';
-        document.getElementById('filtroResponsavel').value = '';
-        document.getElementById('filtroTelefone').value = '';
-        document.getElementById('filtroTurma').value = '';
-        document.getElementById('filtroCategoria').value = '';
-        document.getElementById('filtroBairro').value = '';
-        aplicarFiltros();
-    }
-
     async function carregarDadosDaPlanilha() {
         try {
-            const response = await fetch(SCRIPT_URL);
+            const response = await fetch(`${API_URL}/alunos`);
             const dados = await response.json();
             
-            alunos = dados.filter(item => item.status === 'aprovado').map(item => ({
-                nome: item.nomeAluno || 'Não informado',
-                dataNasc: item.dataNasc || '',
-                idade: parseInt(item.idade) || 0,
-                turma: capitalizar(item.turma),
-                categoria: item.categoria || 'Não informada',
-                bairro: item.bairro ? capitalizar(item.bairro) : 'Não informado',
-                responsavel: item.responsavel || 'Não informado',
-                telefone: item.telefone || '',
-                email: item.email || '',
-                endereco: item.endereco || '',
-                rg: item.rg || '',
-                dataMatricula: item.dataEnvio || new Date().toISOString(),
-                sexo: item.sexo || '',
-                peso: item.peso || '',
-                altura: item.altura || '',
-                calcado: item.calcado || '',
-                uniforme: item.uniforme || '',
-                deficiencia: item.deficiencia || 'Nenhuma',
-                municipio: item.municipio || '',
-                uf: item.uf || '',
-                escola: item.escola || '',
-                serie: item.serie || '',
-                remedio: item.remedio || 'Não',
-                origem: item.origem || ''
-            }));
-            
-            aplicarFiltros();
-            atualizarCards();
-            atualizarCardsDeficienciaRemedioOrigem();
-            atualizarAniversariantes();
-            atualizarVeteranos();
-            
-            ultimaAtualizacao = new Date();
-            atualizarTimestamp();
+            if (Array.isArray(dados)) {
+                todosAlunos = dados.map(item => ({
+                    nome: item.nome_aluno || 'Não informado',
+                    turma: capitalizar(item.turma),
+                    categoria: item.categoria || 'Não informada',
+                    bairro: item.bairro ? capitalizar(item.bairro) : 'Não informado',
+                    responsavel: item.responsavel || 'Não informado',
+                    telefone: item.telefone || '',
+                    idade: parseInt(item.idade) || 0,
+                    dataMatricula: item.data_envio || new Date().toISOString(),
+                    deficiencia: item.deficiencia || 'Nenhuma',
+                    remedio: item.remedio || 'Não',
+                    origem: item.origem || '',
+                    status: item.status || 'pendente'
+                }));
+                
+                aplicarFiltros();
+                atualizarCards();
+                atualizarCardsDeficienciaRemedioOrigem();
+                atualizarVeteranos();
+                
+                ultimaAtualizacao = new Date();
+                atualizarTimestamp();
+            }
         } catch (error) {
             console.error('Erro:', error);
-            alert('Erro ao carregar dados da planilha');
+            mostrarToast('❌ Erro ao conectar com o backend', 'error');
         }
     }
 
     function atualizarCards() {
-        const total = alunos.length;
+        const total = todosAlunos.length;
         document.getElementById('totalAlunos').innerText = total;
-        const somaIdade = alunos.reduce((s, a) => s + a.idade, 0);
+        const somaIdade = todosAlunos.reduce((s, a) => s + a.idade, 0);
         document.getElementById('mediaIdade').innerText = total ? (somaIdade / total).toFixed(1) : 0;
         
         const turmasCount = {};
-        alunos.forEach(a => turmasCount[a.turma] = (turmasCount[a.turma] || 0) + 1);
+        todosAlunos.forEach(a => turmasCount[a.turma] = (turmasCount[a.turma] || 0) + 1);
         let turmaMais = { nome: '-', count: 0 };
         for (const [nome, count] of Object.entries(turmasCount)) if (count > turmaMais.count) turmaMais = { nome, count };
         document.getElementById('turmaMaisAlunos').innerText = turmaMais.nome;
         document.getElementById('turmaPercentual').innerHTML = total ? `${((turmaMais.count / total) * 100).toFixed(1)}% do total` : '0%';
         
         const bairrosCount = {};
-        alunos.forEach(a => { if(a.bairro && a.bairro !== 'Não informado') bairrosCount[a.bairro] = (bairrosCount[a.bairro] || 0) + 1; });
+        todosAlunos.forEach(a => { if(a.bairro && a.bairro !== 'Não informado') bairrosCount[a.bairro] = (bairrosCount[a.bairro] || 0) + 1; });
         let bairroMais = { nome: '-', count: 0 };
         for (const [nome, count] of Object.entries(bairrosCount)) if (count > bairroMais.count) bairroMais = { nome, count };
         document.getElementById('bairroMaisAlunos').innerText = bairroMais.nome;
         document.getElementById('bairroPercentual').innerHTML = total ? `${((bairroMais.count / total) * 100).toFixed(1)}% do total` : '0%';
         
         const mesAtual = new Date().getMonth();
-        const novosMes = alunos.filter(a => a.dataMatricula && new Date(a.dataMatricula).getMonth() === mesAtual).length;
+        const novosMes = todosAlunos.filter(a => a.dataMatricula && new Date(a.dataMatricula).getMonth() === mesAtual).length;
         document.getElementById('novosAlunosMes').innerHTML = `+${novosMes} este mês`;
     }
 
     function atualizarCardsDeficienciaRemedioOrigem() {
-        const total = alunos.length;
-        const deficienciaCount = alunos.filter(a => a.deficiencia && a.deficiencia !== 'Nenhuma').length;
+        const total = todosAlunos.length;
+        const deficienciaCount = todosAlunos.filter(a => a.deficiencia && a.deficiencia !== 'Nenhuma').length;
         document.getElementById('totalDeficiencia').innerText = deficienciaCount;
         
-        const remedioCount = alunos.filter(a => a.remedio && a.remedio !== 'Não').length;
+        const remedioCount = todosAlunos.filter(a => a.remedio && a.remedio !== 'Não').length;
         document.getElementById('totalRemedio').innerText = remedioCount;
         document.getElementById('percentRemedio').innerHTML = total ? `${((remedioCount / total) * 100).toFixed(1)}%` : '0%';
         document.getElementById('numerosRemedio').innerHTML = `${remedioCount} de ${total} alunos`;
         
         const origemCount = {};
-        alunos.forEach(a => { 
+        todosAlunos.forEach(a => { 
             if(a.origem && a.origem.trim() !== '') {
                 let origemFormatada = a.origem.trim();
                 origemFormatada = origemFormatada.charAt(0).toUpperCase() + origemFormatada.slice(1).toLowerCase();
@@ -1460,86 +1023,67 @@ if ('serviceWorker' in navigator) {
         document.getElementById('principalOrigem').innerHTML = origemMais.nome !== '-' ? `${origemMais.nome} (${origemMais.count})` : '-';
     }
 
+    function aplicarFiltros() {
+        const nome = document.getElementById('filtroNome').value.toLowerCase();
+        const responsavel = document.getElementById('filtroResponsavel').value.toLowerCase();
+        const telefone = document.getElementById('filtroTelefone').value.toLowerCase();
+        const turma = document.getElementById('filtroTurma').value;
+        const categoria = document.getElementById('filtroCategoria').value;
+        const bairro = document.getElementById('filtroBairro').value.toLowerCase();
+        const status = document.getElementById('filtroStatus').value;
+        
+        alunosFiltrados = todosAlunos.filter(a => {
+            if (nome && !a.nome.toLowerCase().includes(nome)) return false;
+            if (responsavel && !a.responsavel.toLowerCase().includes(responsavel)) return false;
+            if (telefone && !a.telefone.includes(telefone)) return false;
+            if (turma && a.turma !== turma) return false;
+            if (categoria && a.categoria !== categoria) return false;
+            if (bairro && !a.bairro.toLowerCase().includes(bairro)) return false;
+            if (status && a.status !== status) return false;
+            return true;
+        });
+        
+        atualizarTodosGraficos();
+        atualizarVeteranos();
+    }
+
+    function limparFiltros() {
+        document.getElementById('filtroNome').value = '';
+        document.getElementById('filtroResponsavel').value = '';
+        document.getElementById('filtroTelefone').value = '';
+        document.getElementById('filtroTurma').value = '';
+        document.getElementById('filtroCategoria').value = '';
+        document.getElementById('filtroBairro').value = '';
+        document.getElementById('filtroStatus').value = '';
+        aplicarFiltros();
+    }
+
     function atualizarTodosGraficos() {
         const dados = alunosFiltrados;
         
-        // Gráfico de Turmas
         const turmasCount = TURMAS.map(t => dados.filter(a => a.turma === t).length);
-        const labelsAbreviadas = TURMAS.map(t => t === 'Taekwondo' ? 'Taekw.' : t);
-        
         if (graficos.turmas) graficos.turmas.destroy();
         graficos.turmas = new Chart(document.getElementById('graficoTurmas'), {
             type: 'bar',
-            data: { labels: labelsAbreviadas, datasets: [{ label: 'Alunos', data: turmasCount, backgroundColor: '#0047AB', borderRadius: 8 }] },
-            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, scales: { y: { ticks: { font: { size: 11 } } } }, plugins: { legend: { display: false } } }
+            data: { labels: TURMAS.map(t => t === 'Taekwondo' ? 'Taekw.' : t), datasets: [{ label: 'Alunos', data: turmasCount, backgroundColor: '#0047AB', borderRadius: 8 }] },
+            options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
         });
         
-        // Gráfico de Pizza
         const totalTurmas = turmasCount.reduce((a, b) => a + b, 0);
         if (graficos.pizza) graficos.pizza.destroy();
         graficos.pizza = new Chart(document.getElementById('graficoPizza'), {
             type: 'pie',
-            data: { 
-                labels: TURMAS, 
-                datasets: [{ 
-                    data: turmasCount, 
-                    backgroundColor: ['#0047AB', '#00aaff', '#ff9800', '#25d366', '#ff69b4'],
-                    borderWidth: 2,
-                    borderColor: 'white'
-                }] 
-            },
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: true,
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: (ctx) => {
-                                const label = ctx.label || '';
-                                const value = ctx.raw || 0;
-                                const porcentagem = totalTurmas > 0 ? ((value / totalTurmas) * 100).toFixed(1) : 0;
-                                return `${label}: ${value} alunos (${porcentagem}%)`;
-                            }
-                        }
-                    },
-                    legend: { position: 'bottom', labels: { font: { size: 11 } } }
-                }
-            },
-            plugins: [{
-                afterDatasetsDraw: function(chart) {
-                    const ctx = chart.ctx;
-                    chart.data.datasets.forEach((dataset, i) => {
-                        const meta = chart.getDatasetMeta(i);
-                        if (!meta.hidden) {
-                            meta.data.forEach((element, index) => {
-                                const dataValue = dataset.data[index];
-                                const percentage = totalTurmas > 0 ? ((dataValue / totalTurmas) * 100).toFixed(1) : 0;
-                                if (percentage > 5) {
-                                    const position = element.tooltipPosition();
-                                    ctx.fillStyle = '#ffffff';
-                                    ctx.font = 'bold 12px "Open Sans"';
-                                    ctx.shadowBlur = 0;
-                                    ctx.textAlign = 'center';
-                                    ctx.textBaseline = 'middle';
-                                    ctx.fillText(`${percentage}%`, position.x, position.y);
-                                }
-                            });
-                        }
-                    });
-                }
-            }]
+            data: { labels: TURMAS, datasets: [{ data: turmasCount, backgroundColor: ['#0047AB', '#00aaff', '#ff9800', '#25d366', '#ff69b4'], borderWidth: 2, borderColor: 'white' }] },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { tooltip: { callbacks: { label: (ctx) => { const label = ctx.label || ''; const value = ctx.raw || 0; const porcentagem = totalTurmas > 0 ? ((value / totalTurmas) * 100).toFixed(1) : 0; return `${label}: ${value} alunos (${porcentagem}%)`; } } }, legend: { position: 'bottom', labels: { font: { size: 11 } } } } }
         });
         
-        // Gráfico de Categorias
         const categoriasCount = CATEGORIAS.map(cat => dados.filter(a => a.categoria === cat).length);
         if (graficos.categoria) graficos.categoria.destroy();
         graficos.categoria = new Chart(document.getElementById('graficoCategoria'), {
-            type: 'bar',
-            data: { labels: CATEGORIAS, datasets: [{ label: 'Alunos', data: categoriasCount, backgroundColor: '#ff9800', borderRadius: 8 }] },
+            type: 'bar', data: { labels: CATEGORIAS, datasets: [{ label: 'Alunos', data: categoriasCount, backgroundColor: '#ff9800', borderRadius: 8 }] },
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
         });
         
-        // Gráfico de Bairros
         const bairrosMap = new Map();
         dados.forEach(a => { if(a.bairro && a.bairro !== 'Não informado') bairrosMap.set(a.bairro, (bairrosMap.get(a.bairro) || 0) + 1); });
         const bairros = Array.from(bairrosMap.entries()).sort((a,b) => b[1]-a[1]).slice(0, 8);
@@ -1549,7 +1093,6 @@ if ('serviceWorker' in navigator) {
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
         });
         
-        // Evolução Mensal
         const matriculasPorMes = new Array(12).fill(0);
         dados.forEach(a => { if (a.dataMatricula) { const mes = new Date(a.dataMatricula).getMonth(); matriculasPorMes[mes]++; } });
         if (graficos.evolucao) graficos.evolucao.destroy();
@@ -1559,7 +1102,6 @@ if ('serviceWorker' in navigator) {
             options: { responsive: true, maintainAspectRatio: true }
         });
         
-        // Deficiência
         const deficienciaMap = new Map();
         dados.forEach(a => {
             if (a.deficiencia && a.deficiencia !== 'Nenhuma') {
@@ -1578,7 +1120,6 @@ if ('serviceWorker' in navigator) {
             options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
         });
         
-        // Remédio
         const remedioSim = dados.filter(a => a.remedio && a.remedio !== 'Não').length;
         const remedioNao = dados.length - remedioSim;
         if (graficos.remedio) graficos.remedio.destroy();
@@ -1587,7 +1128,6 @@ if ('serviceWorker' in navigator) {
             options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
         });
         
-        // Gráfico de Origem
         const origemMap = new Map();
         dados.forEach(a => { 
             if (a.origem && a.origem.trim() !== '') {
@@ -1600,42 +1140,12 @@ if ('serviceWorker' in navigator) {
         const origemData = Array.from(origemMap.values());
         const totalOrigem = dados.length;
         const origemPercentuais = origemData.map(v => totalOrigem > 0 ? ((v / totalOrigem) * 100).toFixed(1) : 0);
-        
         if (graficos.origem) graficos.origem.destroy();
         graficos.origem = new Chart(document.getElementById('graficoOrigem'), {
-            type: 'bar',
-            data: { 
-                labels: origemLabels, 
-                datasets: [{ 
-                    label: 'Alunos (%)', 
-                    data: origemPercentuais, 
-                    backgroundColor: '#25d366', 
-                    borderRadius: 8 
-                }] 
-            },
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: true,
-                scales: { 
-                    y: { 
-                        title: { display: true, text: 'Percentual (%)' },
-                        beginAtZero: true,
-                        max: 100
-                    },
-                    x: { ticks: { font: { size: 11 } } }
-                },
-                plugins: { 
-                    tooltip: { 
-                        callbacks: { 
-                            label: (ctx) => `${origemData[ctx.dataIndex]} alunos (${ctx.raw}%)` 
-                        } 
-                    },
-                    legend: { display: false }
-                }
-            }
+            type: 'bar', data: { labels: origemLabels, datasets: [{ label: 'Alunos (%)', data: origemPercentuais, backgroundColor: '#25d366', borderRadius: 8 }] },
+            options: { responsive: true, maintainAspectRatio: true, scales: { y: { title: { display: true, text: 'Percentual (%)' }, beginAtZero: true, max: 100 } }, plugins: { legend: { display: false } } }
         });
         
-        // Sub
         const subCount = [0,0,0,0,0,0,0,0];
         dados.forEach(a => {
             const idade = a.idade;
@@ -1656,80 +1166,8 @@ if ('serviceWorker' in navigator) {
         });
     }
 
-    function atualizarUltimosAlunos() {
-        const ultimos = [...alunos].sort((a,b) => new Date(b.dataMatricula) - new Date(a.dataMatricula)).slice(0, 10);
-        document.getElementById('listaUltimosAlunos').innerHTML = ultimos.map(a => `
-            <tr onclick="abrirDetalhesAluno('${a.nome}')">
-                <td><strong>${a.nome}</strong></td>
-                <td>${a.turma}</td>
-                <td><span style="background: #f0f7ff; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem;">${a.categoria}</span></td>
-                <td>${a.idade} anos</td>
-                <td>${a.responsavel}</td>
-                <td>${a.telefone}</td>
-            </tr>
-        `).join('');
-    }
-
-    function abrirModalTodosAlunos() {
-        const tbody = document.getElementById('listaTodosAlunosModal');
-        tbody.innerHTML = alunos.map(a => `
-            <tr onclick="abrirDetalhesAluno('${a.nome}')">
-                <td><strong>${a.nome}</strong></td>
-                <td>${a.turma}</td>
-                <td><span style="background: #f0f7ff; padding: 4px 8px; border-radius: 20px; font-size: 0.7rem;">${a.categoria}</span></td>
-                <td>${a.idade} anos</td>
-                <td>${a.responsavel}</td>
-                <td>${a.telefone}</td>
-                <td>${a.bairro}</td>
-                <td>${formatarDataSimples(a.dataMatricula)}</td>
-            </tr>
-        `).join('');
-        document.getElementById('modalTodosAlunos').style.display = 'flex';
-    }
-
-    function fecharModalTodos() { document.getElementById('modalTodosAlunos').style.display = 'none'; }
-
-    function abrirDetalhesAluno(nome) {
-        fecharModalTodos();
-        const aluno = alunos.find(a => a.nome === nome);
-        if (!aluno) return;
-        
-        const conteudo = document.getElementById('detalhesAlunoConteudo');
-        const tempoMeses = calcularTempoCasa(aluno.dataMatricula);
-        
-        conteudo.innerHTML = `
-            <div class="detalhe-item"><div class="detalhe-label">📋 Nome</div><div class="detalhe-valor">${aluno.nome || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">🎂 Data Nasc</div><div class="detalhe-valor">${formatarDataSimples(aluno.dataNasc)}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📊 Idade</div><div class="detalhe-valor">${aluno.idade || '-'} anos</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">⚽ Turma</div><div class="detalhe-valor">${aluno.turma || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">🏆 Categoria</div><div class="detalhe-valor"><strong>${aluno.categoria || '-'}</strong></div></div>
-            <div class="detalhe-item"><div class="detalhe-label">👤 Responsável</div><div class="detalhe-valor">${aluno.responsavel || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📞 Telefone</div><div class="detalhe-valor">${aluno.telefone || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📧 Email</div><div class="detalhe-valor">${aluno.email || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">🏠 Endereço</div><div class="detalhe-valor">${aluno.endereco || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📍 Bairro</div><div class="detalhe-valor">${aluno.bairro || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">🆔 RG</div><div class="detalhe-valor">${aluno.rg || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">💊 Remédio</div><div class="detalhe-valor">${aluno.remedio || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">👕 Uniforme</div><div class="detalhe-valor">${aluno.uniforme || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">👤 Sexo</div><div class="detalhe-valor">${aluno.sexo || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">⚖️ Peso</div><div class="detalhe-valor">${aluno.peso ? aluno.peso + ' kg' : '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📏 Altura</div><div class="detalhe-valor">${aluno.altura ? aluno.altura + ' cm' : '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">👟 Calçado</div><div class="detalhe-valor">${aluno.calcado || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">⚠️ Deficiência</div><div class="detalhe-valor">${aluno.deficiencia || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">🏙️ Município</div><div class="detalhe-valor">${aluno.municipio || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📌 UF</div><div class="detalhe-valor">${aluno.uf || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">🏫 Escola</div><div class="detalhe-valor">${aluno.escola || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">📚 Série</div><div class="detalhe-valor">${aluno.serie || '-'}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">🗓️ Matrícula</div><div class="detalhe-valor">${formatarDataSimples(aluno.dataMatricula)}</div></div>
-            <div class="detalhe-item"><div class="detalhe-label">⏳ Tempo de Casa</div><div class="detalhe-valor">${formatarTempoCasa(tempoMeses)}</div></div>
-        `;
-        document.getElementById('modalDetalhesAluno').style.display = 'flex';
-    }
-
-    function fecharModalDetalhes() { document.getElementById('modalDetalhesAluno').style.display = 'none'; }
-
     function atualizarVeteranos() {
-        const alunosComTempo = alunos.map(a => ({ ...a, tempoMeses: calcularTempoCasa(a.dataMatricula) })).filter(a => a.tempoMeses > 0).sort((a, b) => b.tempoMeses - a.tempoMeses);
+        const alunosComTempo = todosAlunos.map(a => ({ ...a, tempoMeses: calcularTempoCasa(a.dataMatricula) })).filter(a => a.tempoMeses > 0).sort((a, b) => b.tempoMeses - a.tempoMeses);
         const topVeteranos = alunosComTempo.slice(0, 5);
         const container = document.getElementById('rankingVeteranos');
         
@@ -1740,7 +1178,7 @@ if ('serviceWorker' in navigator) {
                 const medalhaClass = getMedalhaClass(idx);
                 const tempoBadge = getTempoBadge(a.tempoMeses);
                 return `
-                    <div class="veterano-card" onclick="abrirDetalhesAluno('${a.nome}')">
+                    <div class="veterano-card">
                         <div class="veterano-medalha ${medalhaClass}">${idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : '🏅'}</div>
                         <div class="veterano-info">
                             <div class="veterano-nome"><strong>${a.nome}</strong><span class="tempo-badge ${tempoBadge.class}">${tempoBadge.texto}</span></div>
@@ -1763,31 +1201,41 @@ if ('serviceWorker' in navigator) {
         `;
     }
 
-    function atualizarAniversariantes() {
-        const aniversariantes = alunos.filter(a => a.dataNasc && new Date(a.dataNasc).getMonth() === mesSelecionado);
-        const listaDiv = document.getElementById('aniversariantesLista');
-        document.getElementById('totalAniversariantesMes').innerText = aniversariantes.length;
-        
-        if (!aniversariantes.length) {
-            listaDiv.innerHTML = '<div class="sem-aniversariantes">🎂 Nenhum aniversariante neste mês</div>';
-        } else {
-            listaDiv.innerHTML = aniversariantes.map(a => `
-                <div class="item-aniversario" onclick="abrirDetalhesAluno('${a.nome}')">
-                    <div class="emoji">🎈</div>
-                    <div><strong>${a.nome}</strong><br>${a.idade} anos • ${a.categoria} • ${formatarDataSimples(a.dataNasc)}</div>
-                </div>
-            `).join('');
+    function exportarDados() {
+        if (todosAlunos.length === 0) {
+            mostrarToast('Nenhum dado para exportar', 'error');
+            return;
         }
+        
+        let csv = 'Nome,Turma,Categoria,Idade,Responsável,Telefone,Status,Data Matrícula\n';
+        todosAlunos.forEach(a => {
+            csv += `"${a.nome}","${a.turma}","${a.categoria}","${a.idade}","${a.responsavel}","${a.telefone}","${a.status}","${formatarData(a.dataMatricula)}"\n`;
+        });
+        
+        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `diretoria_dados_${new Date().toISOString().slice(0,10)}.csv`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+        mostrarToast('📥 Dados exportados!');
     }
 
-    function criarBotoesMeses() {
-        const hoje = new Date();
-        document.getElementById('mesesBotoes').innerHTML = MESES.map((mes, idx) => `
-            <button class="btn-mes ${mesSelecionado === idx ? 'ativo' : ''} ${hoje.getMonth() === idx ? 'hoje' : ''}" onclick="selecionarMes(${idx})">${mes.substring(0,3)}</button>
-        `).join('');
+    function exportarComoImagem() {
+        const btn = document.querySelector('.btn-exportar-imagem');
+        btn.innerHTML = '📸 GERANDO...';
+        btn.disabled = true;
+        html2canvas(document.getElementById('abaDashboard'), { scale: 2 }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `dashboard_${new Date().toISOString().slice(0,10)}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+            mostrarToast('✅ Dashboard salvo como imagem!');
+        }).catch(() => mostrarToast('Erro ao gerar imagem', 'error')).finally(() => {
+            btn.innerHTML = '📸 EXPORTAR IMAGEM';
+            btn.disabled = false;
+        });
     }
-
-    function selecionarMes(mes) { mesSelecionado = mes; criarBotoesMeses(); atualizarAniversariantes(); }
 
     function atualizarDados() {
         const btn = document.querySelector('.btn-atualizar');
@@ -1799,28 +1247,13 @@ if ('serviceWorker' in navigator) {
         });
     }
 
-    function exportarComoImagem() {
-        const btn = document.querySelector('.btn-exportar-imagem');
-        btn.innerHTML = '📸 GERANDO...';
-        btn.disabled = true;
-        html2canvas(document.getElementById('painelAnalise'), { scale: 2 }).then(canvas => {
-            const link = document.createElement('a');
-            link.download = `dashboard_${new Date().toISOString().slice(0,10)}.png`;
-            link.href = canvas.toDataURL();
-            link.click();
-            alert('✅ Dashboard salvo como imagem!');
-        }).catch(() => alert('Erro ao gerar imagem')).finally(() => {
-            btn.innerHTML = '📸 EXPORTAR IMAGEM';
-            btn.disabled = false;
-        });
-    }
-
     document.getElementById('filtroNome').addEventListener('input', aplicarFiltros);
     document.getElementById('filtroResponsavel').addEventListener('input', aplicarFiltros);
     document.getElementById('filtroTelefone').addEventListener('input', aplicarFiltros);
     document.getElementById('filtroTurma').addEventListener('change', aplicarFiltros);
     document.getElementById('filtroCategoria').addEventListener('change', aplicarFiltros);
     document.getElementById('filtroBairro').addEventListener('input', aplicarFiltros);
+    document.getElementById('filtroStatus').addEventListener('change', aplicarFiltros);
 
     async function verificarLogin() {
         const email = document.getElementById('emailLogin').value.trim();
@@ -1837,24 +1270,21 @@ if ('serviceWorker' in navigator) {
         document.getElementById('erroLogin').innerText = '';
 
         try {
-            const response = await fetch(`${SCRIPT_URL}?email=${encodeURIComponent(email)}&senha=${encodeURIComponent(senha)}`);
-            const resultado = await response.json();
-
-            if (resultado.valido) {
-                usuarioLogado = { email: email, cargo: resultado.cargo || 'Diretor' };
+            const response = await fetch(`${API_URL}/alunos`);
+            if (response.ok) {
+                usuarioLogado = { email: email, cargo: 'Diretor' };
                 document.getElementById('telaLogin').style.display = 'none';
                 document.getElementById('painelAnalise').style.display = 'block';
-                document.getElementById('infoUsuario').innerHTML = `👤 ${email.split('@')[0]} | ✅ ${resultado.ultimoAcesso || 'acesso registrado'}`;
-                criarBotoesMeses();
+                document.getElementById('infoUsuario').innerHTML = `👤 ${email.split('@')[0]} | ✅ acesso registrado`;
                 carregarDadosDaPlanilha();
                 setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') carregarDadosDaPlanilha(); }, 60000);
                 setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') atualizarTimestamp(); }, 1000);
             } else {
-                document.getElementById('erroLogin').innerText = resultado.erro || 'E-mail ou senha incorretos!';
+                document.getElementById('erroLogin').innerText = 'Erro ao conectar com o servidor';
             }
         } catch (error) {
             console.error('Erro ao verificar login:', error);
-            document.getElementById('erroLogin').innerText = 'Erro ao conectar com o servidor. Tente novamente.';
+            document.getElementById('erroLogin').innerText = 'Erro ao conectar com o servidor. Verifique se o backend está rodando.';
         } finally {
             btn.disabled = false;
             btn.innerHTML = 'ACESSAR';
@@ -1862,15 +1292,6 @@ if ('serviceWorker' in navigator) {
     }
 
     function logout() {
-        if (usuarioLogado && usuarioLogado.email) {
-            const senha = document.getElementById('senhaLogin').value;
-            if (senha) {
-                fetch(`${SCRIPT_URL}?email=${encodeURIComponent(usuarioLogado.email)}&senha=${encodeURIComponent(senha)}`)
-                    .then(() => console.log('✅ Acesso registrado ao sair'))
-                    .catch(err => console.error('Erro:', err));
-            }
-        }
-        
         document.getElementById('telaLogin').style.display = 'flex';
         document.getElementById('painelAnalise').style.display = 'none';
         document.getElementById('emailLogin').value = '';
@@ -1878,8 +1299,6 @@ if ('serviceWorker' in navigator) {
         document.getElementById('erroLogin').innerText = '';
         usuarioLogado = null;
     }
-
-    setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') atualizarTimestamp(); }, 1000);
 </script>
 
 </body>

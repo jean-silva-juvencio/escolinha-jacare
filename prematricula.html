@@ -20,18 +20,15 @@ if ('serviceWorker' in navigator) {
             --azul-escuro: #003399;
             --azul-premium: #0047AB;
             --azul-claro: #00aaff;
-            --verde-whatsapp: #25d366;
             --laranja-destaque: #ff9800;
             --vermelho-erro: #ff4444;
             --verde-sucesso: #4caf50;
-            --cinza-claro: #f8f9fa;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -42,21 +39,31 @@ if ('serviceWorker' in navigator) {
             transition: background 0.3s ease, color 0.3s ease;
         }
 
-        /* ========== TEMA ESCURO ========== */
         body.dark-mode {
             background: linear-gradient(135deg, #0f172a 0%, #1e1a3a 100%);
-            color: #e2e8f0;
+        }
+
+        body.dark-mode,
+        body.dark-mode .form-grupo label,
+        body.dark-mode .secao-titulo,
+        body.dark-mode .subtitulo,
+        body.dark-mode .radio-group label,
+        body.dark-mode .checkbox-group label,
+        body.dark-mode .tabela-referencia h4,
+        body.dark-mode .tamanho-resultado,
+        body.dark-mode .info-idade,
+        body.dark-mode .observacao,
+        body.dark-mode .form-grupo input,
+        body.dark-mode .form-grupo select,
+        body.dark-mode .form-grupo textarea,
+        body.dark-mode .form-grupo input::placeholder,
+        body.dark-mode .form-grupo select::placeholder,
+        body.dark-mode .form-grupo textarea::placeholder {
+            color: #ffffff !important;
         }
 
         body.dark-mode .nav-bar {
             background: #1e293b;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        body.dark-mode .logo-text {
-            background: linear-gradient(45deg, #60a5fa, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
         body.dark-mode .form-card {
@@ -67,97 +74,44 @@ if ('serviceWorker' in navigator) {
             color: #60a5fa;
         }
 
-        body.dark-mode .form-card .subtitulo {
-            color: #94a3b8;
-        }
-
-        body.dark-mode .secao {
-            border-bottom-color: #334155;
-        }
-
-        body.dark-mode .secao-titulo {
-            color: #60a5fa;
-        }
-
-        body.dark-mode .form-grupo label {
-            color: #e2e8f0;
-        }
-
-        body.dark-mode .form-grupo input,
-        body.dark-mode .form-grupo select {
-            background: #0f172a;
-            border-color: #334155;
-            color: #e2e8f0;
-        }
-
-        body.dark-mode .form-grupo input:focus,
-        body.dark-mode .form-grupo select:focus {
-            border-color: #60a5fa;
-            box-shadow: 0 0 0 3px rgba(96,165,250,0.1);
-        }
-
-        body.dark-mode .observacao {
-            background: #0f172a;
-            color: #94a3b8;
-        }
-
-        body.dark-mode .radio-group label {
-            color: #e2e8f0;
-        }
-
-        body.dark-mode .checkbox-group label {
-            color: #e2e8f0;
-        }
-
-        body.dark-mode .buscar-cep {
-            background: #3b82f6;
-        }
-
-        body.dark-mode .buscar-cep:active {
-            background: #2563eb;
-        }
-
         body.dark-mode .btn-enviar {
             background: linear-gradient(135deg, #3b82f6, #1e40af);
-        }
-
-        body.dark-mode .info-idade {
-            background: #0f172a;
-            color: #60a5fa;
-        }
-
-        body.dark-mode .mensagem-erro {
-            color: #f87171;
-        }
-
-        body.dark-mode .toast {
-            background: #1e293b;
-            color: white;
-        }
-
-        body.dark-mode .mensagem-sucesso {
-            background: linear-gradient(135deg, #059669, #047857);
         }
 
         body.dark-mode footer {
             background: #0f172a;
         }
 
-        /* Barra de navegação */
+        body.dark-mode .tabela-referencia {
+            background: #0f172a;
+            border-color: #334155;
+        }
+
+        body.dark-mode .aba {
+            background: #0f172a;
+            border-color: #334155;
+        }
+
         .nav-bar {
             background: white;
             border-radius: 60px;
             padding: 10px 20px;
             margin: 0 auto 20px;
-            max-width: 800px;
+            max-width: 900px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            transition: background 0.3s;
+            position: fixed;
+            top: 16px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            width: calc(100% - 32px);
         }
+
         .logo-text {
             text-decoration: none;
             font-family: 'Montserrat';
@@ -167,10 +121,12 @@ if ('serviceWorker' in navigator) {
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .nav-links {
             display: flex;
             gap: 8px;
         }
+
         .nav-link {
             text-decoration: none;
             padding: 6px 14px;
@@ -179,14 +135,11 @@ if ('serviceWorker' in navigator) {
             font-size: 0.75rem;
             background: #f1f5f9;
             color: #1e293b;
-            transition: background 0.3s;
         }
+
         body.dark-mode .nav-link {
             background: #0f172a;
             color: #e2e8f0;
-        }
-        .nav-link:hover {
-            background: #e2e8f0;
         }
 
         .btn-tema {
@@ -198,19 +151,11 @@ if ('serviceWorker' in navigator) {
             height: 45px;
             font-size: 1.2rem;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-        body.dark-mode .btn-tema {
-            background: #3b82f6;
-        }
-        .btn-tema:hover {
-            transform: scale(1.05);
         }
 
         .form-container {
             max-width: 900px;
             margin: 0 auto;
-            animation: fadeInUp 0.6s ease;
         }
 
         .form-card {
@@ -240,7 +185,6 @@ if ('serviceWorker' in navigator) {
             margin-bottom: 28px;
             border-bottom: 1px solid #eee;
             padding-bottom: 20px;
-            transition: border-color 0.3s;
         }
 
         .secao:last-child {
@@ -256,7 +200,6 @@ if ('serviceWorker' in navigator) {
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: color 0.3s;
         }
 
         .secao-titulo .numero {
@@ -271,6 +214,40 @@ if ('serviceWorker' in navigator) {
             font-size: 0.9rem;
         }
 
+        .abas-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        .aba {
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            background: #f0f0f0;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .aba {
+            background: #334155;
+        }
+
+        .aba.ativa {
+            background: var(--azul-premium);
+            color: white;
+        }
+
+        .conteudo-aba {
+            display: none;
+        }
+
+        .conteudo-aba.ativa {
+            display: block;
+        }
+
         .form-grupo {
             margin-bottom: 16px;
         }
@@ -281,7 +258,6 @@ if ('serviceWorker' in navigator) {
             margin-bottom: 6px;
             color: #333;
             font-size: 0.85rem;
-            transition: color 0.3s;
         }
 
         .form-grupo label .obrigatorio {
@@ -290,35 +266,26 @@ if ('serviceWorker' in navigator) {
         }
 
         .form-grupo input,
-        .form-grupo select {
+        .form-grupo select,
+        .form-grupo textarea {
             width: 100%;
             padding: 12px 14px;
             border: 2px solid #e0e0e0;
             border-radius: 12px;
             font-size: 0.95rem;
-            transition: all 0.3s;
             font-family: 'Open Sans', sans-serif;
             background: white;
         }
 
+        .form-grupo textarea {
+            resize: vertical;
+        }
+
         .form-grupo input:focus,
-        .form-grupo select:focus {
+        .form-grupo select:focus,
+        .form-grupo textarea:focus {
             outline: none;
             border-color: var(--azul-claro);
-            box-shadow: 0 0 0 3px rgba(0,170,255,0.1);
-        }
-
-        .form-grupo input.erro,
-        .form-grupo select.erro {
-            border-color: var(--vermelho-erro);
-            animation: shake 0.3s ease;
-        }
-
-        .mensagem-erro {
-            color: var(--vermelho-erro);
-            font-size: 0.7rem;
-            margin-top: 5px;
-            display: none;
         }
 
         .form-linha {
@@ -343,31 +310,47 @@ if ('serviceWorker' in navigator) {
             color: var(--azul-premium);
             font-weight: 600;
             display: none;
-            transition: background 0.3s;
         }
 
-        .observacao {
-            background: var(--cinza-claro);
+        .tamanho-resultado {
+            background: #e8f0fe;
             padding: 12px;
             border-radius: 12px;
-            margin-top: 12px;
-            font-size: 0.75rem;
-            color: #666;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: background 0.3s, color 0.3s;
+            margin-top: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
         }
 
-        .radio-group {
+        .tabela-referencia {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .tabela-referencia h4 {
+            margin-bottom: 10px;
+            color: var(--azul-premium);
+        }
+
+        .tabela-referencia-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            font-size: 0.8rem;
+        }
+
+        .radio-group, .checkbox-group {
             display: flex;
             gap: 20px;
             align-items: center;
-            padding: 8px 0;
             flex-wrap: wrap;
+            padding: 8px 0;
         }
 
-        .radio-group label {
+        .radio-group label, .checkbox-group label {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -376,23 +359,7 @@ if ('serviceWorker' in navigator) {
             cursor: pointer;
         }
 
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            padding: 10px 0;
-        }
-
-        .checkbox-group label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: normal;
-            cursor: pointer;
-            font-size: 0.85rem;
-        }
-
-        .checkbox-group input {
+        .radio-group input, .checkbox-group input {
             width: 18px;
             height: 18px;
             cursor: pointer;
@@ -407,14 +374,6 @@ if ('serviceWorker' in navigator) {
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 1px solid #eee;
-        }
-
-        .deficiencia-header label {
-            font-weight: 600;
-            margin-bottom: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .deficiencia-opcoes {
@@ -437,17 +396,8 @@ if ('serviceWorker' in navigator) {
             font-weight: 800;
             font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s;
             width: 100%;
             margin-top: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn-enviar:active {
-            transform: scale(0.98);
         }
 
         .btn-enviar:disabled {
@@ -465,57 +415,12 @@ if ('serviceWorker' in navigator) {
             cursor: pointer;
             margin-top: 8px;
             width: 100%;
-            transition: all 0.2s;
         }
 
-        .buscar-cep:active {
-            transform: scale(0.96);
-        }
-
-        .carregando-cep {
+        .mensagem-erro {
+            color: var(--vermelho-erro);
             font-size: 0.7rem;
-            color: #666;
             margin-top: 5px;
-            display: none;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .mensagem-sucesso {
-            background: linear-gradient(135deg, var(--verde-sucesso), #45a049);
-            color: white;
-            padding: 30px 20px;
-            border-radius: 30px;
-            text-align: center;
-            animation: fadeInUp 0.5s ease;
-        }
-
-        .mensagem-sucesso h2 {
-            font-family: 'Montserrat';
-            margin-bottom: 12px;
-            font-size: 1.4rem;
-        }
-
-        .mensagem-sucesso .protocolo {
-            background: rgba(255,255,255,0.2);
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 50px;
-            margin: 12px 0;
-            font-weight: 800;
-            font-size: 0.9rem;
-        }
-
-        .hidden {
             display: none;
         }
 
@@ -526,20 +431,25 @@ if ('serviceWorker' in navigator) {
             background: white;
             padding: 12px 20px;
             border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             z-index: 1100;
-            animation: slideIn 0.3s ease;
             font-weight: 500;
             font-size: 0.85rem;
         }
+
         .toast.success { border-left: 4px solid #4caf50; }
         .toast.error { border-left: 4px solid #f44336; }
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+
+        .mensagem-sucesso {
+            background: linear-gradient(135deg, var(--verde-sucesso), #45a049);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
         }
 
         footer {
@@ -550,25 +460,25 @@ if ('serviceWorker' in navigator) {
             margin-top: 30px;
             border-radius: 20px;
             font-size: 0.75rem;
-            transition: background 0.3s;
         }
 
         @media (max-width: 700px) {
             .form-linha, .form-linha-3 { grid-template-columns: 1fr; }
-            .deficiencia-opcoes { margin-left: 10px; }
+            .radio-group, .checkbox-group { gap: 12px; }
+            .tabela-referencia-grid { grid-template-columns: 1fr; }
+            .abas-container { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-<!-- Barra de navegação -->
 <div class="nav-bar">
     <a href="index.html" class="logo-text">🐊 ESCOLINHA DO JACARÉ</a>
     <div class="nav-links">
         <a href="index.html" class="nav-link">🏠 INÍCIO</a>
         <a href="diretoria.html" class="nav-link">📊 DIRETORIA</a>
         <a href="funcionarios.html" class="nav-link">🔒 FUNCIONÁRIOS</a>
-        <button class="btn-tema" onclick="alternarTema()" style="margin-left: 8px;">🌞</button>
+        <button class="btn-tema" onclick="alternarTema()">🌞</button>
     </div>
 </div>
 
@@ -610,62 +520,63 @@ if ('serviceWorker' in navigator) {
                         </div>
                     </div>
 
-                    <!-- CAMPO CATEGORIA ADICIONADO AQUI -->
-                    <div class="form-grupo">
-                        <label>🏆 Categoria / Sub <span class="obrigatorio">*</span></label>
-                        <select id="categoria" required>
-                            <option value="">Selecione a categoria</option>
-                            <option value="Sub-5">Sub-5 (até 5 anos)</option>
-                            <option value="Sub-7">Sub-7 (6 a 7 anos)</option>
-                            <option value="Sub-9">Sub-9 (8 a 9 anos)</option>
-                            <option value="Sub-11">Sub-11 (10 a 11 anos)</option>
-                            <option value="Sub-13">Sub-13 (12 a 13 anos)</option>
-                            <option value="Sub-15">Sub-15 (14 a 15 anos)</option>
-                            <option value="Sub-17">Sub-17 (16 a 17 anos)</option>
-                            <option value="Acima-17">Acima de 17 anos (consultar diretoria)</option>
-                        </select>
-                        <div class="mensagem-erro" id="erroCategoria">Campo obrigatório</div>
-                        <div class="observacao" style="margin-top: 8px;">
-                            💡 <strong>Dica:</strong> Acima de 17 anos, a matrícula será analisada pela diretoria.
-                        </div>
+                    <!-- ABAS UNIFORME -->
+                    <div class="abas-container">
+                        <div class="aba ativa" data-aba="crianca">👶 CRIANÇA (até 14 anos)</div>
+                        <div class="aba" data-aba="adulto">👨 ADULTO (15+ anos)</div>
                     </div>
 
-                    <div class="form-linha-3">
+                    <!-- ABA CRIANÇA -->
+                    <div id="abaCrianca" class="conteudo-aba ativa">
                         <div class="form-grupo">
-                            <label>Peso (kg) <span class="obrigatorio">*</span></label>
-                            <input type="number" id="peso" step="0.1" placeholder="Ex: 35.5">
-                            <div class="mensagem-erro" id="erroPeso">Campo obrigatório</div>
+                            <label>Idade da criança <span class="obrigatorio">*</span></label>
+                            <input type="number" id="idadeCrianca" min="8" max="14" placeholder="Ex: 8">
+                            <div class="mensagem-erro" id="erroIdade">Campo obrigatório (8 a 14 anos)</div>
                         </div>
-                        <div class="form-grupo">
-                            <label>Altura (cm) <span class="obrigatorio">*</span></label>
-                            <input type="number" id="altura" placeholder="Ex: 145">
-                            <div class="mensagem-erro" id="erroAltura">Campo obrigatório</div>
+                        <div class="tamanho-resultado" id="tamanhoCriancaResultado">
+                            👕 Tamanho da camisa: <strong>-</strong>
                         </div>
+                        <div class="tabela-referencia">
+                            <h4>📏 Tabela de referência (Idade → Tamanho da camisa)</h4>
+                            <div class="tabela-referencia-grid">
+                                <span>📌 8 anos → Tamanho <strong>8</strong></span>
+                                <span>📌 9 anos → Tamanho <strong>9</strong></span>
+                                <span>📌 10 anos → Tamanho <strong>10</strong></span>
+                                <span>📌 11 anos → Tamanho <strong>11</strong></span>
+                                <span>📌 12 anos → Tamanho <strong>12</strong></span>
+                                <span>📌 13 anos → Tamanho <strong>13</strong></span>
+                                <span>📌 14 anos → Tamanho <strong>14</strong></span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="tamanhoCamisaCrianca">
+                    </div>
+
+                    <!-- ABA ADULTO -->
+                    <div id="abaAdulto" class="conteudo-aba">
                         <div class="form-grupo">
-                            <label>Nº Calçado <span class="obrigatorio">*</span></label>
-                            <select id="calcado">
-                                <option value="">Selecione</option>
-                                <option value="25">25</option><option value="26">26</option><option value="27">27</option>
-                                <option value="28">28</option><option value="29">29</option><option value="30">30</option>
-                                <option value="31">31</option><option value="32">32</option><option value="33">33</option>
-                                <option value="34">34</option><option value="35">35</option><option value="36">36</option>
-                                <option value="37">37</option><option value="38">38</option><option value="39">39</option>
-                                <option value="40">40</option><option value="41">41</option><option value="42">42</option>
-                                <option value="43">43</option><option value="44">44</option><option value="45">45</option>
+                            <label>Escolha o tamanho da camisa <span class="obrigatorio">*</span></label>
+                            <select id="tamanhoAdulto">
+                                <option value="">Selecione...</option>
+                                <option value="PP">PP</option>
+                                <option value="P">P</option>
+                                <option value="M">M</option>
+                                <option value="G">G</option>
+                                <option value="GG">GG</option>
+                                <option value="GGG">GGG</option>
+                                <option value="XGG">XGG</option>
                             </select>
-                            <div class="mensagem-erro" id="erroCalcado">Campo obrigatório</div>
+                            <div class="mensagem-erro" id="erroTamanhoAdulto">Selecione o tamanho da camisa</div>
                         </div>
                     </div>
 
                     <div class="form-grupo">
-                        <label>Tamanho Uniforme <span class="obrigatorio">*</span></label>
-                        <select id="uniforme">
-                            <option value="">Selecione</option>
-                            <option value="PP">PP</option><option value="P">P</option><option value="M">M</option>
-                            <option value="G">G</option><option value="GG">GG</option><option value="XG">XG</option>
-                            <option value="XXG">XXG</option>
+                        <label>👕 Já possui a camisa da Escolinha? <span class="obrigatorio">*</span></label>
+                        <select id="possuiUniforme">
+                            <option value="">Selecione...</option>
+                            <option value="sim">✅ SIM - Já tenho a camisa</option>
+                            <option value="nao">❌ NÃO - Preciso da camisa</option>
                         </select>
-                        <div class="mensagem-erro" id="erroUniforme">Campo obrigatório</div>
+                        <div class="mensagem-erro" id="erroPossuiUniforme">Selecione se já possui a camisa</div>
                     </div>
 
                     <div class="form-grupo">
@@ -681,7 +592,6 @@ if ('serviceWorker' in navigator) {
                         <div class="mensagem-erro" id="erroTurma">Campo obrigatório</div>
                     </div>
 
-                    <!-- DEFICIÊNCIA -->
                     <div class="form-grupo">
                         <div class="deficiencia-header">
                             <label>Deficiência</label>
@@ -717,6 +627,33 @@ if ('serviceWorker' in navigator) {
                 <div class="secao">
                     <div class="secao-titulo">
                         <span class="numero">2</span> DADOS DO RESPONSÁVEL
+                    </div>
+
+                    <!-- NOVOS CAMPOS: TIPO DE VÍNCULO E SEXO DO RESPONSÁVEL -->
+                    <div class="form-linha">
+                        <div class="form-grupo">
+                            <label>Tipo de vínculo com o aluno <span class="obrigatorio">*</span></label>
+                            <select id="tipoVinculo">
+                                <option value="">Selecione...</option>
+                                <option value="Pai">👨 Pai</option>
+                                <option value="Mãe">👩 Mãe</option>
+                                <option value="Tio">👨 Tio</option>
+                                <option value="Tia">👩 Tia</option>
+                                <option value="Avô">👨 Avô</option>
+                                <option value="Avó">👩 Avó</option>
+                                <option value="Responsável legal">⚖️ Responsável legal</option>
+                                <option value="Outro">📝 Outro</option>
+                            </select>
+                            <div class="mensagem-erro" id="erroVinculo">Campo obrigatório</div>
+                        </div>
+                        <div class="form-grupo">
+                            <label>Sexo do responsável <span class="obrigatorio">*</span></label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="sexoResponsavel" value="M"> 👨 Masculino</label>
+                                <label><input type="radio" name="sexoResponsavel" value="F"> 👩 Feminino</label>
+                            </div>
+                            <div class="mensagem-erro" id="erroSexoResponsavel">Selecione o sexo</div>
+                        </div>
                     </div>
 
                     <div class="form-linha">
@@ -757,7 +694,6 @@ if ('serviceWorker' in navigator) {
                             <label>CEP</label>
                             <input type="text" id="cep" placeholder="Digite o CEP" maxlength="9">
                             <button type="button" class="buscar-cep" onclick="buscarCEP()">🔍 BUSCAR ENDEREÇO</button>
-                            <div id="carregandoCEP" class="carregando-cep">🔍 Buscando...</div>
                         </div>
                     </div>
 
@@ -845,7 +781,7 @@ if ('serviceWorker' in navigator) {
                     </div>
                 </div>
 
-                <!-- SEÇÃO 5: INFORMAÇÕES ADICIONAIS -->
+                <!-- SEÇÃO 5: INFORMAÇÕES ADICIONAIS (OPCIONAL) -->
                 <div class="secao">
                     <div class="secao-titulo">
                         <span class="numero">5</span> INFORMAÇÕES ADICIONAIS
@@ -864,6 +800,34 @@ if ('serviceWorker' in navigator) {
                         </select>
                     </div>
 
+                    <!-- FEEDBACK -->
+                    <div class="form-grupo">
+                        <label>⭐ Avalie a Escolinha (opcional)</label>
+                        <div class="radio-group" id="estrelas">
+                            <label><input type="radio" name="estrelas" value="1"> ⭐ 1</label>
+                            <label><input type="radio" name="estrelas" value="2"> ⭐⭐ 2</label>
+                            <label><input type="radio" name="estrelas" value="3"> ⭐⭐⭐ 3</label>
+                            <label><input type="radio" name="estrelas" value="4"> ⭐⭐⭐⭐ 4</label>
+                            <label><input type="radio" name="estrelas" value="5"> ⭐⭐⭐⭐⭐ 5</label>
+                        </div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>📝 O que você quer deixar? (opcional)</label>
+                        <div class="radio-group" id="feedbackRadios">
+                            <label><input type="radio" name="tipoFeedback" value="Elogio"> 💬 Elogio</label>
+                            <label><input type="radio" name="tipoFeedback" value="Sugestão"> 💡 Sugestão</label>
+                            <label><input type="radio" name="tipoFeedback" value="Observação"> 👁️ Observação</label>
+                            <label><input type="radio" name="tipoFeedback" value="Crítica"> 🤔 Crítica construtiva</label>
+                            <label><input type="radio" name="tipoFeedback" value="Outro"> 📝 Outro</label>
+                        </div>
+                    </div>
+
+                    <div class="form-grupo">
+                        <label>✏️ Sua mensagem (opcional)</label>
+                        <textarea id="mensagemFeedback" rows="3" placeholder="Escreva aqui seu elogio, sugestão, observação ou crítica..."></textarea>
+                    </div>
+
                     <div class="checkbox-group">
                         <input type="checkbox" id="declaracao">
                         <label for="declaracao">Declaro que as informações são verdadeiras. <span class="obrigatorio">*</span></label>
@@ -880,8 +844,7 @@ if ('serviceWorker' in navigator) {
 
     <!-- MENSAGEM DE SUCESSO -->
     <div id="mensagemSucesso" class="mensagem-sucesso hidden">
-        <div class="emoji-animado">🎉</div>
-        <h2>SOLICITAÇÃO ENVIADA!</h2>
+        <h2>🎉 SOLICITAÇÃO ENVIADA!</h2>
         <p>Recebemos sua pré-matrícula com sucesso!</p>
         <div id="protocoloDiv" class="protocolo"></div>
         <p><strong>Aguarde o contato da diretoria.</strong></p>
@@ -898,11 +861,6 @@ if ('serviceWorker' in navigator) {
 </footer>
 
 <script>
-    // ========== CONFIGURAÇÕES ==========
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw2Dl7TM8gIC8UDTVSVeRcnSokVQOeMsJvasLzHMAL8BiwdEgyD6_gfRy33WpS91U23Pw/exec';
-    const PLANILHA_ID = '1O48gLWV9zb_dtDFpz9MtIMLZ4Cx8jibtTjWlE922bAw';
-    const NOME_ABA = 'solicitaçoes';
-
     // ========== TEMA ESCURO ==========
     function alternarTema() {
         document.body.classList.toggle('dark-mode');
@@ -912,14 +870,12 @@ if ('serviceWorker' in navigator) {
         localStorage.setItem('tema_prematricula', isDark ? 'dark' : 'light');
     }
 
-    // Carregar tema salvo
     if (localStorage.getItem('tema_prematricula') === 'dark') {
         document.body.classList.add('dark-mode');
         document.querySelector('.btn-tema').innerHTML = '🌙';
     }
 
-    // ========== FUNÇÕES AUXILIARES ==========
-    
+    // ========== TOAST ==========
     function mostrarToast(mensagem, tipo = 'success') {
         const toast = document.createElement('div');
         toast.className = `toast ${tipo}`;
@@ -928,100 +884,90 @@ if ('serviceWorker' in navigator) {
         setTimeout(() => toast.remove(), 3000);
     }
 
-    // Controle de deficiência
-    document.getElementById('semDeficiencia').addEventListener('change', function() {
-        const opcoes = document.getElementById('deficienciaOpcoes');
-        const checks = document.querySelectorAll('.deficiencia-check');
-        const outraInput = document.getElementById('outraDeficiencia');
+    // ========== CONTROLE DAS ABAS ==========
+    function alternarAba(abaId) {
+        document.querySelectorAll('.aba').forEach(aba => {
+            aba.classList.remove('ativa');
+        });
+        document.querySelector(`.aba[data-aba="${abaId}"]`).classList.add('ativa');
         
-        if (this.checked) {
-            opcoes.classList.add('disabled');
-            checks.forEach(c => { c.checked = false; c.disabled = true; });
-            outraInput.disabled = true;
-            outraInput.value = '';
-        } else {
-            opcoes.classList.remove('disabled');
-            checks.forEach(c => c.disabled = false);
-            outraInput.disabled = false;
-        }
-    });
+        document.querySelectorAll('.conteudo-aba').forEach(conteudo => {
+            conteudo.classList.remove('ativa');
+        });
+        document.getElementById(`aba${abaId.charAt(0).toUpperCase() + abaId.slice(1)}`).classList.add('ativa');
+    }
 
-    // Controle de remédio
-    document.querySelectorAll('input[name="remedio"]').forEach(radio => {
-        radio.addEventListener('change', function() {
-            const descField = document.getElementById('remedioDesc');
-            descField.style.display = this.value === 'Sim' ? 'block' : 'none';
+    document.querySelectorAll('.aba').forEach(aba => {
+        aba.addEventListener('click', () => {
+            alternarAba(aba.dataset.aba);
         });
     });
 
-    // Calcular idade
+    // ========== CALCULAR IDADE ==========
     function calcularIdade() {
         const dataNasc = document.getElementById('dataNasc').value;
         if (!dataNasc) return null;
         const hoje = new Date();
         const nasc = new Date(dataNasc);
         let idade = hoje.getFullYear() - nasc.getFullYear();
-        const m = hoje.getMonth() - nasc.getMonth();
-        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
+        const mes = hoje.getMonth() - nasc.getMonth();
+        if (mes < 0 || (mes === 0 && hoje.getDate() < nasc.getDate())) idade--;
         return idade;
     }
 
-    // Sugerir categoria automaticamente pela idade
-    function sugerirCategoriaPorIdade() {
-        const idade = calcularIdade();
-        const selectCategoria = document.getElementById('categoria');
-        
-        if (idade !== null && idade >= 0) {
-            let categoriaSugerida = '';
-            if (idade <= 5) categoriaSugerida = 'Sub-5';
-            else if (idade <= 7) categoriaSugerida = 'Sub-7';
-            else if (idade <= 9) categoriaSugerida = 'Sub-9';
-            else if (idade <= 11) categoriaSugerida = 'Sub-11';
-            else if (idade <= 13) categoriaSugerida = 'Sub-13';
-            else if (idade <= 15) categoriaSugerida = 'Sub-15';
-            else if (idade <= 17) categoriaSugerida = 'Sub-17';
-            else categoriaSugerida = 'Acima-17';
-            
-            // Verificar se já está selecionada
-            if (selectCategoria.value !== categoriaSugerida && selectCategoria.value !== '') {
-                // Mostrar sugestão sem alterar automaticamente
-                const infoIdade = document.getElementById('infoIdade');
-                infoIdade.innerHTML = `📊 Idade: ${idade} anos | Sugestão: <strong>${categoriaSugerida}</strong>`;
-                infoIdade.style.display = 'block';
-            } else if (selectCategoria.value === '') {
-                // Se não tem categoria selecionada, sugerir
-                selectCategoria.value = categoriaSugerida;
-                const infoIdade = document.getElementById('infoIdade');
-                infoIdade.innerHTML = `📊 Idade: ${idade} anos | Categoria sugerida: <strong>${categoriaSugerida}</strong>`;
-                infoIdade.style.display = 'block';
-            }
-        }
-    }
-
+    // ========== MOSTRAR IDADE E SUGERIR ==========
     function mostrarIdade() {
         const idade = calcularIdade();
         const infoDiv = document.getElementById('infoIdade');
+        
         if (idade !== null && idade >= 0) {
             infoDiv.innerHTML = `📊 Idade calculada: <strong>${idade} anos</strong>`;
             infoDiv.style.display = 'block';
-            sugerirCategoriaPorIdade();
+            
+            // Sugerir idade automaticamente na aba CRIANÇA
+            const abaAtiva = document.querySelector('.aba.ativa')?.dataset.aba;
+            const idadeCriancaInput = document.getElementById('idadeCrianca');
+            if (abaAtiva === 'crianca' && idadeCriancaInput && !idadeCriancaInput.value && idade >= 8 && idade <= 14) {
+                idadeCriancaInput.value = idade;
+                atualizarTamanhoCrianca();
+            }
         } else {
             infoDiv.style.display = 'none';
         }
     }
 
-    document.getElementById('dataNasc').addEventListener('change', mostrarIdade);
-    document.getElementById('dataNasc').addEventListener('input', mostrarIdade);
+    // ========== IDADE PARA TAMANHO (CRIANÇA) ==========
+    function idadeParaTamanhoCrianca(idade) {
+        if (!idade) return '';
+        if (idade >= 8 && idade <= 14) return idade.toString();
+        return '';
+    }
 
+    function atualizarTamanhoCrianca() {
+        const idade = parseInt(document.getElementById('idadeCrianca').value);
+        const tamanho = idadeParaTamanhoCrianca(idade);
+        const resultadoDiv = document.getElementById('tamanhoCriancaResultado');
+        const campoOculto = document.getElementById('tamanhoCamisaCrianca');
+        
+        if (tamanho) {
+            resultadoDiv.innerHTML = `👕 Tamanho da camisa: <strong>${tamanho}</strong> (equivalente à idade ${idade} anos)`;
+            campoOculto.value = tamanho;
+        } else if (idade) {
+            resultadoDiv.innerHTML = `⚠️ Idade ${idade} anos fora da tabela (8 a 14 anos)`;
+            campoOculto.value = '';
+        } else {
+            resultadoDiv.innerHTML = `👕 Tamanho da camisa: <strong>-</strong>`;
+            campoOculto.value = '';
+        }
+    }
+
+    // ========== BUSCAR CEP ==========
     async function buscarCEP() {
         const cep = document.getElementById('cep').value.replace(/\D/g, '');
         if (cep.length !== 8) {
             mostrarToast('Digite um CEP válido com 8 dígitos!', 'error');
             return;
         }
-
-        const carregando = document.getElementById('carregandoCEP');
-        carregando.style.display = 'block';
 
         try {
             const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
@@ -1037,57 +983,11 @@ if ('serviceWorker' in navigator) {
                 mostrarToast('CEP não encontrado!', 'error');
             }
         } catch (error) {
-            console.error('Erro:', error);
             mostrarToast('Erro ao buscar CEP', 'error');
-        } finally {
-            carregando.style.display = 'none';
         }
     }
 
-    async function verificarDuplicidade(rgResponsavel, nomeResponsavel, nomeAluno, dataNasc) {
-        try {
-            const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:csv&sheet=${NOME_ABA}`;
-            const response = await fetch(url);
-            const texto = await response.text();
-            const linhas = texto.split('\n');
-
-            for (let i = 1; i < linhas.length; i++) {
-                const linha = linhas[i].trim();
-                if (!linha) continue;
-
-                const valores = [];
-                let atual = '';
-                let dentroAspas = false;
-                for (let c of linha) {
-                    if (c === '"') dentroAspas = !dentroAspas;
-                    else if (c === ',' && !dentroAspas) { valores.push(atual); atual = ''; }
-                    else atual += c;
-                }
-                valores.push(atual);
-
-                const limpar = (v) => v ? v.replace(/^"|"$/g, '').trim() : '';
-
-                if (valores.length >= 27) {
-                    const rgExistente = limpar(valores[15]);
-                    const nomeResponsavelExistente = limpar(valores[7]);
-                    const nomeAlunoExistente = limpar(valores[2]);
-                    const dataExistente = limpar(valores[3]);
-
-                    if (rgExistente === rgResponsavel && 
-                        nomeResponsavelExistente === nomeResponsavel && 
-                        nomeAlunoExistente === nomeAluno && 
-                        dataExistente === dataNasc) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        } catch (error) {
-            console.error('Erro ao verificar duplicidade:', error);
-            return false;
-        }
-    }
-
+    // ========== MOSTRAR ERRO ==========
     function mostrarErro(erroId, campoId) {
         const erroDiv = document.getElementById(erroId);
         if (erroDiv) erroDiv.style.display = 'block';
@@ -1101,16 +1001,26 @@ if ('serviceWorker' in navigator) {
         }
     }
 
+    // ========== ENVIAR CADASTRO ==========
     async function enviarCadastro() {
-        // Coletar dados
+        // Coletar dados - ALUNO
         const nomeAluno = document.getElementById('nomeAluno').value.trim();
         const dataNasc = document.getElementById('dataNasc').value;
         const sexo = document.querySelector('input[name="sexo"]:checked')?.value;
-        const categoria = document.getElementById('categoria').value;
-        const peso = document.getElementById('peso').value;
-        const altura = document.getElementById('altura').value;
-        const calcado = document.getElementById('calcado').value;
-        const uniforme = document.getElementById('uniforme').value;
+        
+        // Verificar qual aba está ativa (uniforme)
+        const abaAtiva = document.querySelector('.aba.ativa').dataset.aba;
+        let tamanhoUniforme = '';
+        let idadeCrianca = null;
+        
+        if (abaAtiva === 'crianca') {
+            idadeCrianca = document.getElementById('idadeCrianca').value;
+            tamanhoUniforme = document.getElementById('tamanhoCamisaCrianca').value;
+        } else {
+            tamanhoUniforme = document.getElementById('tamanhoAdulto').value;
+        }
+        
+        const possuiUniforme = document.getElementById('possuiUniforme').value;
         const turma = document.getElementById('turma').value;
         
         const semDeficiencia = document.getElementById('semDeficiencia').checked;
@@ -1127,6 +1037,9 @@ if ('serviceWorker' in navigator) {
         const remedioSelecionado = document.querySelector('input[name="remedio"]:checked')?.value;
         const remedioDesc = remedioSelecionado === 'Sim' ? document.getElementById('remedioDesc').value.trim() : '';
         
+        // DADOS DO RESPONSÁVEL (com novos campos)
+        const tipoVinculo = document.getElementById('tipoVinculo').value;
+        const sexoResponsavel = document.querySelector('input[name="sexoResponsavel"]:checked')?.value;
         const rgResponsavel = document.getElementById('rgResponsavel').value.trim().replace(/\D/g, '');
         const responsavel = document.getElementById('responsavel').value.trim();
         const telefone = document.getElementById('telefone').value.trim();
@@ -1144,18 +1057,30 @@ if ('serviceWorker' in navigator) {
         const origem = document.getElementById('origem').value;
         const declaracao = document.getElementById('declaracao').checked;
 
+        // Feedback
+        const tipoFeedback = document.querySelector('input[name="tipoFeedback"]:checked')?.value;
+        const estrelas = document.querySelector('input[name="estrelas"]:checked')?.value;
+        const mensagemFeedback = document.getElementById('mensagemFeedback').value.trim();
+
         // Validações
         let isValid = true;
         
         if (!nomeAluno) { mostrarErro('erroNome', 'nomeAluno'); isValid = false; }
         if (!dataNasc) { mostrarErro('erroData', 'dataNasc'); isValid = false; }
         if (!sexo) { mostrarErro('erroSexo', null); isValid = false; }
-        if (!categoria) { mostrarErro('erroCategoria', 'categoria'); isValid = false; }
-        if (!peso) { mostrarErro('erroPeso', 'peso'); isValid = false; }
-        if (!altura) { mostrarErro('erroAltura', 'altura'); isValid = false; }
-        if (!calcado) { mostrarErro('erroCalcado', 'calcado'); isValid = false; }
-        if (!uniforme) { mostrarErro('erroUniforme', 'uniforme'); isValid = false; }
+        
+        if (abaAtiva === 'crianca') {
+            if (!idadeCrianca) { mostrarErro('erroIdade', 'idadeCrianca'); isValid = false; }
+        } else {
+            if (!tamanhoUniforme) { mostrarErro('erroTamanhoAdulto', 'tamanhoAdulto'); isValid = false; }
+        }
+        
+        if (!possuiUniforme) { mostrarErro('erroPossuiUniforme', null); isValid = false; }
         if (!turma) { mostrarErro('erroTurma', 'turma'); isValid = false; }
+        
+        // Validações do responsável
+        if (!tipoVinculo) { mostrarErro('erroVinculo', 'tipoVinculo'); isValid = false; }
+        if (!sexoResponsavel) { mostrarErro('erroSexoResponsavel', null); isValid = false; }
         if (!rgResponsavel) { mostrarErro('erroRG', 'rgResponsavel'); isValid = false; }
         if (!responsavel) { mostrarErro('erroResponsavel', 'responsavel'); isValid = false; }
         
@@ -1187,79 +1112,123 @@ if ('serviceWorker' in navigator) {
 
         const btn = document.querySelector('.btn-enviar');
         btn.disabled = true;
-        btn.innerHTML = '⏳ VERIFICANDO...';
+        btn.innerHTML = '⏳ ENVIANDO...';
 
         try {
-            const jaExiste = await verificarDuplicidade(rgResponsavel, responsavel, nomeAluno, dataNasc);
-            
-            if (jaExiste) {
-                mostrarToast('❌ Este aluno já está cadastrado! Entre em contato.', 'error');
-                btn.disabled = false;
-                btn.innerHTML = '✅ ENVIAR SOLICITAÇÃO';
-                return;
-            }
-
-            btn.innerHTML = '⏳ ENVIANDO...';
-
-            const idade = calcularIdade();
             const protocolo = `JAC-${Date.now()}`;
             const dataEnvio = new Date().toLocaleString('pt-BR');
             const enderecoCompleto = `${endereco}, ${numero} - ${bairro}, ${municipio}/${uf}`;
+            const remedioFinal = remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não';
+
+            // Montar observacao completa (feedback + estrelas + mensagem)
+            let observacaoFinal = '';
+            if (estrelas) {
+                observacaoFinal = `⭐ ${estrelas} estrelas. `;
+            }
+            if (tipoFeedback && mensagemFeedback) {
+                observacaoFinal += `[${tipoFeedback}] ${mensagemFeedback}`;
+            } else if (tipoFeedback && !mensagemFeedback) {
+                observacaoFinal += `[${tipoFeedback}]`;
+            } else if (!tipoFeedback && mensagemFeedback) {
+                observacaoFinal += mensagemFeedback;
+            }
 
             const dados = {
                 protocolo: protocolo,
                 dataEnvio: dataEnvio,
                 nomeAluno: nomeAluno,
                 dataNasc: dataNasc,
-                idade: idade,
+                idade: (abaAtiva === 'crianca' && idadeCrianca) ? parseInt(idadeCrianca) : 0,
                 turma: turma,
-                categoria: categoria,  // <--- CAMPO CATEGORIA ADICIONADO
+                categoria: '',
                 responsavel: responsavel,
+                tipo_vinculo: tipoVinculo,
+                sexo_responsavel: sexoResponsavel,
                 telefone: telefone,
                 email: email,
                 endereco: enderecoCompleto,
                 bairro: bairro,
-                moradores: moradores,
-                remedio: remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não',
+                moradores: moradores === '' ? 1 : parseInt(moradores),
+                remedio: remedioFinal,
                 origem: origem,
                 rg: rgResponsavel,
                 sexo: sexo,
-                peso: peso,
-                altura: altura,
-                calcado: calcado,
-                uniforme: uniforme,
+                peso: 0,
+                altura: 0,
+                calcado: '',
+                tamanho_uniforme: tamanhoUniforme,
+                possui_uniforme: possuiUniforme,
                 deficiencia: deficienciaTexto,
                 municipio: municipio,
                 uf: uf,
                 escola: escola,
                 serie: serie,
-                status: 'pendente'
+                observacao: observacaoFinal,
+                estrelas: estrelas || null
             };
 
-            await fetch(SCRIPT_URL, {
+            console.log('Enviando dados:', dados);
+
+            const response = await fetch('http://localhost:5000/api/prematricula', {
                 method: 'POST',
-                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(dados)
             });
 
-            const solicitacoes = JSON.parse(localStorage.getItem('solicitacoes_prematricula') || '[]');
-            solicitacoes.push({ id: Date.now(), protocolo: protocolo, ...dados });
-            localStorage.setItem('solicitacoes_prematricula', JSON.stringify(solicitacoes));
+            const resultado = await response.json();
 
-            document.getElementById('protocoloDiv').innerHTML = `🔑 PROTOCOLO: ${protocolo}`;
-            document.getElementById('formularioContainer').classList.add('hidden');
-            document.getElementById('mensagemSucesso').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            mostrarToast('✅ Solicitação enviada com sucesso!', 'success');
+            if (response.ok) {
+                mostrarToast('✅ Solicitação enviada com sucesso!', 'success');
+                document.getElementById('protocoloDiv').innerHTML = `🔑 PROTOCOLO: ${protocolo}`;
+                document.getElementById('formularioContainer').classList.add('hidden');
+                document.getElementById('mensagemSucesso').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                mostrarToast(resultado.erro || '❌ Erro ao enviar solicitação', 'error');
+            }
 
         } catch (error) {
             console.error('Erro:', error);
-            mostrarToast('❌ Erro ao enviar. Tente novamente.', 'error');
+            mostrarToast('❌ Erro de conexão com o servidor. Verifique se o backend está rodando.', 'error');
         } finally {
             btn.disabled = false;
             btn.innerHTML = '✅ ENVIAR SOLICITAÇÃO';
         }
     }
+
+    // ========== EVENTOS ==========
+    document.getElementById('dataNasc').addEventListener('change', mostrarIdade);
+    document.getElementById('dataNasc').addEventListener('input', mostrarIdade);
+    document.getElementById('idadeCrianca').addEventListener('input', atualizarTamanhoCrianca);
+    document.getElementById('idadeCrianca').addEventListener('change', atualizarTamanhoCrianca);
+
+    // Controle de deficiência
+    document.getElementById('semDeficiencia').addEventListener('change', function() {
+        const opcoes = document.getElementById('deficienciaOpcoes');
+        const checks = document.querySelectorAll('.deficiencia-check');
+        const outraInput = document.getElementById('outraDeficiencia');
+        
+        if (this.checked) {
+            opcoes.classList.add('disabled');
+            checks.forEach(c => { c.checked = false; c.disabled = true; });
+            outraInput.disabled = true;
+            outraInput.value = '';
+        } else {
+            opcoes.classList.remove('disabled');
+            checks.forEach(c => c.disabled = false);
+            outraInput.disabled = false;
+        }
+    });
+
+    // Controle de remédio
+    document.querySelectorAll('input[name="remedio"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const descField = document.getElementById('remedioDesc');
+            descField.style.display = this.value === 'Sim' ? 'block' : 'none';
+        });
+    });
 </script>
 
 </body>
