@@ -14,299 +14,58 @@ if ('serviceWorker' in navigator) {
 </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fc 0%, #e9eef5 100%);
-            min-height: 100vh;
-            padding: 20px;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        body.dark-mode {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #eee;
-        }
-
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
-        /* Cabeçalho */
-        .header {
-            background: linear-gradient(135deg, #0047AB, #003399);
-            color: white;
-            padding: 20px 24px;
-            border-radius: 24px;
-            margin-bottom: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        body.dark-mode .header {
-            background: linear-gradient(135deg, #1e40af, #1e3a8a);
-        }
-        .header h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .header-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .btn-tema, .btn-atualizar, .btn-exportar {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 8px 16px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 12px;
-            color: white;
-            transition: all 0.2s;
-        }
-        .btn-tema:hover, .btn-atualizar:hover, .btn-exportar:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        /* Filtros */
-        .filtros-bar {
-            background: white;
-            border-radius: 20px;
-            padding: 16px 20px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        body.dark-mode .filtros-bar {
-            background: #1e293b;
-        }
-        .filtros-botoes {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .filtro-btn {
-            padding: 8px 18px;
-            border-radius: 40px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-            transition: all 0.2s;
-            background: #f1f5f9;
-            color: #1e293b;
-        }
-        body.dark-mode .filtro-btn {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
-        .filtro-btn.ativo {
-            background: #0047AB;
-            color: white;
-        }
-        body.dark-mode .filtro-btn.ativo {
-            background: #3b82f6;
-        }
-        .stats-info {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        /* Cards container */
-        .secao {
-            background: white;
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        body.dark-mode .secao {
-            background: #1e293b;
-        }
-        .secao h2 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e2e8f0;
-        }
-        body.dark-mode .secao h2 {
-            border-bottom-color: #334155;
-        }
-        .cards-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            justify-content: center;
-        }
-        .card-tamanho {
-            flex: 1;
-            min-width: 130px;
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-            border-radius: 20px;
-            padding: 20px 12px;
-            text-align: center;
-            transition: all 0.3s;
-            border: 1px solid #e2e8f0;
-        }
-        body.dark-mode .card-tamanho {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border-color: #334155;
-        }
-        .card-tamanho:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-        .icone-tamanho {
-            font-size: 2.5rem;
-            margin-bottom: 8px;
-        }
-        .tamanho {
-            font-weight: 800;
-            font-size: 1.6rem;
-            color: #003399;
-        }
-        body.dark-mode .tamanho {
-            color: #60a5fa;
-        }
-        .faixa-idade {
-            font-size: 0.75rem;
-            color: #666;
-            margin: 5px 0 15px 0;
-        }
-        body.dark-mode .faixa-idade {
-            color: #94a3b8;
-        }
-        .quantidade-box {
-            background: #0047AB;
-            color: white;
-            border-radius: 16px;
-            padding: 10px;
-            margin: 10px 0;
-        }
-        body.dark-mode .quantidade-box {
-            background: #3b82f6;
-        }
-        .quantidade {
-            font-size: 2rem;
-            font-weight: 800;
-        }
-        .quantidade-label {
-            font-size: 0.7rem;
-            opacity: 0.9;
-        }
-        .barra-container {
-            width: 100%;
-            height: 8px;
-            background: #e2e8f0;
-            border-radius: 4px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-        .barra {
-            height: 100%;
-            background: linear-gradient(90deg, #0047AB, #00aaff);
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 4px;
-        }
-        .percentual {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #0047AB;
-            margin-top: 5px;
-        }
-        body.dark-mode .percentual {
-            color: #60a5fa;
-        }
-
-        /* Resumo */
-        .resumo {
-            background: linear-gradient(135deg, #0047AB, #003399);
-            color: white;
-            border-radius: 20px;
-            padding: 20px;
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-            text-align: center;
-        }
-        body.dark-mode .resumo {
-            background: linear-gradient(135deg, #1e40af, #1e3a8a);
-        }
-        .resumo-item {
-            flex: 1;
-            min-width: 100px;
-        }
-        .resumo-valor {
-            font-size: 1.8rem;
-            font-weight: 800;
-        }
-        .resumo-label {
-            font-size: 0.75rem;
-            opacity: 0.9;
-        }
-
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 40px;
-        }
-        .spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 3px solid #e2e8f0;
-            border-top-color: #0047AB;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @media (max-width: 800px) {
-            .cards-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .filtros-bar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .card-tamanho {
-                min-width: auto;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f5f7fc 0%, #e9eef5 100%); min-height: 100vh; padding: 20px; transition: background 0.3s, color 0.3s; }
+        body.dark-mode { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #eee; }
+        .container { max-width: 1300px; margin: 0 auto; }
+        .header { background: linear-gradient(135deg, #0047AB, #003399); color: white; padding: 20px 24px; border-radius: 24px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        body.dark-mode .header { background: linear-gradient(135deg, #1e40af, #1e3a8a); }
+        .header h1 { font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .header-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn-tema, .btn-atualizar, .btn-exportar { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); padding: 8px 16px; border-radius: 40px; cursor: pointer; font-weight: 600; font-size: 12px; color: white; transition: all 0.2s; }
+        .btn-tema:hover, .btn-atualizar:hover, .btn-exportar:hover { background: rgba(255,255,255,0.3); }
+        .filtros-bar { background: white; border-radius: 20px; padding: 16px 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        body.dark-mode .filtros-bar { background: #1e293b; }
+        .filtros-botoes { display: flex; gap: 10px; flex-wrap: wrap; }
+        .filtro-btn { padding: 8px 18px; border-radius: 40px; border: none; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.2s; background: #f1f5f9; color: #1e293b; }
+        body.dark-mode .filtro-btn { background: #0f172a; color: #e2e8f0; }
+        .filtro-btn.ativo { background: #0047AB; color: white; }
+        body.dark-mode .filtro-btn.ativo { background: #3b82f6; }
+        .stats-info { display: flex; gap: 20px; align-items: center; font-size: 13px; font-weight: 600; }
+        .secao { background: white; border-radius: 24px; padding: 20px; margin-bottom: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        body.dark-mode .secao { background: #1e293b; }
+        .secao h2 { font-size: 1.3rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 2px solid #e2e8f0; }
+        body.dark-mode .secao h2 { border-bottom-color: #334155; }
+        .cards-container { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+        .card-tamanho { flex: 1; min-width: 130px; background: linear-gradient(135deg, #f8fafc, #f1f5f9); border-radius: 20px; padding: 20px 12px; text-align: center; transition: all 0.3s; border: 1px solid #e2e8f0; }
+        body.dark-mode .card-tamanho { background: linear-gradient(135deg, #1e293b, #0f172a); border-color: #334155; }
+        .card-tamanho:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .icone-tamanho { font-size: 2.5rem; margin-bottom: 8px; }
+        .tamanho { font-weight: 800; font-size: 1.6rem; color: #003399; }
+        body.dark-mode .tamanho { color: #60a5fa; }
+        .faixa-idade { font-size: 0.75rem; color: #666; margin: 5px 0 15px 0; }
+        body.dark-mode .faixa-idade { color: #94a3b8; }
+        .quantidade-box { background: #0047AB; color: white; border-radius: 16px; padding: 10px; margin: 10px 0; }
+        body.dark-mode .quantidade-box { background: #3b82f6; }
+        .quantidade { font-size: 2rem; font-weight: 800; }
+        .quantidade-label { font-size: 0.7rem; opacity: 0.9; }
+        .barra-container { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; margin: 10px 0; overflow: hidden; }
+        .barra { height: 100%; background: linear-gradient(90deg, #0047AB, #00aaff); width: 0%; transition: width 0.5s ease; border-radius: 4px; }
+        .percentual { font-size: 0.8rem; font-weight: 600; color: #0047AB; margin-top: 5px; }
+        body.dark-mode .percentual { color: #60a5fa; }
+        .resumo { background: linear-gradient(135deg, #0047AB, #003399); color: white; border-radius: 20px; padding: 20px; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; text-align: center; }
+        body.dark-mode .resumo { background: linear-gradient(135deg, #1e40af, #1e3a8a); }
+        .resumo-item { flex: 1; min-width: 100px; }
+        .resumo-valor { font-size: 1.8rem; font-weight: 800; }
+        .resumo-label { font-size: 0.75rem; opacity: 0.9; }
+        .loading { text-align: center; padding: 40px; }
+        .spinner { display: inline-block; width: 40px; height: 40px; border: 3px solid #e2e8f0; border-top-color: #0047AB; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 800px) { .cards-container { flex-direction: column; align-items: stretch; } .filtros-bar { flex-direction: column; align-items: stretch; } .card-tamanho { min-width: auto; } }
     </style>
 </head>
 <body>
-
 <div class="container">
-    <!-- Cabeçalho -->
     <div class="header">
         <h1>👕 UNIFORMES - DISTRIBUIÇÃO POR TAMANHO</h1>
         <div class="header-actions">
@@ -315,8 +74,6 @@ if ('serviceWorker' in navigator) {
             <button class="btn-exportar" onclick="exportarCSV()">📥 EXPORTAR CSV</button>
         </div>
     </div>
-
-    <!-- Filtros -->
     <div class="filtros-bar">
         <div class="filtros-botoes">
             <button class="filtro-btn ativo" data-status="todos">📋 TODOS</button>
@@ -327,15 +84,12 @@ if ('serviceWorker' in navigator) {
             <span>📊 Atualizado: <span id="ultimaAtualizacao">--</span></span>
         </div>
     </div>
-
-    <!-- Conteúdo -->
     <div id="conteudo">
-        <div class="loading"><div class="spinner"></div> Carregando dados...</div>
+        <div class="loading"><div class="spinner"></div> Conectando ao servidor...</div>
     </div>
 </div>
-
 <script>
-    const API_URL = 'http://localhost:5000/api';
+    const API_URL = 'https://api-escolinha.onrender.com/api';
     let todosAlunos = [];
     let statusFiltro = 'todos';
 
@@ -343,14 +97,10 @@ if ('serviceWorker' in navigator) {
         document.body.classList.toggle('dark-mode');
         localStorage.setItem('tema_uniforme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
     }
-
-    if (localStorage.getItem('tema_uniforme') === 'dark') {
-        document.body.classList.add('dark-mode');
-    }
+    if (localStorage.getItem('tema_uniforme') === 'dark') document.body.classList.add('dark-mode');
 
     function formatarData() {
-        const agora = new Date();
-        document.getElementById('ultimaAtualizacao').innerText = agora.toLocaleTimeString('pt-BR');
+        document.getElementById('ultimaAtualizacao').innerText = new Date().toLocaleTimeString('pt-BR');
     }
 
     function idadeParaTamanhoInfantil(idade) {
@@ -363,30 +113,25 @@ if ('serviceWorker' in navigator) {
         return null;
     }
 
-    function faixaIdadeParaTamanho(tamanho) {
-        const faixas = {
-            '4': '3-4 anos', '6': '5-6 anos', '8': '7-8 anos',
-            '10': '9-10 anos', '12': '11-12 anos', '14': '13-14 anos'
-        };
-        return faixas[tamanho] || '';
-    }
-
     function iconeTamanho(tamanho) {
-        const icones = {
-            '4': '🟣', '6': '🔵', '8': '🟢', '10': '🟠', '12': '🔴', '14': '🟤',
-            'PP': '🟣', 'P': '🔵', 'M': '🟢', 'G': '🟠', 'GG': '🔴', 'GGG': '🟤', 'XGG': '⚫'
-        };
+        const icones = { '4': '🟣', '6': '🔵', '8': '🟢', '10': '🟠', '12': '🔴', '14': '🟤', 'PP': '🟣', 'P': '🔵', 'M': '🟢', 'G': '🟠', 'GG': '🔴', 'GGG': '🟤', 'XGG': '⚫' };
         return icones[tamanho] || '👕';
     }
 
-    async function carregarDados() {
+    // ✅ FUNÇÃO CORRIGIDA COM RETRY
+    async function carregarDados(tentativa = 1) {
         const conteudo = document.getElementById('conteudo');
-        conteudo.innerHTML = '<div class="loading"><div class="spinner"></div> Carregando dados...</div>';
-        
+        if (tentativa === 1) {
+            conteudo.innerHTML = '<div class="loading"><div class="spinner"></div> Conectando ao servidor...</div>';
+        }
+
         try {
-            const response = await fetch(`${API_URL}/alunos`);
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 15000);
+            const response = await fetch(`${API_URL}/alunos`, { signal: controller.signal });
+            clearTimeout(timeout);
             const dados = await response.json();
-            
+
             if (Array.isArray(dados)) {
                 todosAlunos = dados;
                 formatarData();
@@ -395,202 +140,82 @@ if ('serviceWorker' in navigator) {
                 conteudo.innerHTML = '<div style="text-align:center; padding:40px;">❌ Erro ao carregar dados</div>';
             }
         } catch (error) {
-            console.error('Erro:', error);
-            conteudo.innerHTML = '<div style="text-align:center; padding:40px;">❌ Erro ao conectar com o servidor</div>';
+            console.error(`Tentativa ${tentativa} falhou:`, error);
+            if (tentativa < 4) {
+                conteudo.innerHTML = `<div class="loading"><div class="spinner"></div> Servidor acordando... tentativa ${tentativa}/3</div>`;
+                setTimeout(() => carregarDados(tentativa + 1), tentativa * 5000);
+            } else {
+                conteudo.innerHTML = '<div style="text-align:center; padding:40px;">❌ Erro ao conectar. Clique em <strong>ATUALIZAR</strong>.</div>';
+            }
         }
     }
 
     function aplicarFiltro() {
         let alunosFiltrados = [...todosAlunos];
-        if (statusFiltro !== 'todos') {
-            alunosFiltrados = alunosFiltrados.filter(a => a.status === statusFiltro);
-        }
+        if (statusFiltro !== 'todos') alunosFiltrados = alunosFiltrados.filter(a => a.status === statusFiltro);
         renderizarConteudo(alunosFiltrados);
     }
 
     function renderizarConteudo(alunos) {
-        const infantil = alunos.filter(a => {
-            const idade = parseInt(a.idade);
-            return idade >= 3 && idade <= 14;
-        });
-        
-        const adulto = alunos.filter(a => {
-            const idade = parseInt(a.idade);
-            return idade >= 15;
-        });
-        
+        const infantil = alunos.filter(a => { const i = parseInt(a.idade); return i >= 3 && i <= 14; });
+        const adulto = alunos.filter(a => { const i = parseInt(a.idade); return i >= 15; });
         const contagemInfantil = { '4': 0, '6': 0, '8': 0, '10': 0, '12': 0, '14': 0 };
-        infantil.forEach(aluno => {
-            const idade = parseInt(aluno.idade);
-            const tamanho = idadeParaTamanhoInfantil(idade);
-            if (tamanho) contagemInfantil[tamanho]++;
-        });
-        
+        infantil.forEach(aluno => { const t = idadeParaTamanhoInfantil(parseInt(aluno.idade)); if (t) contagemInfantil[t]++; });
         const contagemAdulto = { 'PP': 0, 'P': 0, 'M': 0, 'G': 0, 'GG': 0, 'GGG': 0, 'XGG': 0 };
         adulto.forEach(aluno => {
-            let tamanho = (aluno.tamanho_uniforme || '').toUpperCase();
-            if (contagemAdulto[tamanho] !== undefined) {
-                contagemAdulto[tamanho]++;
-            } else {
-                const idade = parseInt(aluno.idade);
-                if (idade >= 15 && idade <= 17) contagemAdulto['M']++;
-                else if (idade >= 18) contagemAdulto['G']++;
-                else contagemAdulto['P']++;
-            }
+            let t = (aluno.tamanho_uniforme || '').toUpperCase();
+            if (contagemAdulto[t] !== undefined) { contagemAdulto[t]++; }
+            else { const i = parseInt(aluno.idade); if (i >= 15 && i <= 17) contagemAdulto['M']++; else if (i >= 18) contagemAdulto['G']++; else contagemAdulto['P']++; }
         });
-        
-        const totalInfantil = infantil.length;
-        const totalAdulto = adulto.length;
-        const totalGeral = alunos.length;
+        const totalInfantil = infantil.length, totalAdulto = adulto.length, totalGeral = alunos.length;
         const ativos = alunos.filter(a => a.status === 'aprovado').length;
         const desativados = alunos.filter(a => a.status === 'recusado').length;
-        
-        const html = `
-            <div class="secao">
-                <h2>👶 INFANTIL (tamanho por idade)</h2>
-                <div class="cards-container">
-                    ${gerarCardsInfantil(contagemInfantil, totalInfantil)}
-                </div>
-                <div style="margin-top: 15px; text-align: right; font-size: 0.85rem; font-weight: 600;">
-                    📊 Total infantil: ${totalInfantil} aluno${totalInfantil !== 1 ? 's' : ''}
-                </div>
-            </div>
-            
-            <div class="secao">
-                <h2>👨 ADULTO (tamanho por letra)</h2>
-                <div class="cards-container">
-                    ${gerarCardsAdulto(contagemAdulto, totalAdulto)}
-                </div>
-                <div style="margin-top: 15px; text-align: right; font-size: 0.85rem; font-weight: 600;">
-                    📊 Total adulto: ${totalAdulto} aluno${totalAdulto !== 1 ? 's' : ''}
-                </div>
-            </div>
-            
+        document.getElementById('conteudo').innerHTML = `
+            <div class="secao"><h2>👶 INFANTIL (tamanho por idade)</h2><div class="cards-container">${gerarCardsInfantil(contagemInfantil, totalInfantil)}</div><div style="margin-top: 15px; text-align: right; font-size: 0.85rem; font-weight: 600;">📊 Total infantil: ${totalInfantil} aluno${totalInfantil !== 1 ? 's' : ''}</div></div>
+            <div class="secao"><h2>👨 ADULTO (tamanho por letra)</h2><div class="cards-container">${gerarCardsAdulto(contagemAdulto, totalAdulto)}</div><div style="margin-top: 15px; text-align: right; font-size: 0.85rem; font-weight: 600;">📊 Total adulto: ${totalAdulto} aluno${totalAdulto !== 1 ? 's' : ''}</div></div>
             <div class="resumo">
-                <div class="resumo-item">
-                    <div class="resumo-valor">${totalInfantil}</div>
-                    <div class="resumo-label">👶 Infantil</div>
-                </div>
-                <div class="resumo-item">
-                    <div class="resumo-valor">${totalAdulto}</div>
-                    <div class="resumo-label">👨 Adulto</div>
-                </div>
-                <div class="resumo-item">
-                    <div class="resumo-valor">${totalGeral}</div>
-                    <div class="resumo-label">📋 Total Geral</div>
-                </div>
-                <div class="resumo-item">
-                    <div class="resumo-valor">${ativos}</div>
-                    <div class="resumo-label">✅ Ativos</div>
-                </div>
-                <div class="resumo-item">
-                    <div class="resumo-valor">${desativados}</div>
-                    <div class="resumo-label">❌ Desativados</div>
-                </div>
-            </div>
-        `;
-        
-        document.getElementById('conteudo').innerHTML = html;
-        
-        document.getElementById('statsInfo').innerHTML = `
-            <span>📊 Total: ${totalGeral} alunos</span>
-            <span>✅ Ativos: ${ativos}</span>
-            <span>❌ Desativados: ${desativados}</span>
-            <span>🕐 Atualizado: ${new Date().toLocaleTimeString('pt-BR')}</span>
-        `;
+                <div class="resumo-item"><div class="resumo-valor">${totalInfantil}</div><div class="resumo-label">👶 Infantil</div></div>
+                <div class="resumo-item"><div class="resumo-valor">${totalAdulto}</div><div class="resumo-label">👨 Adulto</div></div>
+                <div class="resumo-item"><div class="resumo-valor">${totalGeral}</div><div class="resumo-label">📋 Total Geral</div></div>
+                <div class="resumo-item"><div class="resumo-valor">${ativos}</div><div class="resumo-label">✅ Ativos</div></div>
+                <div class="resumo-item"><div class="resumo-valor">${desativados}</div><div class="resumo-label">❌ Desativados</div></div>
+            </div>`;
+        document.getElementById('statsInfo').innerHTML = `<span>📊 Total: ${totalGeral}</span><span>✅ Ativos: ${ativos}</span><span>❌ Desativados: ${desativados}</span><span>🕐 ${new Date().toLocaleTimeString('pt-BR')}</span>`;
     }
-    
+
     function gerarCardsInfantil(contagem, total) {
-        const tamanhos = ['4', '6', '8', '10', '12', '14'];
-        const faixas = {
-            '4': '3-4 anos', '6': '5-6 anos', '8': '7-8 anos',
-            '10': '9-10 anos', '12': '11-12 anos', '14': '13-14 anos'
-        };
-        
-        return tamanhos.map(tamanho => {
-            const quantidade = contagem[tamanho];
-            const percentual = total > 0 ? ((quantidade / total) * 100).toFixed(1) : 0;
-            const icone = iconeTamanho(tamanho);
-            
-            return `
-                <div class="card-tamanho">
-                    <div class="icone-tamanho">${icone}</div>
-                    <div class="tamanho">${tamanho}</div>
-                    <div class="faixa-idade">${faixas[tamanho]}</div>
-                    <div class="quantidade-box">
-                        <div class="quantidade">${quantidade}</div>
-                        <div class="quantidade-label">ALUNOS</div>
-                    </div>
-                    <div class="barra-container">
-                        <div class="barra" style="width: ${percentual}%;"></div>
-                    </div>
-                    <div class="percentual">${percentual}%</div>
-                </div>
-            `;
+        const faixas = { '4': '3-4 anos', '6': '5-6 anos', '8': '7-8 anos', '10': '9-10 anos', '12': '11-12 anos', '14': '13-14 anos' };
+        return ['4','6','8','10','12','14'].map(t => {
+            const q = contagem[t], p = total > 0 ? ((q/total)*100).toFixed(1) : 0;
+            return `<div class="card-tamanho"><div class="icone-tamanho">${iconeTamanho(t)}</div><div class="tamanho">${t}</div><div class="faixa-idade">${faixas[t]}</div><div class="quantidade-box"><div class="quantidade">${q}</div><div class="quantidade-label">ALUNOS</div></div><div class="barra-container"><div class="barra" style="width:${p}%;"></div></div><div class="percentual">${p}%</div></div>`;
         }).join('');
     }
-    
+
     function gerarCardsAdulto(contagem, total) {
-        const tamanhos = ['PP', 'P', 'M', 'G', 'GG', 'GGG', 'XGG'];
-        
-        return tamanhos.map(tamanho => {
-            const quantidade = contagem[tamanho];
-            const percentual = total > 0 ? ((quantidade / total) * 100).toFixed(1) : 0;
-            const icone = iconeTamanho(tamanho);
-            
-            return `
-                <div class="card-tamanho">
-                    <div class="icone-tamanho">${icone}</div>
-                    <div class="tamanho">${tamanho}</div>
-                    <div class="quantidade-box">
-                        <div class="quantidade">${quantidade}</div>
-                        <div class="quantidade-label">ALUNOS</div>
-                    </div>
-                    <div class="barra-container">
-                        <div class="barra" style="width: ${percentual}%;"></div>
-                    </div>
-                    <div class="percentual">${percentual}%</div>
-                </div>
-            `;
+        return ['PP','P','M','G','GG','GGG','XGG'].map(t => {
+            const q = contagem[t], p = total > 0 ? ((q/total)*100).toFixed(1) : 0;
+            return `<div class="card-tamanho"><div class="icone-tamanho">${iconeTamanho(t)}</div><div class="tamanho">${t}</div><div class="quantidade-box"><div class="quantidade">${q}</div><div class="quantidade-label">ALUNOS</div></div><div class="barra-container"><div class="barra" style="width:${p}%;"></div></div><div class="percentual">${p}%</div></div>`;
         }).join('');
     }
-    
+
     function exportarCSV() {
-        let alunosExportar = [...todosAlunos];
-        if (statusFiltro !== 'todos') {
-            alunosExportar = alunosExportar.filter(a => a.status === statusFiltro);
-        }
-        
-        if (alunosExportar.length === 0) {
-            alert('Nenhum dado para exportar');
-            return;
-        }
-        
-        let csv = 'Nome,Idade,Turma,Categoria,Tamanho Uniforme,Status,Data Matrícula\n';
-        alunosExportar.forEach(aluno => {
-            let tamanho = aluno.tamanho_uniforme || '';
-            if (!tamanho) {
-                const idade = parseInt(aluno.idade);
-                if (idade >= 3 && idade <= 14) {
-                    tamanho = idadeParaTamanhoInfantil(idade) || '';
-                } else if (idade >= 15 && idade <= 17) {
-                    tamanho = 'M';
-                } else if (idade >= 18) {
-                    tamanho = 'G';
-                }
-            }
-            csv += `"${aluno.nome_aluno || ''}","${aluno.idade || ''}","${aluno.turma || ''}","${aluno.categoria || ''}","${tamanho}","${aluno.status || ''}","${aluno.data_envio || ''}"\n`;
+        let exp = [...todosAlunos];
+        if (statusFiltro !== 'todos') exp = exp.filter(a => a.status === statusFiltro);
+        if (exp.length === 0) { alert('Nenhum dado para exportar'); return; }
+        let csv = 'Nome,Idade,Turma,Categoria,Tamanho Uniforme,Status\n';
+        exp.forEach(a => {
+            let t = a.tamanho_uniforme || '';
+            if (!t) { const i = parseInt(a.idade); if (i>=3&&i<=14) t=idadeParaTamanhoInfantil(i)||''; else if (i>=15&&i<=17) t='M'; else t='G'; }
+            csv += `"${a.nome_aluno||''}","${a.idade||''}","${a.turma||''}","${a.categoria||''}","${t}","${a.status||''}"\n`;
         });
-        
-        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+        const blob = new Blob(["\uFEFF"+csv], {type:'text/csv;charset=utf-8;'});
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = `uniformes_${statusFiltro}_${new Date().toISOString().slice(0,10)}.csv`;
+        link.download = `uniformes_${new Date().toISOString().slice(0,10)}.csv`;
         link.click();
         URL.revokeObjectURL(link.href);
-        alert('📥 Uniformes exportados com sucesso!');
     }
-    
+
     document.querySelectorAll('.filtro-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
@@ -599,9 +224,8 @@ if ('serviceWorker' in navigator) {
             aplicarFiltro();
         });
     });
-    
+
     carregarDados();
 </script>
-
 </body>
 </html>
