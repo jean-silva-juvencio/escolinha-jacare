@@ -4,316 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Aniversariantes | Escolinha do Jacaré</title>
-        <link rel="manifest" href="manifest.json">
-    <script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-        .then(() => console.log('Service Worker registrado!'))
-        .catch(err => console.log('Erro:', err));
-}
-</script>
+    <link rel="manifest" href="manifest.json">
+    <script>if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').then(()=>console.log('SW ok')).catch(e=>console.log(e));}</script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fc 0%, #e9eef5 100%);
-            min-height: 100vh;
-            padding: 20px;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        body.dark-mode {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #eee;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Cabeçalho */
-        .header {
-            background: linear-gradient(135deg, #0047AB, #003399);
-            color: white;
-            padding: 20px 24px;
-            border-radius: 24px;
-            margin-bottom: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        body.dark-mode .header {
-            background: linear-gradient(135deg, #1e40af, #1e3a8a);
-        }
-        .header h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .header-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .btn-tema, .btn-atualizar, .btn-exportar, .btn-voltar {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 8px 16px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 12px;
-            color: white;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .btn-voltar {
-            background: #8b5cf6;
-        }
-        .btn-tema:hover, .btn-atualizar:hover, .btn-exportar:hover, .btn-voltar:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
-        }
-
-        /* Gráfico de meses (cards) */
-        .meses-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-        .mes-card {
-            flex: 1;
-            min-width: 70px;
-            background: white;
-            border-radius: 16px;
-            padding: 12px 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        body.dark-mode .mes-card {
-            background: #1e293b;
-            border-color: #334155;
-        }
-        .mes-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .mes-card.ativo {
-            background: #0047AB;
-            color: white;
-            border-color: #0047AB;
-        }
-        body.dark-mode .mes-card.ativo {
-            background: #3b82f6;
-        }
-        .mes-nome {
-            font-weight: 700;
-            font-size: 0.8rem;
-        }
-        .mes-quantidade {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-top: 5px;
-        }
-        .mes-card.ativo .mes-quantidade {
-            color: white;
-        }
-
-        /* Filtros */
-        .filtros-bar {
-            background: white;
-            border-radius: 20px;
-            padding: 16px 20px;
-            margin-bottom: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: flex-end;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        body.dark-mode .filtros-bar {
-            background: #1e293b;
-        }
-        .filtro-group {
-            flex: 1;
-            min-width: 140px;
-        }
-        .filtro-group label {
-            display: block;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: #666;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-        }
-        body.dark-mode .filtro-group label {
-            color: #94a3b8;
-        }
-        .filtro-group select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            background: white;
-        }
-        body.dark-mode .filtro-group select {
-            background: #0f172a;
-            border-color: #334155;
-            color: white;
-        }
-
-        /* Lista de aniversariantes */
-        .aniversariantes-lista {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        body.dark-mode .aniversariantes-lista {
-            background: #1e293b;
-        }
-        .aniversariante-card {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            border-bottom: 1px solid #e2e8f0;
-            transition: all 0.3s;
-            cursor: pointer;
-            animation: fadeInUp 0.3s ease;
-        }
-        body.dark-mode .aniversariante-card {
-            border-bottom-color: #334155;
-        }
-        .aniversariante-card:hover {
-            background: #f8fafc;
-            transform: translateX(5px);
-        }
-        body.dark-mode .aniversariante-card:hover {
-            background: #334155;
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .aniversariante-icone {
-            font-size: 2.5rem;
-            animation: bounce 1s ease infinite;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-        .aniversariante-info {
-            flex: 1;
-        }
-        .aniversariante-nome {
-            font-weight: 700;
-            font-size: 1rem;
-        }
-        .aniversariante-detalhes {
-            font-size: 0.8rem;
-            color: #666;
-            margin-top: 4px;
-        }
-        body.dark-mode .aniversariante-detalhes {
-            color: #94a3b8;
-        }
-        .aniversariante-data {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #ff9800;
-        }
-        .sem-aniversariantes {
-            text-align: center;
-            padding: 40px;
-            color: #999;
-        }
-
-        /* Loading e toast */
-        .loading {
-            text-align: center;
-            padding: 40px;
-        }
-        .spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 3px solid #e2e8f0;
-            border-top-color: #0047AB;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #10b981;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 10px;
-            z-index: 1100;
-            animation: slideIn 0.3s ease;
-        }
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        footer {
-            background: #003399;
-            color: white;
-            text-align: center;
-            padding: 30px;
-            margin-top: 50px;
-            border-radius: 20px;
-        }
-        body.dark-mode footer {
-            background: #0f172a;
-        }
-
-        @media (max-width: 700px) {
-            .meses-grid {
-                justify-content: center;
-            }
-            .mes-card {
-                min-width: 60px;
-            }
-            .aniversariante-card {
-                flex-direction: column;
-                text-align: center;
-            }
-            .filtros-bar {
-                flex-direction: column;
-            }
-        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#f5f7fc 0%,#e9eef5 100%);min-height:100vh;padding:20px;transition:background 0.3s,color 0.3s;}
+        body.dark-mode{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);color:#eee;}
+        .container{max-width:1200px;margin:0 auto;}
+        .header{background:linear-gradient(135deg,#0047AB,#003399);color:white;padding:20px 24px;border-radius:24px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;}
+        body.dark-mode .header{background:linear-gradient(135deg,#1e40af,#1e3a8a);}
+        .header h1{font-size:1.5rem;font-weight:700;display:flex;align-items:center;gap:10px;}
+        .header-actions{display:flex;gap:10px;flex-wrap:wrap;}
+        .btn-tema,.btn-atualizar,.btn-exportar,.btn-voltar{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);padding:8px 16px;border-radius:40px;cursor:pointer;font-weight:600;font-size:12px;color:white;transition:all 0.2s;text-decoration:none;display:inline-block;}
+        .btn-voltar{background:#8b5cf6;}
+        .btn-tema:hover,.btn-atualizar:hover,.btn-exportar:hover,.btn-voltar:hover{background:rgba(255,255,255,0.3);transform:translateY(-2px);}
+        .meses-grid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-bottom:30px;}
+        .mes-card{flex:1;min-width:70px;background:white;border-radius:16px;padding:12px 8px;text-align:center;cursor:pointer;transition:all 0.3s;border:1px solid #e2e8f0;box-shadow:0 2px 5px rgba(0,0,0,0.05);}
+        body.dark-mode .mes-card{background:#1e293b;border-color:#334155;}
+        .mes-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,0,0,0.1);}
+        .mes-card.ativo{background:#0047AB;color:white;border-color:#0047AB;}
+        body.dark-mode .mes-card.ativo{background:#3b82f6;}
+        .mes-nome{font-weight:700;font-size:0.8rem;}
+        .mes-quantidade{font-size:1.5rem;font-weight:800;margin-top:5px;}
+        .mes-card.ativo .mes-quantidade{color:white;}
+        .filtros-bar{background:white;border-radius:20px;padding:16px 20px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:15px;align-items:flex-end;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+        body.dark-mode .filtros-bar{background:#1e293b;}
+        .filtro-group{flex:1;min-width:140px;}
+        .filtro-group label{display:block;font-size:0.7rem;font-weight:600;color:#666;margin-bottom:4px;text-transform:uppercase;}
+        body.dark-mode .filtro-group label{color:#94a3b8;}
+        .filtro-group select{width:100%;padding:10px 12px;border:1px solid #e2e8f0;border-radius:12px;font-size:0.85rem;background:white;}
+        body.dark-mode .filtro-group select{background:#0f172a;border-color:#334155;color:white;}
+        .aniversariantes-lista{background:white;border-radius:20px;padding:20px;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+        body.dark-mode .aniversariantes-lista{background:#1e293b;}
+        .aniversariante-card{display:flex;align-items:center;gap:15px;padding:15px;border-bottom:1px solid #e2e8f0;transition:all 0.3s;cursor:pointer;animation:fadeInUp 0.3s ease;}
+        body.dark-mode .aniversariante-card{border-bottom-color:#334155;}
+        .aniversariante-card:hover{background:#f8fafc;transform:translateX(5px);}
+        body.dark-mode .aniversariante-card:hover{background:#334155;}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+        .aniversariante-icone{font-size:2.5rem;animation:bounce 1s ease infinite;}
+        @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+        .aniversariante-info{flex:1;}
+        .aniversariante-nome{font-weight:700;font-size:1rem;}
+        .aniversariante-detalhes{font-size:0.8rem;color:#666;margin-top:4px;}
+        body.dark-mode .aniversariante-detalhes{color:#94a3b8;}
+        .aniversariante-data{font-size:0.9rem;font-weight:600;color:#ff9800;}
+        .sem-aniversariantes{text-align:center;padding:40px;color:#999;}
+        .loading{text-align:center;padding:40px;}
+        .spinner{display:inline-block;width:40px;height:40px;border:3px solid #e2e8f0;border-top-color:#0047AB;border-radius:50%;animation:spin 0.8s linear infinite;}
+        @keyframes spin{to{transform:rotate(360deg);}}
+        .toast{position:fixed;bottom:30px;right:30px;background:#10b981;color:white;padding:12px 20px;border-radius:10px;z-index:1100;animation:slideIn 0.3s ease;}
+        @keyframes slideIn{from{transform:translateX(100%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+        footer{background:#003399;color:white;text-align:center;padding:30px;margin-top:50px;border-radius:20px;}
+        body.dark-mode footer{background:#0f172a;}
+        @media(max-width:700px){.meses-grid{justify-content:center;}.mes-card{min-width:60px;}.aniversariante-card{flex-direction:column;text-align:center;}.filtros-bar{flex-direction:column;}}
     </style>
 </head>
 <body>
-
 <div class="container">
-    <!-- Cabeçalho -->
     <div class="header">
         <h1>🎂 ANIVERSARIANTES</h1>
         <div class="header-actions">
@@ -323,11 +71,7 @@ if ('serviceWorker' in navigator) {
             <a href="diretoria.html" class="btn-voltar">← VOLTAR</a>
         </div>
     </div>
-
-    <!-- Cards de quantidade por mês -->
     <div class="meses-grid" id="mesesGrid"></div>
-
-    <!-- Filtros -->
     <div class="filtros-bar">
         <div class="filtro-group">
             <label>📅 MÊS</label>
@@ -345,10 +89,8 @@ if ('serviceWorker' in navigator) {
             <label>⚽ TURMA</label>
             <select id="filtroTurma">
                 <option value="">Todas</option>
-                <option value="Futebol">Futebol</option>
-                <option value="Taekwondo">Taekwondo</option>
-                <option value="Ginástica">Ginástica</option>
-                <option value="Tênis de Mesa">Tênis de Mesa</option>
+                <option value="Futebol">Futebol</option><option value="Taekwondo">Taekwondo</option>
+                <option value="Ginástica">Ginástica</option><option value="Tênis de Mesa">Tênis de Mesa</option>
                 <option value="Judô">Judô</option>
             </select>
         </div>
@@ -363,214 +105,141 @@ if ('serviceWorker' in navigator) {
             </select>
         </div>
     </div>
-
-    <!-- Lista de aniversariantes -->
     <div id="aniversariantesLista" class="aniversariantes-lista">
-        <div class="loading"><div class="spinner"></div> Carregando...</div>
+        <div class="loading"><div class="spinner"></div> Conectando ao servidor...</div>
     </div>
 </div>
-
-<footer>
-    ESCOLINHA DO JACARÉ - ALVORADA<br>
-    Manaus/AM - Brasil<br>
-    © 2026 - Todos os direitos reservados.
-</footer>
-
+<footer>ESCOLINHA DO JACARÉ - ALVORADA<br>Manaus/AM - Brasil<br>© 2026 - Todos os direitos reservados.</footer>
 <script>
-    const API_URL = 'http://localhost:5000/api';
+    const API_URL = 'https://api-escolinha.onrender.com/api';
     let todosAlunos = [];
     let mesesCount = Array(12).fill(0);
     let mesSelecionado = null;
-    let turmaFiltro = '';
-    let categoriaFiltro = '';
-
-    const MESES = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
+    let turmaFiltro = '', categoriaFiltro = '';
+    const MESES = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
 
     function alternarTema() {
         document.body.classList.toggle('dark-mode');
         localStorage.setItem('tema_aniversario', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
     }
+    if (localStorage.getItem('tema_aniversario') === 'dark') document.body.classList.add('dark-mode');
 
-    if (localStorage.getItem('tema_aniversario') === 'dark') {
-        document.body.classList.add('dark-mode');
+    function mostrarToast(m) {
+        const t = document.createElement('div'); t.className = 'toast'; t.innerHTML = m;
+        document.body.appendChild(t); setTimeout(() => t.remove(), 3000);
     }
 
-    function mostrarToast(mensagem) {
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.innerHTML = mensagem;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
-    }
-
-    async function carregarDados() {
+    // ✅ FUNÇÃO CORRIGIDA COM RETRY
+    async function carregarDados(tentativa = 1) {
         const container = document.getElementById('aniversariantesLista');
-        container.innerHTML = '<div class="loading"><div class="spinner"></div> Carregando...</div>';
-        
+        if (tentativa === 1) container.innerHTML = '<div class="loading"><div class="spinner"></div> Conectando ao servidor...</div>';
+
         try {
-            const response = await fetch(`${API_URL}/alunos`);
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 15000);
+            const response = await fetch(`${API_URL}/alunos`, { signal: controller.signal });
+            clearTimeout(timeout);
             const dados = await response.json();
-            
+
             if (Array.isArray(dados)) {
                 todosAlunos = dados.filter(a => a.data_nasc && a.status === 'aprovado');
-                calcularMeses();
-                renderizarMeses();
-                aplicarFiltros();
+                calcularMeses(); renderizarMeses(); aplicarFiltros();
             } else {
                 container.innerHTML = '<div class="sem-aniversariantes">❌ Erro ao carregar dados</div>';
             }
         } catch (error) {
-            console.error('Erro:', error);
-            container.innerHTML = '<div class="sem-aniversariantes">❌ Erro ao conectar com o servidor. Verifique o backend.</div>';
+            console.error(`Tentativa ${tentativa} falhou:`, error);
+            if (tentativa < 4) {
+                container.innerHTML = `<div class="loading"><div class="spinner"></div> Servidor acordando... tentativa ${tentativa}/3</div>`;
+                setTimeout(() => carregarDados(tentativa + 1), tentativa * 5000);
+            } else {
+                container.innerHTML = '<div class="sem-aniversariantes">❌ Erro ao conectar. Clique em <strong>ATUALIZAR</strong>.</div>';
+            }
         }
     }
 
     function calcularMeses() {
         mesesCount.fill(0);
-        todosAlunos.forEach(aluno => {
-            const mes = new Date(aluno.data_nasc).getMonth();
-            mesesCount[mes]++;
-        });
+        todosAlunos.forEach(a => { const m = new Date(a.data_nasc).getMonth(); mesesCount[m]++; });
     }
 
     function renderizarMeses() {
-        const grid = document.getElementById('mesesGrid');
-        grid.innerHTML = MESES.map((mes, idx) => `
-            <div class="mes-card ${mesSelecionado === idx ? 'ativo' : ''}" data-mes="${idx}" onclick="selecionarMes(${idx})">
-                <div class="mes-nome">${mes}</div>
-                <div class="mes-quantidade">${mesesCount[idx]}</div>
-            </div>
-        `).join('');
+        document.getElementById('mesesGrid').innerHTML = MESES.map((m, i) =>
+            `<div class="mes-card ${mesSelecionado===i?'ativo':''}" onclick="selecionarMes(${i})"><div class="mes-nome">${m}</div><div class="mes-quantidade">${mesesCount[i]}</div></div>`
+        ).join('');
     }
 
     function selecionarMes(mes) {
-        mesSelecionado = mes;
-        document.getElementById('filtroMes').value = mes;
-        renderizarMeses();
-        aplicarFiltros();
+        mesSelecionado = mes; document.getElementById('filtroMes').value = mes;
+        renderizarMeses(); aplicarFiltros();
     }
 
     function aplicarFiltros() {
         const mesFiltro = parseInt(document.getElementById('filtroMes').value);
         turmaFiltro = document.getElementById('filtroTurma').value;
         categoriaFiltro = document.getElementById('filtroCategoria').value;
-        
         let filtrados = [...todosAlunos];
-        
-        if (!isNaN(mesFiltro)) {
-            filtrados = filtrados.filter(a => new Date(a.data_nasc).getMonth() === mesFiltro);
-        }
-        if (turmaFiltro) {
-            filtrados = filtrados.filter(a => a.turma === turmaFiltro);
-        }
-        if (categoriaFiltro) {
-            filtrados = filtrados.filter(a => a.categoria === categoriaFiltro);
-        }
-        
-        // Ordenar por dia do mês
-        filtrados.sort((a, b) => {
-            const diaA = new Date(a.data_nasc).getDate();
-            const diaB = new Date(b.data_nasc).getDate();
-            return diaA - diaB;
-        });
-        
+        if (!isNaN(mesFiltro)) filtrados = filtrados.filter(a => new Date(a.data_nasc).getMonth() === mesFiltro);
+        if (turmaFiltro) filtrados = filtrados.filter(a => a.turma === turmaFiltro);
+        if (categoriaFiltro) filtrados = filtrados.filter(a => a.categoria === categoriaFiltro);
+        filtrados.sort((a,b) => new Date(a.data_nasc).getDate() - new Date(b.data_nasc).getDate());
         renderizarLista(filtrados);
     }
 
-    function formatarData(dataStr) {
-        if (!dataStr) return '';
-        const data = new Date(dataStr);
-        return `${data.getDate().toString().padStart(2,'0')}/${(data.getMonth()+1).toString().padStart(2,'0')}`;
+    function formatarData(d) {
+        if (!d) return '';
+        const dt = new Date(d);
+        return `${dt.getDate().toString().padStart(2,'0')}/${(dt.getMonth()+1).toString().padStart(2,'0')}`;
     }
 
-    function calcularIdade(dataNasc) {
-        const hoje = new Date();
-        const nasc = new Date(dataNasc);
-        let idade = hoje.getFullYear() - nasc.getFullYear();
+    function calcularIdade(d) {
+        const hoje = new Date(), nasc = new Date(d);
+        let i = hoje.getFullYear() - nasc.getFullYear();
         const m = hoje.getMonth() - nasc.getMonth();
-        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
-        return idade;
+        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) i--;
+        return i;
     }
 
     function renderizarLista(alunos) {
         const container = document.getElementById('aniversariantesLista');
-        
-        if (alunos.length === 0) {
-            container.innerHTML = '<div class="sem-aniversariantes">🎂 Nenhum aniversariante encontrado</div>';
-            return;
-        }
-        
+        if (alunos.length === 0) { container.innerHTML = '<div class="sem-aniversariantes">🎂 Nenhum aniversariante encontrado</div>'; return; }
         const mesNome = document.getElementById('filtroMes').options[document.getElementById('filtroMes').selectedIndex]?.text || 'Todos os meses';
-        
-        container.innerHTML = `
-            <h3 style="margin-bottom: 15px;">🎂 Aniversariantes de ${mesNome}</h3>
-            ${alunos.map(aluno => {
-                const idade = calcularIdade(aluno.data_nasc);
-                return `
-                    <div class="aniversariante-card" onclick="abrirDetalhes('${aluno.protocolo}')">
-                        <div class="aniversariante-icone">🎈</div>
-                        <div class="aniversariante-info">
-                            <div class="aniversariante-nome">${aluno.nome_aluno || '-'}</div>
-                            <div class="aniversariante-detalhes">
-                                ${aluno.turma || '-'} • ${aluno.categoria || '-'} • ${idade} anos
-                            </div>
-                        </div>
-                        <div class="aniversariante-data">${formatarData(aluno.data_nasc)}</div>
+        container.innerHTML = `<h3 style="margin-bottom:15px;">🎂 Aniversariantes de ${mesNome}</h3>
+            ${alunos.map(a => `
+                <div class="aniversariante-card">
+                    <div class="aniversariante-icone">🎈</div>
+                    <div class="aniversariante-info">
+                        <div class="aniversariante-nome">${a.nome_aluno||'-'}</div>
+                        <div class="aniversariante-detalhes">${a.turma||'-'} • ${a.categoria||'-'} • ${calcularIdade(a.data_nasc)} anos</div>
                     </div>
-                `;
-            }).join('')}
-            <div style="margin-top: 15px; text-align: right; font-size: 0.8rem; color: #666;">
-                Total: ${alunos.length} aniversariante(s)
-            </div>
-        `;
-    }
-
-    function abrirDetalhes(protocolo) {
-        const aluno = todosAlunos.find(a => a.protocolo === protocolo);
-        if (!aluno) return;
-        mostrarToast(`📋 ${aluno.nome_aluno} - ${aluno.turma} - ${aluno.categoria}`);
-        // Aqui poderia abrir um modal com mais detalhes se necessário
+                    <div class="aniversariante-data">${formatarData(a.data_nasc)}</div>
+                </div>`).join('')}
+            <div style="margin-top:15px;text-align:right;font-size:0.8rem;color:#666;">Total: ${alunos.length} aniversariante(s)</div>`;
     }
 
     function exportarAniversariantes() {
         const mesFiltro = parseInt(document.getElementById('filtroMes').value);
         let filtrados = [...todosAlunos];
-        if (!isNaN(mesFiltro)) {
-            filtrados = filtrados.filter(a => new Date(a.data_nasc).getMonth() === mesFiltro);
-        }
+        if (!isNaN(mesFiltro)) filtrados = filtrados.filter(a => new Date(a.data_nasc).getMonth() === mesFiltro);
         if (turmaFiltro) filtrados = filtrados.filter(a => a.turma === turmaFiltro);
         if (categoriaFiltro) filtrados = filtrados.filter(a => a.categoria === categoriaFiltro);
-        
-        if (filtrados.length === 0) {
-            mostrarToast('Nenhum aniversariante para exportar');
-            return;
-        }
-        
+        if (filtrados.length === 0) { mostrarToast('Nenhum aniversariante para exportar'); return; }
         let csv = 'Nome,Data Nascimento,Idade,Turma,Categoria\n';
-        filtrados.forEach(a => {
-            csv += `"${a.nome_aluno}","${a.data_nasc}","${calcularIdade(a.data_nasc)}","${a.turma}","${a.categoria}"\n`;
-        });
-        
-        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `aniversariantes_${new Date().toISOString().slice(0,10)}.csv`;
-        link.click();
-        URL.revokeObjectURL(link.href);
-        mostrarToast('📥 Aniversariantes exportados!');
+        filtrados.forEach(a => { csv += `"${a.nome_aluno}","${a.data_nasc}","${calcularIdade(a.data_nasc)}","${a.turma}","${a.categoria}"\n`; });
+        const blob = new Blob(["\uFEFF"+csv], {type:'text/csv;charset=utf-8;'});
+        const link = document.createElement('a'); link.href = URL.createObjectURL(blob);
+        link.download = `aniversariantes_${new Date().toISOString().slice(0,10)}.csv`; link.click();
+        URL.revokeObjectURL(link.href); mostrarToast('📥 Aniversariantes exportados!');
     }
 
     document.getElementById('filtroMes').addEventListener('change', () => {
-        const val = parseInt(document.getElementById('filtroMes').value);
-        mesSelecionado = isNaN(val) ? null : val;
-        renderizarMeses();
-        aplicarFiltros();
+        const v = parseInt(document.getElementById('filtroMes').value);
+        mesSelecionado = isNaN(v) ? null : v; renderizarMeses(); aplicarFiltros();
     });
     document.getElementById('filtroTurma').addEventListener('change', aplicarFiltros);
     document.getElementById('filtroCategoria').addEventListener('change', aplicarFiltros);
 
     carregarDados();
 </script>
-
 </body>
 </html>
