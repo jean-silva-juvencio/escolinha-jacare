@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Escolinha do Jacaré</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Montserrat', 'Open Sans', sans-serif;
+        }
+
+        .splash {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #7ec8ff 0%, #3b9eff 100%);
+            overflow: hidden;
+        }
+
+        /* QUADRA FUTSAL */
+        .quadra {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 55%;
+            background: #2d6a4f;
+            border-radius: 60% 60% 0 0 / 40px 40px 0 0;
+        }
+        .linha-meio {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 40%;
+            height: 3px;
+            background: #FFD700;
+            opacity: 0.8;
+        }
+        .circulo-central {
+            position: absolute;
+            left: 50%;
+            top: 40%;
+            width: 80px;
+            height: 80px;
+            border: 3px solid #FFD700;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.8;
+        }
+        .area-esquerda {
+            position: absolute;
+            left: 5%;
+            top: 20%;
+            width: 70px;
+            height: 90px;
+            border: 3px solid #FFD700;
+            border-radius: 10px;
+            opacity: 0.7;
+        }
+        .area-direita {
+            position: absolute;
+            right: 5%;
+            top: 20%;
+            width: 70px;
+            height: 90px;
+            border: 3px solid #FFD700;
+            border-radius: 10px;
+            opacity: 0.7;
+        }
+
+        /* NUVENS */
+        .nuvem {
+            position: absolute;
+            background: white;
+            border-radius: 100%;
+            opacity: 0.9;
+        }
+        .nuvem1 { width: 90px; height: 65px; top: 20px; left: 10%; }
+        .nuvem2 { width: 110px; height: 75px; top: 50px; right: 15%; }
+        .nuvem1::before, .nuvem2::before {
+            content: "";
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+        .nuvem1::before { width: 55px; height: 55px; top: -25px; left: 15px; }
+        .nuvem2::before { width: 65px; height: 65px; top: -35px; left: 20px; }
+
+        /* BOLA */
+        .bola {
+            position: absolute;
+            width: 55px;
+            height: 55px;
+            background: white;
+            border-radius: 50%;
+            z-index: 20;
+            opacity: 0;
+            animation: bolaEntrada 0.8s ease-out forwards;
+            animation-delay: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .bola::before {
+            content: "";
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            background: #222;
+            clip-path: polygon(50% 0%, 100% 38%, 81% 100%, 19% 100%, 0% 38%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .bola::after {
+            content: "";
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #222;
+            clip-path: polygon(50% 0%, 100% 38%, 81% 100%, 19% 100%, 0% 38%);
+            top: 15%;
+            left: 20%;
+            transform: rotate(45deg);
+        }
+        .bola .penta2 {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #222;
+            clip-path: polygon(50% 0%, 100% 38%, 81% 100%, 19% 100%, 0% 38%);
+            bottom: 12%;
+            right: 18%;
+            transform: rotate(20deg);
+        }
+
+        @keyframes bolaEntrada {
+            0% { left: -100px; top: 30%; opacity: 0; transform: rotate(0deg); }
+            100% { left: 8%; top: 32%; opacity: 1; transform: rotate(360deg); }
+        }
+
+        /* TROFÉU */
+        .trofeu {
+            position: absolute;
+            font-size: 60px;
+            z-index: 20;
+            opacity: 0;
+            animation: trofeuEntrada 0.8s ease-out forwards;
+            animation-delay: 0.5s;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+        }
+        @keyframes trofeuEntrada {
+            0% { right: -100px; top: 30%; opacity: 0; transform: scale(0) rotate(-180deg); }
+            100% { right: 8%; top: 32%; opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        /* ESPORTES */
+        .esportes-container {
+            position: absolute;
+            top: 12%;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+            z-index: 15;
+            opacity: 0;
+            animation: esportesAparece 0.5s ease forwards;
+            animation-delay: 1s;
+        }
+        @keyframes esportesAparece {
+            to { opacity: 1; }
+        }
+        .esporte-item {
+            background: rgba(255,255,255,0.9);
+            padding: 6px 16px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #0044aa;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .esporte-item span {
+            font-size: 22px;
+        }
+
+        /* FRASE PRINCIPAL */
+        .frase-container {
+            position: absolute;
+            top: 55%;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 25;
+        }
+        .frase-pintura {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+        .letra {
+            display: inline-block;
+            transition: color 0.03s linear;
+        }
+        .letra.azul {
+            color: #003399;
+        }
+        .letra.branca {
+            color: white;
+            text-shadow: 1px 1px 0 #003399;
+        }
+
+        /* BARRA */
+        .loading-container {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 350px;
+            text-align: center;
+            z-index: 30;
+        }
+        .loading-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .loading-progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #003399, #3b9eff);
+            border-radius: 8px;
+        }
+        .loading-percent {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #003399;
+            background: rgba(255,255,255,0.8);
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+
+        /* FRASE FINAL */
+        .frase-final {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #003399;
+            font-weight: bold;
+            z-index: 30;
+            opacity: 0;
+        }
+
+        @media (max-width: 768px) {
+            .frase-pintura { font-size: 1rem; }
+            .esporte-item { padding: 4px 12px; font-size: 0.7rem; }
+            .esporte-item span { font-size: 16px; }
+            .bola { width: 40px; height: 40px; }
+            .trofeu { font-size: 45px; }
+            .loading-container { bottom: 60px; }
+            .frase-final { bottom: 15px; font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="splash" id="splashScreen">
+        <div class="quadra">
+            <div class="linha-meio"></div>
+            <div class="circulo-central"></div>
+            <div class="area-esquerda"></div>
+            <div class="area-direita"></div>
+        </div>
+
+        <div class="nuvem nuvem1"></div>
+        <div class="nuvem nuvem2"></div>
+
+        <div class="bola">
+            <div class="penta2"></div>
+        </div>
+
+        <div class="trofeu">🏆</div>
+
+        <div class="esportes-container">
+            <div class="esporte-item"><span>⚽</span> FUTEBOL</div>
+            <div class="esporte-item"><span>🥋</span> TAEKWONDO</div>
+            <div class="esporte-item"><span>🤸</span> GINÁSTICA</div>
+            <div class="esporte-item"><span>🏓</span> TÊNIS DE MESA</div>
+        </div>
+
+        <div class="frase-container">
+            <div class="frase-pintura" id="frasePintura"></div>
+        </div>
+
+        <div class="loading-container">
+            <div class="loading-bar">
+                <div class="loading-progress" id="loadingProgress"></div>
+            </div>
+            <div class="loading-percent" id="loadingPercent">0%</div>
+        </div>
+
+        <div class="frase-final" id="fraseFinal">🐊 Alvorada • Desde 1998</div>
+    </div>
+
+    <script>
+        const texto = "ESCOLINHA DO JACARÉ";
+        const fraseDiv = document.getElementById('frasePintura');
+        const loadingProgress = document.getElementById('loadingProgress');
+        const loadingPercent = document.getElementById('loadingPercent');
+        const fraseFinal = document.getElementById('fraseFinal');
+        
+        texto.split('').forEach(letra => {
+            const span = document.createElement('span');
+            span.className = 'letra branca';
+            span.textContent = letra === ' ' ? '\u00A0' : letra;
+            if (letra === ' ') span.style.marginRight = '8px';
+            fraseDiv.appendChild(span);
+        });
+        
+        const letras = document.querySelectorAll('.letra');
+        const totalLetras = letras.length;
+        const duracao = 5000;
+        const inicio = Date.now();
+        
+        function atualizarPintura() {
+            const elapsed = Date.now() - inicio;
+            const progresso = Math.min(1, elapsed / duracao);
+            const percentual = Math.floor(progresso * 100);
+            
+            loadingProgress.style.width = (progresso * 100) + '%';
+            loadingPercent.textContent = percentual + '%';
+            
+            const letrasParaPintar = Math.floor(progresso * totalLetras);
+            for (let i = 0; i < letras.length; i++) {
+                letras[i].className = i < letrasParaPintar ? 'letra azul' : 'letra branca';
+            }
+            
+            if (progresso < 1) {
+                requestAnimationFrame(atualizarPintura);
+            } else {
+                fraseFinal.style.transition = 'opacity 0.5s ease';
+                fraseFinal.style.opacity = '1';
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            }
+        }
+        
+        setTimeout(() => {
+            requestAnimationFrame(atualizarPintura);
+        }, 2500);
+    </script>
+</body>
+</html>
