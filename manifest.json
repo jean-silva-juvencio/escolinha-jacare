@@ -2,7 +2,7 @@
   "name": "Escolinha do Jacaré",
   "short_name": "Jacaré",
   "description": "Sistema da Escolinha do Jacaré - Alvorada",
-  "start_url": "/diretoria.html",
+  "start_url": "/splash.html",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
