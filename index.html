@@ -1975,16 +1975,35 @@ if ('serviceWorker' in navigator) {
 
         try {
             const response = await fetch(`${API_URL}/alunos`);
-
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const dados = await response.json();
 
             if (Array.isArray(dados)) {
                 depoimentos = dados.filter(item => {
-                    const obs = (item.observacao || '').trim();
                     const estrelas = parseInt(item.estrelas) || 0;
-                    return obs.length > 0 && estrelas >= 4;
-                }).sort((a, b) => (parseInt(b.estrelas) || 0) - (parseInt(a.estrelas) || 0));
+                    if (estrelas < 4) return false;
+
+                    // Limpa o prefixo e verifica se sobrou texto real
+                    const obs = (item.observacao || '').trim();
+                    const textoLimpo = obs
+                        .replace(/⭐+\s*\d*\s*estrelas?\.\s*/gi, '')
+                        .replace(/\[Elogio\]/gi, '')
+                        .replace(/\[Sugestão\]/gi, '')
+                        .replace(/\[Crítica\]/gi, '')
+                        .replace(/\[Outros\]/gi, '')
+                        .trim();
+
+                    return textoLimpo.length > 0;
+                }).map(item => ({
+                    ...item,
+                    textoLimpo: (item.observacao || '')
+                        .replace(/⭐+\s*\d*\s*estrelas?\.\s*/gi, '')
+                        .replace(/\[Elogio\]/gi, '')
+                        .replace(/\[Sugestão\]/gi, '')
+                        .replace(/\[Crítica\]/gi, '')
+                        .replace(/\[Outros\]/gi, '')
+                        .trim()
+                })).sort((a, b) => (parseInt(b.estrelas) || 0) - (parseInt(a.estrelas) || 0));
             }
 
             renderizarCarrossel();
@@ -2016,7 +2035,7 @@ if ('serviceWorker' in navigator) {
             const nome = d.responsavel || 'Responsável';
             const aluno = d.nome_aluno ? `Responsável por ${d.nome_aluno}` : 'Família Jacaré';
             const icone = (d.sexo_responsavel || '').toLowerCase().includes('f') ? '👩' : '👨';
-            const texto = (d.observacao || '').trim();
+            const texto = d.textoLimpo || '';
 
             return `
                 <div class="depoimento-card">
