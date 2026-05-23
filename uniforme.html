@@ -2,787 +2,340 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Uniforme | Escolinha do Jacaré - Sistema de Filtros</title>
-    <link rel="manifest" href="manifest.json">
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-                .then(() => console.log('Service Worker registrado!'))
-                .catch(err => console.log('Erro:', err));
-        }
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniforme | Escolinha do Jacaré</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fc 0%, #e9eef5 100%);
-            min-height: 100vh;
-            padding: 20px;
-            transition: background 0.3s, color 0.3s;
-        }
-
-        body.dark-mode {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #eee;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Cabeçalho */
-        .header {
-            background: linear-gradient(135deg, #0047AB, #003399);
-            color: white;
-            padding: 20px 24px;
-            border-radius: 24px;
-            margin-bottom: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        body.dark-mode .header {
-            background: linear-gradient(135deg, #1e40af, #1e3a8a);
-        }
-        .header h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .header-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .btn-tema, .btn-atualizar, .btn-exportar, .btn-limpar {
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 8px 16px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 12px;
-            color: white;
-            transition: all 0.2s;
-        }
-        .btn-tema:hover, .btn-atualizar:hover, .btn-exportar:hover, .btn-limpar:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        /* Painel de Filtros */
-        .filtros-painel {
-            background: white;
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        body.dark-mode .filtros-painel {
-            background: #1e293b;
-        }
-        .filtros-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        .grupo-filtro {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .grupo-filtro label {
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: #0047AB;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        body.dark-mode .grupo-filtro label {
-            color: #60a5fa;
-        }
-        .grupo-filtro select, .grupo-filtro input {
-            padding: 10px 12px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            background: #f8fafc;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        body.dark-mode .grupo-filtro select, 
-        body.dark-mode .grupo-filtro input {
-            background: #0f172a;
-            border-color: #334155;
-            color: #e2e8f0;
-        }
-        .grupo-filtro select:focus, .grupo-filtro input:focus {
-            outline: none;
-            border-color: #0047AB;
-            box-shadow: 0 0 0 3px rgba(0,71,171,0.1);
-        }
-        .filtros-rapidos {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding-top: 15px;
-            border-top: 1px solid #e2e8f0;
-        }
-        body.dark-mode .filtros-rapidos {
-            border-top-color: #334155;
-        }
-        .filtro-rapido {
-            padding: 6px 14px;
-            border-radius: 20px;
-            border: 1px solid #cbd5e1;
-            background: white;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        body.dark-mode .filtro-rapido {
-            background: #0f172a;
-            border-color: #475569;
-            color: #cbd5e1;
-        }
-        .filtro-rapido.ativo {
-            background: #0047AB;
-            color: white;
-            border-color: #0047AB;
-        }
-        body.dark-mode .filtro-rapido.ativo {
-            background: #3b82f6;
-            border-color: #3b82f6;
-        }
-        .contagem-filtros {
-            font-size: 0.75rem;
-            color: #64748b;
-            margin-top: 10px;
-            text-align: right;
-        }
-        body.dark-mode .contagem-filtros {
-            color: #94a3b8;
-        }
-
-        /* Cards container */
-        .secao {
-            background: white;
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        body.dark-mode .secao {
-            background: #1e293b;
-        }
-        .secao h2 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #e2e8f0;
-        }
-        body.dark-mode .secao h2 {
-            border-bottom-color: #334155;
-        }
-        .cards-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            justify-content: center;
-        }
-        .card-tamanho {
-            flex: 1;
-            min-width: 130px;
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-            border-radius: 20px;
-            padding: 20px 12px;
-            text-align: center;
-            transition: all 0.3s;
-            border: 1px solid #e2e8f0;
-        }
-        body.dark-mode .card-tamanho {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            border-color: #334155;
-        }
-        .card-tamanho:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-        .icone-tamanho {
-            font-size: 2.5rem;
-            margin-bottom: 8px;
-        }
-        .tamanho {
-            font-weight: 800;
-            font-size: 1.6rem;
-            color: #003399;
-        }
-        body.dark-mode .tamanho {
-            color: #60a5fa;
-        }
-        .faixa-idade {
-            font-size: 0.75rem;
-            color: #666;
-            margin: 5px 0 15px 0;
-        }
-        body.dark-mode .faixa-idade {
-            color: #94a3b8;
-        }
-        .quantidade-box {
-            background: #0047AB;
-            color: white;
-            border-radius: 16px;
-            padding: 10px;
-            margin: 10px 0;
-        }
-        body.dark-mode .quantidade-box {
-            background: #3b82f6;
-        }
-        .quantidade {
-            font-size: 2rem;
-            font-weight: 800;
-        }
-        .quantidade-label {
-            font-size: 0.7rem;
-            opacity: 0.9;
-        }
-        .barra-container {
-            width: 100%;
-            height: 8px;
-            background: #e2e8f0;
-            border-radius: 4px;
-            margin: 10px 0;
-            overflow: hidden;
-        }
-        .barra {
-            height: 100%;
-            background: linear-gradient(90deg, #0047AB, #00aaff);
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 4px;
-        }
-        .percentual {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #0047AB;
-            margin-top: 5px;
-        }
-        body.dark-mode .percentual {
-            color: #60a5fa;
-        }
-
-        /* Resumo */
-        .resumo {
-            background: linear-gradient(135deg, #0047AB, #003399);
-            color: white;
-            border-radius: 20px;
-            padding: 20px;
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-            text-align: center;
-        }
-        body.dark-mode .resumo {
-            background: linear-gradient(135deg, #1e40af, #1e3a8a);
-        }
-        .resumo-item {
-            flex: 1;
-            min-width: 100px;
-        }
-        .resumo-valor {
-            font-size: 1.8rem;
-            font-weight: 800;
-        }
-        .resumo-label {
-            font-size: 0.75rem;
-            opacity: 0.9;
-        }
-
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 40px;
-        }
-        .spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 3px solid #e2e8f0;
-            border-top-color: #0047AB;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        .sem-resultados {
-            text-align: center;
-            padding: 40px;
-            font-size: 1.1rem;
-            color: #64748b;
-        }
-
-        @media (max-width: 800px) {
-            .cards-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .card-tamanho {
-                min-width: auto;
-            }
-            .filtros-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header { background: #003399; color: white; padding: 20px; border-radius: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .btn { background: rgba(255,255,255,0.2); border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; color: white; font-weight: 600; }
+        .filtros-painel { background: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+        .filtros-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 15px; }
+        .grupo-filtro { display: flex; flex-direction: column; gap: 5px; }
+        .grupo-filtro label { font-size: 11px; font-weight: 600; color: #003399; }
+        .grupo-filtro select, .grupo-filtro input { padding: 8px 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 13px; }
+        .busca-nome { grid-column: span 2; }
+        .filtros-acoes { display: flex; gap: 10px; justify-content: flex-end; padding-top: 15px; border-top: 1px solid #e2e8f0; }
+        .btn-filtro { padding: 8px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; }
+        .btn-limpar { background: #e2e8f0; color: #1e293b; }
+        .resumo-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .card-resumo { background: white; border-radius: 16px; padding: 15px; text-align: center; border-left: 4px solid #003399; }
+        .card-resumo .numero { font-size: 28px; font-weight: 800; color: #003399; }
+        .card-resumo .label { font-size: 11px; color: #666; }
+        .tabela-container { background: white; border-radius: 16px; padding: 20px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { background: #003399; color: white; padding: 10px; text-align: left; }
+        td { padding: 8px 10px; border-bottom: 1px solid #ddd; }
+        tr:hover { background: #f5f5f5; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .badge-ativo { background: #d4edda; color: #155724; }
+        .badge-inativo { background: #f8d7da; color: #721c24; }
+        .badge-com { background: #d4edda; color: #155724; }
+        .badge-sem { background: #fff3cd; color: #856404; }
+        .loading { text-align: center; padding: 40px; }
+        .spinner { display: inline-block; width: 40px; height: 40px; border: 3px solid #e2e8f0; border-top-color: #003399; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 700px) { .filtros-grid { grid-template-columns: 1fr; } .busca-nome { grid-column: span 1; } th, td { font-size: 11px; padding: 6px; } }
     </style>
 </head>
 <body>
-
 <div class="container">
     <div class="header">
-        <h1>👕 UNIFORMES - DISTRIBUIÇÃO POR TAMANHO</h1>
-        <div class="header-actions">
-            <button class="btn-tema" onclick="alternarTema()">🌓 TEMA</button>
-            <button class="btn-limpar" onclick="limparTodosFiltros()">🧹 LIMPAR FILTROS</button>
-            <button class="btn-atualizar" onclick="carregarDados()">🔄 ATUALIZAR</button>
-            <button class="btn-exportar" onclick="exportarCSV()">📥 EXPORTAR CSV</button>
+        <h1>👕 UNIFORMES - ESCOLINHA DO JACARÉ</h1>
+        <div>
+            <button class="btn" onclick="carregarDados()">🔄 ATUALIZAR</button>
+            <button class="btn" onclick="exportarCSV()">📥 EXPORTAR CSV</button>
         </div>
     </div>
 
-    <!-- Painel de Filtros -->
     <div class="filtros-painel">
         <div class="filtros-grid">
+            <div class="grupo-filtro busca-nome">
+                <label>🔍 BUSCAR NOME</label>
+                <input type="text" id="buscaNome" placeholder="Digite o nome..." onkeyup="aplicarFiltros()">
+            </div>
             <div class="grupo-filtro">
-                <label>🎽 STATUS UNIFORME</label>
-                <select id="filtroUniforme">
+                <label>🎽 UNIFORME</label>
+                <select id="filtroUniforme" onchange="aplicarFiltros()">
                     <option value="todos">Todos</option>
-                    <option value="com">✅ Com uniforme</option>
-                    <option value="sem">❌ Sem uniforme</option>
+                    <option value="com">Com uniforme</option>
+                    <option value="sem">Sem uniforme</option>
                 </select>
             </div>
             <div class="grupo-filtro">
                 <label>📏 TAMANHO</label>
-                <select id="filtroTamanho">
-                    <option value="todos">Todos os tamanhos</option>
+                <select id="filtroTamanho" onchange="aplicarFiltros()">
+                    <option value="todos">Todos</option>
                     <optgroup label="Infantil">
-                        <option value="4">Tamanho 4</option><option value="6">Tamanho 6</option>
-                        <option value="8">Tamanho 8</option><option value="10">Tamanho 10</option>
-                        <option value="12">Tamanho 12</option><option value="14">Tamanho 14</option>
+                        <option value="4">4</option><option value="6">6</option><option value="8">8</option>
+                        <option value="10">10</option><option value="12">12</option><option value="14">14</option>
                     </optgroup>
                     <optgroup label="Adulto">
-                        <option value="PP">PP</option><option value="P">P</option>
-                        <option value="M">M</option><option value="G">G</option>
-                        <option value="GG">GG</option><option value="GGG">GGG</option>
-                        <option value="XGG">XGG</option>
+                        <option value="PP">PP</option><option value="P">P</option><option value="M">M</option>
+                        <option value="G">G</option><option value="GG">GG</option><option value="GGG">GGG</option>
                     </optgroup>
                 </select>
             </div>
             <div class="grupo-filtro">
-                <label>🏆 CATEGORIA/MODALIDADE</label>
-                <select id="filtroCategoria">
+                <label>🏆 CATEGORIA</label>
+                <select id="filtroCategoria" onchange="aplicarFiltros()">
                     <option value="todos">Todas</option>
-                    <option value="Futebol">⚽ Futebol</option>
-                    <option value="Ginástica">🤸 Ginástica</option>
-                    <option value="Tênis de Mesa">🏓 Tênis de Mesa</option>
-                    <option value="Judô">🥋 Judô</option>
-                    <option value="Taekwondo">🥋 Taekwondo</option>
                 </select>
             </div>
             <div class="grupo-filtro">
                 <label>📚 TURMA</label>
-                <select id="filtroTurma">
+                <select id="filtroTurma" onchange="aplicarFiltros()">
                     <option value="todos">Todas</option>
-                    <option value="Sub-7">Sub-7</option><option value="Sub-9">Sub-9</option>
-                    <option value="Sub-11">Sub-11</option><option value="Sub-13">Sub-13</option>
-                    <option value="Sub-15">Sub-15</option><option value="Acima-17">Acima-17</option>
                 </select>
             </div>
             <div class="grupo-filtro">
-                <label>👤 STATUS ALUNO</label>
-                <select id="filtroStatusAluno">
+                <label>👤 STATUS</label>
+                <select id="filtroStatus" onchange="aplicarFiltros()">
                     <option value="todos">Todos</option>
-                    <option value="aprovado">✅ Ativos</option>
-                    <option value="recusado">❌ Desativados</option>
+                    <option value="aprovado">Ativos</option>
+                    <option value="recusado">Inativos</option>
+                </select>
+            </div>
+            <div class="grupo-filtro">
+                <label>👥 GÊNERO</label>
+                <select id="filtroGenero" onchange="aplicarFiltros()">
+                    <option value="todos">Todos</option>
                 </select>
             </div>
         </div>
-        <div class="filtros-rapidos" id="filtrosRapidos"></div>
-        <div class="contagem-filtros" id="contagemFiltros"></div>
+        <div class="filtros-acoes">
+            <button class="btn-filtro btn-limpar" onclick="limparFiltros()">🧹 LIMPAR TUDO</button>
+        </div>
     </div>
 
-    <div id="conteudo">
-        <div class="loading"><div class="spinner"></div> Carregando dados...</div>
+    <div class="resumo-cards" id="resumoCards"></div>
+
+    <div class="tabela-container">
+        <h2>📋 LISTA DE ALUNOS <span id="totalRegistros"></span></h2>
+        <div style="overflow-x: auto;">
+            <table id="tabelaAlunos">
+                <thead>
+                    <tr><th>Nome</th><th>Idade</th><th>Gênero</th><th>Turma</th><th>Categoria</th><th>Tamanho</th><th>Uniforme</th><th>Status</th></tr>
+                </thead>
+                <tbody id="tabelaBody"><tr><td colspan="8" class="loading"><div class="spinner"></div> Carregando...<\/td></tr></tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 <script>
-    // ==================== DADOS MOCK (SIMULANDO BANCO) ====================
-    // Como a API pode não estar disponível, criei dados mock completos
+    const API_URL = 'https://api-escolinha.onrender.com/api/alunos';
     let todosAlunos = [];
-    let alunosFiltrados = [];
-    
-    // Gerar dados mock para demonstração
-    function gerarDadosMock() {
-        const categorias = ['Futebol', 'Ginástica', 'Tênis de Mesa', 'Judô', 'Taekwondo'];
-        const turmas = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Acima-17'];
-        const nomes = ['Ana Silva', 'Bruno Souza', 'Carla Mendes', 'Diego Santos', 'Elisa Ferreira', 
-                       'Felipe Rocha', 'Gabriela Lima', 'Henrique Costa', 'Isabela Araujo', 'João Pedro',
-                       'Karina Dias', 'Lucas Oliveira', 'Mariana Torres', 'Nicholas Andrade', 'Olivia Ramos'];
-        const statusAluno = ['aprovado', 'recusado'];
-        const temUniforme = [true, false];
-        
-        const alunos = [];
-        for (let i = 1; i <= 120; i++) {
-            const idade = Math.floor(Math.random() * 18) + 3; // 3 a 20 anos
-            const categoria = categorias[Math.floor(Math.random() * categorias.length)];
-            const turma = turmas[Math.floor(Math.random() * turmas.length)];
-            const status = statusAluno[Math.floor(Math.random() * statusAluno.length)];
-            const possuiUniforme = temUniforme[Math.floor(Math.random() * temUniforme.length)];
-            
-            let tamanhoUniforme = '';
-            if (idade >= 3 && idade <= 14) {
-                const tamanhosInf = ['4','6','8','10','12','14'];
-                const idx = Math.floor((idade - 3) / 2);
-                tamanhoUniforme = tamanhosInf[Math.min(idx, tamanhosInf.length-1)];
-            } else {
-                const tamanhosAd = ['PP','P','M','G','GG','GGG','XGG'];
-                tamanhoUniforme = tamanhosAd[Math.floor(Math.random() * tamanhosAd.length)];
-            }
-            
-            alunos.push({
-                id: i,
-                nome_aluno: nomes[Math.floor(Math.random() * nomes.length)] + (i % 10),
-                idade: idade,
-                turma: turma,
-                categoria: categoria,
-                tamanho_uniforme: possuiUniforme ? tamanhoUniforme : '',
-                status: status,
-                data_envio: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString().split('T')[0]
-            });
-        }
-        return alunos;
-    }
-    
-    // Estado dos filtros
-    let filtros = {
-        uniforme: 'todos',
-        tamanho: 'todos',
-        categoria: 'todos',
-        turma: 'todos',
-        statusAluno: 'todos'
-    };
-    
-    function alternarTema() {
-        document.body.classList.toggle('dark-mode');
-        localStorage.setItem('tema_uniforme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-    }
-    
-    if (localStorage.getItem('tema_uniforme') === 'dark') {
-        document.body.classList.add('dark-mode');
-    }
-    
-    function idadeParaTamanhoInfantil(idade) {
+
+    function idadeParaTamanho(idade) {
         if (idade >= 3 && idade <= 4) return '4';
         if (idade >= 5 && idade <= 6) return '6';
         if (idade >= 7 && idade <= 8) return '8';
         if (idade >= 9 && idade <= 10) return '10';
         if (idade >= 11 && idade <= 12) return '12';
         if (idade >= 13 && idade <= 14) return '14';
-        return null;
+        if (idade >= 15 && idade <= 17) return 'M';
+        if (idade >= 18) return 'G';
+        return '';
     }
-    
-    function iconeTamanho(tamanho) {
-        const icones = {
-            '4': '🟣', '6': '🔵', '8': '🟢', '10': '🟠', '12': '🔴', '14': '🟤',
-            'PP': '🟣', 'P': '🔵', 'M': '🟢', 'G': '🟠', 'GG': '🔴', 'GGG': '🟤', 'XGG': '⚫'
-        };
-        return icones[tamanho] || '👕';
+
+    function getTamanho(aluno) {
+        if (aluno.tamanho_uniforme && aluno.tamanho_uniforme !== '') return aluno.tamanho_uniforme;
+        return idadeParaTamanho(parseInt(aluno.idade));
     }
-    
+
+    // CORREÇÃO: Os campos estão invertidos no banco!
+    // categoria (Futebol, Ginástica) está no campo TURMA
+    // turma (Sub-11, Sub-15) está no campo CATEGORIA
+    function getCategoria(aluno) {
+        if (aluno.turma && aluno.turma !== '') return aluno.turma;
+        return '';
+    }
+
+    function getTurma(aluno) {
+        if (aluno.categoria && aluno.categoria !== '') return aluno.categoria;
+        return '';
+    }
+
+    function getPossuiUniforme(aluno) {
+        if (aluno.possui_uniforme === 'sim') return 'sim';
+        if (aluno.possui_uniforme === 'nao') return 'nao';
+        if (aluno.possui_uniforme === 'não') return 'nao';
+        return '';
+    }
+
+    async function carregarDados() {
+        document.getElementById('tabelaBody').innerHTML = '<tr><td colspan="8" class="loading"><div class="spinner"></div> Carregando...<\/td></tr>';
+        try {
+            const response = await fetch(API_URL);
+            const dados = await response.json();
+            if (Array.isArray(dados)) {
+                todosAlunos = dados;
+                console.log('Total:', todosAlunos.length);
+                
+                // Extrair valores únicos
+                const cats = new Set();
+                const turmas = new Set();
+                const gens = new Set();
+                
+                todosAlunos.forEach(aluno => {
+                    const cat = getCategoria(aluno);
+                    const tur = getTurma(aluno);
+                    const gen = aluno.sexo;
+                    if (cat && cat !== '') cats.add(cat);
+                    if (tur && tur !== '') turmas.add(tur);
+                    if (gen && gen !== '') gens.add(gen);
+                });
+                
+                // Preencher filtros
+                const selectCat = document.getElementById('filtroCategoria');
+                selectCat.innerHTML = '<option value="todos">Todas</option>';
+                Array.from(cats).sort().forEach(c => selectCat.innerHTML += `<option value="${c}">${c}</option>`);
+                
+                const selectTur = document.getElementById('filtroTurma');
+                selectTur.innerHTML = '<option value="todos">Todas</option>';
+                Array.from(turmas).sort().forEach(t => selectTur.innerHTML += `<option value="${t}">${t}</option>`);
+                
+                const selectGen = document.getElementById('filtroGenero');
+                selectGen.innerHTML = '<option value="todos">Todos</option>';
+                Array.from(gens).sort().forEach(g => selectGen.innerHTML += `<option value="${g}">${g === 'Masculino' ? '👨 Masculino' : '👩 Feminino'}</option>`);
+                
+                aplicarFiltros();
+            }
+        } catch (error) {
+            document.getElementById('tabelaBody').innerHTML = '<tr><td colspan="8" class="loading">❌ Erro ao carregar<\/td></tr>';
+        }
+    }
+
     function aplicarFiltros() {
-        alunosFiltrados = [...todosAlunos];
-        
-        // Filtro por status do aluno
-        if (filtros.statusAluno !== 'todos') {
-            alunosFiltrados = alunosFiltrados.filter(a => a.status === filtros.statusAluno);
-        }
-        
-        // Filtro por uniforme (com/sem)
-        if (filtros.uniforme === 'com') {
-            alunosFiltrados = alunosFiltrados.filter(a => a.tamanho_uniforme && a.tamanho_uniforme !== '');
-        } else if (filtros.uniforme === 'sem') {
-            alunosFiltrados = alunosFiltrados.filter(a => !a.tamanho_uniforme || a.tamanho_uniforme === '');
-        }
-        
-        // Filtro por tamanho específico
-        if (filtros.tamanho !== 'todos') {
-            alunosFiltrados = alunosFiltrados.filter(a => {
-                let tamanhoAluno = a.tamanho_uniforme;
-                if (!tamanhoAluno) {
-                    const idade = parseInt(a.idade);
-                    if (idade >= 3 && idade <= 14) {
-                        tamanhoAluno = idadeParaTamanhoInfantil(idade);
-                    }
-                }
-                return tamanhoAluno === filtros.tamanho;
-            });
-        }
-        
-        // Filtro por categoria
-        if (filtros.categoria !== 'todos') {
-            alunosFiltrados = alunosFiltrados.filter(a => a.categoria === filtros.categoria);
-        }
-        
-        // Filtro por turma
-        if (filtros.turma !== 'todos') {
-            alunosFiltrados = alunosFiltrados.filter(a => a.turma === filtros.turma);
-        }
-        
-        renderizarConteudo(alunosFiltrados);
-        atualizarContagemFiltros();
+        const busca = document.getElementById('buscaNome').value.toLowerCase();
+        const uniforme = document.getElementById('filtroUniforme').value;
+        const tamanho = document.getElementById('filtroTamanho').value;
+        const categoria = document.getElementById('filtroCategoria').value;
+        const turma = document.getElementById('filtroTurma').value;
+        const status = document.getElementById('filtroStatus').value;
+        const genero = document.getElementById('filtroGenero').value;
+
+        let filtrados = todosAlunos.filter(aluno => {
+            if (busca && !(aluno.nome_aluno || '').toLowerCase().includes(busca)) return false;
+            
+            const possuiUniforme = getPossuiUniforme(aluno);
+            if (uniforme === 'com' && possuiUniforme !== 'sim') return false;
+            if (uniforme === 'sem' && possuiUniforme !== 'nao') return false;
+            
+            if (tamanho !== 'todos' && getTamanho(aluno) !== tamanho) return false;
+            if (categoria !== 'todos' && getCategoria(aluno) !== categoria) return false;
+            if (turma !== 'todos' && getTurma(aluno) !== turma) return false;
+            if (status !== 'todos' && aluno.status !== status) return false;
+            if (genero !== 'todos' && aluno.sexo !== genero) return false;
+            
+            return true;
+        });
+
+        renderizarTabela(filtrados);
+        renderizarResumo(filtrados);
     }
-    
-    function atualizarContagemFiltros() {
-        const ativos = Object.values(filtros).filter(v => v !== 'todos').length;
-        const contagemEl = document.getElementById('contagemFiltros');
-        if (contagemEl) {
-            contagemEl.innerHTML = `🎯 ${ativos} filtro(s) ativo(s) | 📊 Exibindo ${alunosFiltrados.length} de ${todosAlunos.length} alunos`;
+
+    function renderizarTabela(alunos) {
+        const tbody = document.getElementById('tabelaBody');
+        if (alunos.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:40px;">Nenhum aluno encontrado<\/td></tr>';
+            document.getElementById('totalRegistros').innerHTML = '(0)';
+            return;
         }
-    }
-    
-    function limparTodosFiltros() {
-        filtros = {
-            uniforme: 'todos',
-            tamanho: 'todos',
-            categoria: 'todos',
-            turma: 'todos',
-            statusAluno: 'todos'
-        };
         
+        tbody.innerHTML = alunos.map(aluno => {
+            const tamanho = getTamanho(aluno);
+            const possuiUniforme = getPossuiUniforme(aluno);
+            const temUniforme = possuiUniforme === 'sim';
+            const categoria = getCategoria(aluno) || '-';
+            const turma = getTurma(aluno) || '-';
+            const genero = aluno.sexo === 'Masculino' ? '👨 Masculino' : (aluno.sexo === 'Feminino' ? '👩 Feminino' : '-');
+            
+            return `<tr>
+                <td><strong>${aluno.nome_aluno || '-'}</strong></td>
+                <td>${aluno.idade} anos</td>
+                <td>${genero}</td>
+                <td>${turma}</td>
+                <td>${categoria}</td>
+                <td><strong>${tamanho || '-'}</strong></td>
+                <td><span class="badge ${temUniforme ? 'badge-com' : 'badge-sem'}">${temUniforme ? 'Com uniforme' : 'Sem uniforme'}</span></td>
+                <td><span class="badge ${aluno.status === 'aprovado' ? 'badge-ativo' : 'badge-inativo'}">${aluno.status === 'aprovado' ? 'Ativo' : 'Inativo'}</span></td>
+            </tr>`;
+        }).join('');
+        document.getElementById('totalRegistros').innerHTML = `(${alunos.length} registros)`;
+    }
+
+    function renderizarResumo(alunos) {
+        const total = alunos.length;
+        const comUniforme = alunos.filter(a => getPossuiUniforme(a) === 'sim').length;
+        const ativos = alunos.filter(a => a.status === 'aprovado').length;
+        const masculino = alunos.filter(a => a.sexo === 'Masculino').length;
+        const futebol = alunos.filter(a => getCategoria(a) === 'Futebol').length;
+        const futebolSemUniforme = alunos.filter(a => getCategoria(a) === 'Futebol' && getPossuiUniforme(a) !== 'sim').length;
+        
+        document.getElementById('resumoCards').innerHTML = `
+            <div class="card-resumo"><div class="numero">${total}</div><div class="label">📋 Total</div></div>
+            <div class="card-resumo"><div class="numero">${comUniforme}</div><div class="label">✅ Com Uniforme</div></div>
+            <div class="card-resumo"><div class="numero">${total - comUniforme}</div><div class="label">❌ Sem Uniforme</div></div>
+            <div class="card-resumo"><div class="numero">${futebol}</div><div class="label">⚽ Futebol</div></div>
+            <div class="card-resumo"><div class="numero" style="color:#dc2626">${futebolSemUniforme}</div><div class="label">⚠️ Futebol sem uniforme</div></div>
+            <div class="card-resumo"><div class="numero">${ativos}</div><div class="label">✅ Ativos</div></div>
+            <div class="card-resumo"><div class="numero">${masculino}</div><div class="label">👨 Masculino</div></div>
+        `;
+    }
+
+    function limparFiltros() {
+        document.getElementById('buscaNome').value = '';
         document.getElementById('filtroUniforme').value = 'todos';
         document.getElementById('filtroTamanho').value = 'todos';
         document.getElementById('filtroCategoria').value = 'todos';
         document.getElementById('filtroTurma').value = 'todos';
-        document.getElementById('filtroStatusAluno').value = 'todos';
-        
+        document.getElementById('filtroStatus').value = 'todos';
+        document.getElementById('filtroGenero').value = 'todos';
         aplicarFiltros();
     }
-    
-    function carregarDados() {
-        const conteudo = document.getElementById('conteudo');
-        conteudo.innerHTML = '<div class="loading"><div class="spinner"></div> Carregando dados...</div>';
-        
-        // Simulando carregamento da API
-        setTimeout(() => {
-            todosAlunos = gerarDadosMock();
-            aplicarFiltros();
-        }, 500);
-    }
-    
-    function renderizarConteudo(alunos) {
-        const infantil = alunos.filter(a => {
-            const idade = parseInt(a.idade);
-            return idade >= 3 && idade <= 14;
-        });
-        
-        const adulto = alunos.filter(a => {
-            const idade = parseInt(a.idade);
-            return idade >= 15;
-        });
-        
-        const contagemInfantil = { '4': 0, '6': 0, '8': 0, '10': 0, '12': 0, '14': 0 };
-        infantil.forEach(aluno => {
-            const idade = parseInt(aluno.idade);
-            let tamanho = aluno.tamanho_uniforme;
-            if (!tamanho) {
-                tamanho = idadeParaTamanhoInfantil(idade);
-            }
-            if (contagemInfantil[tamanho] !== undefined) contagemInfantil[tamanho]++;
-        });
-        
-        const contagemAdulto = { 'PP': 0, 'P': 0, 'M': 0, 'G': 0, 'GG': 0, 'GGG': 0, 'XGG': 0 };
-        adulto.forEach(aluno => {
-            let tamanho = (aluno.tamanho_uniforme || '').toUpperCase();
-            if (contagemAdulto[tamanho] !== undefined) {
-                contagemAdulto[tamanho]++;
-            }
-        });
-        
-        const totalInfantil = infantil.length;
-        const totalAdulto = adulto.length;
-        const totalGeral = alunos.length;
-        const ativos = alunos.filter(a => a.status === 'aprovado').length;
-        const desativados = alunos.filter(a => a.status === 'recusado').length;
-        const comUniforme = alunos.filter(a => a.tamanho_uniforme && a.tamanho_uniforme !== '').length;
-        const semUniforme = totalGeral - comUniforme;
-        
-        if (totalGeral === 0) {
-            document.getElementById('conteudo').innerHTML = '<div class="sem-resultados">😕 Nenhum aluno encontrado com os filtros selecionados</div>';
-            return;
-        }
-        
-        const html = `
-            <div class="secao">
-                <h2>👶 INFANTIL (tamanho por idade)</h2>
-                <div class="cards-container">
-                    ${gerarCardsInfantil(contagemInfantil, totalInfantil)}
-                </div>
-                <div style="margin-top: 15px; text-align: right; font-size: 0.85rem; font-weight: 600;">
-                    📊 Total infantil: ${totalInfantil} aluno${totalInfantil !== 1 ? 's' : ''}
-                </div>
-            </div>
-            
-            <div class="secao">
-                <h2>👨 ADULTO (tamanho por letra)</h2>
-                <div class="cards-container">
-                    ${gerarCardsAdulto(contagemAdulto, totalAdulto)}
-                </div>
-                <div style="margin-top: 15px; text-align: right; font-size: 0.85rem; font-weight: 600;">
-                    📊 Total adulto: ${totalAdulto} aluno${totalAdulto !== 1 ? 's' : ''}
-                </div>
-            </div>
-            
-            <div class="resumo">
-                <div class="resumo-item">
-                    <div class="resumo-valor">${totalInfantil}</div>
-                    <div class="resumo-label">👶 Infantil</div>
-                </div>
-                <div class="resumo-item">
-                    <div class="resumo-valor">${totalAdulto}</div>
-                    <div class="resumo-label">👨 Adulto</div>
-                </div>
-                <div class="resumo-item">
-                    <div class="resumo-valor">${totalGeral}</div>
-                    <div class="resumo-label">📋 Total Geral</div>
-                </div>
-                <div class="resumo-item">
-                    <div class="resumo-valor">${comUniforme}</div>
-                    <div class="resumo-label">✅ Com uniforme</div>
-                </div>
-                <div class="resumo-item">
-                    <div class="resumo-valor">${semUniforme}</div>
-                    <div class="resumo-label">❌ Sem uniforme</div>
-                </div>
-                <div class="resumo-item">
-                    <div class="resumo-valor">${ativos}</div>
-                    <div class="resumo-label">✅ Ativos</div>
-                </div>
-                <div class="resumo-item">
-                    <div class="resumo-valor">${desativados}</div>
-                    <div class="resumo-label">❌ Desativados</div>
-                </div>
-            </div>
-        `;
-        
-        document.getElementById('conteudo').innerHTML = html;
-    }
-    
-    function gerarCardsInfantil(contagem, total) {
-        const tamanhos = ['4', '6', '8', '10', '12', '14'];
-        const faixas = {
-            '4': '3-4 anos', '6': '5-6 anos', '8': '7-8 anos',
-            '10': '9-10 anos', '12': '11-12 anos', '14': '13-14 anos'
-        };
-        
-        return tamanhos.map(tamanho => {
-            const quantidade = contagem[tamanho];
-            const percentual = total > 0 ? ((quantidade / total) * 100).toFixed(1) : 0;
-            const icone = iconeTamanho(tamanho);
-            
-            return `
-                <div class="card-tamanho">
-                    <div class="icone-tamanho">${icone}</div>
-                    <div class="tamanho">${tamanho}</div>
-                    <div class="faixa-idade">${faixas[tamanho]}</div>
-                    <div class="quantidade-box">
-                        <div class="quantidade">${quantidade}</div>
-                        <div class="quantidade-label">ALUNOS</div>
-                    </div>
-                    <div class="barra-container">
-                        <div class="barra" style="width: ${percentual}%;"></div>
-                    </div>
-                    <div class="percentual">${percentual}%</div>
-                </div>
-            `;
-        }).join('');
-    }
-    
-    function gerarCardsAdulto(contagem, total) {
-        const tamanhos = ['PP', 'P', 'M', 'G', 'GG', 'GGG', 'XGG'];
-        
-        return tamanhos.map(tamanho => {
-            const quantidade = contagem[tamanho];
-            const percentual = total > 0 ? ((quantidade / total) * 100).toFixed(1) : 0;
-            const icone = iconeTamanho(tamanho);
-            
-            return `
-                <div class="card-tamanho">
-                    <div class="icone-tamanho">${icone}</div>
-                    <div class="tamanho">${tamanho}</div>
-                    <div class="quantidade-box">
-                        <div class="quantidade">${quantidade}</div>
-                        <div class="quantidade-label">ALUNOS</div>
-                    </div>
-                    <div class="barra-container">
-                        <div class="barra" style="width: ${percentual}%;"></div>
-                    </div>
-                    <div class="percentual">${percentual}%</div>
-                </div>
-            `;
-        }).join('');
-    }
-    
+
     function exportarCSV() {
-        if (alunosFiltrados.length === 0) {
-            alert('Nenhum dado para exportar com os filtros atuais');
-            return;
-        }
+        const busca = document.getElementById('buscaNome').value.toLowerCase();
+        const uniforme = document.getElementById('filtroUniforme').value;
+        const tamanho = document.getElementById('filtroTamanho').value;
+        const categoria = document.getElementById('filtroCategoria').value;
+        const turma = document.getElementById('filtroTurma').value;
+        const status = document.getElementById('filtroStatus').value;
+        const genero = document.getElementById('filtroGenero').value;
+
+        let filtrados = todosAlunos.filter(aluno => {
+            if (busca && !(aluno.nome_aluno || '').toLowerCase().includes(busca)) return false;
+            const possuiUniforme = getPossuiUniforme(aluno);
+            if (uniforme === 'com' && possuiUniforme !== 'sim') return false;
+            if (uniforme === 'sem' && possuiUniforme !== 'nao') return false;
+            if (tamanho !== 'todos' && getTamanho(aluno) !== tamanho) return false;
+            if (categoria !== 'todos' && getCategoria(aluno) !== categoria) return false;
+            if (turma !== 'todos' && getTurma(aluno) !== turma) return false;
+            if (status !== 'todos' && aluno.status !== status) return false;
+            if (genero !== 'todos' && aluno.sexo !== genero) return false;
+            return true;
+        });
+
+        if (filtrados.length === 0) { alert('Nenhum dado para exportar'); return; }
         
-        let csv = 'Nome,Idade,Turma,Categoria,Tamanho Uniforme,Status,Data Matrícula\n';
-        alunosFiltrados.forEach(aluno => {
-            let tamanho = aluno.tamanho_uniforme || '';
-            if (!tamanho && aluno.idade >= 3 && aluno.idade <= 14) {
-                tamanho = idadeParaTamanhoInfantil(parseInt(aluno.idade)) || '';
-            }
-            csv += `"${aluno.nome_aluno || ''}","${aluno.idade || ''}","${aluno.turma || ''}","${aluno.categoria || ''}","${tamanho}","${aluno.status || ''}","${aluno.data_envio || ''}"\n`;
+        let csv = 'Nome,Idade,Gênero,Turma,Categoria,Tamanho,Uniforme,Status\n';
+        filtrados.forEach(aluno => {
+            csv += `"${aluno.nome_aluno || ''}","${aluno.idade}","${aluno.sexo}","${getTurma(aluno)}","${getCategoria(aluno)}","${getTamanho(aluno)}","${getPossuiUniforme(aluno) === 'sim' ? 'Com uniforme' : 'Sem uniforme'}","${aluno.status === 'aprovado' ? 'Ativo' : 'Inativo'}"\n`;
         });
         
         const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = `uniformes_filtrado_${new Date().toISOString().slice(0,10)}.csv`;
+        link.download = `uniformes_${new Date().toISOString().slice(0,10)}.csv`;
         link.click();
-        URL.revokeObjectURL(link.href);
-        alert('📥 Uniformes exportados com sucesso!');
+        alert('✅ Exportado!');
     }
-    
-    // Event listeners dos filtros
-    document.getElementById('filtroUniforme').addEventListener('change', (e) => { filtros.uniforme = e.target.value; aplicarFiltros(); });
-    document.getElementById('filtroTamanho').addEventListener('change', (e) => { filtros.tamanho = e.target.value; aplicarFiltros(); });
-    document.getElementById('filtroCategoria').addEventListener('change', (e) => { filtros.categoria = e.target.value; aplicarFiltros(); });
-    document.getElementById('filtroTurma').addEventListener('change', (e) => { filtros.turma = e.target.value; aplicarFiltros(); });
-    document.getElementById('filtroStatusAluno').addEventListener('change', (e) => { filtros.statusAluno = e.target.value; aplicarFiltros(); });
-    
+
     carregarDados();
 </script>
-
 </body>
 </html>
