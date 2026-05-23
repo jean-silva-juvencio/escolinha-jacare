@@ -1140,6 +1140,168 @@ if ('serviceWorker' in navigator) {
             opacity: 0.8;
         }
 
+        /* ========== CARROSSEL DE DEPOIMENTOS ========== */
+        .depoimentos-section {
+            max-width: 80%;
+            margin: 30px auto 0;
+            padding: 0 0 10px;
+            position: relative;
+            z-index: 1;
+        }
+        .depoimentos-titulo {
+            text-align: center;
+            color: #003399;
+            font-family: 'Montserrat';
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin-bottom: 18px;
+        }
+        body.dark-mode .depoimentos-titulo {
+            color: white;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .carrossel-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+        .carrossel-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .depoimento-card {
+            min-width: 100%;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 20px;
+            padding: 24px 30px;
+            box-sizing: border-box;
+            color: #1e293b;
+        }
+        body.dark-mode .depoimento-card {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
+            color: white;
+        }
+        .depoimento-estrelas {
+            font-size: 1.3rem;
+            color: #FFD700;
+            margin-bottom: 12px;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        }
+        .depoimento-texto {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-style: italic;
+            margin-bottom: 16px;
+            opacity: 0.95;
+        }
+        .depoimento-autor {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .depoimento-avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        .depoimento-info .nome {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .depoimento-info .sub {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+        .carrossel-controles {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 14px;
+        }
+        .carrossel-btn {
+            background: rgba(0,71,171,0.15);
+            border: 1px solid rgba(0,71,171,0.3);
+            color: #003399;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .carrossel-btn:hover {
+            background: #0047AB;
+            color: white;
+        }
+        body.dark-mode .carrossel-btn {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.3);
+            color: white;
+        }
+        body.dark-mode .carrossel-btn:hover {
+            background: rgba(255,255,255,0.35);
+        }
+        .carrossel-dots {
+            display: flex;
+            gap: 6px;
+        }
+        .carrossel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(0,71,171,0.25);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        body.dark-mode .carrossel-dot {
+            background: rgba(255,255,255,0.4);
+        }
+        .carrossel-dot.ativo {
+            background: #0047AB;
+            width: 22px;
+            border-radius: 4px;
+        }
+        body.dark-mode .carrossel-dot.ativo {
+            background: white;
+        }
+        .depoimentos-vazio {
+            text-align: center;
+            color: #003399;
+            padding: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        body.dark-mode .depoimentos-vazio {
+            color: rgba(255,255,255,0.7);
+        }
+        @media (max-width: 768px) {
+            .depoimentos-section {
+                max-width: 95%;
+            }
+            .depoimentos-titulo {
+                font-size: 1.1rem;
+            }
+            .depoimento-card {
+                padding: 18px 20px;
+            }
+            .depoimento-texto {
+                font-size: 0.85rem;
+            }
+        }
+
         /* ========== BOTÃO TOPO ========== */
         .btn-topo {
             position: fixed;
@@ -1420,6 +1582,21 @@ if ('serviceWorker' in navigator) {
         <h1>🐊 ESCOLINHA DO JACARÉ - ALVORADA</h1>
         <p>"Desde 15 de abril de 1998 formando cidadãos através do esporte"</p>
         <a href="prematricula.html" class="btn-prematricula">📝 FAZER PRÉ-MATRÍCULA</a>
+    </div>
+</div>
+
+<!-- DEPOIMENTOS -->
+<div class="depoimentos-section">
+    <div class="depoimentos-titulo">💬 O que as famílias dizem</div>
+    <div class="carrossel-wrapper">
+        <div class="carrossel-track" id="carrosselTrack">
+            <div class="depoimentos-vazio">⏳ Carregando depoimentos...</div>
+        </div>
+    </div>
+    <div class="carrossel-controles" id="carrosselControles" style="display:none;">
+        <button class="carrossel-btn" id="btnAnterior">‹</button>
+        <div class="carrossel-dots" id="carrosselDots"></div>
+        <button class="carrossel-btn" id="btnProximo">›</button>
     </div>
 </div>
 
@@ -1779,11 +1956,126 @@ if ('serviceWorker' in navigator) {
     });
     document.getElementById('btnAcessibilidade')?.addEventListener('click', alternarAcessibilidade);
 
+    // ========== CARROSSEL DE DEPOIMENTOS ==========
+    let depoimentos = [];
+    let carrosselIndex = 0;
+    let carrosselTimer = null;
+
+    async function carregarDepoimentos(tentativa = 1) {
+        const maxTentativas = 4;
+        const mensagens = [
+            '⏳ Acordando o servidor... (pode levar até 50s)',
+            '⏳ Ainda conectando, aguarde...',
+            '⏳ Quase lá...',
+            '⏳ Última tentativa...'
+        ];
+
+        document.getElementById('carrosselTrack').innerHTML =
+            `<div class="depoimentos-vazio">${mensagens[tentativa - 1]}</div>`;
+
+        try {
+            const response = await fetch(`${API_URL}/alunos`);
+
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const dados = await response.json();
+
+            if (Array.isArray(dados)) {
+                depoimentos = dados.filter(item => {
+                    const obs = (item.observacao || '').trim();
+                    const estrelas = parseInt(item.estrelas) || 0;
+                    return obs.length > 0 && estrelas >= 4;
+                }).sort((a, b) => (parseInt(b.estrelas) || 0) - (parseInt(a.estrelas) || 0));
+            }
+
+            renderizarCarrossel();
+        } catch (e) {
+            console.error(`Erro depoimentos (tentativa ${tentativa}):`, e);
+            if (tentativa < maxTentativas) {
+                setTimeout(() => carregarDepoimentos(tentativa + 1), 15000);
+            } else {
+                document.getElementById('carrosselTrack').innerHTML =
+                    '<div class="depoimentos-vazio">📭 Nenhum depoimento disponível no momento.</div>';
+            }
+        }
+    }
+
+    function renderizarCarrossel() {
+        const track = document.getElementById('carrosselTrack');
+        const controles = document.getElementById('carrosselControles');
+        const dots = document.getElementById('carrosselDots');
+
+        if (depoimentos.length === 0) {
+            track.innerHTML = '<div class="depoimentos-vazio">📭 Nenhum depoimento disponível ainda.</div>';
+            controles.style.display = 'none';
+            return;
+        }
+
+        track.innerHTML = depoimentos.map(d => {
+            const estrelas = parseInt(d.estrelas) || 0;
+            const estrelasHtml = '★'.repeat(estrelas) + '☆'.repeat(5 - estrelas);
+            const nome = d.responsavel || 'Responsável';
+            const aluno = d.nome_aluno ? `Responsável por ${d.nome_aluno}` : 'Família Jacaré';
+            const icone = (d.sexo_responsavel || '').toLowerCase().includes('f') ? '👩' : '👨';
+            const texto = (d.observacao || '').trim();
+
+            return `
+                <div class="depoimento-card">
+                    <div class="depoimento-estrelas">${estrelasHtml}</div>
+                    <div class="depoimento-texto">"${texto}"</div>
+                    <div class="depoimento-autor">
+                        <div class="depoimento-avatar">${icone}</div>
+                        <div class="depoimento-info">
+                            <div class="nome">${nome}</div>
+                            <div class="sub">${aluno}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        // Dots
+        dots.innerHTML = depoimentos.map((_, i) =>
+            `<div class="carrossel-dot ${i === 0 ? 'ativo' : ''}" data-index="${i}"></div>`
+        ).join('');
+
+        dots.querySelectorAll('.carrossel-dot').forEach(dot => {
+            dot.addEventListener('click', () => irParaSlide(parseInt(dot.dataset.index)));
+        });
+
+        controles.style.display = 'flex';
+        iniciarCarrossel();
+    }
+
+    function irParaSlide(index) {
+        carrosselIndex = (index + depoimentos.length) % depoimentos.length;
+        document.getElementById('carrosselTrack').style.transform = `translateX(-${carrosselIndex * 100}%)`;
+        document.querySelectorAll('.carrossel-dot').forEach((d, i) => {
+            d.classList.toggle('ativo', i === carrosselIndex);
+        });
+        reiniciarTimer();
+    }
+
+    function iniciarCarrossel() {
+        if (depoimentos.length <= 1) return;
+        carrosselTimer = setInterval(() => irParaSlide(carrosselIndex + 1), 5000);
+    }
+
+    function reiniciarTimer() {
+        clearInterval(carrosselTimer);
+        if (depoimentos.length > 1) {
+            carrosselTimer = setInterval(() => irParaSlide(carrosselIndex + 1), 5000);
+        }
+    }
+
+    document.getElementById('btnProximo')?.addEventListener('click', () => irParaSlide(carrosselIndex + 1));
+    document.getElementById('btnAnterior')?.addEventListener('click', () => irParaSlide(carrosselIndex - 1));
+
     // ========== INICIALIZAÇÃO ==========
     window.addEventListener('load', () => {
         buscarClima();
         buscarNoticiasFutebol();
         carregarDadosDaPlanilha();
+        carregarDepoimentos();
         setInterval(buscarClima, 600000);
         setInterval(buscarNoticiasFutebol, 300000);
         
