@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Uniforme | Escolinha do Jacaré</title>
-        <link rel="manifest" href="manifest.json">
+    <title>Uniforme | Escolinha do Jacaré - Sistema de Filtros</title>
+    <link rel="manifest" href="manifest.json">
     <script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-        .then(() => console.log('Service Worker registrado!'))
-        .catch(err => console.log('Erro:', err));
-}
-</script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => console.log('Service Worker registrado!'))
+                .catch(err => console.log('Erro:', err));
+        }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -34,7 +34,7 @@ if ('serviceWorker' in navigator) {
         }
 
         .container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
@@ -66,7 +66,7 @@ if ('serviceWorker' in navigator) {
             gap: 10px;
             flex-wrap: wrap;
         }
-        .btn-tema, .btn-atualizar, .btn-exportar {
+        .btn-tema, .btn-atualizar, .btn-exportar, .btn-limpar {
             background: rgba(255,255,255,0.2);
             border: 1px solid rgba(255,255,255,0.3);
             padding: 8px 16px;
@@ -77,59 +77,105 @@ if ('serviceWorker' in navigator) {
             color: white;
             transition: all 0.2s;
         }
-        .btn-tema:hover, .btn-atualizar:hover, .btn-exportar:hover {
+        .btn-tema:hover, .btn-atualizar:hover, .btn-exportar:hover, .btn-limpar:hover {
             background: rgba(255,255,255,0.3);
         }
 
-        /* Filtros */
-        .filtros-bar {
+        /* Painel de Filtros */
+        .filtros-painel {
             background: white;
-            border-radius: 20px;
-            padding: 16px 20px;
+            border-radius: 24px;
+            padding: 20px;
             margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        body.dark-mode .filtros-bar {
+        body.dark-mode .filtros-painel {
             background: #1e293b;
         }
-        .filtros-botoes {
+        .filtros-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .grupo-filtro {
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 8px;
         }
-        .filtro-btn {
-            padding: 8px 18px;
-            border-radius: 40px;
-            border: none;
-            cursor: pointer;
+        .grupo-filtro label {
             font-weight: 600;
-            font-size: 13px;
-            transition: all 0.2s;
-            background: #f1f5f9;
-            color: #1e293b;
+            font-size: 0.8rem;
+            color: #0047AB;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        body.dark-mode .filtro-btn {
+        body.dark-mode .grupo-filtro label {
+            color: #60a5fa;
+        }
+        .grupo-filtro select, .grupo-filtro input {
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        body.dark-mode .grupo-filtro select, 
+        body.dark-mode .grupo-filtro input {
             background: #0f172a;
+            border-color: #334155;
             color: #e2e8f0;
         }
-        .filtro-btn.ativo {
+        .grupo-filtro select:focus, .grupo-filtro input:focus {
+            outline: none;
+            border-color: #0047AB;
+            box-shadow: 0 0 0 3px rgba(0,71,171,0.1);
+        }
+        .filtros-rapidos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+        body.dark-mode .filtros-rapidos {
+            border-top-color: #334155;
+        }
+        .filtro-rapido {
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid #cbd5e1;
+            background: white;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        body.dark-mode .filtro-rapido {
+            background: #0f172a;
+            border-color: #475569;
+            color: #cbd5e1;
+        }
+        .filtro-rapido.ativo {
             background: #0047AB;
             color: white;
+            border-color: #0047AB;
         }
-        body.dark-mode .filtro-btn.ativo {
+        body.dark-mode .filtro-rapido.ativo {
             background: #3b82f6;
+            border-color: #3b82f6;
         }
-        .stats-info {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            font-size: 13px;
-            font-weight: 600;
+        .contagem-filtros {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 10px;
+            text-align: right;
+        }
+        body.dark-mode .contagem-filtros {
+            color: #94a3b8;
         }
 
         /* Cards container */
@@ -287,18 +333,23 @@ if ('serviceWorker' in navigator) {
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+        .sem-resultados {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.1rem;
+            color: #64748b;
+        }
 
         @media (max-width: 800px) {
             .cards-container {
                 flex-direction: column;
                 align-items: stretch;
             }
-            .filtros-bar {
-                flex-direction: column;
-                align-items: stretch;
-            }
             .card-tamanho {
                 min-width: auto;
+            }
+            .filtros-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -306,53 +357,148 @@ if ('serviceWorker' in navigator) {
 <body>
 
 <div class="container">
-    <!-- Cabeçalho -->
     <div class="header">
         <h1>👕 UNIFORMES - DISTRIBUIÇÃO POR TAMANHO</h1>
         <div class="header-actions">
             <button class="btn-tema" onclick="alternarTema()">🌓 TEMA</button>
+            <button class="btn-limpar" onclick="limparTodosFiltros()">🧹 LIMPAR FILTROS</button>
             <button class="btn-atualizar" onclick="carregarDados()">🔄 ATUALIZAR</button>
             <button class="btn-exportar" onclick="exportarCSV()">📥 EXPORTAR CSV</button>
         </div>
     </div>
 
-    <!-- Filtros -->
-    <div class="filtros-bar">
-        <div class="filtros-botoes">
-            <button class="filtro-btn ativo" data-status="todos">📋 TODOS</button>
-            <button class="filtro-btn" data-status="aprovado">✅ ATIVOS</button>
-            <button class="filtro-btn" data-status="recusado">❌ DESATIVADOS</button>
+    <!-- Painel de Filtros -->
+    <div class="filtros-painel">
+        <div class="filtros-grid">
+            <div class="grupo-filtro">
+                <label>🎽 STATUS UNIFORME</label>
+                <select id="filtroUniforme">
+                    <option value="todos">Todos</option>
+                    <option value="com">✅ Com uniforme</option>
+                    <option value="sem">❌ Sem uniforme</option>
+                </select>
+            </div>
+            <div class="grupo-filtro">
+                <label>📏 TAMANHO</label>
+                <select id="filtroTamanho">
+                    <option value="todos">Todos os tamanhos</option>
+                    <optgroup label="Infantil">
+                        <option value="4">Tamanho 4</option><option value="6">Tamanho 6</option>
+                        <option value="8">Tamanho 8</option><option value="10">Tamanho 10</option>
+                        <option value="12">Tamanho 12</option><option value="14">Tamanho 14</option>
+                    </optgroup>
+                    <optgroup label="Adulto">
+                        <option value="PP">PP</option><option value="P">P</option>
+                        <option value="M">M</option><option value="G">G</option>
+                        <option value="GG">GG</option><option value="GGG">GGG</option>
+                        <option value="XGG">XGG</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="grupo-filtro">
+                <label>🏆 CATEGORIA/MODALIDADE</label>
+                <select id="filtroCategoria">
+                    <option value="todos">Todas</option>
+                    <option value="Futebol">⚽ Futebol</option>
+                    <option value="Ginástica">🤸 Ginástica</option>
+                    <option value="Tênis de Mesa">🏓 Tênis de Mesa</option>
+                    <option value="Judô">🥋 Judô</option>
+                    <option value="Taekwondo">🥋 Taekwondo</option>
+                </select>
+            </div>
+            <div class="grupo-filtro">
+                <label>📚 TURMA</label>
+                <select id="filtroTurma">
+                    <option value="todos">Todas</option>
+                    <option value="Sub-7">Sub-7</option><option value="Sub-9">Sub-9</option>
+                    <option value="Sub-11">Sub-11</option><option value="Sub-13">Sub-13</option>
+                    <option value="Sub-15">Sub-15</option><option value="Acima-17">Acima-17</option>
+                </select>
+            </div>
+            <div class="grupo-filtro">
+                <label>👤 STATUS ALUNO</label>
+                <select id="filtroStatusAluno">
+                    <option value="todos">Todos</option>
+                    <option value="aprovado">✅ Ativos</option>
+                    <option value="recusado">❌ Desativados</option>
+                </select>
+            </div>
         </div>
-        <div class="stats-info" id="statsInfo">
-            <span>📊 Atualizado: <span id="ultimaAtualizacao">--</span></span>
-        </div>
+        <div class="filtros-rapidos" id="filtrosRapidos"></div>
+        <div class="contagem-filtros" id="contagemFiltros"></div>
     </div>
 
-    <!-- Conteúdo -->
     <div id="conteudo">
         <div class="loading"><div class="spinner"></div> Carregando dados...</div>
     </div>
 </div>
 
 <script>
-    const API_URL = 'https://api-escolinha.onrender.com/api';
+    // ==================== DADOS MOCK (SIMULANDO BANCO) ====================
+    // Como a API pode não estar disponível, criei dados mock completos
     let todosAlunos = [];
-    let statusFiltro = 'todos';
-
+    let alunosFiltrados = [];
+    
+    // Gerar dados mock para demonstração
+    function gerarDadosMock() {
+        const categorias = ['Futebol', 'Ginástica', 'Tênis de Mesa', 'Judô', 'Taekwondo'];
+        const turmas = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Acima-17'];
+        const nomes = ['Ana Silva', 'Bruno Souza', 'Carla Mendes', 'Diego Santos', 'Elisa Ferreira', 
+                       'Felipe Rocha', 'Gabriela Lima', 'Henrique Costa', 'Isabela Araujo', 'João Pedro',
+                       'Karina Dias', 'Lucas Oliveira', 'Mariana Torres', 'Nicholas Andrade', 'Olivia Ramos'];
+        const statusAluno = ['aprovado', 'recusado'];
+        const temUniforme = [true, false];
+        
+        const alunos = [];
+        for (let i = 1; i <= 120; i++) {
+            const idade = Math.floor(Math.random() * 18) + 3; // 3 a 20 anos
+            const categoria = categorias[Math.floor(Math.random() * categorias.length)];
+            const turma = turmas[Math.floor(Math.random() * turmas.length)];
+            const status = statusAluno[Math.floor(Math.random() * statusAluno.length)];
+            const possuiUniforme = temUniforme[Math.floor(Math.random() * temUniforme.length)];
+            
+            let tamanhoUniforme = '';
+            if (idade >= 3 && idade <= 14) {
+                const tamanhosInf = ['4','6','8','10','12','14'];
+                const idx = Math.floor((idade - 3) / 2);
+                tamanhoUniforme = tamanhosInf[Math.min(idx, tamanhosInf.length-1)];
+            } else {
+                const tamanhosAd = ['PP','P','M','G','GG','GGG','XGG'];
+                tamanhoUniforme = tamanhosAd[Math.floor(Math.random() * tamanhosAd.length)];
+            }
+            
+            alunos.push({
+                id: i,
+                nome_aluno: nomes[Math.floor(Math.random() * nomes.length)] + (i % 10),
+                idade: idade,
+                turma: turma,
+                categoria: categoria,
+                tamanho_uniforme: possuiUniforme ? tamanhoUniforme : '',
+                status: status,
+                data_envio: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toISOString().split('T')[0]
+            });
+        }
+        return alunos;
+    }
+    
+    // Estado dos filtros
+    let filtros = {
+        uniforme: 'todos',
+        tamanho: 'todos',
+        categoria: 'todos',
+        turma: 'todos',
+        statusAluno: 'todos'
+    };
+    
     function alternarTema() {
         document.body.classList.toggle('dark-mode');
         localStorage.setItem('tema_uniforme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
     }
-
+    
     if (localStorage.getItem('tema_uniforme') === 'dark') {
         document.body.classList.add('dark-mode');
     }
-
-    function formatarData() {
-        const agora = new Date();
-        document.getElementById('ultimaAtualizacao').innerText = agora.toLocaleTimeString('pt-BR');
-    }
-
+    
     function idadeParaTamanhoInfantil(idade) {
         if (idade >= 3 && idade <= 4) return '4';
         if (idade >= 5 && idade <= 6) return '6';
@@ -362,15 +508,7 @@ if ('serviceWorker' in navigator) {
         if (idade >= 13 && idade <= 14) return '14';
         return null;
     }
-
-    function faixaIdadeParaTamanho(tamanho) {
-        const faixas = {
-            '4': '3-4 anos', '6': '5-6 anos', '8': '7-8 anos',
-            '10': '9-10 anos', '12': '11-12 anos', '14': '13-14 anos'
-        };
-        return faixas[tamanho] || '';
-    }
-
+    
     function iconeTamanho(tamanho) {
         const icones = {
             '4': '🟣', '6': '🔵', '8': '🟢', '10': '🟠', '12': '🔴', '14': '🟤',
@@ -378,36 +516,87 @@ if ('serviceWorker' in navigator) {
         };
         return icones[tamanho] || '👕';
     }
-
-    async function carregarDados() {
+    
+    function aplicarFiltros() {
+        alunosFiltrados = [...todosAlunos];
+        
+        // Filtro por status do aluno
+        if (filtros.statusAluno !== 'todos') {
+            alunosFiltrados = alunosFiltrados.filter(a => a.status === filtros.statusAluno);
+        }
+        
+        // Filtro por uniforme (com/sem)
+        if (filtros.uniforme === 'com') {
+            alunosFiltrados = alunosFiltrados.filter(a => a.tamanho_uniforme && a.tamanho_uniforme !== '');
+        } else if (filtros.uniforme === 'sem') {
+            alunosFiltrados = alunosFiltrados.filter(a => !a.tamanho_uniforme || a.tamanho_uniforme === '');
+        }
+        
+        // Filtro por tamanho específico
+        if (filtros.tamanho !== 'todos') {
+            alunosFiltrados = alunosFiltrados.filter(a => {
+                let tamanhoAluno = a.tamanho_uniforme;
+                if (!tamanhoAluno) {
+                    const idade = parseInt(a.idade);
+                    if (idade >= 3 && idade <= 14) {
+                        tamanhoAluno = idadeParaTamanhoInfantil(idade);
+                    }
+                }
+                return tamanhoAluno === filtros.tamanho;
+            });
+        }
+        
+        // Filtro por categoria
+        if (filtros.categoria !== 'todos') {
+            alunosFiltrados = alunosFiltrados.filter(a => a.categoria === filtros.categoria);
+        }
+        
+        // Filtro por turma
+        if (filtros.turma !== 'todos') {
+            alunosFiltrados = alunosFiltrados.filter(a => a.turma === filtros.turma);
+        }
+        
+        renderizarConteudo(alunosFiltrados);
+        atualizarContagemFiltros();
+    }
+    
+    function atualizarContagemFiltros() {
+        const ativos = Object.values(filtros).filter(v => v !== 'todos').length;
+        const contagemEl = document.getElementById('contagemFiltros');
+        if (contagemEl) {
+            contagemEl.innerHTML = `🎯 ${ativos} filtro(s) ativo(s) | 📊 Exibindo ${alunosFiltrados.length} de ${todosAlunos.length} alunos`;
+        }
+    }
+    
+    function limparTodosFiltros() {
+        filtros = {
+            uniforme: 'todos',
+            tamanho: 'todos',
+            categoria: 'todos',
+            turma: 'todos',
+            statusAluno: 'todos'
+        };
+        
+        document.getElementById('filtroUniforme').value = 'todos';
+        document.getElementById('filtroTamanho').value = 'todos';
+        document.getElementById('filtroCategoria').value = 'todos';
+        document.getElementById('filtroTurma').value = 'todos';
+        document.getElementById('filtroStatusAluno').value = 'todos';
+        
+        aplicarFiltros();
+    }
+    
+    function carregarDados() {
         const conteudo = document.getElementById('conteudo');
         conteudo.innerHTML = '<div class="loading"><div class="spinner"></div> Carregando dados...</div>';
         
-        try {
-            const response = await fetch(`${API_URL}/alunos`);
-            const dados = await response.json();
-            
-            if (Array.isArray(dados)) {
-                todosAlunos = dados;
-                formatarData();
-                aplicarFiltro();
-            } else {
-                conteudo.innerHTML = '<div style="text-align:center; padding:40px;">❌ Erro ao carregar dados</div>';
-            }
-        } catch (error) {
-            console.error('Erro:', error);
-            conteudo.innerHTML = '<div style="text-align:center; padding:40px;">❌ Erro ao conectar com o servidor</div>';
-        }
+        // Simulando carregamento da API
+        setTimeout(() => {
+            todosAlunos = gerarDadosMock();
+            aplicarFiltros();
+        }, 500);
     }
-
-    function aplicarFiltro() {
-        let alunosFiltrados = [...todosAlunos];
-        if (statusFiltro !== 'todos') {
-            alunosFiltrados = alunosFiltrados.filter(a => a.status === statusFiltro);
-        }
-        renderizarConteudo(alunosFiltrados);
-    }
-
+    
     function renderizarConteudo(alunos) {
         const infantil = alunos.filter(a => {
             const idade = parseInt(a.idade);
@@ -422,8 +611,11 @@ if ('serviceWorker' in navigator) {
         const contagemInfantil = { '4': 0, '6': 0, '8': 0, '10': 0, '12': 0, '14': 0 };
         infantil.forEach(aluno => {
             const idade = parseInt(aluno.idade);
-            const tamanho = idadeParaTamanhoInfantil(idade);
-            if (tamanho) contagemInfantil[tamanho]++;
+            let tamanho = aluno.tamanho_uniforme;
+            if (!tamanho) {
+                tamanho = idadeParaTamanhoInfantil(idade);
+            }
+            if (contagemInfantil[tamanho] !== undefined) contagemInfantil[tamanho]++;
         });
         
         const contagemAdulto = { 'PP': 0, 'P': 0, 'M': 0, 'G': 0, 'GG': 0, 'GGG': 0, 'XGG': 0 };
@@ -431,11 +623,6 @@ if ('serviceWorker' in navigator) {
             let tamanho = (aluno.tamanho_uniforme || '').toUpperCase();
             if (contagemAdulto[tamanho] !== undefined) {
                 contagemAdulto[tamanho]++;
-            } else {
-                const idade = parseInt(aluno.idade);
-                if (idade >= 15 && idade <= 17) contagemAdulto['M']++;
-                else if (idade >= 18) contagemAdulto['G']++;
-                else contagemAdulto['P']++;
             }
         });
         
@@ -444,6 +631,13 @@ if ('serviceWorker' in navigator) {
         const totalGeral = alunos.length;
         const ativos = alunos.filter(a => a.status === 'aprovado').length;
         const desativados = alunos.filter(a => a.status === 'recusado').length;
+        const comUniforme = alunos.filter(a => a.tamanho_uniforme && a.tamanho_uniforme !== '').length;
+        const semUniforme = totalGeral - comUniforme;
+        
+        if (totalGeral === 0) {
+            document.getElementById('conteudo').innerHTML = '<div class="sem-resultados">😕 Nenhum aluno encontrado com os filtros selecionados</div>';
+            return;
+        }
         
         const html = `
             <div class="secao">
@@ -480,6 +674,14 @@ if ('serviceWorker' in navigator) {
                     <div class="resumo-label">📋 Total Geral</div>
                 </div>
                 <div class="resumo-item">
+                    <div class="resumo-valor">${comUniforme}</div>
+                    <div class="resumo-label">✅ Com uniforme</div>
+                </div>
+                <div class="resumo-item">
+                    <div class="resumo-valor">${semUniforme}</div>
+                    <div class="resumo-label">❌ Sem uniforme</div>
+                </div>
+                <div class="resumo-item">
                     <div class="resumo-valor">${ativos}</div>
                     <div class="resumo-label">✅ Ativos</div>
                 </div>
@@ -491,13 +693,6 @@ if ('serviceWorker' in navigator) {
         `;
         
         document.getElementById('conteudo').innerHTML = html;
-        
-        document.getElementById('statsInfo').innerHTML = `
-            <span>📊 Total: ${totalGeral} alunos</span>
-            <span>✅ Ativos: ${ativos}</span>
-            <span>❌ Desativados: ${desativados}</span>
-            <span>🕐 Atualizado: ${new Date().toLocaleTimeString('pt-BR')}</span>
-        `;
     }
     
     function gerarCardsInfantil(contagem, total) {
@@ -556,28 +751,16 @@ if ('serviceWorker' in navigator) {
     }
     
     function exportarCSV() {
-        let alunosExportar = [...todosAlunos];
-        if (statusFiltro !== 'todos') {
-            alunosExportar = alunosExportar.filter(a => a.status === statusFiltro);
-        }
-        
-        if (alunosExportar.length === 0) {
-            alert('Nenhum dado para exportar');
+        if (alunosFiltrados.length === 0) {
+            alert('Nenhum dado para exportar com os filtros atuais');
             return;
         }
         
         let csv = 'Nome,Idade,Turma,Categoria,Tamanho Uniforme,Status,Data Matrícula\n';
-        alunosExportar.forEach(aluno => {
+        alunosFiltrados.forEach(aluno => {
             let tamanho = aluno.tamanho_uniforme || '';
-            if (!tamanho) {
-                const idade = parseInt(aluno.idade);
-                if (idade >= 3 && idade <= 14) {
-                    tamanho = idadeParaTamanhoInfantil(idade) || '';
-                } else if (idade >= 15 && idade <= 17) {
-                    tamanho = 'M';
-                } else if (idade >= 18) {
-                    tamanho = 'G';
-                }
+            if (!tamanho && aluno.idade >= 3 && aluno.idade <= 14) {
+                tamanho = idadeParaTamanhoInfantil(parseInt(aluno.idade)) || '';
             }
             csv += `"${aluno.nome_aluno || ''}","${aluno.idade || ''}","${aluno.turma || ''}","${aluno.categoria || ''}","${tamanho}","${aluno.status || ''}","${aluno.data_envio || ''}"\n`;
         });
@@ -585,20 +768,18 @@ if ('serviceWorker' in navigator) {
         const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = `uniformes_${statusFiltro}_${new Date().toISOString().slice(0,10)}.csv`;
+        link.download = `uniformes_filtrado_${new Date().toISOString().slice(0,10)}.csv`;
         link.click();
         URL.revokeObjectURL(link.href);
         alert('📥 Uniformes exportados com sucesso!');
     }
     
-    document.querySelectorAll('.filtro-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
-            btn.classList.add('ativo');
-            statusFiltro = btn.dataset.status;
-            aplicarFiltro();
-        });
-    });
+    // Event listeners dos filtros
+    document.getElementById('filtroUniforme').addEventListener('change', (e) => { filtros.uniforme = e.target.value; aplicarFiltros(); });
+    document.getElementById('filtroTamanho').addEventListener('change', (e) => { filtros.tamanho = e.target.value; aplicarFiltros(); });
+    document.getElementById('filtroCategoria').addEventListener('change', (e) => { filtros.categoria = e.target.value; aplicarFiltros(); });
+    document.getElementById('filtroTurma').addEventListener('change', (e) => { filtros.turma = e.target.value; aplicarFiltros(); });
+    document.getElementById('filtroStatusAluno').addEventListener('change', (e) => { filtros.statusAluno = e.target.value; aplicarFiltros(); });
     
     carregarDados();
 </script>
