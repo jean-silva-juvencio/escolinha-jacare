@@ -2,17 +2,18 @@
   "name": "Escolinha do Jacaré",
   "short_name": "Jacaré",
   "description": "Sistema da Escolinha do Jacaré - Alvorada",
-  "start_url": "/splash.html",
-  "scope": "/",
+  "start_url": "/escolinha-jacare/splash.html",
+  "scope": "/escolinha-jacare/",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#003399",
   "background_color": "#ffffff",
   "icons": [
     {
-      "src": "icones/jacare.png",
+      "src": "/escolinha-jacare/icons/jacare.jpeg",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/jpeg",
+      "purpose": "any maskable"
     }
   ]
 }
