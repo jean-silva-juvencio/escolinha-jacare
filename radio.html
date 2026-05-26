@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Rádio Jacaré | Em Breve | Escolinha do Jacaré</title>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => console.log('Service Worker registrado!'))
+                .catch(err => console.log('Erro:', err));
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a2a 0%, #1a1a3e 100%);
+            min-height: 100vh;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0f0f 100%);
+        }
+
+        body.light-mode {
+            background: linear-gradient(135deg, #fff5f0 0%, #ffe8e0 100%);
+        }
+
+        /* ========== BARRA SUPERIOR ========== */
+        .nav-bar {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 60px;
+            padding: 10px 24px;
+            margin: 20px auto 0;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        body.dark-mode .nav-bar {
+            background: rgba(30,20,20,0.95);
+        }
+
+        .logo-text {
+            text-decoration: none;
+            font-family: 'Inter';
+            font-weight: 900;
+            font-size: 1.4rem;
+            background: linear-gradient(45deg, #e67e22, #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        body.dark-mode .nav-link {
+            background: #2d1a1a;
+            color: #f0d0b0;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            background: #e67e22;
+            color: white;
+        }
+
+        .nav-link.ativo {
+            background: linear-gradient(135deg, #e67e22, #f39c12);
+            color: white;
+        }
+
+        .btn-tema {
+            background: rgba(0,0,0,0.1);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .btn-tema:hover {
+            transform: scale(1.05);
+        }
+
+        /* ========== CONTEÚDO PRINCIPAL ========== */
+        .container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        /* ========== CARD SOFISTICADO ========== */
+        .radio-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 48px;
+            padding: 60px 40px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        body.light-mode .radio-card {
+            background: rgba(255,255,255,0.9);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Logo da Rádio */
+        .radio-logo {
+            margin-bottom: 40px;
+        }
+
+        .radio-logo .icone {
+            font-size: 6rem;
+            display: inline-block;
+            animation: pulseRadio 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseRadio {
+            0%, 100% {
+                transform: scale(1);
+                text-shadow: 0 0 0 rgba(230,126,34,0);
+            }
+            50% {
+                transform: scale(1.1);
+                text-shadow: 0 0 20px rgba(230,126,34,0.5);
+            }
+        }
+
+        .radio-logo h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #e67e22, #f39c12);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-top: 15px;
+        }
+
+        .radio-logo p {
+            color: #c0a080;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        body.light-mode .radio-logo p {
+            color: #a06030;
+        }
+
+        /* Status - EM BREVE */
+        .status-breve {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(230,126,34,0.15);
+            padding: 12px 28px;
+            border-radius: 80px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(230,126,34,0.3);
+        }
+
+        .pulse-dot {
+            width: 12px;
+            height: 12px;
+            background: #e67e22;
+            border-radius: 50%;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.3);
+            }
+        }
+
+        .status-breve span {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #e67e22;
+            letter-spacing: 2px;
+        }
+
+        /* Mensagem Central */
+        .mensagem-central {
+            margin: 40px 0;
+        }
+
+        .mensagem-central h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        body.light-mode .mensagem-central h2 {
+            color: #2d1a1a;
+        }
+
+        .mensagem-central .detalhe {
+            font-size: 1rem;
+            color: #c0a080;
+            line-height: 1.6;
+        }
+
+        /* Wave Animation */
+        .wave-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            height: 60px;
+            margin: 30px 0;
+        }
+
+        .wave-animation .bar {
+            width: 5px;
+            height: 25px;
+            background: linear-gradient(135deg, #e67e22, #f39c12);
+            border-radius: 3px;
+            animation: wave 1s ease-in-out infinite;
+        }
+
+        .wave-animation .bar:nth-child(1) { animation-delay: 0s; height: 20px; }
+        .wave-animation .bar:nth-child(2) { animation-delay: 0.1s; height: 35px; }
+        .wave-animation .bar:nth-child(3) { animation-delay: 0.2s; height: 50px; }
+        .wave-animation .bar:nth-child(4) { animation-delay: 0.3s; height: 40px; }
+        .wave-animation .bar:nth-child(5) { animation-delay: 0.4s; height: 55px; }
+        .wave-animation .bar:nth-child(6) { animation-delay: 0.5s; height: 30px; }
+        .wave-animation .bar:nth-child(7) { animation-delay: 0.6s; height: 45px; }
+        .wave-animation .bar:nth-child(8) { animation-delay: 0.7s; height: 25px; }
+
+        @keyframes wave {
+            0%, 100% {
+                transform: scaleY(1);
+            }
+            50% {
+                transform: scaleY(0.5);
+            }
+        }
+
+        /* Botão de Notificação */
+        .btn-notificar {
+            background: linear-gradient(135deg, #e67e22, #f39c12);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-notificar:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(230,126,34,0.4);
+        }
+
+        /* Player Placeholder (desabilitado) */
+        .player-placeholder {
+            background: rgba(0,0,0,0.2);
+            border-radius: 60px;
+            padding: 20px 30px;
+            margin-top: 30px;
+            opacity: 0.6;
+        }
+
+        body.light-mode .player-placeholder {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .player-placeholder .placeholder-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .player-placeholder .placeholder-text span {
+            font-size: 1.2rem;
+        }
+
+        .player-placeholder .placeholder-text .mock-controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .player-placeholder .placeholder-text .mock-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Rodapé */
+        footer {
+            background: rgba(0,0,0,0.8);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        body.light-mode footer {
+            background: #c0392b;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #e67e22;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            z-index: 1100;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 700px) {
+            .radio-card {
+                padding: 40px 25px;
+            }
+            .radio-logo .icone {
+                font-size: 4rem;
+            }
+            .radio-logo h1 {
+                font-size: 1.8rem;
+            }
+            .mensagem-central h2 {
+                font-size: 1.3rem;
+            }
+            .mensagem-central .detalhe {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- BARRA DE NAVEGAÇÃO -->
+<div class="nav-bar">
+    <a href="index.html" class="logo-text">
+        <span>🐊</span> ESCOLINHA DO JACARÉ
+    </a>
+    <div class="nav-links">
+        <a href="index.html" class="nav-link">🏠 INÍCIO</a>
+        <a href="diretoria.html" class="nav-link">📊 DIRETORIA</a>
+        <a href="funcionarios.html" class="nav-link">🔒 FUNCIONÁRIOS</a>
+        <a href="radio.html" class="nav-link ativo">🎙️ RÁDIO JACARÉ</a>
+        <a href="galerias.html" class="nav-link">📸 GALERIAS</a>
+        <a href="prematricula.html" class="nav-link">📝 MATRÍCULA</a>
+        <button class="btn-tema" onclick="alternarTema()">🌙</button>
+    </div>
+</div>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<div class="container">
+    <div class="radio-card">
+        <!-- Logo da Rádio -->
+        <div class="radio-logo">
+            <div class="icone">🎙️🐊</div>
+            <h1>RÁDIO JACARÉ</h1>
+            <p>A voz da Escolinha do Jacaré - Alvorada</p>
+        </div>
+
+        <!-- Status EM BREVE -->
+        <div class="status-breve">
+            <div class="pulse-dot"></div>
+            <span>EM BREVE</span>
+        </div>
+
+        <!-- Mensagem Central -->
+        <div class="mensagem-central">
+            <h2>🎵 AGUARDE, PROGRAMAÇÃO EM BREVE! 🎵</h2>
+            <div class="detalhe">
+                Estamos preparando uma playlist especial com muito <strong>Pagode e Samba</strong><br>
+                para você se distrair e curtir o melhor da música brasileira!
+            </div>
+        </div>
+
+        <!-- Wave Animation -->
+        <div class="wave-animation">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+        <!-- Botão de Notificação -->
+        <button class="btn-notificar" onclick="notificarQuandoSair()">
+            🔔 ME AVISE QUANDO COMEÇAR
+        </button>
+
+        <!-- Player Placeholder (desabilitado, só pra mostrar que vai ter) -->
+        <div class="player-placeholder">
+            <div class="placeholder-text">
+                <span>🎵</span>
+                <div class="mock-controls">
+                    <div class="mock-btn"></div>
+                    <div class="mock-btn"></div>
+                    <div class="mock-btn"></div>
+                </div>
+                <span>🔊</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- RODAPÉ -->
+<footer>
+    <p>🐊 ESCOLINHA DO JACARÉ - ALVORADA | RÁDIO JACARÉ 🎙️</p>
+    <p>Manaus/AM - Brasil</p>
+    <p style="font-size: 0.7rem; margin-top: 10px;">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</p>
+</footer>
+
+<script>
+    // ========== TEMA (CLARO/ESCURO) ==========
+    function alternarTema() {
+        const body = document.body;
+        const btn = document.querySelector('.btn-tema');
+        
+        if (body.classList.contains('dark-mode')) {
+            body.classList.remove('dark-mode');
+            body.classList.add('light-mode');
+            btn.innerHTML = '🌙';
+            localStorage.setItem('tema_radio', 'light');
+        } else if (body.classList.contains('light-mode')) {
+            body.classList.remove('light-mode');
+            body.classList.add('dark-mode');
+            btn.innerHTML = '☀️';
+            localStorage.setItem('tema_radio', 'dark');
+        } else {
+            body.classList.add('dark-mode');
+            btn.innerHTML = '☀️';
+            localStorage.setItem('tema_radio', 'dark');
+        }
+    }
+
+    // Carregar tema salvo
+    const temaSalvo = localStorage.getItem('tema_radio');
+    if (temaSalvo === 'light') {
+        document.body.classList.add('light-mode');
+        document.querySelector('.btn-tema').innerHTML = '🌙';
+    } else if (temaSalvo === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.querySelector('.btn-tema').innerHTML = '☀️';
+    } else {
+        document.body.classList.add('dark-mode');
+        document.querySelector('.btn-tema').innerHTML = '☀️';
+    }
+
+    // ========== NOTIFICAÇÃO ==========
+    function notificarQuandoSair() {
+        mostrarToast('🔔 Você será avisado quando a Rádio Jacaré começar!');
+    }
+
+    // ========== TOAST ==========
+    function mostrarToast(mensagem) {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `🎵 ${mensagem}`;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+</script>
+
+</body>
+</html>
