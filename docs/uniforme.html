@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniforme | Escolinha do Jacaré</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .header { background: #003399; color: white; padding: 20px; border-radius: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .btn { background: rgba(255,255,255,0.2); border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; color: white; font-weight: 600; }
+        .filtros-painel { background: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+        .filtros-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 15px; }
+        .grupo-filtro { display: flex; flex-direction: column; gap: 5px; }
+        .grupo-filtro label { font-size: 11px; font-weight: 600; color: #003399; }
+        .grupo-filtro select, .grupo-filtro input { padding: 8px 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 13px; }
+        .busca-nome { grid-column: span 2; }
+        .filtros-acoes { display: flex; gap: 10px; justify-content: flex-end; padding-top: 15px; border-top: 1px solid #e2e8f0; }
+        .btn-filtro { padding: 8px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; }
+        .btn-limpar { background: #e2e8f0; color: #1e293b; }
+        .resumo-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .card-resumo { background: white; border-radius: 16px; padding: 15px; text-align: center; border-left: 4px solid #003399; }
+        .card-resumo .numero { font-size: 28px; font-weight: 800; color: #003399; }
+        .card-resumo .label { font-size: 11px; color: #666; }
+        .tabela-container { background: white; border-radius: 16px; padding: 20px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { background: #003399; color: white; padding: 10px; text-align: left; }
+        td { padding: 8px 10px; border-bottom: 1px solid #ddd; }
+        tr:hover { background: #f5f5f5; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .badge-ativo { background: #d4edda; color: #155724; }
+        .badge-inativo { background: #f8d7da; color: #721c24; }
+        .badge-com { background: #d4edda; color: #155724; }
+        .badge-sem { background: #fff3cd; color: #856404; }
+        .loading { text-align: center; padding: 40px; }
+        .spinner { display: inline-block; width: 40px; height: 40px; border: 3px solid #e2e8f0; border-top-color: #003399; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 700px) { .filtros-grid { grid-template-columns: 1fr; } .busca-nome { grid-column: span 1; } th, td { font-size: 11px; padding: 6px; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>👕 UNIFORMES - ESCOLINHA DO JACARÉ</h1>
+        <div>
+            <button class="btn" onclick="carregarDados()">🔄 ATUALIZAR</button>
+            <button class="btn" onclick="exportarCSV()">📥 EXPORTAR CSV</button>
+        </div>
+    </div>
+
+    <div class="filtros-painel">
+        <div class="filtros-grid">
+            <div class="grupo-filtro busca-nome">
+                <label>🔍 BUSCAR NOME</label>
+                <input type="text" id="buscaNome" placeholder="Digite o nome..." onkeyup="aplicarFiltros()">
+            </div>
+            <div class="grupo-filtro">
+                <label>🎽 UNIFORME</label>
+                <select id="filtroUniforme" onchange="aplicarFiltros()">
+                    <option value="todos">Todos</option>
+                    <option value="com">Com uniforme</option>
+                    <option value="sem">Sem uniforme</option>
+                </select>
+            </div>
+            <div class="grupo-filtro">
+                <label>📏 TAMANHO</label>
+                <select id="filtroTamanho" onchange="aplicarFiltros()">
+                    <option value="todos">Todos</option>
+                    <optgroup label="Infantil">
+                        <option value="4">4</option><option value="6">6</option><option value="8">8</option>
+                        <option value="10">10</option><option value="12">12</option><option value="14">14</option>
+                    </optgroup>
+                    <optgroup label="Adulto">
+                        <option value="PP">PP</option><option value="P">P</option><option value="M">M</option>
+                        <option value="G">G</option><option value="GG">GG</option><option value="GGG">GGG</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="grupo-filtro">
+                <label>🏆 CATEGORIA</label>
+                <select id="filtroCategoria" onchange="aplicarFiltros()">
+                    <option value="todos">Todas</option>
+                </select>
+            </div>
+            <div class="grupo-filtro">
+                <label>📚 TURMA</label>
+                <select id="filtroTurma" onchange="aplicarFiltros()">
+                    <option value="todos">Todas</option>
+                </select>
+            </div>
+            <div class="grupo-filtro">
+                <label>👤 STATUS</label>
+                <select id="filtroStatus" onchange="aplicarFiltros()">
+                    <option value="todos">Todos</option>
+                    <option value="aprovado">Ativos</option>
+                    <option value="recusado">Inativos</option>
+                </select>
+            </div>
+            <div class="grupo-filtro">
+                <label>👥 GÊNERO</label>
+                <select id="filtroGenero" onchange="aplicarFiltros()">
+                    <option value="todos">Todos</option>
+                </select>
+            </div>
+        </div>
+        <div class="filtros-acoes">
+            <button class="btn-filtro btn-limpar" onclick="limparFiltros()">🧹 LIMPAR TUDO</button>
+        </div>
+    </div>
+
+    <div class="resumo-cards" id="resumoCards"></div>
+
+    <div class="tabela-container">
+        <h2>📋 LISTA DE ALUNOS <span id="totalRegistros"></span></h2>
+        <div style="overflow-x: auto;">
+            <table id="tabelaAlunos">
+                <thead>
+                    <tr><th>Nome</th><th>Idade</th><th>Gênero</th><th>Turma</th><th>Categoria</th><th>Tamanho</th><th>Uniforme</th><th>Status</th></tr>
+                </thead>
+                <tbody id="tabelaBody"><tr><td colspan="8" class="loading"><div class="spinner"></div> Carregando...<\/td></tr></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_URL = 'https://api-escolinha.onrender.com/api/alunos';
+    let todosAlunos = [];
+
+    function idadeParaTamanho(idade) {
+        if (idade >= 3 && idade <= 4) return '4';
+        if (idade >= 5 && idade <= 6) return '6';
+        if (idade >= 7 && idade <= 8) return '8';
+        if (idade >= 9 && idade <= 10) return '10';
+        if (idade >= 11 && idade <= 12) return '12';
+        if (idade >= 13 && idade <= 14) return '14';
+        if (idade >= 15 && idade <= 17) return 'M';
+        if (idade >= 18) return 'G';
+        return '';
+    }
+
+    function getTamanho(aluno) {
+        if (aluno.tamanho_uniforme && aluno.tamanho_uniforme !== '') return aluno.tamanho_uniforme;
+        return idadeParaTamanho(parseInt(aluno.idade));
+    }
+
+    // CORREÇÃO: Os campos estão invertidos no banco!
+    // categoria (Futebol, Ginástica) está no campo TURMA
+    // turma (Sub-11, Sub-15) está no campo CATEGORIA
+    function getCategoria(aluno) {
+        if (aluno.turma && aluno.turma !== '') return aluno.turma;
+        return '';
+    }
+
+    function getTurma(aluno) {
+        if (aluno.categoria && aluno.categoria !== '') return aluno.categoria;
+        return '';
+    }
+
+    function getPossuiUniforme(aluno) {
+        if (aluno.possui_uniforme === 'sim') return 'sim';
+        if (aluno.possui_uniforme === 'nao') return 'nao';
+        if (aluno.possui_uniforme === 'não') return 'nao';
+        return '';
+    }
+
+    async function carregarDados() {
+        document.getElementById('tabelaBody').innerHTML = '<tr><td colspan="8" class="loading"><div class="spinner"></div> Carregando...<\/td></tr>';
+        try {
+            const response = await fetch(API_URL);
+            const dados = await response.json();
+            if (Array.isArray(dados)) {
+                todosAlunos = dados;
+                console.log('Total:', todosAlunos.length);
+                
+                // Extrair valores únicos
+                const cats = new Set();
+                const turmas = new Set();
+                const gens = new Set();
+                
+                todosAlunos.forEach(aluno => {
+                    const cat = getCategoria(aluno);
+                    const tur = getTurma(aluno);
+                    const gen = aluno.sexo;
+                    if (cat && cat !== '') cats.add(cat);
+                    if (tur && tur !== '') turmas.add(tur);
+                    if (gen && gen !== '') gens.add(gen);
+                });
+                
+                // Preencher filtros
+                const selectCat = document.getElementById('filtroCategoria');
+                selectCat.innerHTML = '<option value="todos">Todas</option>';
+                Array.from(cats).sort().forEach(c => selectCat.innerHTML += `<option value="${c}">${c}</option>`);
+                
+                const selectTur = document.getElementById('filtroTurma');
+                selectTur.innerHTML = '<option value="todos">Todas</option>';
+                Array.from(turmas).sort().forEach(t => selectTur.innerHTML += `<option value="${t}">${t}</option>`);
+                
+                const selectGen = document.getElementById('filtroGenero');
+                selectGen.innerHTML = '<option value="todos">Todos</option>';
+                Array.from(gens).sort().forEach(g => selectGen.innerHTML += `<option value="${g}">${g === 'Masculino' ? '👨 Masculino' : '👩 Feminino'}</option>`);
+                
+                aplicarFiltros();
+            }
+        } catch (error) {
+            document.getElementById('tabelaBody').innerHTML = '<tr><td colspan="8" class="loading">❌ Erro ao carregar<\/td></tr>';
+        }
+    }
+
+    function aplicarFiltros() {
+        const busca = document.getElementById('buscaNome').value.toLowerCase();
+        const uniforme = document.getElementById('filtroUniforme').value;
+        const tamanho = document.getElementById('filtroTamanho').value;
+        const categoria = document.getElementById('filtroCategoria').value;
+        const turma = document.getElementById('filtroTurma').value;
+        const status = document.getElementById('filtroStatus').value;
+        const genero = document.getElementById('filtroGenero').value;
+
+        let filtrados = todosAlunos.filter(aluno => {
+            if (busca && !(aluno.nome_aluno || '').toLowerCase().includes(busca)) return false;
+            
+            const possuiUniforme = getPossuiUniforme(aluno);
+            if (uniforme === 'com' && possuiUniforme !== 'sim') return false;
+            if (uniforme === 'sem' && possuiUniforme !== 'nao') return false;
+            
+            if (tamanho !== 'todos' && getTamanho(aluno) !== tamanho) return false;
+            if (categoria !== 'todos' && getCategoria(aluno) !== categoria) return false;
+            if (turma !== 'todos' && getTurma(aluno) !== turma) return false;
+            if (status !== 'todos' && aluno.status !== status) return false;
+            if (genero !== 'todos' && aluno.sexo !== genero) return false;
+            
+            return true;
+        });
+
+        renderizarTabela(filtrados);
+        renderizarResumo(filtrados);
+    }
+
+    function renderizarTabela(alunos) {
+        const tbody = document.getElementById('tabelaBody');
+        if (alunos.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:40px;">Nenhum aluno encontrado<\/td></tr>';
+            document.getElementById('totalRegistros').innerHTML = '(0)';
+            return;
+        }
+        
+        tbody.innerHTML = alunos.map(aluno => {
+            const tamanho = getTamanho(aluno);
+            const possuiUniforme = getPossuiUniforme(aluno);
+            const temUniforme = possuiUniforme === 'sim';
+            const categoria = getCategoria(aluno) || '-';
+            const turma = getTurma(aluno) || '-';
+            const genero = aluno.sexo === 'Masculino' ? '👨 Masculino' : (aluno.sexo === 'Feminino' ? '👩 Feminino' : '-');
+            
+            return `<tr>
+                <td><strong>${aluno.nome_aluno || '-'}</strong></td>
+                <td>${aluno.idade} anos</td>
+                <td>${genero}</td>
+                <td>${turma}</td>
+                <td>${categoria}</td>
+                <td><strong>${tamanho || '-'}</strong></td>
+                <td><span class="badge ${temUniforme ? 'badge-com' : 'badge-sem'}">${temUniforme ? 'Com uniforme' : 'Sem uniforme'}</span></td>
+                <td><span class="badge ${aluno.status === 'aprovado' ? 'badge-ativo' : 'badge-inativo'}">${aluno.status === 'aprovado' ? 'Ativo' : 'Inativo'}</span></td>
+            </tr>`;
+        }).join('');
+        document.getElementById('totalRegistros').innerHTML = `(${alunos.length} registros)`;
+    }
+
+    function renderizarResumo(alunos) {
+        const total = alunos.length;
+        const comUniforme = alunos.filter(a => getPossuiUniforme(a) === 'sim').length;
+        const ativos = alunos.filter(a => a.status === 'aprovado').length;
+        const masculino = alunos.filter(a => a.sexo === 'Masculino').length;
+        const futebol = alunos.filter(a => getCategoria(a) === 'Futebol').length;
+        const futebolSemUniforme = alunos.filter(a => getCategoria(a) === 'Futebol' && getPossuiUniforme(a) !== 'sim').length;
+        
+        document.getElementById('resumoCards').innerHTML = `
+            <div class="card-resumo"><div class="numero">${total}</div><div class="label">📋 Total</div></div>
+            <div class="card-resumo"><div class="numero">${comUniforme}</div><div class="label">✅ Com Uniforme</div></div>
+            <div class="card-resumo"><div class="numero">${total - comUniforme}</div><div class="label">❌ Sem Uniforme</div></div>
+            <div class="card-resumo"><div class="numero">${futebol}</div><div class="label">⚽ Futebol</div></div>
+            <div class="card-resumo"><div class="numero" style="color:#dc2626">${futebolSemUniforme}</div><div class="label">⚠️ Futebol sem uniforme</div></div>
+            <div class="card-resumo"><div class="numero">${ativos}</div><div class="label">✅ Ativos</div></div>
+            <div class="card-resumo"><div class="numero">${masculino}</div><div class="label">👨 Masculino</div></div>
+        `;
+    }
+
+    function limparFiltros() {
+        document.getElementById('buscaNome').value = '';
+        document.getElementById('filtroUniforme').value = 'todos';
+        document.getElementById('filtroTamanho').value = 'todos';
+        document.getElementById('filtroCategoria').value = 'todos';
+        document.getElementById('filtroTurma').value = 'todos';
+        document.getElementById('filtroStatus').value = 'todos';
+        document.getElementById('filtroGenero').value = 'todos';
+        aplicarFiltros();
+    }
+
+    function exportarCSV() {
+        const busca = document.getElementById('buscaNome').value.toLowerCase();
+        const uniforme = document.getElementById('filtroUniforme').value;
+        const tamanho = document.getElementById('filtroTamanho').value;
+        const categoria = document.getElementById('filtroCategoria').value;
+        const turma = document.getElementById('filtroTurma').value;
+        const status = document.getElementById('filtroStatus').value;
+        const genero = document.getElementById('filtroGenero').value;
+
+        let filtrados = todosAlunos.filter(aluno => {
+            if (busca && !(aluno.nome_aluno || '').toLowerCase().includes(busca)) return false;
+            const possuiUniforme = getPossuiUniforme(aluno);
+            if (uniforme === 'com' && possuiUniforme !== 'sim') return false;
+            if (uniforme === 'sem' && possuiUniforme !== 'nao') return false;
+            if (tamanho !== 'todos' && getTamanho(aluno) !== tamanho) return false;
+            if (categoria !== 'todos' && getCategoria(aluno) !== categoria) return false;
+            if (turma !== 'todos' && getTurma(aluno) !== turma) return false;
+            if (status !== 'todos' && aluno.status !== status) return false;
+            if (genero !== 'todos' && aluno.sexo !== genero) return false;
+            return true;
+        });
+
+        if (filtrados.length === 0) { alert('Nenhum dado para exportar'); return; }
+        
+        let csv = 'Nome,Idade,Gênero,Turma,Categoria,Tamanho,Uniforme,Status\n';
+        filtrados.forEach(aluno => {
+            csv += `"${aluno.nome_aluno || ''}","${aluno.idade}","${aluno.sexo}","${getTurma(aluno)}","${getCategoria(aluno)}","${getTamanho(aluno)}","${getPossuiUniforme(aluno) === 'sim' ? 'Com uniforme' : 'Sem uniforme'}","${aluno.status === 'aprovado' ? 'Ativo' : 'Inativo'}"\n`;
+        });
+        
+        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `uniformes_${new Date().toISOString().slice(0,10)}.csv`;
+        link.click();
+        alert('✅ Exportado!');
+    }
+
+    carregarDados();
+</script>
+</body>
+</html>
