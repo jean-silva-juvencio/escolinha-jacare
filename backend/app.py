@@ -206,5 +206,6 @@ def atualizar_status(protocolo):
         print(f"Erro: {e}")
         return jsonify({'erro': 'Erro ao atualizar status'}), 500
 
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
