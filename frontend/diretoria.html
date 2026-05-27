@@ -570,6 +570,8 @@ if ('serviceWorker' in navigator) {
             z-index: 1100;
             animation: slideIn 0.3s ease;
         }
+        .toast.error { background: #ef4444; }
+        .toast.info { background: #3b82f6; }
         @keyframes slideIn {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
@@ -876,10 +878,10 @@ if ('serviceWorker' in navigator) {
 
     function mostrarToast(mensagem, tipo = 'success') {
         const toast = document.createElement('div');
-        toast.className = 'toast';
+        toast.className = `toast ${tipo}`;
         toast.innerHTML = mensagem;
         document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3000);
+        setTimeout(() => toast.remove(), 3500);
     }
 
     function formatarData(dataStr) {
@@ -936,9 +938,19 @@ if ('serviceWorker' in navigator) {
         return { class: '', texto: '🆕 Novato' };
     }
 
-    async function carregarDadosDaPlanilha() {
+    // ✅ FUNÇÃO CORRIGIDA COM RETRY (resolve problema do Render dormindo)
+    async function carregarDadosDaPlanilha(tentativa = 1) {
+        if (tentativa === 1) {
+            mostrarToast('⏳ Conectando ao servidor...', 'info');
+        }
+
         try {
-            const response = await fetch(`${API_URL}/alunos`);
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 15000); // 15s timeout
+
+            const response = await fetch(`${API_URL}/alunos`, { signal: controller.signal });
+            clearTimeout(timeout);
+
             const dados = await response.json();
             
             if (Array.isArray(dados)) {
@@ -964,10 +976,18 @@ if ('serviceWorker' in navigator) {
                 
                 ultimaAtualizacao = new Date();
                 atualizarTimestamp();
+                mostrarToast(`✅ ${dados.length} alunos carregados`, 'success');
             }
         } catch (error) {
-            console.error('Erro:', error);
-            mostrarToast('❌ Erro ao conectar com o backend', 'error');
+            console.error(`Tentativa ${tentativa} falhou:`, error);
+
+            if (tentativa < 4) {
+                const espera = tentativa * 5000; // 5s, 10s, 15s
+                mostrarToast(`⏳ Servidor acordando... tentativa ${tentativa}/3 (aguarde ${tentativa * 5}s)`, 'info');
+                setTimeout(() => carregarDadosDaPlanilha(tentativa + 1), espera);
+            } else {
+                mostrarToast('❌ Não foi possível conectar. Clique em ATUALIZAR para tentar novamente.', 'error');
+            }
         }
     }
 
@@ -1270,7 +1290,11 @@ if ('serviceWorker' in navigator) {
         document.getElementById('erroLogin').innerText = '';
 
         try {
-            const response = await fetch(`${API_URL}/alunos`);
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 20000);
+            const response = await fetch(`${API_URL}/alunos`, { signal: controller.signal });
+            clearTimeout(timeout);
+
             if (response.ok) {
                 usuarioLogado = { email: email, cargo: 'Diretor' };
                 document.getElementById('telaLogin').style.display = 'none';
@@ -1284,7 +1308,7 @@ if ('serviceWorker' in navigator) {
             }
         } catch (error) {
             console.error('Erro ao verificar login:', error);
-            document.getElementById('erroLogin').innerText = 'Erro ao conectar com o servidor. Verifique se o backend está rodando.';
+            document.getElementById('erroLogin').innerText = 'Servidor demorou para responder. Tente novamente em alguns segundos.';
         } finally {
             btn.disabled = false;
             btn.innerHTML = 'ACESSAR';
