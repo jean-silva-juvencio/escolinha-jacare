@@ -4,12 +4,12 @@ import pymysql
 import os
 from dotenv import load_dotenv
 from datetime import datetime
-
+ 
 load_dotenv()
-
+ 
 app = Flask(__name__)
 CORS(app)
-
+ 
 def get_connection():
     return pymysql.connect(
         host=os.getenv('TIDB_HOST'),
@@ -20,11 +20,11 @@ def get_connection():
         ssl={'ca': None},
         cursorclass=pymysql.cursors.DictCursor
     )
-
+ 
 @app.route('/')
 def home():
     return jsonify({'mensagem': 'API da Escolinha do Jacaré funcionando!'})
-
+ 
 @app.route('/api/prematricula', methods=['POST'])
 def prematricula():
     dados = request.json
@@ -154,7 +154,7 @@ def prematricula():
         import traceback
         traceback.print_exc()
         return jsonify({'erro': str(e)}), 500
-
+ 
 @app.route('/api/elogios', methods=['GET'])
 def get_elogios():
     try:
@@ -174,7 +174,7 @@ def get_elogios():
     except Exception as e:
         print(f"Erro: {e}")
         return jsonify({'erro': 'Erro ao buscar elogios'}), 500
-
+ 
 @app.route('/api/alunos', methods=['GET'])
 def get_alunos():
     try:
@@ -188,7 +188,7 @@ def get_alunos():
     except Exception as e:
         print(f"Erro: {e}")
         return jsonify({'erro': 'Erro ao buscar alunos'}), 500
-
+ 
 @app.route('/api/aluno/<protocolo>', methods=['PUT'])
 def atualizar_status(protocolo):
     dados = request.json
@@ -205,7 +205,23 @@ def atualizar_status(protocolo):
     except Exception as e:
         print(f"Erro: {e}")
         return jsonify({'erro': 'Erro ao atualizar status'}), 500
-
-
+ 
+ 
+@app.route('/api/aluno/<protocolo>', methods=['DELETE'])
+def deletar_aluno(protocolo):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM alunos WHERE protocolo = %s", (protocolo,))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        print(f"🗑️ Aluno deletado: {protocolo}")
+        return jsonify({'mensagem': 'Aluno deletado com sucesso'}), 200
+    except Exception as e:
+        print(f"Erro: {e}")
+        return jsonify({'erro': 'Erro ao deletar aluno'}), 500
+ 
+ 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
