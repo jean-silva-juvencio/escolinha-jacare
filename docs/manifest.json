@@ -1,10 +1,9 @@
-
 {
   "name": "Escolinha do Jacaré",
   "short_name": "Jacaré",
-  "description": "Sistema da Escolinha do Jacaré - Alvorada. Informações, diretoria, funcionários e muito mais.",
-  "start_url": "/escolinha-jacare/index.html",
-  "scope": "/escolinha-jacare/",
+  "description": "Escolinha do Jacaré - Unidos do Alvorada. Formando cidadãos através do esporte desde 1998.",
+  "start_url": "/docs/index.html",
+  "scope": "/docs/",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#003399",
@@ -13,6 +12,12 @@
     {
       "src": "icones/icon-192.png",
       "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icones/icon-512.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
