@@ -1,7 +1,7 @@
 {
   "name": "Escolinha do Jacaré",
   "short_name": "Jacaré",
-  "description": "Escolinha do Jacaré - Unidos do Alvorada. Formando cidadãos através do esporte desde 1998.",
+  "description": "Escolinha do Jacaré - Unidos do Alvorada",
   "start_url": "/docs/index.html",
   "scope": "/docs/",
   "display": "standalone",
@@ -10,14 +10,8 @@
   "background_color": "#ffffff",
   "icons": [
     {
-      "src": "icones/icon-192.png",
+      "src": "icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icones/icon-512.png",
-      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
