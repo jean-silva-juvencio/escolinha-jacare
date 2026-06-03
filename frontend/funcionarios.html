@@ -1,3 +1,6 @@
+
+raw
+Funcionarios · HTML
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -673,12 +676,24 @@ if ('serviceWorker' in navigator) {
             clearTimeout(timeout);
  
             if (response.ok) {
+                const dados = await response.json();
                 document.getElementById('erroLogin').innerText = '';
                 document.getElementById('erroLogin').style.color = '#dc2626';
                 document.getElementById('telaLogin').style.display = 'none';
                 document.getElementById('painelInterno').style.display = 'block';
                 if (localStorage.getItem('tema') === 'dark') document.body.classList.add('dark-mode');
-                carregarDados();
+ 
+                // Aproveita os dados já buscados no login, evita segundo fetch
+                if (Array.isArray(dados)) {
+                    todosAlunos = dados;
+                    ultimaAtualizacao = new Date();
+                    atualizarTimestamp();
+                    atualizarAbas();
+                    filtrarEOrdenar();
+                    mostrarToast(`✅ ${dados.length} registros carregados`, 'success');
+                    document.getElementById('loadingDados').style.display = 'none';
+                }
+ 
                 setInterval(() => carregarDados(), 60000);
             } else {
                 document.getElementById('erroLogin').style.color = '#dc2626';
