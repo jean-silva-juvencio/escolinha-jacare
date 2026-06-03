@@ -1,23 +1,20 @@
+Manifest · JSON
 {
   "name": "Escolinha do Jacaré",
   "short_name": "Jacaré",
   "description": "Sistema da Escolinha do Jacaré - Alvorada. Informações, diretoria, funcionários e muito mais.",
-  "start_url": "/diretoria.html",
-  "scope": "/",
+  "start_url": "/escolinha-jacare/index.html",
+  "scope": "/escolinha-jacare/",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#003399",
   "background_color": "#ffffff",
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "icones/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
