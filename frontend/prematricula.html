@@ -1,3 +1,6 @@
+
+raw
+Prematricula · HTML
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -14,7 +17,7 @@ if ('serviceWorker' in navigator) {
 </script>
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+ 
     <style>
         :root {
             --azul-escuro: #003399;
@@ -24,13 +27,13 @@ if ('serviceWorker' in navigator) {
             --vermelho-erro: #ff4444;
             --verde-sucesso: #4caf50;
         }
-
+ 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+ 
         body {
             font-family: 'Open Sans', sans-serif;
             background: linear-gradient(135deg, #f0f7ff 0%, #e0ecf9 100%);
@@ -38,11 +41,11 @@ if ('serviceWorker' in navigator) {
             padding: 110px 16px 50px;
             transition: background 0.3s ease, color 0.3s ease;
         }
-
+ 
         body.dark-mode {
             background: linear-gradient(135deg, #0f172a 0%, #1e1a3a 100%);
         }
-
+ 
         body.dark-mode,
         body.dark-mode .form-grupo label,
         body.dark-mode .secao-titulo,
@@ -61,37 +64,37 @@ if ('serviceWorker' in navigator) {
         body.dark-mode .form-grupo textarea::placeholder {
             color: #ffffff !important;
         }
-
+ 
         body.dark-mode .nav-bar {
             background: #1e293b;
         }
-
+ 
         body.dark-mode .form-card {
             background: #1e293b;
         }
-
+ 
         body.dark-mode .form-card h1 {
             color: #60a5fa;
         }
-
+ 
         body.dark-mode .btn-enviar {
             background: linear-gradient(135deg, #3b82f6, #1e40af);
         }
-
+ 
         body.dark-mode footer {
             background: #0f172a;
         }
-
+ 
         body.dark-mode .tabela-referencia {
             background: #0f172a;
             border-color: #334155;
         }
-
+ 
         body.dark-mode .aba {
             background: #0f172a;
             border-color: #334155;
         }
-
+ 
         .nav-bar {
             background: white;
             border-radius: 60px;
@@ -111,7 +114,7 @@ if ('serviceWorker' in navigator) {
             z-index: 1000;
             width: calc(100% - 32px);
         }
-
+ 
         .logo-text {
             text-decoration: none;
             font-family: 'Montserrat';
@@ -121,12 +124,12 @@ if ('serviceWorker' in navigator) {
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
+ 
         .nav-links {
             display: flex;
             gap: 8px;
         }
-
+ 
         .nav-link {
             text-decoration: none;
             padding: 6px 14px;
@@ -136,12 +139,12 @@ if ('serviceWorker' in navigator) {
             background: #f1f5f9;
             color: #1e293b;
         }
-
+ 
         body.dark-mode .nav-link {
             background: #0f172a;
             color: #e2e8f0;
         }
-
+ 
         .btn-tema {
             background: #0047AB;
             color: white;
@@ -152,12 +155,12 @@ if ('serviceWorker' in navigator) {
             font-size: 1.2rem;
             cursor: pointer;
         }
-
+ 
         .form-container {
             max-width: 900px;
             margin: 0 auto;
         }
-
+ 
         .form-card {
             background: white;
             border-radius: 32px;
@@ -165,7 +168,7 @@ if ('serviceWorker' in navigator) {
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             transition: background 0.3s;
         }
-
+ 
         .form-card h1 {
             font-family: 'Montserrat';
             color: var(--azul-escuro);
@@ -173,25 +176,25 @@ if ('serviceWorker' in navigator) {
             font-size: 1.6rem;
             margin-bottom: 8px;
         }
-
+ 
         .form-card .subtitulo {
             text-align: center;
             color: #666;
             margin-bottom: 25px;
             font-size: 0.85rem;
         }
-
+ 
         .secao {
             margin-bottom: 28px;
             border-bottom: 1px solid #eee;
             padding-bottom: 20px;
         }
-
+ 
         .secao:last-child {
             border-bottom: none;
             padding-bottom: 0;
         }
-
+ 
         .secao-titulo {
             font-weight: 800;
             color: var(--azul-escuro);
@@ -201,7 +204,7 @@ if ('serviceWorker' in navigator) {
             align-items: center;
             gap: 8px;
         }
-
+ 
         .secao-titulo .numero {
             background: var(--azul-premium);
             color: white;
@@ -213,7 +216,7 @@ if ('serviceWorker' in navigator) {
             justify-content: center;
             font-size: 0.9rem;
         }
-
+ 
         .abas-container {
             display: flex;
             gap: 10px;
@@ -221,7 +224,7 @@ if ('serviceWorker' in navigator) {
             border-bottom: 2px solid #e0e0e0;
             padding-bottom: 10px;
         }
-
+ 
         .aba {
             padding: 10px 20px;
             border-radius: 30px;
@@ -230,28 +233,28 @@ if ('serviceWorker' in navigator) {
             font-weight: 600;
             transition: all 0.3s;
         }
-
+ 
         body.dark-mode .aba {
             background: #334155;
         }
-
+ 
         .aba.ativa {
             background: var(--azul-premium);
             color: white;
         }
-
+ 
         .conteudo-aba {
             display: none;
         }
-
+ 
         .conteudo-aba.ativa {
             display: block;
         }
-
+ 
         .form-grupo {
             margin-bottom: 16px;
         }
-
+ 
         .form-grupo label {
             display: block;
             font-weight: 600;
@@ -259,12 +262,12 @@ if ('serviceWorker' in navigator) {
             color: #333;
             font-size: 0.85rem;
         }
-
+ 
         .form-grupo label .obrigatorio {
             color: var(--vermelho-erro);
             margin-left: 3px;
         }
-
+ 
         .form-grupo input,
         .form-grupo select,
         .form-grupo textarea {
@@ -276,30 +279,30 @@ if ('serviceWorker' in navigator) {
             font-family: 'Open Sans', sans-serif;
             background: white;
         }
-
+ 
         .form-grupo textarea {
             resize: vertical;
         }
-
+ 
         .form-grupo input:focus,
         .form-grupo select:focus,
         .form-grupo textarea:focus {
             outline: none;
             border-color: var(--azul-claro);
         }
-
+ 
         .form-linha {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
         }
-
+ 
         .form-linha-3 {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 12px;
         }
-
+ 
         .info-idade {
             background: #f0f7ff;
             padding: 10px;
@@ -311,7 +314,7 @@ if ('serviceWorker' in navigator) {
             font-weight: 600;
             display: none;
         }
-
+ 
         .tamanho-resultado {
             background: #e8f0fe;
             padding: 12px;
@@ -321,7 +324,7 @@ if ('serviceWorker' in navigator) {
             font-weight: bold;
             font-size: 1.1rem;
         }
-
+ 
         .tabela-referencia {
             background: #f8f9fa;
             padding: 15px;
@@ -329,19 +332,19 @@ if ('serviceWorker' in navigator) {
             margin-top: 12px;
             border: 1px solid #e0e0e0;
         }
-
+ 
         .tabela-referencia h4 {
             margin-bottom: 10px;
             color: var(--azul-premium);
         }
-
+ 
         .tabela-referencia-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 8px;
             font-size: 0.8rem;
         }
-
+ 
         .radio-group, .checkbox-group {
             display: flex;
             gap: 20px;
@@ -349,7 +352,7 @@ if ('serviceWorker' in navigator) {
             flex-wrap: wrap;
             padding: 8px 0;
         }
-
+ 
         .radio-group label, .checkbox-group label {
             display: flex;
             align-items: center;
@@ -358,13 +361,13 @@ if ('serviceWorker' in navigator) {
             margin-bottom: 0;
             cursor: pointer;
         }
-
+ 
         .radio-group input, .checkbox-group input {
             width: 18px;
             height: 18px;
             cursor: pointer;
         }
-
+ 
         .deficiencia-header {
             display: flex;
             align-items: center;
@@ -375,18 +378,18 @@ if ('serviceWorker' in navigator) {
             padding-bottom: 10px;
             border-bottom: 1px solid #eee;
         }
-
+ 
         .deficiencia-opcoes {
             margin-left: 20px;
             padding-left: 15px;
             border-left: 2px solid #e0e0e0;
         }
-
+ 
         .deficiencia-opcoes.disabled {
             opacity: 0.5;
             pointer-events: none;
         }
-
+ 
         .btn-enviar {
             background: linear-gradient(135deg, var(--laranja-destaque), #f57c00);
             color: white;
@@ -399,12 +402,12 @@ if ('serviceWorker' in navigator) {
             width: 100%;
             margin-top: 20px;
         }
-
+ 
         .btn-enviar:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
-
+ 
         .buscar-cep {
             background: var(--azul-premium);
             color: white;
@@ -416,14 +419,14 @@ if ('serviceWorker' in navigator) {
             margin-top: 8px;
             width: 100%;
         }
-
+ 
         .mensagem-erro {
             color: var(--vermelho-erro);
             font-size: 0.7rem;
             margin-top: 5px;
             display: none;
         }
-
+ 
         .toast {
             position: fixed;
             bottom: 30px;
@@ -436,10 +439,10 @@ if ('serviceWorker' in navigator) {
             font-weight: 500;
             font-size: 0.85rem;
         }
-
+ 
         .toast.success { border-left: 4px solid #4caf50; }
         .toast.error { border-left: 4px solid #f44336; }
-
+ 
         .mensagem-sucesso {
             background: linear-gradient(135deg, var(--verde-sucesso), #45a049);
             color: white;
@@ -447,11 +450,11 @@ if ('serviceWorker' in navigator) {
             border-radius: 30px;
             text-align: center;
         }
-
+ 
         .hidden {
             display: none;
         }
-
+ 
         footer {
             background: var(--azul-escuro);
             color: white;
@@ -461,7 +464,7 @@ if ('serviceWorker' in navigator) {
             border-radius: 20px;
             font-size: 0.75rem;
         }
-
+ 
         @media (max-width: 700px) {
             .form-linha, .form-linha-3 { grid-template-columns: 1fr; }
             .radio-group, .checkbox-group { gap: 12px; }
@@ -471,7 +474,7 @@ if ('serviceWorker' in navigator) {
     </style>
 </head>
 <body>
-
+ 
 <div class="nav-bar">
     <a href="index.html" class="logo-text">🐊 ESCOLINHA DO JACARÉ</a>
     <div class="nav-links">
@@ -481,7 +484,7 @@ if ('serviceWorker' in navigator) {
         <button class="btn-tema" onclick="alternarTema()">🌞</button>
     </div>
 </div>
-
+ 
 <div class="form-container">
     <div id="formularioContainer">
         <div class="form-card">
@@ -489,20 +492,20 @@ if ('serviceWorker' in navigator) {
             <div class="subtitulo">
                 Preencha todos os campos <strong>obrigatórios (*)</strong> para solicitar sua matrícula
             </div>
-
+ 
             <form id="formPrematricula">
                 <!-- SEÇÃO 1: DADOS DO ALUNO -->
                 <div class="secao">
                     <div class="secao-titulo">
                         <span class="numero">1</span> DADOS DO ALUNO
                     </div>
-
+ 
                     <div class="form-grupo">
                         <label>Nome completo do aluno <span class="obrigatorio">*</span></label>
                         <input type="text" id="nomeAluno" placeholder="Digite o nome completo">
                         <div class="mensagem-erro" id="erroNome">Campo obrigatório</div>
                     </div>
-
+ 
                     <div class="form-linha">
                         <div class="form-grupo">
                             <label>Data de nascimento <span class="obrigatorio">*</span></label>
@@ -519,13 +522,13 @@ if ('serviceWorker' in navigator) {
                             <div class="mensagem-erro" id="erroSexo">Selecione o sexo</div>
                         </div>
                     </div>
-
+ 
                     <!-- ABAS UNIFORME -->
                     <div class="abas-container">
                         <div class="aba ativa" data-aba="crianca">👶 CRIANÇA (até 14 anos)</div>
                         <div class="aba" data-aba="adulto">👨 ADULTO (15+ anos)</div>
                     </div>
-
+ 
                     <!-- ABA CRIANÇA -->
                     <div id="abaCrianca" class="conteudo-aba ativa">
                         <div class="form-grupo">
@@ -550,7 +553,7 @@ if ('serviceWorker' in navigator) {
                         </div>
                         <input type="hidden" id="tamanhoCamisaCrianca">
                     </div>
-
+ 
                     <!-- ABA ADULTO -->
                     <div id="abaAdulto" class="conteudo-aba">
                         <div class="form-grupo">
@@ -568,7 +571,7 @@ if ('serviceWorker' in navigator) {
                             <div class="mensagem-erro" id="erroTamanhoAdulto">Selecione o tamanho da camisa</div>
                         </div>
                     </div>
-
+ 
                     <div class="form-grupo">
                         <label>👕 Já possui a camisa da Escolinha? <span class="obrigatorio">*</span></label>
                         <select id="possuiUniforme">
@@ -578,7 +581,7 @@ if ('serviceWorker' in navigator) {
                         </select>
                         <div class="mensagem-erro" id="erroPossuiUniforme">Selecione se já possui a camisa</div>
                     </div>
-
+ 
                     <div class="form-grupo">
                         <label>Turma desejada <span class="obrigatorio">*</span></label>
                         <select id="turma">
@@ -591,7 +594,7 @@ if ('serviceWorker' in navigator) {
                         </select>
                         <div class="mensagem-erro" id="erroTurma">Campo obrigatório</div>
                     </div>
-
+ 
                     <div class="form-grupo">
                         <div class="deficiencia-header">
                             <label>Deficiência</label>
@@ -611,7 +614,7 @@ if ('serviceWorker' in navigator) {
                             </div>
                         </div>
                     </div>
-
+ 
                     <div class="form-grupo">
                         <label>Faz uso de remédio controlado? <span class="obrigatorio">*</span></label>
                         <div class="radio-group">
@@ -622,13 +625,13 @@ if ('serviceWorker' in navigator) {
                         <div class="mensagem-erro" id="erroRemedioDesc">Informe qual remédio</div>
                     </div>
                 </div>
-
+ 
                 <!-- SEÇÃO 2: DADOS DO RESPONSÁVEL -->
                 <div class="secao">
                     <div class="secao-titulo">
                         <span class="numero">2</span> DADOS DO RESPONSÁVEL
                     </div>
-
+ 
                     <!-- NOVOS CAMPOS: TIPO DE VÍNCULO E SEXO DO RESPONSÁVEL -->
                     <div class="form-linha">
                         <div class="form-grupo">
@@ -655,7 +658,7 @@ if ('serviceWorker' in navigator) {
                             <div class="mensagem-erro" id="erroSexoResponsavel">Selecione o sexo</div>
                         </div>
                     </div>
-
+ 
                     <div class="form-linha">
                         <div class="form-grupo">
                             <label>RG do responsável <span class="obrigatorio">*</span></label>
@@ -668,7 +671,7 @@ if ('serviceWorker' in navigator) {
                             <div class="mensagem-erro" id="erroResponsavel">Campo obrigatório</div>
                         </div>
                     </div>
-
+ 
                     <div class="form-linha">
                         <div class="form-grupo">
                             <label>Telefone (WhatsApp) <span class="obrigatorio">*</span></label>
@@ -682,13 +685,13 @@ if ('serviceWorker' in navigator) {
                         </div>
                     </div>
                 </div>
-
+ 
                 <!-- SEÇÃO 3: ENDEREÇO -->
                 <div class="secao">
                     <div class="secao-titulo">
                         <span class="numero">3</span> ENDEREÇO
                     </div>
-
+ 
                     <div class="form-linha">
                         <div class="form-grupo">
                             <label>CEP</label>
@@ -696,7 +699,7 @@ if ('serviceWorker' in navigator) {
                             <button type="button" class="buscar-cep" onclick="buscarCEP()">🔍 BUSCAR ENDEREÇO</button>
                         </div>
                     </div>
-
+ 
                     <div class="form-linha-3">
                         <div class="form-grupo">
                             <label>Endereço <span class="obrigatorio">*</span></label>
@@ -714,7 +717,7 @@ if ('serviceWorker' in navigator) {
                             <div class="mensagem-erro" id="erroBairro">Campo obrigatório</div>
                         </div>
                     </div>
-
+ 
                     <div class="form-linha">
                         <div class="form-grupo">
                             <label>Município <span class="obrigatorio">*</span></label>
@@ -738,26 +741,26 @@ if ('serviceWorker' in navigator) {
                             <div class="mensagem-erro" id="erroUF">Campo obrigatório</div>
                         </div>
                     </div>
-
+ 
                     <div class="form-grupo">
                         <label>Quantas pessoas moram na sua casa? <span class="obrigatorio">*</span></label>
                         <input type="number" id="moradores" min="1" max="20" placeholder="Número de moradores">
                         <div class="mensagem-erro" id="erroMoradores">Campo obrigatório</div>
                     </div>
                 </div>
-
+ 
                 <!-- SEÇÃO 4: ESCOLARIDADE -->
                 <div class="secao">
                     <div class="secao-titulo">
                         <span class="numero">4</span> ESCOLARIDADE
                     </div>
-
+ 
                     <div class="form-grupo">
                         <label>Escola onde estuda <span class="obrigatorio">*</span></label>
                         <input type="text" id="escola" placeholder="Nome da escola">
                         <div class="mensagem-erro" id="erroEscola">Campo obrigatório</div>
                     </div>
-
+ 
                     <div class="form-grupo">
                         <label>Série <span class="obrigatorio">*</span></label>
                         <select id="serie">
@@ -780,13 +783,13 @@ if ('serviceWorker' in navigator) {
                         <div class="mensagem-erro" id="erroSerie">Campo obrigatório</div>
                     </div>
                 </div>
-
+ 
                 <!-- SEÇÃO 5: INFORMAÇÕES ADICIONAIS (OPCIONAL) -->
                 <div class="secao">
                     <div class="secao-titulo">
                         <span class="numero">5</span> INFORMAÇÕES ADICIONAIS
                     </div>
-
+ 
                     <div class="form-grupo">
                         <label>Como conheceu a Escolinha do Jacaré?</label>
                         <select id="origem">
@@ -799,7 +802,7 @@ if ('serviceWorker' in navigator) {
                             <option value="Outros">📢 Outros</option>
                         </select>
                     </div>
-
+ 
                     <!-- FEEDBACK -->
                     <div class="form-grupo">
                         <label>⭐ Avalie a Escolinha (opcional)</label>
@@ -811,7 +814,7 @@ if ('serviceWorker' in navigator) {
                             <label><input type="radio" name="estrelas" value="5"> ⭐⭐⭐⭐⭐ 5</label>
                         </div>
                     </div>
-
+ 
                     <div class="form-grupo">
                         <label>📝 O que você quer deixar? (opcional)</label>
                         <div class="radio-group" id="feedbackRadios">
@@ -822,26 +825,26 @@ if ('serviceWorker' in navigator) {
                             <label><input type="radio" name="tipoFeedback" value="Outro"> 📝 Outro</label>
                         </div>
                     </div>
-
+ 
                     <div class="form-grupo">
                         <label>✏️ Sua mensagem (opcional)</label>
                         <textarea id="mensagemFeedback" rows="3" placeholder="Escreva aqui seu elogio, sugestão, observação ou crítica..."></textarea>
                     </div>
-
+ 
                     <div class="checkbox-group">
                         <input type="checkbox" id="declaracao">
                         <label for="declaracao">Declaro que as informações são verdadeiras. <span class="obrigatorio">*</span></label>
                     </div>
                     <div class="mensagem-erro" id="erroDeclaracao">Você precisa confirmar esta declaração</div>
                 </div>
-
+ 
                 <button type="button" class="btn-enviar" onclick="enviarCadastro()">
                     ✅ ENVIAR SOLICITAÇÃO
                 </button>
             </form>
         </div>
     </div>
-
+ 
     <!-- MENSAGEM DE SUCESSO -->
     <div id="mensagemSucesso" class="mensagem-sucesso hidden">
         <h2>🎉 SOLICITAÇÃO ENVIADA!</h2>
@@ -853,13 +856,13 @@ if ('serviceWorker' in navigator) {
         </div>
     </div>
 </div>
-
+ 
 <footer>
     ESCOLINHA DO JACARÉ - ALVORADA<br>
     Manaus/AM - Brasil
     <div class="rights">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</div>
 </footer>
-
+ 
 <script>
     // ========== TEMA ESCURO ==========
     function alternarTema() {
@@ -869,12 +872,12 @@ if ('serviceWorker' in navigator) {
         btn.innerHTML = isDark ? '🌙' : '🌞';
         localStorage.setItem('tema_prematricula', isDark ? 'dark' : 'light');
     }
-
+ 
     if (localStorage.getItem('tema_prematricula') === 'dark') {
         document.body.classList.add('dark-mode');
         document.querySelector('.btn-tema').innerHTML = '🌙';
     }
-
+ 
     // ========== TOAST ==========
     function mostrarToast(mensagem, tipo = 'success') {
         const toast = document.createElement('div');
@@ -883,7 +886,7 @@ if ('serviceWorker' in navigator) {
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 3000);
     }
-
+ 
     // ========== CONTROLE DAS ABAS ==========
     function alternarAba(abaId) {
         document.querySelectorAll('.aba').forEach(aba => {
@@ -896,13 +899,13 @@ if ('serviceWorker' in navigator) {
         });
         document.getElementById(`aba${abaId.charAt(0).toUpperCase() + abaId.slice(1)}`).classList.add('ativa');
     }
-
+ 
     document.querySelectorAll('.aba').forEach(aba => {
         aba.addEventListener('click', () => {
             alternarAba(aba.dataset.aba);
         });
     });
-
+ 
     // ========== CALCULAR IDADE ==========
     function calcularIdade() {
         const dataNasc = document.getElementById('dataNasc').value;
@@ -914,7 +917,7 @@ if ('serviceWorker' in navigator) {
         if (mes < 0 || (mes === 0 && hoje.getDate() < nasc.getDate())) idade--;
         return idade;
     }
-
+ 
     // ========== MOSTRAR IDADE E SUGERIR ==========
     function mostrarIdade() {
         const idade = calcularIdade();
@@ -935,14 +938,14 @@ if ('serviceWorker' in navigator) {
             infoDiv.style.display = 'none';
         }
     }
-
+ 
     // ========== IDADE PARA TAMANHO (CRIANÇA) ==========
     function idadeParaTamanhoCrianca(idade) {
         if (!idade) return '';
         if (idade >= 8 && idade <= 14) return idade.toString();
         return '';
     }
-
+ 
     function atualizarTamanhoCrianca() {
         const idade = parseInt(document.getElementById('idadeCrianca').value);
         const tamanho = idadeParaTamanhoCrianca(idade);
@@ -960,7 +963,7 @@ if ('serviceWorker' in navigator) {
             campoOculto.value = '';
         }
     }
-
+ 
     // ========== BUSCAR CEP ==========
     async function buscarCEP() {
         const cep = document.getElementById('cep').value.replace(/\D/g, '');
@@ -968,11 +971,11 @@ if ('serviceWorker' in navigator) {
             mostrarToast('Digite um CEP válido com 8 dígitos!', 'error');
             return;
         }
-
+ 
         try {
             const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
             const dados = await response.json();
-
+ 
             if (!dados.erro) {
                 document.getElementById('endereco').value = dados.logradouro || '';
                 document.getElementById('bairro').value = dados.bairro || '';
@@ -986,7 +989,7 @@ if ('serviceWorker' in navigator) {
             mostrarToast('Erro ao buscar CEP', 'error');
         }
     }
-
+ 
     // ========== MOSTRAR ERRO ==========
     function mostrarErro(erroId, campoId) {
         const erroDiv = document.getElementById(erroId);
@@ -1000,7 +1003,7 @@ if ('serviceWorker' in navigator) {
             }, 3000);
         }
     }
-
+ 
     // ========== ENVIAR CADASTRO ==========
     async function enviarCadastro() {
         // Coletar dados - ALUNO
@@ -1056,12 +1059,12 @@ if ('serviceWorker' in navigator) {
         const serie = document.getElementById('serie').value;
         const origem = document.getElementById('origem').value;
         const declaracao = document.getElementById('declaracao').checked;
-
+ 
         // Feedback
         const tipoFeedback = document.querySelector('input[name="tipoFeedback"]:checked')?.value;
         const estrelas = document.querySelector('input[name="estrelas"]:checked')?.value;
         const mensagemFeedback = document.getElementById('mensagemFeedback').value.trim();
-
+ 
         // Validações
         let isValid = true;
         
@@ -1104,22 +1107,22 @@ if ('serviceWorker' in navigator) {
             mostrarErro('erroRemedioDesc', 'remedioDesc');
             isValid = false;
         }
-
+ 
         if (!isValid) {
             mostrarToast('⚠️ Preencha todos os campos obrigatórios!', 'error');
             return;
         }
-
+ 
         const btn = document.querySelector('.btn-enviar');
         btn.disabled = true;
         btn.innerHTML = '⏳ ENVIANDO...';
-
+ 
         try {
             const protocolo = `JAC-${Date.now()}`;
             const dataEnvio = new Date().toLocaleString('pt-BR');
             const enderecoCompleto = `${endereco}, ${numero} - ${bairro}, ${municipio}/${uf}`;
             const remedioFinal = remedioSelecionado === 'Sim' ? `Sim - ${remedioDesc}` : 'Não';
-
+ 
             // Montar observacao completa (feedback + estrelas + mensagem)
             let observacaoFinal = '';
             if (estrelas) {
@@ -1132,7 +1135,7 @@ if ('serviceWorker' in navigator) {
             } else if (!tipoFeedback && mensagemFeedback) {
                 observacaoFinal += mensagemFeedback;
             }
-
+ 
             const dados = {
                 protocolo: protocolo,
                 dataEnvio: dataEnvio,
@@ -1166,19 +1169,19 @@ if ('serviceWorker' in navigator) {
                 observacao: observacaoFinal,
                 estrelas: estrelas || null
             };
-
+ 
             console.log('Enviando dados:', dados);
-
-            const response = await fetch('http://localhost:5000/api/prematricula', {
+ 
+            const response = await fetch('https://api-escolinha.onrender.com/api/prematricula', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(dados)
             });
-
+ 
             const resultado = await response.json();
-
+ 
             if (response.ok) {
                 mostrarToast('✅ Solicitação enviada com sucesso!', 'success');
                 document.getElementById('protocoloDiv').innerHTML = `🔑 PROTOCOLO: ${protocolo}`;
@@ -1188,7 +1191,7 @@ if ('serviceWorker' in navigator) {
             } else {
                 mostrarToast(resultado.erro || '❌ Erro ao enviar solicitação', 'error');
             }
-
+ 
         } catch (error) {
             console.error('Erro:', error);
             mostrarToast('❌ Erro de conexão com o servidor. Verifique se o backend está rodando.', 'error');
@@ -1197,13 +1200,13 @@ if ('serviceWorker' in navigator) {
             btn.innerHTML = '✅ ENVIAR SOLICITAÇÃO';
         }
     }
-
+ 
     // ========== EVENTOS ==========
     document.getElementById('dataNasc').addEventListener('change', mostrarIdade);
     document.getElementById('dataNasc').addEventListener('input', mostrarIdade);
     document.getElementById('idadeCrianca').addEventListener('input', atualizarTamanhoCrianca);
     document.getElementById('idadeCrianca').addEventListener('change', atualizarTamanhoCrianca);
-
+ 
     // Controle de deficiência
     document.getElementById('semDeficiencia').addEventListener('change', function() {
         const opcoes = document.getElementById('deficienciaOpcoes');
@@ -1221,7 +1224,7 @@ if ('serviceWorker' in navigator) {
             outraInput.disabled = false;
         }
     });
-
+ 
     // Controle de remédio
     document.querySelectorAll('input[name="remedio"]').forEach(radio => {
         radio.addEventListener('change', function() {
@@ -1230,6 +1233,6 @@ if ('serviceWorker' in navigator) {
         });
     });
 </script>
-
+ 
 </body>
 </html>
