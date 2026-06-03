@@ -5,18 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>Escolinha do Jacaré | Unidos do Alvorada</title>
     <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icones/icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Jacaré">
+    <meta name="theme-color" content="#003399">
+    <meta name="description" content="Escolinha do Jacaré - Unidos do Alvorada. Formando cidadãos através do esporte desde 1998.">
     <script>
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-        .then(() => console.log('Service Worker registrado!'))
-        .catch(err => console.log('Erro:', err));
-}
-</script>
+        // Força atualização do Service Worker para sempre pegar a versão mais recente
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(registration => {
+                console.log('Service Worker registrado!');
+                // Verifica se há atualização a cada 5 minutos
+                setInterval(() => {
+                    registration.update();
+                }, 300000);
+            }).catch(err => console.log('Erro:', err));
+        }
+    </script>
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* TODO O SEU CSS PERMANECE IGUAL - NÃO ALTERADO */
         * {
             margin: 0;
             padding: 0;
@@ -1474,7 +1484,7 @@ if ('serviceWorker' in navigator) {
 </head>
 <body>
 
-<!-- MENU MOBILE - CORRIGIDO: icons/ → icones/ -->
+<!-- MENU MOBILE - CORRIGIDO: caminho icones/ -->
 <div class="menu-mobile" id="menuMobile">
     <a href="index.html">🏠 INÍCIO</a>
     <a href="diretoria.html">📊 DIRETORIA</a>
@@ -1539,13 +1549,11 @@ if ('serviceWorker' in navigator) {
 
 <!-- BANNER -->
 <div class="hero">
-    <!-- Efeito espacial (aparece APENAS no modo escuro) -->
     <div class="banner-espacial">
         <div class="banner-bg"></div>
         <div class="stars-bg"></div>
         <div class="nebula"></div>
         <div class="nebula"></div>
-        
         <div class="particle-system">
             <div class="particle" style="width: 3px; height: 3px; bottom: 0; left: 10%; animation-duration: 6s;"></div>
             <div class="particle" style="width: 5px; height: 5px; bottom: 0; left: 25%; animation-duration: 8s; animation-delay: 1s;"></div>
@@ -1555,23 +1563,18 @@ if ('serviceWorker' in navigator) {
             <div class="particle" style="width: 6px; height: 6px; bottom: 0; left: 85%; animation-duration: 6.5s; animation-delay: 1.5s;"></div>
             <div class="particle" style="width: 2px; height: 2px; bottom: 0; left: 95%; animation-duration: 7.5s; animation-delay: 2.5s;"></div>
         </div>
-        
         <div class="sol"></div>
-        
         <div class="orbit-ring"></div>
         <div class="orbit-ring"></div>
         <div class="orbit-ring"></div>
         <div class="orbit-ring"></div>
         <div class="orbit-ring"></div>
-        
         <div class="planeta planeta1"></div>
         <div class="planeta planeta2"></div>
         <div class="planeta planeta3"></div>
         <div class="planeta planeta4"></div>
         <div class="planeta planeta5"></div>
-        
         <div class="light-scan"></div>
-        
         <div class="meteor"></div>
         <div class="meteor"></div>
         <div class="meteor"></div>
@@ -1579,7 +1582,6 @@ if ('serviceWorker' in navigator) {
         <div class="meteor"></div>
         <div class="meteor"></div>
     </div>
-    
     <div class="hero-content">
         <h1>🐊 ESCOLINHA DO JACARÉ - ALVORADA</h1>
         <p>"Desde 15 de abril de 1998 formando cidadãos através do esporte"</p>
@@ -1605,7 +1607,6 @@ if ('serviceWorker' in navigator) {
 <!-- CONTEÚDO PRINCIPAL -->
 <div class="conteudo">
 
-    <!-- INDICADORES -->
     <div class="indicadores-grid" id="indicadoresGrid">
         <div class="indicador-card stagger-item">
             <div class="icone">🏆</div>
@@ -1633,7 +1634,6 @@ if ('serviceWorker' in navigator) {
         </div>
     </div>
 
-    <!-- NOSSA HISTÓRIA -->
     <div class="card">
         <h2>📖 NOSSA HISTÓRIA</h2>
         <p style="text-align: center; margin-bottom: 30px;">Fundada no coração do bairro Alvorada, a Escolinha do Jacaré nasceu do sonho de transformar vidas através do esporte. Mais que formar atletas, nosso objetivo é formar cidadãos com valores sólidos como respeito, disciplina e trabalho em equipe.</p>
@@ -1656,7 +1656,6 @@ if ('serviceWorker' in navigator) {
         </div>
     </div>
 
-    <!-- CATEGORIAS -->
     <div class="categorias-container">
         <h2>🏆 CATEGORIAS</h2>
         <div class="grid-categorias">
@@ -1671,7 +1670,6 @@ if ('serviceWorker' in navigator) {
         </div>
     </div>
 
-    <!-- JACARÉ IA -->
     <div class="chat-container">
         <div class="chat-header">
             <div class="avatar">🐊</div>
@@ -1710,7 +1708,6 @@ if ('serviceWorker' in navigator) {
         </div>
     </div>
 
-    <!-- PATROCINADORES -->
     <div class="patrocinadores">
         <h2>🏆 NOSSOS PATROCINADORES</h2>
         <div class="patrocinadores-grid">
@@ -1724,7 +1721,6 @@ if ('serviceWorker' in navigator) {
         </div>
     </div>
 
-    <!-- LOCALIZAÇÃO -->
     <div class="loc-card">
         <h2>📍 VENHA NOS CONHECER</h2>
         <div class="mapa-container">
@@ -1737,7 +1733,6 @@ if ('serviceWorker' in navigator) {
         <a href="https://maps.app.goo.gl/Sz58rBrkoswb7wSq5" target="_blank" class="btn-mapa">📍 ABRIR NO GOOGLE MAPS</a>
     </div>
 
-    <!-- RODAPÉ -->
     <footer>
         🐊 ESCOLINHA DO JACARÉ - ALVORADA<br>
         Manaus/AM - Brasil
@@ -1749,11 +1744,9 @@ if ('serviceWorker' in navigator) {
     </footer>
 </div>
 
-<!-- BOTÃO VOLTAR AO TOPO -->
 <button id="btnTopo" class="btn-topo" title="Voltar ao topo">⬆️</button>
 
 <script>
-    // ========== CONFIGURAÇÕES ==========
     const API_URL = 'https://api-escolinha.onrender.com/api';
     let alunos = [];
     let tickerAnimation = null;
@@ -1761,11 +1754,9 @@ if ('serviceWorker' in navigator) {
     let tickerSpeed = 0.6;
     let tickerRunning = true;
 
-    // ========== MENU HAMBÚRGUER ==========
     function toggleMenu() {
         var menu = document.getElementById('menuMobile');
         var hamburger = document.getElementById('hamburger');
-        
         if (menu.style.left === '0px') {
             menu.style.left = '-280px';
             hamburger.classList.remove('active');
@@ -1775,34 +1766,30 @@ if ('serviceWorker' in navigator) {
         }
     }
 
-    // ========== CARREGAR DADOS DA PLANILHA ==========
     async function carregarDadosDaPlanilha() {
-    try {
-        const response = await fetch(`${API_URL}/alunos`);
-        const dados = await response.json();
-        
-        if (Array.isArray(dados)) {
-            alunos = dados.filter(item => item.status === 'aprovado');
-            const totalAlunosElement = document.getElementById('totalAlunos');
-            if (totalAlunosElement && alunos.length > 0) {
-                totalAlunosElement.innerText = alunos.length;
+        try {
+            const response = await fetch(`${API_URL}/alunos`);
+            const dados = await response.json();
+            if (Array.isArray(dados)) {
+                alunos = dados.filter(item => item.status === 'aprovado');
+                const totalAlunosElement = document.getElementById('totalAlunos');
+                if (totalAlunosElement && alunos.length > 0) {
+                    totalAlunosElement.innerText = alunos.length;
+                }
             }
+        } catch (error) { 
+            console.error('Erro:', error);
+            const totalAlunosElement = document.getElementById('totalAlunos');
+            if (totalAlunosElement) totalAlunosElement.innerText = '--';
         }
-    } catch (error) { 
-        console.error('Erro:', error);
-        const totalAlunosElement = document.getElementById('totalAlunos');
-        if (totalAlunosElement) totalAlunosElement.innerText = '--';
     }
-}
 
-    // ========== CLIMA ==========
     async function buscarClima() {
         try {
             const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-3.1019&longitude=-60.0250&current_weather=true&timezone=America/Manaus');
             const dados = await response.json();
             const temp = Math.round(dados.current_weather.temperature);
             const codigo = dados.current_weather.weathercode;
-            
             let icone = '🌡️', desc = '';
             if (codigo === 0) { icone = '☀️'; desc = 'Céu limpo'; }
             else if (codigo === 1 || codigo === 2) { icone = '⛅'; desc = 'Parcialmente nublado'; }
@@ -1811,14 +1798,12 @@ if ('serviceWorker' in navigator) {
             else if ((codigo >= 51 && codigo <= 55) || (codigo >= 61 && codigo <= 65) || (codigo >= 80 && codigo <= 82)) { icone = '🌧️'; desc = 'Chuva'; }
             else if (codigo >= 95 && codigo <= 99) { icone = '⛈️'; desc = 'Tempestade'; }
             else { icone = '🌡️'; desc = 'Manaus'; }
-            
             document.getElementById('climaTemp').innerHTML = `${temp}°C`;
             document.getElementById('climaDesc').innerHTML = `Manaus • ${desc}`;
             document.getElementById('climaIcone').innerHTML = icone;
         } catch (error) { console.log('Erro clima:', error); }
     }
 
-    // ========== BARRA DE NOTÍCIAS ==========
     let noticiasLista = [];
     async function buscarNoticiasFutebol() {
         try {
@@ -1834,7 +1819,6 @@ if ('serviceWorker' in navigator) {
                 return;
             }
         } catch (error) { console.log('Globo falhou'); }
-        
         noticiasLista = ["🏆 Campeonato Brasileiro: líder vence e mantém vantagem", "⚽ Craque do time se destaca na rodada", "🎉 Seleção brasileira se prepara para próximo amistoso"];
         atualizarTicker();
     }
@@ -1865,7 +1849,6 @@ if ('serviceWorker' in navigator) {
         tickerAnimation = requestAnimationFrame(animar);
     }
 
-    // ========== JACARÉ IA ==========
     const conhecimentoEscolinha = {
         categorias: "A Escolinha do Jacaré tem as categorias: Sub-7 (5-7 anos), Sub-9 (7-9 anos), Sub-11 (9-11 anos), Sub-13 (11-13 anos) e Sub-15 (13-15 anos). Também oferecemos Taekwondo, Tênis de Mesa e Ginástica.",
         idade: "Aceitamos crianças a partir de 5 anos até 17 anos.",
@@ -1906,7 +1889,6 @@ if ('serviceWorker' in navigator) {
         setTimeout(() => { adicionarMensagem(responderPergunta(pergunta), false); }, 300);
     }
 
-    // ========== TEMA ==========
     function alternarTema() {
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
@@ -1914,7 +1896,6 @@ if ('serviceWorker' in navigator) {
         localStorage.setItem('tema', isDark ? 'dark' : 'light');
     }
 
-    // ========== ACESSIBILIDADE ==========
     function alternarAcessibilidade() {
         document.body.classList.toggle('acessibilidade');
         const btn = document.getElementById('btnAcessibilidade');
@@ -1929,7 +1910,6 @@ if ('serviceWorker' in navigator) {
         }
     }
 
-    // ========== BOTÃO TOPO ==========
     const btnTopo = document.getElementById('btnTopo');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 300) btnTopo.classList.add('visible');
@@ -1937,7 +1917,6 @@ if ('serviceWorker' in navigator) {
     });
     btnTopo.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // ========== TOAST ==========
     function mostrarToast(mensagem) {
         const toast = document.createElement('div');
         toast.className = 'toast';
@@ -1947,7 +1926,6 @@ if ('serviceWorker' in navigator) {
         setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 2500);
     }
 
-    // ========== EVENTOS ==========
     document.getElementById('chatSendBtn')?.addEventListener('click', enviarPergunta);
     document.getElementById('chatInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') enviarPergunta(); });
     document.querySelectorAll('.sugestao-btn').forEach(btn => {
@@ -1958,7 +1936,6 @@ if ('serviceWorker' in navigator) {
     });
     document.getElementById('btnAcessibilidade')?.addEventListener('click', alternarAcessibilidade);
 
-    // ========== CARROSSEL DE DEPOIMENTOS ==========
     let depoimentos = [];
     let carrosselIndex = 0;
     let carrosselTimer = null;
@@ -1971,51 +1948,30 @@ if ('serviceWorker' in navigator) {
             '⏳ Quase lá...',
             '⏳ Última tentativa...'
         ];
-
-        document.getElementById('carrosselTrack').innerHTML =
-            `<div class="depoimentos-vazio">${mensagens[tentativa - 1]}</div>`;
-
+        document.getElementById('carrosselTrack').innerHTML = `<div class="depoimentos-vazio">${mensagens[tentativa - 1]}</div>`;
         try {
             const response = await fetch(`${API_URL}/alunos`);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const dados = await response.json();
-
             if (Array.isArray(dados)) {
                 depoimentos = dados.filter(item => {
                     const estrelas = parseInt(item.estrelas) || 0;
                     if (estrelas < 4) return false;
-
-                    // Limpa o prefixo e verifica se sobrou texto real
                     const obs = (item.observacao || '').trim();
-                    const textoLimpo = obs
-                        .replace(/⭐+\s*\d*\s*estrelas?\.\s*/gi, '')
-                        .replace(/\[Elogio\]/gi, '')
-                        .replace(/\[Sugestão\]/gi, '')
-                        .replace(/\[Crítica\]/gi, '')
-                        .replace(/\[Outros\]/gi, '')
-                        .trim();
-
+                    const textoLimpo = obs.replace(/⭐+\s*\d*\s*estrelas?\.\s*/gi, '').replace(/\[Elogio\]/gi, '').replace(/\[Sugestão\]/gi, '').replace(/\[Crítica\]/gi, '').replace(/\[Outros\]/gi, '').trim();
                     return textoLimpo.length > 0;
                 }).map(item => ({
                     ...item,
-                    textoLimpo: (item.observacao || '')
-                        .replace(/⭐+\s*\d*\s*estrelas?\.\s*/gi, '')
-                        .replace(/\[Elogio\]/gi, '')
-                        .replace(/\[Sugestão\]/gi, '')
-                        .replace(/\[Crítica\]/gi, '')
-                        .replace(/\[Outros\]/gi, '')
-                        .trim()
+                    textoLimpo: (item.observacao || '').replace(/⭐+\s*\d*\s*estrelas?\.\s*/gi, '').replace(/\[Elogio\]/gi, '').replace(/\[Sugestão\]/gi, '').replace(/\[Crítica\]/gi, '').replace(/\[Outros\]/gi, '').trim()
                 })).sort((a, b) => (parseInt(b.estrelas) || 0) - (parseInt(a.estrelas) || 0));
             }
-
             renderizarCarrossel();
         } catch (e) {
             console.error(`Erro depoimentos (tentativa ${tentativa}):`, e);
             if (tentativa < maxTentativas) {
                 setTimeout(() => carregarDepoimentos(tentativa + 1), 15000);
             } else {
-                document.getElementById('carrosselTrack').innerHTML =
-                    '<div class="depoimentos-vazio">📭 Nenhum depoimento disponível no momento.</div>';
+                document.getElementById('carrosselTrack').innerHTML = '<div class="depoimentos-vazio">📭 Nenhum depoimento disponível no momento.</div>';
             }
         }
     }
@@ -2024,13 +1980,11 @@ if ('serviceWorker' in navigator) {
         const track = document.getElementById('carrosselTrack');
         const controles = document.getElementById('carrosselControles');
         const dots = document.getElementById('carrosselDots');
-
         if (depoimentos.length === 0) {
             track.innerHTML = '<div class="depoimentos-vazio">📭 Nenhum depoimento disponível ainda.</div>';
             controles.style.display = 'none';
             return;
         }
-
         track.innerHTML = depoimentos.map(d => {
             const estrelas = parseInt(d.estrelas) || 0;
             const estrelasHtml = '★'.repeat(estrelas) + '☆'.repeat(5 - estrelas);
@@ -2038,31 +1992,10 @@ if ('serviceWorker' in navigator) {
             const aluno = d.nome_aluno ? `Responsável por ${d.nome_aluno}` : 'Família Jacaré';
             const icone = (d.sexo_responsavel || '').toLowerCase().includes('f') ? '👩' : '👨';
             const texto = d.textoLimpo || '';
-
-            return `
-                <div class="depoimento-card">
-                    <div class="depoimento-estrelas">${estrelasHtml}</div>
-                    <div class="depoimento-texto">"${texto}"</div>
-                    <div class="depoimento-autor">
-                        <div class="depoimento-avatar">${icone}</div>
-                        <div class="depoimento-info">
-                            <div class="nome">${nome}</div>
-                            <div class="sub">${aluno}</div>
-                        </div>
-                    </div>
-                </div>
-            `;
+            return `<div class="depoimento-card"><div class="depoimento-estrelas">${estrelasHtml}</div><div class="depoimento-texto">"${texto}"</div><div class="depoimento-autor"><div class="depoimento-avatar">${icone}</div><div class="depoimento-info"><div class="nome">${nome}</div><div class="sub">${aluno}</div></div></div></div>`;
         }).join('');
-
-        // Dots
-        dots.innerHTML = depoimentos.map((_, i) =>
-            `<div class="carrossel-dot ${i === 0 ? 'ativo' : ''}" data-index="${i}"></div>`
-        ).join('');
-
-        dots.querySelectorAll('.carrossel-dot').forEach(dot => {
-            dot.addEventListener('click', () => irParaSlide(parseInt(dot.dataset.index)));
-        });
-
+        dots.innerHTML = depoimentos.map((_, i) => `<div class="carrossel-dot ${i === 0 ? 'ativo' : ''}" data-index="${i}"></div>`).join('');
+        dots.querySelectorAll('.carrossel-dot').forEach(dot => { dot.addEventListener('click', () => irParaSlide(parseInt(dot.dataset.index))); });
         controles.style.display = 'flex';
         iniciarCarrossel();
     }
@@ -2070,9 +2003,7 @@ if ('serviceWorker' in navigator) {
     function irParaSlide(index) {
         carrosselIndex = (index + depoimentos.length) % depoimentos.length;
         document.getElementById('carrosselTrack').style.transform = `translateX(-${carrosselIndex * 100}%)`;
-        document.querySelectorAll('.carrossel-dot').forEach((d, i) => {
-            d.classList.toggle('ativo', i === carrosselIndex);
-        });
+        document.querySelectorAll('.carrossel-dot').forEach((d, i) => { d.classList.toggle('ativo', i === carrosselIndex); });
         reiniciarTimer();
     }
 
@@ -2083,15 +2014,12 @@ if ('serviceWorker' in navigator) {
 
     function reiniciarTimer() {
         clearInterval(carrosselTimer);
-        if (depoimentos.length > 1) {
-            carrosselTimer = setInterval(() => irParaSlide(carrosselIndex + 1), 5000);
-        }
+        if (depoimentos.length > 1) { carrosselTimer = setInterval(() => irParaSlide(carrosselIndex + 1), 5000); }
     }
 
     document.getElementById('btnProximo')?.addEventListener('click', () => irParaSlide(carrosselIndex + 1));
     document.getElementById('btnAnterior')?.addEventListener('click', () => irParaSlide(carrosselIndex - 1));
 
-    // ========== INICIALIZAÇÃO ==========
     window.addEventListener('load', () => {
         buscarClima();
         buscarNoticiasFutebol();
@@ -2099,36 +2027,22 @@ if ('serviceWorker' in navigator) {
         carregarDepoimentos();
         setInterval(buscarClima, 600000);
         setInterval(buscarNoticiasFutebol, 300000);
-        
         const staggerItems = document.querySelectorAll('.stagger-item');
-        staggerItems.forEach((item, index) => {
-            setTimeout(() => {
-                item.style.opacity = '1';
-                item.style.animation = 'fadeInUp 0.5s ease forwards';
-            }, index * 150);
-        });
+        staggerItems.forEach((item, index) => { setTimeout(() => { item.style.opacity = '1'; item.style.animation = 'fadeInUp 0.5s ease forwards'; }, index * 150); });
+        if (localStorage.getItem('tema') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('btnTema').innerHTML = '🌙'; }
+        if (localStorage.getItem('acessibilidade') === 'active') { document.body.classList.add('acessibilidade'); document.getElementById('btnAcessibilidade').classList.add('ativo'); }
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.style.animation = 'fadeInUp 0.6s ease forwards'; observer.unobserve(entry.target); } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.card, .categorias-container, .patrocinadores, .loc-card, .chat-container').forEach(el => { el.style.opacity = '0'; observer.observe(el); });
         
-        if (localStorage.getItem('tema') === 'dark') {
-            document.body.classList.add('dark-mode');
-            document.getElementById('btnTema').innerHTML = '🌙';
-        }
-        if (localStorage.getItem('acessibilidade') === 'active') {
-            document.body.classList.add('acessibilidade');
-            document.getElementById('btnAcessibilidade').classList.add('ativo');
-        }
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
-                    observer.unobserve(entry.target);
-                }
+        // Força atualização do Service Worker para sempre pegar a versão mais recente
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                registrations.forEach(registration => {
+                    registration.update();
+                    console.log('Service Worker atualizado');
+                });
             });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.card, .categorias-container, .patrocinadores, .loc-card, .chat-container').forEach(el => {
-            el.style.opacity = '0';
-            observer.observe(el);
-        });
+        }
     });
 </script>
 </body>
