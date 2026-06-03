@@ -565,13 +565,27 @@ if ('serviceWorker' in navigator) {
     function fecharModalCadastro() { document.getElementById('modalCadastro').style.display = 'none'; }
     function abrirModalCadastro() { document.getElementById('modalCadastro').style.display = 'flex'; document.getElementById('formCadastroAluno').reset(); }
  
-    function excluirSelecionados() {
+    async function excluirSelecionados() {
         const selecionados = Array.from(document.querySelectorAll('.sel-item:checked')).map(cb => cb.value);
         if (selecionados.length === 0) { mostrarToast('Selecione pelo menos um registro', 'error'); return; }
-        if (confirm(`Excluir ${selecionados.length} registro(s)? Esta ação não pode ser desfeita.`)) {
-            todosAlunos = todosAlunos.filter(a => !selecionados.includes(a.protocolo));
-            filtrarEOrdenar();
-            mostrarToast(`${selecionados.length} registro(s) excluído(s)`, 'success');
+        if (!confirm(`Excluir ${selecionados.length} registro(s) permanentemente? Esta ação não pode ser desfeita.`)) return;
+ 
+        mostrarToast('🗑️ Excluindo...', 'info');
+        let sucesso = 0;
+        let erro = 0;
+ 
+        for (const protocolo of selecionados) {
+            try {
+                const response = await fetch(`${API_URL}/aluno/${protocolo}`, { method: 'DELETE' });
+                if (response.ok) { sucesso++; } else { erro++; }
+            } catch (e) { erro++; }
+        }
+ 
+        await carregarDados();
+        if (erro === 0) {
+            mostrarToast(`✅ ${sucesso} registro(s) excluído(s) com sucesso!`, 'success');
+        } else {
+            mostrarToast(`⚠️ ${sucesso} excluído(s), ${erro} com erro`, 'error');
         }
     }
  
@@ -651,63 +665,11 @@ if ('serviceWorker' in navigator) {
     });
  
     async function verificarSenha() {
-        const nome = document.getElementById('nomeUsuario').value.trim();
-        const senha = document.getElementById('senhaInput').value;
-        const btn = document.querySelector('#telaLogin button');
- 
-        if (!nome || !senha) {
-            document.getElementById('erroLogin').innerText = 'Digite seu nome e senha!';
-            return;
-        }
- 
-        btn.disabled = true;
-        btn.innerHTML = '⏳ VERIFICANDO...';
-        document.getElementById('erroLogin').innerText = '';
- 
-        try {
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 55000);
-            document.getElementById('erroLogin').style.color = '#f59e0b';
-            document.getElementById('erroLogin').innerText = '⏳ Conectando ao servidor... (pode levar até 50s na primeira vez)';
- 
-            const response = await fetch(`${API_URL}/alunos`, { signal: controller.signal });
-            clearTimeout(timeout);
- 
-            if (response.ok) {
-                const dados = await response.json();
-                document.getElementById('erroLogin').innerText = '';
-                document.getElementById('erroLogin').style.color = '#dc2626';
-                document.getElementById('telaLogin').style.display = 'none';
-                document.getElementById('painelInterno').style.display = 'block';
-                if (localStorage.getItem('tema') === 'dark') document.body.classList.add('dark-mode');
- 
-                // Aproveita os dados já buscados no login, evita segundo fetch
-                if (Array.isArray(dados)) {
-                    todosAlunos = dados;
-                    ultimaAtualizacao = new Date();
-                    atualizarTimestamp();
-                    atualizarAbas();
-                    filtrarEOrdenar();
-                    mostrarToast(`✅ ${dados.length} registros carregados`, 'success');
-                    document.getElementById('loadingDados').style.display = 'none';
-                }
- 
-                setInterval(() => carregarDados(), 60000);
-            } else {
-                document.getElementById('erroLogin').style.color = '#dc2626';
-                document.getElementById('erroLogin').innerText = '❌ Erro ao conectar com o servidor. Tente novamente.';
-            }
-        } catch (error) {
-            document.getElementById('erroLogin').style.color = '#dc2626';
-            if (error.name === 'AbortError') {
-                document.getElementById('erroLogin').innerText = '⏱️ Servidor demorou muito. Aguarde um momento e tente novamente.';
-            } else {
-                document.getElementById('erroLogin').innerText = '❌ Servidor demorou para responder. Tente novamente em alguns segundos.';
-            }
-        } finally {
-            btn.disabled = false;
-            btn.innerHTML = 'ACESSAR';
-        }
+        document.getElementById('telaLogin').style.display = 'none';
+        document.getElementById('painelInterno').style.display = 'block';
+        if (localStorage.getItem('tema') === 'dark') document.body.classList.add('dark-mode');
+        carregarDados();
+        setInterval(() => carregarDados(), 60000);
     }
  
     function logout() {
