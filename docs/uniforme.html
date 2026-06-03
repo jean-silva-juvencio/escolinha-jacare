@@ -2,59 +2,269 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Uniforme | Escolinha do Jacaré</title>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => console.log('Service Worker registrado!'))
+                .catch(err => console.log('Erro:', err));
+        }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #f0f2f5; padding: 20px; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(135deg, #f0f2f5 0%, #e2e8f0 100%);
+            padding: 20px;
+            transition: background 0.3s, color 0.3s;
+        }
+        
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #eee;
+        }
+        
         .container { max-width: 1400px; margin: 0 auto; }
-        .header { background: #003399; color: white; padding: 20px; border-radius: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-        .btn { background: rgba(255,255,255,0.2); border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; color: white; font-weight: 600; }
-        .filtros-painel { background: white; border-radius: 16px; padding: 20px; margin-bottom: 20px; }
-        .filtros-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-bottom: 15px; }
-        .grupo-filtro { display: flex; flex-direction: column; gap: 5px; }
-        .grupo-filtro label { font-size: 11px; font-weight: 600; color: #003399; }
-        .grupo-filtro select, .grupo-filtro input { padding: 8px 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 13px; }
+        
+        /* Cabeçalho */
+        .header { 
+            background: linear-gradient(135deg, #003399, #0047AB);
+            color: white; 
+            padding: 20px 24px; 
+            border-radius: 20px; 
+            margin-bottom: 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            flex-wrap: wrap; 
+            gap: 15px; 
+        }
+        body.dark-mode .header {
+            background: linear-gradient(135deg, #1e40af, #1e3a8a);
+        }
+        .header h1 { font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
+        .header-actions { display: flex; gap: 10px; }
+        .btn { 
+            background: rgba(255,255,255,0.2); 
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px; 
+            border-radius: 40px; 
+            cursor: pointer; 
+            color: white; 
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        .btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
+        .btn-tema { background: rgba(255,255,255,0.2); }
+        
+        /* Filtros */
+        .filtros-painel { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 20px; 
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        body.dark-mode .filtros-painel { background: #1e293b; }
+        
+        .filtros-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
+            gap: 15px; 
+            margin-bottom: 15px; 
+        }
         .busca-nome { grid-column: span 2; }
-        .filtros-acoes { display: flex; gap: 10px; justify-content: flex-end; padding-top: 15px; border-top: 1px solid #e2e8f0; }
-        .btn-filtro { padding: 8px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; }
+        
+        .grupo-filtro { display: flex; flex-direction: column; gap: 5px; }
+        .grupo-filtro label { 
+            font-size: 11px; 
+            font-weight: 700; 
+            color: #003399; 
+            text-transform: uppercase;
+        }
+        body.dark-mode .grupo-filtro label { color: #60a5fa; }
+        
+        .grupo-filtro select, .grupo-filtro input { 
+            padding: 10px 12px; 
+            border-radius: 12px; 
+            border: 1px solid #e2e8f0; 
+            font-size: 13px;
+            background: white;
+        }
+        body.dark-mode .grupo-filtro select, 
+        body.dark-mode .grupo-filtro input { 
+            background: #0f172a; 
+            border-color: #334155; 
+            color: white;
+        }
+        
+        .filtros-acoes { 
+            display: flex; 
+            gap: 10px; 
+            justify-content: flex-end; 
+            padding-top: 15px; 
+            border-top: 1px solid #e2e8f0; 
+        }
+        body.dark-mode .filtros-acoes { border-top-color: #334155; }
+        
+        .btn-filtro { 
+            padding: 8px 20px; 
+            border-radius: 40px; 
+            border: none; 
+            cursor: pointer; 
+            font-weight: 600; 
+            font-size: 12px;
+        }
         .btn-limpar { background: #e2e8f0; color: #1e293b; }
-        .resumo-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .card-resumo { background: white; border-radius: 16px; padding: 15px; text-align: center; border-left: 4px solid #003399; }
+        body.dark-mode .btn-limpar { background: #334155; color: white; }
+        
+        /* Cards de resumo */
+        .resumo-cards { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); 
+            gap: 15px; 
+            margin-bottom: 20px; 
+        }
+        .card-resumo { 
+            background: white; 
+            border-radius: 16px; 
+            padding: 15px; 
+            text-align: center; 
+            border-left: 4px solid #003399;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        body.dark-mode .card-resumo { background: #1e293b; border-left-color: #3b82f6; }
         .card-resumo .numero { font-size: 28px; font-weight: 800; color: #003399; }
-        .card-resumo .label { font-size: 11px; color: #666; }
-        .tabela-container { background: white; border-radius: 16px; padding: 20px; overflow-x: auto; }
+        body.dark-mode .card-resumo .numero { color: #60a5fa; }
+        .card-resumo .label { font-size: 11px; color: #666; margin-top: 5px; }
+        body.dark-mode .card-resumo .label { color: #94a3b8; }
+        
+        /* Tabela */
+        .tabela-container { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 20px; 
+            overflow-x: auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        body.dark-mode .tabela-container { background: #1e293b; }
+        
+        .tabela-container h2 { 
+            font-size: 1.1rem; 
+            margin-bottom: 15px; 
+            color: #003399;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        body.dark-mode .tabela-container h2 { color: #60a5fa; }
+        
         table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        th { background: #003399; color: white; padding: 10px; text-align: left; }
-        td { padding: 8px 10px; border-bottom: 1px solid #ddd; }
-        tr:hover { background: #f5f5f5; }
-        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
-        .badge-ativo { background: #d4edda; color: #155724; }
-        .badge-inativo { background: #f8d7da; color: #721c24; }
+        th { 
+            background: #003399; 
+            color: white; 
+            padding: 12px 10px; 
+            text-align: left;
+            font-weight: 600;
+        }
+        body.dark-mode th { background: #0f172a; color: #60a5fa; }
+        td { padding: 10px; border-bottom: 1px solid #e2e8f0; }
+        body.dark-mode td { border-bottom-color: #334155; }
+        tr:hover { background: #f8fafc; }
+        body.dark-mode tr:hover { background: #334155; }
+        
+        /* Badges */
+        .badge { 
+            display: inline-block; 
+            padding: 4px 10px; 
+            border-radius: 30px; 
+            font-size: 11px; 
+            font-weight: 600; 
+        }
         .badge-com { background: #d4edda; color: #155724; }
         .badge-sem { background: #fff3cd; color: #856404; }
+        .badge-ativo { background: #d4edda; color: #155724; }
+        .badge-inativo { background: #f8d7da; color: #721c24; }
+        
+        body.dark-mode .badge-com { background: #064e3b; color: #86efac; }
+        body.dark-mode .badge-sem { background: #854d0e; color: #fde047; }
+        body.dark-mode .badge-ativo { background: #064e3b; color: #86efac; }
+        body.dark-mode .badge-inativo { background: #7f1d1d; color: #fca5a5; }
+        
+        /* Loading */
         .loading { text-align: center; padding: 40px; }
-        .spinner { display: inline-block; width: 40px; height: 40px; border: 3px solid #e2e8f0; border-top-color: #003399; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        .spinner { 
+            display: inline-block; 
+            width: 40px; 
+            height: 40px; 
+            border: 3px solid #e2e8f0; 
+            border-top-color: #003399; 
+            border-radius: 50%; 
+            animation: spin 0.8s linear infinite; 
+        }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @media (max-width: 700px) { .filtros-grid { grid-template-columns: 1fr; } .busca-nome { grid-column: span 1; } th, td { font-size: 11px; padding: 6px; } }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #10b981;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            z-index: 1100;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* Rodapé */
+        footer {
+            background: #003399;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+            border-radius: 20px;
+        }
+        body.dark-mode footer { background: #0f172a; }
+        
+        @media (max-width: 700px) {
+            .filtros-grid { grid-template-columns: 1fr; }
+            .busca-nome { grid-column: span 1; }
+            th, td { font-size: 11px; padding: 6px; }
+            .resumo-cards { grid-template-columns: repeat(2, 1fr); }
+        }
     </style>
 </head>
 <body>
+
 <div class="container">
+    <!-- Cabeçalho -->
     <div class="header">
         <h1>👕 UNIFORMES - ESCOLINHA DO JACARÉ</h1>
-        <div>
+        <div class="header-actions">
+            <button class="btn btn-tema" onclick="alternarTema()">🌓 TEMA</button>
             <button class="btn" onclick="carregarDados()">🔄 ATUALIZAR</button>
             <button class="btn" onclick="exportarCSV()">📥 EXPORTAR CSV</button>
+            <a href="diretoria.html" style="text-decoration:none;"><button class="btn">← VOLTAR</button></a>
         </div>
     </div>
 
+    <!-- Filtros -->
     <div class="filtros-painel">
         <div class="filtros-grid">
             <div class="grupo-filtro busca-nome">
                 <label>🔍 BUSCAR NOME</label>
-                <input type="text" id="buscaNome" placeholder="Digite o nome..." onkeyup="aplicarFiltros()">
+                <input type="text" id="buscaNome" placeholder="Digite o nome do aluno..." onkeyup="aplicarFiltros()">
             </div>
             <div class="grupo-filtro">
                 <label>🎽 UNIFORME</label>
@@ -79,14 +289,14 @@
                 </select>
             </div>
             <div class="grupo-filtro">
-                <label>🏆 CATEGORIA</label>
-                <select id="filtroCategoria" onchange="aplicarFiltros()">
+                <label>🏆 TURMA (Modalidade)</label>
+                <select id="filtroTurma" onchange="aplicarFiltros()">
                     <option value="todos">Todas</option>
                 </select>
             </div>
             <div class="grupo-filtro">
-                <label>📚 TURMA</label>
-                <select id="filtroTurma" onchange="aplicarFiltros()">
+                <label>📚 CATEGORIA (Sub)</label>
+                <select id="filtroCategoria" onchange="aplicarFiltros()">
                     <option value="todos">Todas</option>
                 </select>
             </div>
@@ -110,126 +320,202 @@
         </div>
     </div>
 
+    <!-- Cards de resumo -->
     <div class="resumo-cards" id="resumoCards"></div>
 
+    <!-- Tabela de alunos -->
     <div class="tabela-container">
         <h2>📋 LISTA DE ALUNOS <span id="totalRegistros"></span></h2>
         <div style="overflow-x: auto;">
             <table id="tabelaAlunos">
                 <thead>
-                    <tr><th>Nome</th><th>Idade</th><th>Gênero</th><th>Turma</th><th>Categoria</th><th>Tamanho</th><th>Uniforme</th><th>Status</th></tr>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Idade</th>
+                        <th>Gênero</th>
+                        <th>Turma (Modalidade)</th>
+                        <th>Categoria (Sub)</th>
+                        <th>Tamanho</th>
+                        <th>Uniforme</th>
+                        <th>Status</th>
+                    </tr>
                 </thead>
-                <tbody id="tabelaBody"><tr><td colspan="8" class="loading"><div class="spinner"></div> Carregando...<\/td></tr></tbody>
+                <tbody id="tabelaBody">
+                    <tr><td colspan="8" class="loading"><div class="spinner"></div> Carregando...</td></tr>
+                </tbody>
             </table>
         </div>
     </div>
 </div>
 
+<footer>
+    ESCOLINHA DO JACARÉ - ALVORADA<br>
+    Manaus/AM - Brasil<br>
+    © 2026 - Todos os direitos reservados.
+</footer>
+
 <script>
+    // API CORRIGIDA - apontando para o servidor online
     const API_URL = 'https://api-escolinha.onrender.com/api/alunos';
     let todosAlunos = [];
 
+    // ========== FUNÇÃO CORRIGIDA: idade para tamanho ==========
     function idadeParaTamanho(idade) {
-        if (idade >= 3 && idade <= 4) return '4';
-        if (idade >= 5 && idade <= 6) return '6';
-        if (idade >= 7 && idade <= 8) return '8';
-        if (idade >= 9 && idade <= 10) return '10';
-        if (idade >= 11 && idade <= 12) return '12';
-        if (idade >= 13 && idade <= 14) return '14';
-        if (idade >= 15 && idade <= 17) return 'M';
-        if (idade >= 18) return 'G';
+        // Validação para evitar erro
+        if (!idade && idade !== 0) return '';
+        const idadeNum = parseInt(idade);
+        if (isNaN(idadeNum)) return '';
+        
+        if (idadeNum >= 3 && idadeNum <= 4) return '4';
+        if (idadeNum >= 5 && idadeNum <= 6) return '6';
+        if (idadeNum >= 7 && idadeNum <= 8) return '8';
+        if (idadeNum >= 9 && idadeNum <= 10) return '10';
+        if (idadeNum >= 11 && idadeNum <= 12) return '12';
+        if (idadeNum >= 13 && idadeNum <= 14) return '14';
+        if (idadeNum >= 15 && idadeNum <= 17) return 'M';
+        if (idadeNum >= 18) return 'G';
         return '';
     }
 
-    function getTamanho(aluno) {
-        if (aluno.tamanho_uniforme && aluno.tamanho_uniforme !== '') return aluno.tamanho_uniforme;
-        return idadeParaTamanho(parseInt(aluno.idade));
-    }
-
-    // CORREÇÃO: Os campos estão invertidos no banco!
-    // categoria (Futebol, Ginástica) está no campo TURMA
-    // turma (Sub-11, Sub-15) está no campo CATEGORIA
-    function getCategoria(aluno) {
+    // ========== CORREÇÃO: campos invertidos ==========
+    // No backend: campo "turma" guarda a MODALIDADE (Futebol, Taekwondo...)
+    // campo "categoria" guarda a SUB (Sub-11, Sub-13...)
+    
+    function getTurma(aluno) {
+        // Turma = Modalidade (Futebol, Taekwondo, Ginástica...)
         if (aluno.turma && aluno.turma !== '') return aluno.turma;
         return '';
     }
 
-    function getTurma(aluno) {
+    function getCategoria(aluno) {
+        // Categoria = Sub (Sub-11, Sub-13...)
         if (aluno.categoria && aluno.categoria !== '') return aluno.categoria;
         return '';
     }
 
     function getPossuiUniforme(aluno) {
-        if (aluno.possui_uniforme === 'sim') return 'sim';
-        if (aluno.possui_uniforme === 'nao') return 'nao';
-        if (aluno.possui_uniforme === 'não') return 'nao';
+        const uniforme = (aluno.possui_uniforme || '').toLowerCase();
+        if (uniforme === 'sim') return 'sim';
+        if (uniforme === 'nao' || uniforme === 'não') return 'nao';
         return '';
     }
 
+    function getTamanho(aluno) {
+        if (aluno.tamanho_uniforme && aluno.tamanho_uniforme !== '') return aluno.tamanho_uniforme;
+        return idadeParaTamanho(aluno.idade);
+    }
+
+    // ========== TEMA ==========
+    function alternarTema() {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('tema_uniforme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+    }
+    
+    if (localStorage.getItem('tema_uniforme') === 'dark') {
+        document.body.classList.add('dark-mode');
+    }
+
+    // ========== TOAST ==========
+    function mostrarToast(mensagem) {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = mensagem;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+
+    // ========== CARREGAR DADOS DA API ==========
     async function carregarDados() {
-        document.getElementById('tabelaBody').innerHTML = '<tr><td colspan="8" class="loading"><div class="spinner"></div> Carregando...<\/td></tr>';
+        document.getElementById('tabelaBody').innerHTML = '<tr><td colspan="8" class="loading"><div class="spinner"></div> Carregando...</td></tr>';
+        
         try {
             const response = await fetch(API_URL);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const dados = await response.json();
+            
             if (Array.isArray(dados)) {
                 todosAlunos = dados;
-                console.log('Total:', todosAlunos.length);
+                console.log(`Total de alunos carregados: ${todosAlunos.length}`);
                 
-                // Extrair valores únicos
-                const cats = new Set();
+                // Extrair valores únicos para os filtros
                 const turmas = new Set();
-                const gens = new Set();
+                const categorias = new Set();
+                const generos = new Set();
                 
                 todosAlunos.forEach(aluno => {
-                    const cat = getCategoria(aluno);
                     const tur = getTurma(aluno);
+                    const cat = getCategoria(aluno);
                     const gen = aluno.sexo;
-                    if (cat && cat !== '') cats.add(cat);
                     if (tur && tur !== '') turmas.add(tur);
-                    if (gen && gen !== '') gens.add(gen);
+                    if (cat && cat !== '') categorias.add(cat);
+                    if (gen && gen !== '') generos.add(gen);
                 });
                 
-                // Preencher filtros
-                const selectCat = document.getElementById('filtroCategoria');
-                selectCat.innerHTML = '<option value="todos">Todas</option>';
-                Array.from(cats).sort().forEach(c => selectCat.innerHTML += `<option value="${c}">${c}</option>`);
+                // Preencher filtro de Turma (Modalidade)
+                const selectTurma = document.getElementById('filtroTurma');
+                selectTurma.innerHTML = '<option value="todos">Todas</option>';
+                Array.from(turmas).sort().forEach(t => {
+                    selectTurma.innerHTML += `<option value="${t}">${t}</option>`;
+                });
                 
-                const selectTur = document.getElementById('filtroTurma');
-                selectTur.innerHTML = '<option value="todos">Todas</option>';
-                Array.from(turmas).sort().forEach(t => selectTur.innerHTML += `<option value="${t}">${t}</option>`);
+                // Preencher filtro de Categoria (Sub)
+                const selectCategoria = document.getElementById('filtroCategoria');
+                selectCategoria.innerHTML = '<option value="todos">Todas</option>';
+                Array.from(categorias).sort().forEach(c => {
+                    selectCategoria.innerHTML += `<option value="${c}">${c}</option>`;
+                });
                 
-                const selectGen = document.getElementById('filtroGenero');
-                selectGen.innerHTML = '<option value="todos">Todos</option>';
-                Array.from(gens).sort().forEach(g => selectGen.innerHTML += `<option value="${g}">${g === 'Masculino' ? '👨 Masculino' : '👩 Feminino'}</option>`);
+                // Preencher filtro de Gênero
+                const selectGenero = document.getElementById('filtroGenero');
+                selectGenero.innerHTML = '<option value="todos">Todos</option>';
+                Array.from(generos).sort().forEach(g => {
+                    const icone = g === 'Masculino' ? '👨 ' : (g === 'Feminino' ? '👩 ' : '');
+                    selectGenero.innerHTML += `<option value="${g}">${icone}${g}</option>`;
+                });
                 
                 aplicarFiltros();
+            } else {
+                document.getElementById('tabelaBody').innerHTML = '<tr><td colspan="8" class="loading">❌ Erro: formato de dados inválido</td></tr>';
             }
         } catch (error) {
-            document.getElementById('tabelaBody').innerHTML = '<tr><td colspan="8" class="loading">❌ Erro ao carregar<\/td></tr>';
+            console.error('Erro:', error);
+            document.getElementById('tabelaBody').innerHTML = '<tr><td colspan="8" class="loading">❌ Erro ao conectar com o servidor. Verifique sua internet.</td></tr>';
         }
     }
 
+    // ========== APLICAR FILTROS ==========
     function aplicarFiltros() {
-        const busca = document.getElementById('buscaNome').value.toLowerCase();
-        const uniforme = document.getElementById('filtroUniforme').value;
-        const tamanho = document.getElementById('filtroTamanho').value;
-        const categoria = document.getElementById('filtroCategoria').value;
-        const turma = document.getElementById('filtroTurma').value;
-        const status = document.getElementById('filtroStatus').value;
-        const genero = document.getElementById('filtroGenero').value;
+        const buscaNome = document.getElementById('buscaNome').value.toLowerCase();
+        const filtroUniforme = document.getElementById('filtroUniforme').value;
+        const filtroTamanho = document.getElementById('filtroTamanho').value;
+        const filtroTurma = document.getElementById('filtroTurma').value;
+        const filtroCategoria = document.getElementById('filtroCategoria').value;
+        const filtroStatus = document.getElementById('filtroStatus').value;
+        const filtroGenero = document.getElementById('filtroGenero').value;
 
         let filtrados = todosAlunos.filter(aluno => {
-            if (busca && !(aluno.nome_aluno || '').toLowerCase().includes(busca)) return false;
+            // Busca por nome
+            if (buscaNome && !(aluno.nome_aluno || '').toLowerCase().includes(buscaNome)) return false;
             
+            // Filtro uniforme
             const possuiUniforme = getPossuiUniforme(aluno);
-            if (uniforme === 'com' && possuiUniforme !== 'sim') return false;
-            if (uniforme === 'sem' && possuiUniforme !== 'nao') return false;
+            if (filtroUniforme === 'com' && possuiUniforme !== 'sim') return false;
+            if (filtroUniforme === 'sem' && possuiUniforme !== 'nao') return false;
             
-            if (tamanho !== 'todos' && getTamanho(aluno) !== tamanho) return false;
-            if (categoria !== 'todos' && getCategoria(aluno) !== categoria) return false;
-            if (turma !== 'todos' && getTurma(aluno) !== turma) return false;
-            if (status !== 'todos' && aluno.status !== status) return false;
-            if (genero !== 'todos' && aluno.sexo !== genero) return false;
+            // Filtro tamanho
+            if (filtroTamanho !== 'todos' && getTamanho(aluno) !== filtroTamanho) return false;
+            
+            // Filtro turma (modalidade)
+            if (filtroTurma !== 'todos' && getTurma(aluno) !== filtroTurma) return false;
+            
+            // Filtro categoria (sub)
+            if (filtroCategoria !== 'todos' && getCategoria(aluno) !== filtroCategoria) return false;
+            
+            // Filtro status
+            if (filtroStatus !== 'todos' && aluno.status !== filtroStatus) return false;
+            
+            // Filtro gênero
+            if (filtroGenero !== 'todos' && aluno.sexo !== filtroGenero) return false;
             
             return true;
         });
@@ -238,10 +524,12 @@
         renderizarResumo(filtrados);
     }
 
+    // ========== RENDERIZAR TABELA ==========
     function renderizarTabela(alunos) {
         const tbody = document.getElementById('tabelaBody');
+        
         if (alunos.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:40px;">Nenhum aluno encontrado<\/td></tr>';
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:40px;">🎽 Nenhum aluno encontrado</td></tr>';
             document.getElementById('totalRegistros').innerHTML = '(0)';
             return;
         }
@@ -250,91 +538,112 @@
             const tamanho = getTamanho(aluno);
             const possuiUniforme = getPossuiUniforme(aluno);
             const temUniforme = possuiUniforme === 'sim';
-            const categoria = getCategoria(aluno) || '-';
             const turma = getTurma(aluno) || '-';
+            const categoria = getCategoria(aluno) || '-';
             const genero = aluno.sexo === 'Masculino' ? '👨 Masculino' : (aluno.sexo === 'Feminino' ? '👩 Feminino' : '-');
             
-            return `<tr>
-                <td><strong>${aluno.nome_aluno || '-'}</strong></td>
-                <td>${aluno.idade} anos</td>
-                <td>${genero}</td>
-                <td>${turma}</td>
-                <td>${categoria}</td>
-                <td><strong>${tamanho || '-'}</strong></td>
-                <td><span class="badge ${temUniforme ? 'badge-com' : 'badge-sem'}">${temUniforme ? 'Com uniforme' : 'Sem uniforme'}</span></td>
-                <td><span class="badge ${aluno.status === 'aprovado' ? 'badge-ativo' : 'badge-inativo'}">${aluno.status === 'aprovado' ? 'Ativo' : 'Inativo'}</span></td>
-            </tr>`;
+            return `
+                <tr>
+                    <td><strong>${aluno.nome_aluno || '-'}</strong></td>
+                    <td>${aluno.idade || '-'} anos</td>
+                    <td>${genero}</td>
+                    <td>${turma}</td>
+                    <td>${categoria}</td>
+                    <td><strong>${tamanho || '-'}</strong></td>
+                    <td><span class="badge ${temUniforme ? 'badge-com' : 'badge-sem'}">${temUniforme ? '✅ Com uniforme' : '❌ Sem uniforme'}</span></td>
+                    <td><span class="badge ${aluno.status === 'aprovado' ? 'badge-ativo' : 'badge-inativo'}">${aluno.status === 'aprovado' ? '🟢 Ativo' : '🔴 Inativo'}</span></td>
+                </tr>
+            `;
         }).join('');
+        
         document.getElementById('totalRegistros').innerHTML = `(${alunos.length} registros)`;
     }
 
+    // ========== RENDERIZAR CARDS DE RESUMO ==========
     function renderizarResumo(alunos) {
         const total = alunos.length;
         const comUniforme = alunos.filter(a => getPossuiUniforme(a) === 'sim').length;
+        const semUniforme = total - comUniforme;
         const ativos = alunos.filter(a => a.status === 'aprovado').length;
         const masculino = alunos.filter(a => a.sexo === 'Masculino').length;
-        const futebol = alunos.filter(a => getCategoria(a) === 'Futebol').length;
-        const futebolSemUniforme = alunos.filter(a => getCategoria(a) === 'Futebol' && getPossuiUniforme(a) !== 'sim').length;
+        const feminino = alunos.filter(a => a.sexo === 'Feminino').length;
+        
+        // Alunos do Futebol sem uniforme
+        const futebolSemUniforme = alunos.filter(a => getTurma(a) === 'Futebol' && getPossuiUniforme(a) !== 'sim').length;
+        
+        // Percentual de uniformizados
+        const percentualUniforme = total > 0 ? Math.round((comUniforme / total) * 100) : 0;
         
         document.getElementById('resumoCards').innerHTML = `
-            <div class="card-resumo"><div class="numero">${total}</div><div class="label">📋 Total</div></div>
+            <div class="card-resumo"><div class="numero">${total}</div><div class="label">📋 Total Alunos</div></div>
             <div class="card-resumo"><div class="numero">${comUniforme}</div><div class="label">✅ Com Uniforme</div></div>
-            <div class="card-resumo"><div class="numero">${total - comUniforme}</div><div class="label">❌ Sem Uniforme</div></div>
-            <div class="card-resumo"><div class="numero">${futebol}</div><div class="label">⚽ Futebol</div></div>
-            <div class="card-resumo"><div class="numero" style="color:#dc2626">${futebolSemUniforme}</div><div class="label">⚠️ Futebol sem uniforme</div></div>
-            <div class="card-resumo"><div class="numero">${ativos}</div><div class="label">✅ Ativos</div></div>
+            <div class="card-resumo"><div class="numero">${semUniforme}</div><div class="label">❌ Sem Uniforme</div></div>
+            <div class="card-resumo"><div class="numero">${percentualUniforme}%</div><div class="label">📊 Uniformizados</div></div>
+            <div class="card-resumo"><div class="numero" style="color:#dc2626">${futebolSemUniforme}</div><div class="label">⚽ Futebol sem uniforme</div></div>
+            <div class="card-resumo"><div class="numero">${ativos}</div><div class="label">✅ Alunos Ativos</div></div>
             <div class="card-resumo"><div class="numero">${masculino}</div><div class="label">👨 Masculino</div></div>
+            <div class="card-resumo"><div class="numero">${feminino}</div><div class="label">👩 Feminino</div></div>
         `;
     }
 
+    // ========== LIMPAR FILTROS ==========
     function limparFiltros() {
         document.getElementById('buscaNome').value = '';
         document.getElementById('filtroUniforme').value = 'todos';
         document.getElementById('filtroTamanho').value = 'todos';
-        document.getElementById('filtroCategoria').value = 'todos';
         document.getElementById('filtroTurma').value = 'todos';
+        document.getElementById('filtroCategoria').value = 'todos';
         document.getElementById('filtroStatus').value = 'todos';
         document.getElementById('filtroGenero').value = 'todos';
         aplicarFiltros();
+        mostrarToast('🧹 Filtros limpos!');
     }
 
+    // ========== EXPORTAR CSV ==========
     function exportarCSV() {
-        const busca = document.getElementById('buscaNome').value.toLowerCase();
-        const uniforme = document.getElementById('filtroUniforme').value;
-        const tamanho = document.getElementById('filtroTamanho').value;
-        const categoria = document.getElementById('filtroCategoria').value;
-        const turma = document.getElementById('filtroTurma').value;
-        const status = document.getElementById('filtroStatus').value;
-        const genero = document.getElementById('filtroGenero').value;
+        const buscaNome = document.getElementById('buscaNome').value.toLowerCase();
+        const filtroUniforme = document.getElementById('filtroUniforme').value;
+        const filtroTamanho = document.getElementById('filtroTamanho').value;
+        const filtroTurma = document.getElementById('filtroTurma').value;
+        const filtroCategoria = document.getElementById('filtroCategoria').value;
+        const filtroStatus = document.getElementById('filtroStatus').value;
+        const filtroGenero = document.getElementById('filtroGenero').value;
 
         let filtrados = todosAlunos.filter(aluno => {
-            if (busca && !(aluno.nome_aluno || '').toLowerCase().includes(busca)) return false;
+            if (buscaNome && !(aluno.nome_aluno || '').toLowerCase().includes(buscaNome)) return false;
             const possuiUniforme = getPossuiUniforme(aluno);
-            if (uniforme === 'com' && possuiUniforme !== 'sim') return false;
-            if (uniforme === 'sem' && possuiUniforme !== 'nao') return false;
-            if (tamanho !== 'todos' && getTamanho(aluno) !== tamanho) return false;
-            if (categoria !== 'todos' && getCategoria(aluno) !== categoria) return false;
-            if (turma !== 'todos' && getTurma(aluno) !== turma) return false;
-            if (status !== 'todos' && aluno.status !== status) return false;
-            if (genero !== 'todos' && aluno.sexo !== genero) return false;
+            if (filtroUniforme === 'com' && possuiUniforme !== 'sim') return false;
+            if (filtroUniforme === 'sem' && possuiUniforme !== 'nao') return false;
+            if (filtroTamanho !== 'todos' && getTamanho(aluno) !== filtroTamanho) return false;
+            if (filtroTurma !== 'todos' && getTurma(aluno) !== filtroTurma) return false;
+            if (filtroCategoria !== 'todos' && getCategoria(aluno) !== filtroCategoria) return false;
+            if (filtroStatus !== 'todos' && aluno.status !== filtroStatus) return false;
+            if (filtroGenero !== 'todos' && aluno.sexo !== filtroGenero) return false;
             return true;
         });
 
-        if (filtrados.length === 0) { alert('Nenhum dado para exportar'); return; }
+        if (filtrados.length === 0) {
+            mostrarToast('📭 Nenhum dado para exportar');
+            return;
+        }
         
-        let csv = 'Nome,Idade,Gênero,Turma,Categoria,Tamanho,Uniforme,Status\n';
+        // Criar CSV
+        let csv = '\uFEFFNome,Idade,Gênero,Turma (Modalidade),Categoria (Sub),Tamanho,Uniforme,Status\n';
         filtrados.forEach(aluno => {
-            csv += `"${aluno.nome_aluno || ''}","${aluno.idade}","${aluno.sexo}","${getTurma(aluno)}","${getCategoria(aluno)}","${getTamanho(aluno)}","${getPossuiUniforme(aluno) === 'sim' ? 'Com uniforme' : 'Sem uniforme'}","${aluno.status === 'aprovado' ? 'Ativo' : 'Inativo'}"\n`;
+            csv += `"${aluno.nome_aluno || ''}","${aluno.idade || ''}","${aluno.sexo || ''}","${getTurma(aluno)}","${getCategoria(aluno)}","${getTamanho(aluno)}","${getPossuiUniforme(aluno) === 'sim' ? 'Com uniforme' : 'Sem uniforme'}","${aluno.status === 'aprovado' ? 'Ativo' : 'Inativo'}"\n`;
         });
         
-        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
+        const url = URL.createObjectURL(blob);
+        link.href = url;
         link.download = `uniformes_${new Date().toISOString().slice(0,10)}.csv`;
         link.click();
-        alert('✅ Exportado!');
+        URL.revokeObjectURL(url);
+        mostrarToast(`📥 ${filtrados.length} registros exportados!`);
     }
 
+    // ========== INICIALIZAÇÃO ==========
     carregarDados();
 </script>
 </body>
