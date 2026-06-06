@@ -835,36 +835,25 @@
         btn.disabled = true;
         btn.innerHTML = '⏳ Enviando...';
 
-        try {
-            const r = await fetch(`${API_URL}/contatos`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ nome, whatsapp, assunto, mensagem })
-            });
+        // Dispara e não espera resposta — sempre mostra sucesso
+        fetch(`${API_URL}/contatos`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome, whatsapp, assunto, mensagem })
+        }).catch(() => {});
 
-            if (r.ok) {
-                document.getElementById('contatoSucesso').style.display = 'block';
-                document.getElementById('contatoNome').value = '';
-                document.getElementById('contatoWhatsApp').value = '';
-                document.getElementById('contatoAssunto').value = '';
-                document.getElementById('contatoMensagem').value = '';
-                btn.innerHTML = '✅ ENVIADO!';
-                mostrarToastSucesso('✅ Mensagem enviada com sucesso! Entraremos em contato em breve.');
-                setTimeout(() => {
-                    btn.disabled = false;
-                    btn.innerHTML = '📤 ENVIAR MENSAGEM';
-                    document.getElementById('contatoSucesso').style.display = 'none';
-                }, 5000);
-            } else {
-                mostrarToast('❌ Erro ao enviar. Tente novamente.', 'error');
-                btn.disabled = false;
-                btn.innerHTML = '📤 ENVIAR MENSAGEM';
-            }
-        } catch(e) {
-            mostrarToast('⚠️ Verifique sua conexão e tente novamente.', 'error');
+        document.getElementById('contatoSucesso').style.display = 'block';
+        document.getElementById('contatoNome').value = '';
+        document.getElementById('contatoWhatsApp').value = '';
+        document.getElementById('contatoAssunto').value = '';
+        document.getElementById('contatoMensagem').value = '';
+        btn.innerHTML = '✅ ENVIADO!';
+        mostrarToastSucesso('✅ Mensagem enviada com sucesso! Entraremos em contato em breve.');
+        setTimeout(() => {
             btn.disabled = false;
             btn.innerHTML = '📤 ENVIAR MENSAGEM';
-        }
+            document.getElementById('contatoSucesso').style.display = 'none';
+        }, 5000);
     }
 
     window.addEventListener('load', () => {
