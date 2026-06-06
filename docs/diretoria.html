@@ -171,6 +171,8 @@
         .contato-stat .lbl { font-size: 0.72rem; color: #666; margin-top: 4px; }
         body.dark-mode .contato-stat .lbl { color: #94a3b8; }
         .contatos-vazio { text-align: center; padding: 50px; color: #888; font-size: 0.9rem; }
+        .btn-excluir { background: #fee2e2; color: #dc2626; border: none; padding: 6px 14px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .btn-excluir:hover { background: #dc2626; color: white; }
 
         .toast { position: fixed; bottom: 30px; right: 30px; background: #10b981; color: white; padding: 12px 20px; border-radius: 10px; z-index: 1100; animation: slideIn 0.3s ease; }
         .toast.error { background: #ef4444; }
@@ -463,13 +465,38 @@
                     <div class="contato-msg-texto">"${c.mensagem || ''}"</div>
                     <div class="contato-msg-footer">
                         <span class="contato-msg-whats">${c.whatsapp ? '📱 ' + c.whatsapp : ''}</span>
-                        ${btnWhats}
+                        <div style="display:flex;gap:8px;align-items:center;">
+                            ${btnWhats}
+                            <button class="btn-excluir" onclick="excluirContato(${c.id}, this)">🗑️ Excluir</button>
+                        </div>
                     </div>
                 </div>`;
         }).join('');
     }
 
     function filtrarContatos() { renderizarContatos(todosContatos); }
+
+    async function excluirContato(id, btn) {
+        if (!confirm('Tem certeza que deseja excluir esta mensagem?')) return;
+        btn.disabled = true;
+        btn.innerHTML = '⏳';
+        try {
+            const r = await fetch(`${API_URL}/contatos/${id}`, { method: 'DELETE' });
+            if (r.ok) {
+                todosContatos = todosContatos.filter(c => c.id !== id);
+                renderizarContatos(todosContatos);
+                mostrarToast('🗑️ Mensagem excluída!');
+            } else {
+                mostrarToast('❌ Erro ao excluir', 'error');
+                btn.disabled = false;
+                btn.innerHTML = '🗑️ Excluir';
+            }
+        } catch(e) {
+            mostrarToast('❌ Erro ao excluir', 'error');
+            btn.disabled = false;
+            btn.innerHTML = '🗑️ Excluir';
+        }
+    }
 
     // ========== COMENTÁRIOS ==========
     async function carregarComentarios() {
