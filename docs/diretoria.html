@@ -7,7 +7,7 @@
     <link rel="manifest" href="manifest.json">
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').then(() => console.log('Service Worker registrado!')).catch(err => console.log('Erro:', err));
+            navigator.serviceWorker.register('sw.js').then(() => console.log('SW registrado!')).catch(() => {});
         }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Open Sans', sans-serif; background: linear-gradient(135deg, #f0f7ff 0%, #e0ecf9 100%); min-height: 100vh; }
         body.dark-mode { background: linear-gradient(135deg, #0f172a 0%, #1e1a3a 100%); color: #e2e8f0; }
-        body.dark-mode .card, body.dark-mode .grafico-card, body.dark-mode .veteranos-section, body.dark-mode .modal-content { background: #1e293b; }
+        body.dark-mode .card, body.dark-mode .grafico-card, body.dark-mode .veteranos-section { background: #1e293b; }
  
         .nav-bar { background: white; border-radius: 60px; padding: 12px 24px; margin: 20px auto 0; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         body.dark-mode .nav-bar { background: #1e293b; }
@@ -55,6 +55,7 @@
         .btn-sair { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); color: white; padding: 8px 15px; border-radius: 50px; cursor: pointer; font-size: 0.8rem; }
  
         /* BOTÃO ONLINE/OFFLINE */
+        @keyframes piscar { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         .btn-status { padding: 8px 18px; border-radius: 50px; cursor: pointer; font-size: 0.85rem; font-weight: 700; border: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
         .btn-status.online { background: #10b981; color: white; box-shadow: 0 0 12px rgba(16,185,129,0.5); }
         .btn-status.offline { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); color: white; }
@@ -62,14 +63,13 @@
         .status-ponto { width: 8px; height: 8px; border-radius: 50%; }
         .btn-status.online .status-ponto { background: white; animation: piscar 1.5s ease-in-out infinite; }
         .btn-status.offline .status-ponto { background: #ef4444; }
-        @keyframes piscar { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
  
         .info-atualizacao { text-align: right; font-size: 0.75rem; color: #666; margin-bottom: 15px; }
         body.dark-mode .info-atualizacao { color: #94a3b8; }
  
         .abas-nav { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; background: white; padding: 10px 15px; border-radius: 60px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         body.dark-mode .abas-nav { background: #1e293b; }
-        .aba-nav-btn { padding: 10px 24px; border-radius: 40px; border: none; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s; background: #f1f5f9; color: #1e293b; }
+        .aba-nav-btn { padding: 10px 24px; border-radius: 40px; border: none; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s; background: #f1f5f9; color: #1e293b; text-decoration: none; display: inline-block; }
         body.dark-mode .aba-nav-btn { background: #0f172a; color: #e2e8f0; }
         .aba-nav-btn.ativa { background: #0047AB; color: white; }
         body.dark-mode .aba-nav-btn.ativa { background: #3b82f6; }
@@ -113,7 +113,7 @@
         .veteranos-section h2 { font-family: 'Montserrat'; color: #003399; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
         body.dark-mode .veteranos-section h2 { color: #60a5fa; }
         .ranking-veteranos { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
-        .veterano-card { background: #f8fafc; border-radius: 16px; padding: 15px; display: flex; align-items: center; gap: 15px; transition: all 0.3s; border-left: 4px solid #0047AB; cursor: pointer; }
+        .veterano-card { background: #f8fafc; border-radius: 16px; padding: 15px; display: flex; align-items: center; gap: 15px; transition: all 0.3s; border-left: 4px solid #0047AB; }
         body.dark-mode .veterano-card { background: #0f172a; }
         .veterano-card:hover { transform: translateX(5px); }
         .veterano-medalha { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
@@ -126,11 +126,7 @@
         .veterano-detalhes { font-size: 0.75rem; color: #666; margin-top: 4px; }
         body.dark-mode .veterano-detalhes { color: #94a3b8; }
         .tempo-badge { background: #0047AB; color: white; padding: 4px 10px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; }
-        .tempo-1ano { background: #10b981; }
-        .tempo-2anos { background: #3b82f6; }
-        .tempo-3anos { background: #8b5cf6; }
-        .tempo-4anos { background: #f59e0b; }
-        .tempo-5anos { background: #ef4444; }
+        .tempo-1ano { background: #10b981; } .tempo-2anos { background: #3b82f6; } .tempo-3anos { background: #8b5cf6; } .tempo-4anos { background: #f59e0b; } .tempo-5anos { background: #ef4444; }
         .stats-veteranos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
         body.dark-mode .stats-veteranos { border-top-color: #334155; }
         .stat-veterano { text-align: center; padding: 10px; background: #f8fafc; border-radius: 12px; }
@@ -139,6 +135,42 @@
         body.dark-mode .stat-veterano .numero { color: #60a5fa; }
         .stat-veterano .label { font-size: 0.7rem; color: #666; }
         body.dark-mode .stat-veterano .label { color: #94a3b8; }
+ 
+        /* ABA CONTATOS */
+        .contatos-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+        .contatos-header h2 { font-family: 'Montserrat'; color: #003399; font-size: 1.3rem; }
+        body.dark-mode .contatos-header h2 { color: #60a5fa; }
+        .contatos-filtros { display: flex; gap: 10px; flex-wrap: wrap; }
+        .contatos-filtros select, .contatos-filtros input { padding: 8px 14px; border: 1px solid #e2e8f0; border-radius: 40px; font-size: 0.8rem; background: white; outline: none; }
+        body.dark-mode .contatos-filtros select, body.dark-mode .contatos-filtros input { background: #0f172a; border-color: #334155; color: white; }
+        .contato-msg-card { background: #f8fafc; border-radius: 16px; padding: 18px 20px; margin-bottom: 12px; border-left: 4px solid #0047AB; transition: all 0.2s; }
+        body.dark-mode .contato-msg-card { background: #0f172a; }
+        .contato-msg-card:hover { transform: translateX(4px); }
+        .contato-msg-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+        .contato-msg-nome { font-weight: 700; font-size: 0.95rem; color: #1e293b; }
+        body.dark-mode .contato-msg-nome { color: #e2e8f0; }
+        .contato-msg-data { font-size: 0.7rem; color: #999; }
+        .contato-msg-assunto { display: inline-block; padding: 3px 12px; border-radius: 40px; font-size: 0.72rem; font-weight: 700; margin-bottom: 8px; }
+        .assunto-sugestao { background: #dbeafe; color: #1e40af; }
+        .assunto-elogio { background: #fce7f3; color: #9d174d; }
+        .assunto-reclamacao { background: #fee2e2; color: #991b1b; }
+        .assunto-duvida { background: #fef9c3; color: #854d0e; }
+        .assunto-outro { background: #f1f5f9; color: #475569; }
+        .contato-msg-texto { font-size: 0.85rem; color: #555; line-height: 1.5; margin-bottom: 10px; }
+        body.dark-mode .contato-msg-texto { color: #94a3b8; }
+        .contato-msg-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .contato-msg-whats { font-size: 0.8rem; color: #666; }
+        body.dark-mode .contato-msg-whats { color: #94a3b8; }
+        .btn-responder { background: #25D366; color: white; border: none; padding: 6px 14px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: all 0.2s; }
+        .btn-responder:hover { opacity: 0.9; transform: scale(1.03); }
+        .contatos-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 20px; }
+        .contato-stat { background: white; border-radius: 16px; padding: 15px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        body.dark-mode .contato-stat { background: #1e293b; }
+        .contato-stat .num { font-size: 1.8rem; font-weight: 800; font-family: 'Montserrat'; color: #003399; }
+        body.dark-mode .contato-stat .num { color: #60a5fa; }
+        .contato-stat .lbl { font-size: 0.72rem; color: #666; margin-top: 4px; }
+        body.dark-mode .contato-stat .lbl { color: #94a3b8; }
+        .contatos-vazio { text-align: center; padding: 50px; color: #888; font-size: 0.9rem; }
  
         .toast { position: fixed; bottom: 30px; right: 30px; background: #10b981; color: white; padding: 12px 20px; border-radius: 10px; z-index: 1100; animation: slideIn 0.3s ease; }
         .toast.error { background: #ef4444; }
@@ -193,17 +225,17 @@
         </div>
     </div>
  
-    <div class="info-atualizacao">
-        <span id="ultimaAtualizacao">🕐 Última atualização: carregando...</span>
-    </div>
+    <div class="info-atualizacao"><span id="ultimaAtualizacao">🕐 Última atualização: carregando...</span></div>
  
     <div class="abas-nav">
         <button class="aba-nav-btn ativa" data-aba="dashboard">📈 DASHBOARD</button>
         <button class="aba-nav-btn" data-aba="comentarios">💬 COMENTÁRIOS</button>
+        <button class="aba-nav-btn" data-aba="contatos">📬 CONTATOS</button>
         <button class="aba-nav-btn" data-aba="uniforme">👕 UNIFORMES</button>
         <button class="aba-nav-btn" data-aba="aniversarios">🎂 ANIVERSÁRIOS</button>
     </div>
  
+    <!-- ABA DASHBOARD -->
     <div id="abaDashboard" class="aba-conteudo ativa">
         <div class="cards-container">
             <div class="card-analise"><div class="icone">👥</div><div class="valor" id="totalAlunos">0</div><div class="label">Total de Alunos</div><div class="detalhe" id="novosAlunosMes">+0 este mês</div></div>
@@ -216,7 +248,6 @@
             <div class="card-analise"><div class="icone">💊</div><div class="valor" id="totalRemedio">0</div><div class="label">Remédio Controlado</div><div class="detalhe" id="percentRemedio">0%</div><div class="detalhe" id="numerosRemedio" style="font-size:0.65rem;">0 alunos</div></div>
             <div class="card-analise"><div class="icone">📢</div><div class="valor" id="totalOrigem">0</div><div class="label">Como conheceu</div><div class="detalhe" id="principalOrigem">-</div></div>
         </div>
- 
         <div class="filtros-container">
             <div class="filtros-grid">
                 <div class="filtro-group"><label>🔍 NOME</label><input type="text" id="filtroNome" placeholder="Nome do aluno..."></div>
@@ -229,7 +260,6 @@
             </div>
             <div class="filtros-acoes"><button class="btn-limpar-filtros" onclick="limparFiltros()">🗑️ LIMPAR FILTROS</button></div>
         </div>
- 
         <div class="graficos-container">
             <div class="grafico-card"><h3>⚽ Alunos por Turma</h3><canvas id="graficoTurmas"></canvas></div>
             <div class="grafico-card"><h3>🥧 Distribuição por Turma (%)</h3><canvas id="graficoPizza"></canvas></div>
@@ -241,7 +271,6 @@
             <div class="grafico-card"><h3>📢 Como conheceu a Escolinha (%)</h3><canvas id="graficoOrigem"></canvas></div>
             <div class="grafico-card full-width"><h3>📊 Alunos por Faixa Etária (Sub)</h3><canvas id="graficoSub"></canvas></div>
         </div>
- 
         <div class="veteranos-section">
             <h2>🏅 ALUNOS VETERANOS <span style="font-size:0.8rem;">(mais tempo de casa)</span></h2>
             <div class="ranking-veteranos" id="rankingVeteranos"><div>Carregando veteranos...</div></div>
@@ -253,6 +282,7 @@
         </div>
     </div>
  
+    <!-- ABA COMENTÁRIOS -->
     <div id="abaComentarios" class="aba-conteudo">
         <div class="card" style="background:white;border-radius:20px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.05);">
             <h2 style="margin-bottom:20px;">💬 COMENTÁRIOS E AVALIAÇÕES</h2>
@@ -262,6 +292,39 @@
         </div>
     </div>
  
+    <!-- ABA CONTATOS -->
+    <div id="abaContatos" class="aba-conteudo">
+        <div style="background:white;border-radius:20px;padding:25px;box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+            <div class="contatos-header">
+                <h2>📬 MENSAGENS RECEBIDAS</h2>
+                <div class="contatos-filtros">
+                    <select id="filtroContatoAssunto" onchange="filtrarContatos()">
+                        <option value="">Todos os assuntos</option>
+                        <option value="Sugestão">💡 Sugestão</option>
+                        <option value="Elogio">❤️ Elogio</option>
+                        <option value="Reclamação">⚠️ Reclamação</option>
+                        <option value="Dúvida">❓ Dúvida</option>
+                        <option value="Outro">📋 Outro</option>
+                    </select>
+                    <input type="text" id="filtroContatoNome" placeholder="Buscar por nome..." oninput="filtrarContatos()" style="width:180px;">
+                    <button onclick="carregarContatos()" style="background:#0047AB;color:white;border:none;padding:8px 16px;border-radius:40px;cursor:pointer;font-size:0.8rem;font-weight:700;">🔄 Atualizar</button>
+                </div>
+            </div>
+ 
+            <div class="contatos-stats" id="contatosStats">
+                <div class="contato-stat"><div class="num" id="statTotal">0</div><div class="lbl">Total</div></div>
+                <div class="contato-stat"><div class="num" id="statSugestao">0</div><div class="lbl">Sugestões</div></div>
+                <div class="contato-stat"><div class="num" id="statElogio">0</div><div class="lbl">Elogios</div></div>
+                <div class="contato-stat"><div class="num" id="statReclamacao">0</div><div class="lbl">Reclamações</div></div>
+                <div class="contato-stat"><div class="num" id="statDuvida">0</div><div class="lbl">Dúvidas</div></div>
+            </div>
+ 
+            <div id="contatosCarregando" style="text-align:center;padding:30px;color:#666;">⏳ Carregando mensagens...</div>
+            <div id="listaContatos"></div>
+        </div>
+    </div>
+ 
+    <!-- ABA UNIFORMES -->
     <div id="abaUniforme" class="aba-conteudo">
         <div class="card" style="background:white;border-radius:20px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.05);text-align:center;">
             <h2>👕 UNIFORMES</h2>
@@ -269,6 +332,7 @@
         </div>
     </div>
  
+    <!-- ABA ANIVERSÁRIOS -->
     <div id="abaAniversarios" class="aba-conteudo">
         <div class="card" style="background:white;border-radius:20px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.05);text-align:center;">
             <h2>🎂 ANIVERSARIANTES</h2>
@@ -278,19 +342,21 @@
 </div>
  
 <footer>
-    ESCOLINHA DO JACARÉ - ALVORADA<br>
-    Manaus/AM - Brasil<br>
+    ESCOLINHA DO JACARÉ - ALVORADA<br>Manaus/AM - Brasil<br>
     © 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte
 </footer>
  
 <script>
     const API_URL = 'https://api-escolinha.onrender.com/api';
+    const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz57NEpM8UiCTZfc-3qFbjOrZhrJ9mFjhC5VmuD7Oa-O_4EevWA9SgGCRycwxwmugSnzQ/exec';
+ 
     let usuarioLogado = null;
     let todosAlunos = [];
     let alunosFiltrados = [];
     let graficos = {};
     let ultimaAtualizacao = new Date();
     let statusAtual = false;
+    let todosContatos = [];
  
     const TURMAS = ['Futebol', 'Taekwondo', 'Ginástica', 'Tênis de Mesa', 'Judô'];
     const CATEGORIAS = ['Sub-5', 'Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Acima-17'];
@@ -303,10 +369,7 @@
             const d = await r.json();
             statusAtual = d.online === true;
             atualizarBotaoStatus();
-        } catch(e) {
-            statusAtual = false;
-            atualizarBotaoStatus();
-        }
+        } catch(e) { statusAtual = false; atualizarBotaoStatus(); }
     }
  
     async function alternarStatus() {
@@ -314,46 +377,116 @@
         btn.disabled = true;
         const novoStatus = !statusAtual;
         try {
-            const r = await fetch(`${API_URL}/status`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ online: novoStatus })
-            });
-            if (r.ok) {
-                statusAtual = novoStatus;
-                atualizarBotaoStatus();
-                mostrarToast(novoStatus ? '🟢 Agora você está ONLINE!' : '🔴 Agora você está OFFLINE');
-            }
-        } catch(e) {
-            mostrarToast('❌ Erro ao alterar status', 'error');
-        }
+            const r = await fetch(`${API_URL}/status`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ online: novoStatus }) });
+            if (r.ok) { statusAtual = novoStatus; atualizarBotaoStatus(); mostrarToast(novoStatus ? '🟢 Agora você está ONLINE!' : '🔴 Agora você está OFFLINE'); }
+        } catch(e) { mostrarToast('❌ Erro ao alterar status', 'error'); }
         btn.disabled = false;
     }
  
     function atualizarBotaoStatus() {
         const btn = document.getElementById('btnStatus');
         const texto = document.getElementById('textoStatus');
-        if (statusAtual) {
-            btn.className = 'btn-status online';
-            texto.innerText = 'ONLINE';
-        } else {
-            btn.className = 'btn-status offline';
-            texto.innerText = 'OFFLINE';
-        }
+        if (statusAtual) { btn.className = 'btn-status online'; texto.innerText = 'ONLINE'; }
+        else { btn.className = 'btn-status offline'; texto.innerText = 'OFFLINE'; }
     }
  
     // ========== ABAS ==========
     function alternarAba(abaId) {
         document.querySelectorAll('.aba-nav-btn').forEach(btn => btn.classList.remove('ativa'));
-        document.querySelector(`.aba-nav-btn[data-aba="${abaId}"]`).classList.add('ativa');
+        document.querySelector(`.aba-nav-btn[data-aba="${abaId}"]`)?.classList.add('ativa');
         document.querySelectorAll('.aba-conteudo').forEach(c => c.classList.remove('ativa'));
-        document.getElementById(`aba${abaId.charAt(0).toUpperCase() + abaId.slice(1)}`).classList.add('ativa');
+        document.getElementById(`aba${abaId.charAt(0).toUpperCase() + abaId.slice(1)}`)?.classList.add('ativa');
         if (abaId === 'comentarios') carregarComentarios();
+        if (abaId === 'contatos') carregarContatos();
     }
  
-    document.querySelectorAll('.aba-nav-btn').forEach(btn => {
+    document.querySelectorAll('.aba-nav-btn[data-aba]').forEach(btn => {
         btn.addEventListener('click', () => alternarAba(btn.dataset.aba));
     });
+ 
+    // ========== CONTATOS (GOOGLE SHEETS) ==========
+    async function carregarContatos() {
+        document.getElementById('contatosCarregando').style.display = 'block';
+        document.getElementById('listaContatos').innerHTML = '';
+        try {
+            const r = await fetch(`${SHEETS_URL}?action=read`);
+            const texto = await r.text();
+            let dados;
+            try { dados = JSON.parse(texto); } catch(e) { dados = []; }
+ 
+            if (Array.isArray(dados) && dados.length > 0) {
+                todosContatos = dados;
+            } else {
+                // Tenta pegar via URL simples
+                todosContatos = await buscarContatosSheets();
+            }
+            renderizarContatos(todosContatos);
+        } catch(e) {
+            todosContatos = await buscarContatosSheets();
+            renderizarContatos(todosContatos);
+        }
+        document.getElementById('contatosCarregando').style.display = 'none';
+    }
+ 
+    async function buscarContatosSheets() {
+        try {
+            const r = await fetch(SHEETS_URL);
+            const texto = await r.text();
+            const dados = JSON.parse(texto);
+            return Array.isArray(dados) ? dados : [];
+        } catch(e) {
+            return [];
+        }
+    }
+ 
+    function renderizarContatos(lista) {
+        const assuntoFiltro = document.getElementById('filtroContatoAssunto').value;
+        const nomeFiltro = document.getElementById('filtroContatoNome').value.toLowerCase();
+ 
+        const filtrados = lista.filter(c => {
+            if (assuntoFiltro && c.assunto !== assuntoFiltro) return false;
+            if (nomeFiltro && !(c.nome || '').toLowerCase().includes(nomeFiltro)) return false;
+            return true;
+        });
+ 
+        // Stats
+        document.getElementById('statTotal').innerText = lista.length;
+        document.getElementById('statSugestao').innerText = lista.filter(c => c.assunto === 'Sugestão').length;
+        document.getElementById('statElogio').innerText = lista.filter(c => c.assunto === 'Elogio').length;
+        document.getElementById('statReclamacao').innerText = lista.filter(c => c.assunto === 'Reclamação').length;
+        document.getElementById('statDuvida').innerText = lista.filter(c => c.assunto === 'Dúvida').length;
+ 
+        const container = document.getElementById('listaContatos');
+        if (filtrados.length === 0) {
+            container.innerHTML = '<div class="contatos-vazio">📭 Nenhuma mensagem encontrada</div>';
+            return;
+        }
+ 
+        const assuntoClass = { 'Sugestão': 'assunto-sugestao', 'Elogio': 'assunto-elogio', 'Reclamação': 'assunto-reclamacao', 'Dúvida': 'assunto-duvida', 'Outro': 'assunto-outro' };
+        const assuntoEmoji = { 'Sugestão': '💡', 'Elogio': '❤️', 'Reclamação': '⚠️', 'Dúvida': '❓', 'Outro': '📋' };
+ 
+        container.innerHTML = [...filtrados].reverse().map(c => {
+            const cls = assuntoClass[c.assunto] || 'assunto-outro';
+            const emoji = assuntoEmoji[c.assunto] || '📋';
+            const whats = (c.whatsapp || '').replace(/\D/g, '');
+            const btnWhats = whats ? `<a class="btn-responder" href="https://wa.me/55${whats}?text=Olá ${encodeURIComponent(c.nome || '')}! Recebemos sua mensagem da Escolinha do Jacaré." target="_blank">💬 Responder no WhatsApp</a>` : '<span style="font-size:0.75rem;color:#999;">Sem WhatsApp</span>';
+            return `
+                <div class="contato-msg-card">
+                    <div class="contato-msg-header">
+                        <div class="contato-msg-nome">👤 ${c.nome || 'Anônimo'}</div>
+                        <div class="contato-msg-data">${c.data || ''}</div>
+                    </div>
+                    <span class="contato-msg-assunto ${cls}">${emoji} ${c.assunto || 'Outro'}</span>
+                    <div class="contato-msg-texto">"${c.mensagem || ''}"</div>
+                    <div class="contato-msg-footer">
+                        <span class="contato-msg-whats">${c.whatsapp ? '📱 ' + c.whatsapp : ''}</span>
+                        ${btnWhats}
+                    </div>
+                </div>`;
+        }).join('');
+    }
+ 
+    function filtrarContatos() { renderizarContatos(todosContatos); }
  
     // ========== COMENTÁRIOS ==========
     async function carregarComentarios() {
@@ -365,90 +498,39 @@
             const dados = await r.json();
             if (Array.isArray(dados)) {
                 const comentarios = dados.filter(i => i.observacao && i.observacao.trim().length > 0);
-                if (!comentarios.length) {
-                    container.innerHTML = '<div style="text-align:center;padding:40px;">📭 Nenhum comentário encontrado</div>';
-                } else {
-                    container.innerHTML = comentarios.map(item => {
-                        let estrelas = item.estrelas > 0 ? '⭐'.repeat(item.estrelas) + '☆'.repeat(5 - item.estrelas) : '';
-                        return `<div style="background:#f8fafc;border-radius:16px;padding:15px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;margin-bottom:8px;"><span style="font-weight:600;">👤 ${item.nome_aluno||'Anônimo'}</span><span style="color:#ff9800;">${estrelas}</span><span style="font-size:0.7rem;color:#666;">${formatarData(item.data_envio)}</span></div><div style="margin-top:8px;">"${item.observacao}"</div></div>`;
-                    }).join('');
-                }
+                if (!comentarios.length) { container.innerHTML = '<div style="text-align:center;padding:40px;">📭 Nenhum comentário encontrado</div>'; }
+                else { container.innerHTML = comentarios.map(item => { let estrelas = item.estrelas > 0 ? '⭐'.repeat(item.estrelas) + '☆'.repeat(5-item.estrelas) : ''; return `<div style="background:#f8fafc;border-radius:16px;padding:15px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;margin-bottom:8px;"><span style="font-weight:600;">👤 ${item.nome_aluno||'Anônimo'}</span><span style="color:#ff9800;">${estrelas}</span><span style="font-size:0.7rem;color:#666;">${formatarData(item.data_envio)}</span></div><div style="margin-top:8px;">"${item.observacao}"</div></div>`; }).join(''); }
                 loading.style.display = 'none'; container.style.display = 'block';
             }
-        } catch(e) {
-            container.innerHTML = '<div style="text-align:center;padding:40px;">❌ Erro ao carregar comentários</div>';
-            loading.style.display = 'none'; container.style.display = 'block';
-        }
+        } catch(e) { container.innerHTML = '<div style="text-align:center;padding:40px;">❌ Erro ao carregar comentários</div>'; loading.style.display = 'none'; container.style.display = 'block'; }
     }
  
     function exportarComentarios() {
         const comentarios = document.querySelectorAll('#listaComentarios > div');
         if (!comentarios.length) { mostrarToast('Nenhum comentário para exportar', 'error'); return; }
         let csv = 'Nome,Comentário,Data,Estrelas\n';
-        comentarios.forEach(div => {
-            const nome = div.querySelector('span:first-child')?.innerText?.replace('👤 ', '') || '';
-            const estrelas = (div.querySelector('span:nth-child(2)')?.innerText?.match(/⭐/g)||[]).length;
-            const data = div.querySelector('span:last-child')?.innerText || '';
-            const texto = div.querySelector('div:last-child')?.innerText?.replace(/"/g,'""') || '';
-            csv += `"${nome}","${texto}","${data}","${estrelas}"\n`;
-        });
-        const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `comentarios_${new Date().toISOString().slice(0,10)}.csv`;
-        link.click(); URL.revokeObjectURL(link.href);
+        comentarios.forEach(div => { const nome = div.querySelector('span:first-child')?.innerText?.replace('👤 ','') || ''; const estrelas = (div.querySelector('span:nth-child(2)')?.innerText?.match(/⭐/g)||[]).length; const data = div.querySelector('span:last-child')?.innerText || ''; const texto = div.querySelector('div:last-child')?.innerText?.replace(/"/g,'""') || ''; csv += `"${nome}","${texto}","${data}","${estrelas}"\n`; });
+        const blob = new Blob(["\uFEFF" + csv], { type:'text/csv;charset=utf-8;' });
+        const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = `comentarios_${new Date().toISOString().slice(0,10)}.csv`; link.click(); URL.revokeObjectURL(link.href);
         mostrarToast('📥 Comentários exportados!');
     }
  
     function mostrarToast(mensagem, tipo = 'success') {
-        const toast = document.createElement('div');
-        toast.className = `toast ${tipo}`; toast.innerHTML = mensagem;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 3500);
+        const t = document.createElement('div'); t.className = `toast ${tipo}`; t.innerHTML = mensagem; document.body.appendChild(t);
+        setTimeout(() => t.remove(), 3500);
     }
  
     function formatarData(dataStr) {
         if (!dataStr) return '-';
-        try { const d = new Date(dataStr); return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`; }
-        catch { return dataStr; }
+        try { const d = new Date(dataStr); return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`; } catch { return dataStr; }
     }
  
-    function capitalizar(str) {
-        if (!str || str === 'Não informada' || str === 'Não informado') return 'Não informada';
-        return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-    }
- 
-    function atualizarTimestamp() {
-        const diff = Math.floor((new Date() - ultimaAtualizacao) / 1000);
-        document.getElementById('ultimaAtualizacao').innerHTML = `🕐 Última atualização: ${diff < 60 ? `há ${diff} segundos` : `há ${Math.floor(diff/60)} minutos`}`;
-    }
- 
-    function calcularTempoCasa(dataMatricula) {
-        if (!dataMatricula) return 0;
-        const data = new Date(dataMatricula);
-        const hoje = new Date();
-        return (hoje.getFullYear() - data.getFullYear()) * 12 + (hoje.getMonth() - data.getMonth());
-    }
- 
-    function formatarTempoCasa(meses) {
-        if (meses === 0) return 'Menos de 1 mês';
-        if (meses < 12) return `${meses} ${meses === 1 ? 'mês' : 'meses'}`;
-        const anos = Math.floor(meses / 12);
-        const m = meses % 12;
-        if (m === 0) return `${anos} ${anos === 1 ? 'ano' : 'anos'}`;
-        return `${anos} ${anos === 1 ? 'ano' : 'anos'} e ${m} ${m === 1 ? 'mês' : 'meses'}`;
-    }
- 
+    function capitalizar(str) { if (!str || str === 'Não informada' || str === 'Não informado') return 'Não informada'; return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase(); }
+    function atualizarTimestamp() { const diff = Math.floor((new Date() - ultimaAtualizacao) / 1000); document.getElementById('ultimaAtualizacao').innerHTML = `🕐 Última atualização: ${diff < 60 ? `há ${diff} segundos` : `há ${Math.floor(diff/60)} minutos`}`; }
+    function calcularTempoCasa(dataMatricula) { if (!dataMatricula) return 0; const data = new Date(dataMatricula); const hoje = new Date(); return (hoje.getFullYear() - data.getFullYear()) * 12 + (hoje.getMonth() - data.getMonth()); }
+    function formatarTempoCasa(meses) { if (meses === 0) return 'Menos de 1 mês'; if (meses < 12) return `${meses} ${meses===1?'mês':'meses'}`; const anos = Math.floor(meses/12); const m = meses%12; if (m===0) return `${anos} ${anos===1?'ano':'anos'}`; return `${anos} ${anos===1?'ano':'anos'} e ${m} ${m===1?'mês':'meses'}`; }
     function getMedalhaClass(i) { return ['medalha-ouro','medalha-prata','medalha-bronze','medalha-geral'][i] || 'medalha-geral'; }
- 
-    function getTempoBadge(meses) {
-        if (meses >= 60) return { class: 'tempo-5anos', texto: '🏆 5+ anos' };
-        if (meses >= 48) return { class: 'tempo-4anos', texto: '⭐ 4 anos' };
-        if (meses >= 36) return { class: 'tempo-3anos', texto: '✨ 3 anos' };
-        if (meses >= 24) return { class: 'tempo-2anos', texto: '🌟 2 anos' };
-        if (meses >= 12) return { class: 'tempo-1ano', texto: '🎉 1 ano' };
-        return { class: '', texto: '🆕 Novato' };
-    }
+    function getTempoBadge(meses) { if (meses>=60) return {class:'tempo-5anos',texto:'🏆 5+ anos'}; if (meses>=48) return {class:'tempo-4anos',texto:'⭐ 4 anos'}; if (meses>=36) return {class:'tempo-3anos',texto:'✨ 3 anos'}; if (meses>=24) return {class:'tempo-2anos',texto:'🌟 2 anos'}; if (meses>=12) return {class:'tempo-1ano',texto:'🎉 1 ano'}; return {class:'',texto:'🆕 Novato'}; }
  
     async function carregarDadosDaPlanilha(tentativa = 1) {
         if (tentativa === 1) mostrarToast('⏳ Conectando ao servidor...', 'info');
@@ -459,26 +541,13 @@
             clearTimeout(timeout);
             const dados = await r.json();
             if (Array.isArray(dados)) {
-                todosAlunos = dados.map(item => ({
-                    nome: item.nome_aluno || 'Não informado',
-                    turma: capitalizar(item.turma),
-                    categoria: item.categoria || 'Não informada',
-                    bairro: item.bairro ? capitalizar(item.bairro) : 'Não informado',
-                    responsavel: item.responsavel || 'Não informado',
-                    telefone: item.telefone || '',
-                    idade: parseInt(item.idade) || 0,
-                    dataMatricula: item.data_envio || new Date().toISOString(),
-                    deficiencia: item.deficiencia || 'Nenhuma',
-                    remedio: item.remedio || 'Não',
-                    origem: item.origem || '',
-                    status: item.status || 'pendente'
-                }));
+                todosAlunos = dados.map(item => ({ nome: item.nome_aluno||'Não informado', turma: capitalizar(item.turma), categoria: item.categoria||'Não informada', bairro: item.bairro?capitalizar(item.bairro):'Não informado', responsavel: item.responsavel||'Não informado', telefone: item.telefone||'', idade: parseInt(item.idade)||0, dataMatricula: item.data_envio||new Date().toISOString(), deficiencia: item.deficiencia||'Nenhuma', remedio: item.remedio||'Não', origem: item.origem||'', status: item.status||'pendente' }));
                 aplicarFiltros(); atualizarCards(); atualizarCardsDeficienciaRemedioOrigem(); atualizarVeteranos();
                 ultimaAtualizacao = new Date(); atualizarTimestamp();
                 mostrarToast(`✅ ${dados.length} alunos carregados`);
             }
         } catch(e) {
-            if (tentativa < 4) { mostrarToast(`⏳ Tentativa ${tentativa}/3...`, 'info'); setTimeout(() => carregarDadosDaPlanilha(tentativa + 1), tentativa * 5000); }
+            if (tentativa < 4) { mostrarToast(`⏳ Tentativa ${tentativa}/3...`, 'info'); setTimeout(() => carregarDadosDaPlanilha(tentativa+1), tentativa*5000); }
             else mostrarToast('❌ Não foi possível conectar. Clique em ATUALIZAR.', 'error');
         }
     }
@@ -486,34 +555,30 @@
     function atualizarCards() {
         const total = todosAlunos.length;
         document.getElementById('totalAlunos').innerText = total;
-        document.getElementById('mediaIdade').innerText = total ? (todosAlunos.reduce((s,a) => s+a.idade, 0) / total).toFixed(1) : 0;
-        const turmasCount = {}; todosAlunos.forEach(a => turmasCount[a.turma] = (turmasCount[a.turma]||0)+1);
-        let turmaMais = { nome: '-', count: 0 };
-        for (const [n,c] of Object.entries(turmasCount)) if (c > turmaMais.count) turmaMais = { nome: n, count: c };
+        document.getElementById('mediaIdade').innerText = total ? (todosAlunos.reduce((s,a) => s+a.idade,0)/total).toFixed(1) : 0;
+        const turmasCount = {}; todosAlunos.forEach(a => turmasCount[a.turma]=(turmasCount[a.turma]||0)+1);
+        let turmaMais = {nome:'-',count:0}; for (const [n,c] of Object.entries(turmasCount)) if (c>turmaMais.count) turmaMais={nome:n,count:c};
         document.getElementById('turmaMaisAlunos').innerText = turmaMais.nome;
         document.getElementById('turmaPercentual').innerHTML = total ? `${((turmaMais.count/total)*100).toFixed(1)}% do total` : '0%';
-        const bairrosCount = {}; todosAlunos.forEach(a => { if(a.bairro !== 'Não informado') bairrosCount[a.bairro] = (bairrosCount[a.bairro]||0)+1; });
-        let bairroMais = { nome: '-', count: 0 };
-        for (const [n,c] of Object.entries(bairrosCount)) if (c > bairroMais.count) bairroMais = { nome: n, count: c };
+        const bairrosCount = {}; todosAlunos.forEach(a => { if(a.bairro!=='Não informado') bairrosCount[a.bairro]=(bairrosCount[a.bairro]||0)+1; });
+        let bairroMais = {nome:'-',count:0}; for (const [n,c] of Object.entries(bairrosCount)) if (c>bairroMais.count) bairroMais={nome:n,count:c};
         document.getElementById('bairroMaisAlunos').innerText = bairroMais.nome;
         document.getElementById('bairroPercentual').innerHTML = total ? `${((bairroMais.count/total)*100).toFixed(1)}% do total` : '0%';
         const mesAtual = new Date().getMonth();
-        document.getElementById('novosAlunosMes').innerHTML = `+${todosAlunos.filter(a => a.dataMatricula && new Date(a.dataMatricula).getMonth() === mesAtual).length} este mês`;
+        document.getElementById('novosAlunosMes').innerHTML = `+${todosAlunos.filter(a => a.dataMatricula && new Date(a.dataMatricula).getMonth()===mesAtual).length} este mês`;
     }
  
     function atualizarCardsDeficienciaRemedioOrigem() {
         const total = todosAlunos.length;
-        document.getElementById('totalDeficiencia').innerText = todosAlunos.filter(a => a.deficiencia && a.deficiencia !== 'Nenhuma').length;
-        const remedioCount = todosAlunos.filter(a => a.remedio && a.remedio !== 'Não').length;
+        document.getElementById('totalDeficiencia').innerText = todosAlunos.filter(a => a.deficiencia && a.deficiencia!=='Nenhuma').length;
+        const remedioCount = todosAlunos.filter(a => a.remedio && a.remedio!=='Não').length;
         document.getElementById('totalRemedio').innerText = remedioCount;
         document.getElementById('percentRemedio').innerHTML = total ? `${((remedioCount/total)*100).toFixed(1)}%` : '0%';
         document.getElementById('numerosRemedio').innerHTML = `${remedioCount} de ${total} alunos`;
-        const origemCount = {};
-        todosAlunos.forEach(a => { if(a.origem?.trim()) { let o = a.origem.trim(); o = o.charAt(0).toUpperCase()+o.slice(1).toLowerCase(); origemCount[o]=(origemCount[o]||0)+1; } });
-        let origemMais = { nome: '-', count: 0 };
-        for (const [n,c] of Object.entries(origemCount)) if (c > origemMais.count) origemMais = { nome: n, count: c };
+        const origemCount = {}; todosAlunos.forEach(a => { if(a.origem?.trim()) { let o=a.origem.trim(); o=o.charAt(0).toUpperCase()+o.slice(1).toLowerCase(); origemCount[o]=(origemCount[o]||0)+1; } });
+        let origemMais = {nome:'-',count:0}; for (const [n,c] of Object.entries(origemCount)) if (c>origemMais.count) origemMais={nome:n,count:c};
         document.getElementById('totalOrigem').innerText = Object.keys(origemCount).length;
-        document.getElementById('principalOrigem').innerHTML = origemMais.nome !== '-' ? `${origemMais.nome} (${origemMais.count})` : '-';
+        document.getElementById('principalOrigem').innerHTML = origemMais.nome!=='-' ? `${origemMais.nome} (${origemMais.count})` : '-';
     }
  
     function aplicarFiltros() {
@@ -528,81 +593,63 @@
             if (nome && !a.nome.toLowerCase().includes(nome)) return false;
             if (responsavel && !a.responsavel.toLowerCase().includes(responsavel)) return false;
             if (telefone && !a.telefone.includes(telefone)) return false;
-            if (turma && a.turma !== turma) return false;
-            if (categoria && a.categoria !== categoria) return false;
+            if (turma && a.turma!==turma) return false;
+            if (categoria && a.categoria!==categoria) return false;
             if (bairro && !a.bairro.toLowerCase().includes(bairro)) return false;
-            if (status && a.status !== status) return false;
+            if (status && a.status!==status) return false;
             return true;
         });
         atualizarTodosGraficos(); atualizarVeteranos();
     }
  
     function limparFiltros() {
-        ['filtroNome','filtroResponsavel','filtroTelefone','filtroBairro'].forEach(id => document.getElementById(id).value = '');
-        ['filtroTurma','filtroCategoria','filtroStatus'].forEach(id => document.getElementById(id).value = '');
+        ['filtroNome','filtroResponsavel','filtroTelefone','filtroBairro'].forEach(id => document.getElementById(id).value='');
+        ['filtroTurma','filtroCategoria','filtroStatus'].forEach(id => document.getElementById(id).value='');
         aplicarFiltros();
     }
  
     function atualizarTodosGraficos() {
         const dados = alunosFiltrados;
-        const turmasCount = TURMAS.map(t => dados.filter(a => a.turma === t).length);
+        const turmasCount = TURMAS.map(t => dados.filter(a => a.turma===t).length);
         if (graficos.turmas) graficos.turmas.destroy();
-        graficos.turmas = new Chart(document.getElementById('graficoTurmas'), { type:'bar', data:{ labels: TURMAS.map(t => t==='Taekwondo'?'Taekw.':t), datasets:[{ label:'Alunos', data:turmasCount, backgroundColor:'#0047AB', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } } } });
- 
+        graficos.turmas = new Chart(document.getElementById('graficoTurmas'), { type:'bar', data:{ labels:TURMAS.map(t => t==='Taekwondo'?'Taekw.':t), datasets:[{ label:'Alunos', data:turmasCount, backgroundColor:'#0047AB', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } } } });
         const totalTurmas = turmasCount.reduce((a,b) => a+b, 0);
         if (graficos.pizza) graficos.pizza.destroy();
         graficos.pizza = new Chart(document.getElementById('graficoPizza'), { type:'pie', data:{ labels:TURMAS, datasets:[{ data:turmasCount, backgroundColor:['#0047AB','#00aaff','#ff9800','#25d366','#ff69b4'], borderWidth:2, borderColor:'white' }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ tooltip:{ callbacks:{ label:(ctx) => `${ctx.label}: ${ctx.raw} alunos (${totalTurmas>0?((ctx.raw/totalTurmas)*100).toFixed(1):0}%)` } }, legend:{ position:'bottom', labels:{ font:{ size:11 } } } } } });
- 
-        const categoriasCount = CATEGORIAS.map(cat => dados.filter(a => a.categoria === cat).length);
+        const categoriasCount = CATEGORIAS.map(cat => dados.filter(a => a.categoria===cat).length);
         if (graficos.categoria) graficos.categoria.destroy();
         graficos.categoria = new Chart(document.getElementById('graficoCategoria'), { type:'bar', data:{ labels:CATEGORIAS, datasets:[{ label:'Alunos', data:categoriasCount, backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } } } });
- 
-        const bairrosMap = new Map(); dados.forEach(a => { if(a.bairro && a.bairro !== 'Não informado') bairrosMap.set(a.bairro, (bairrosMap.get(a.bairro)||0)+1); });
+        const bairrosMap = new Map(); dados.forEach(a => { if(a.bairro && a.bairro!=='Não informado') bairrosMap.set(a.bairro, (bairrosMap.get(a.bairro)||0)+1); });
         const bairros = Array.from(bairrosMap.entries()).sort((a,b) => b[1]-a[1]).slice(0,8);
         if (graficos.bairro) graficos.bairro.destroy();
         graficos.bairro = new Chart(document.getElementById('graficoBairro'), { type:'bar', data:{ labels:bairros.map(b=>b[0]), datasets:[{ label:'Alunos', data:bairros.map(b=>b[1]), backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } } } });
- 
         const matriculasPorMes = new Array(12).fill(0); dados.forEach(a => { if(a.dataMatricula) matriculasPorMes[new Date(a.dataMatricula).getMonth()]++; });
         if (graficos.evolucao) graficos.evolucao.destroy();
         graficos.evolucao = new Chart(document.getElementById('graficoEvolucao'), { type:'line', data:{ labels:['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'], datasets:[{ label:'Matrículas', data:matriculasPorMes, borderColor:'#0047AB', backgroundColor:'rgba(0,71,171,0.1)', fill:true, tension:0.3 }] }, options:{ responsive:true, maintainAspectRatio:true } });
- 
-        const deficienciaMap = new Map(); dados.forEach(a => { if(a.deficiencia && a.deficiencia !== 'Nenhuma') { a.deficiencia.split(', ').forEach(t => { const tl = t.replace('Outra: ','').trim(); if(tl) deficienciaMap.set(tl, (deficienciaMap.get(tl)||0)+1); }); } });
+        const deficienciaMap = new Map(); dados.forEach(a => { if(a.deficiencia && a.deficiencia!=='Nenhuma') { a.deficiencia.split(', ').forEach(t => { const tl=t.replace('Outra: ','').trim(); if(tl) deficienciaMap.set(tl,(deficienciaMap.get(tl)||0)+1); }); } });
         if (graficos.deficiencia) graficos.deficiencia.destroy();
         graficos.deficiencia = new Chart(document.getElementById('graficoDeficiencia'), { type:'bar', data:{ labels:deficienciaMap.size?Array.from(deficienciaMap.keys()):['Nenhuma'], datasets:[{ label:'Alunos', data:deficienciaMap.size?Array.from(deficienciaMap.values()):[dados.length], backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } } } });
- 
-        const remedioSim = dados.filter(a => a.remedio && a.remedio !== 'Não').length;
+        const remedioSim = dados.filter(a => a.remedio && a.remedio!=='Não').length;
         if (graficos.remedio) graficos.remedio.destroy();
-        graficos.remedio = new Chart(document.getElementById('graficoRemedio'), { type:'pie', data:{ labels:['Sim','Não'], datasets:[{ data:[remedioSim, dados.length-remedioSim], backgroundColor:['#f44336','#4caf50'] }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ position:'bottom' } } } });
- 
-        const origemMap = new Map(); dados.forEach(a => { if(a.origem?.trim()) { let o = a.origem.trim(); o = o.charAt(0).toUpperCase()+o.slice(1).toLowerCase(); origemMap.set(o, (origemMap.get(o)||0)+1); } });
-        const origemLabels = Array.from(origemMap.keys()); const origemData = Array.from(origemMap.values());
+        graficos.remedio = new Chart(document.getElementById('graficoRemedio'), { type:'pie', data:{ labels:['Sim','Não'], datasets:[{ data:[remedioSim,dados.length-remedioSim], backgroundColor:['#f44336','#4caf50'] }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ position:'bottom' } } } });
+        const origemMap = new Map(); dados.forEach(a => { if(a.origem?.trim()) { let o=a.origem.trim(); o=o.charAt(0).toUpperCase()+o.slice(1).toLowerCase(); origemMap.set(o,(origemMap.get(o)||0)+1); } });
         if (graficos.origem) graficos.origem.destroy();
-        graficos.origem = new Chart(document.getElementById('graficoOrigem'), { type:'bar', data:{ labels:origemLabels, datasets:[{ label:'Alunos (%)', data:origemData.map(v => dados.length>0?((v/dados.length)*100).toFixed(1):0), backgroundColor:'#25d366', borderRadius:8 }] }, options:{ responsive:true, maintainAspectRatio:true, scales:{ y:{ title:{ display:true, text:'Percentual (%)' }, beginAtZero:true, max:100 } }, plugins:{ legend:{ display:false } } } });
- 
-        const subCount = [0,0,0,0,0,0,0,0]; dados.forEach(a => { const idade = a.idade; if(!idade) return; if(idade<=7) subCount[0]++; else if(idade<=9) subCount[1]++; else if(idade<=11) subCount[2]++; else if(idade<=13) subCount[3]++; else if(idade<=15) subCount[4]++; else if(idade<=17) subCount[5]++; else if(idade<=20) subCount[6]++; else subCount[7]++; });
+        graficos.origem = new Chart(document.getElementById('graficoOrigem'), { type:'bar', data:{ labels:Array.from(origemMap.keys()), datasets:[{ label:'Alunos (%)', data:Array.from(origemMap.values()).map(v => dados.length>0?((v/dados.length)*100).toFixed(1):0), backgroundColor:'#25d366', borderRadius:8 }] }, options:{ responsive:true, maintainAspectRatio:true, scales:{ y:{ title:{ display:true, text:'Percentual (%)' }, beginAtZero:true, max:100 } }, plugins:{ legend:{ display:false } } } });
+        const subCount = [0,0,0,0,0,0,0,0]; dados.forEach(a => { const idade=a.idade; if(!idade) return; if(idade<=7) subCount[0]++; else if(idade<=9) subCount[1]++; else if(idade<=11) subCount[2]++; else if(idade<=13) subCount[3]++; else if(idade<=15) subCount[4]++; else if(idade<=17) subCount[5]++; else if(idade<=20) subCount[6]++; else subCount[7]++; });
         if (graficos.sub) graficos.sub.destroy();
         graficos.sub = new Chart(document.getElementById('graficoSub'), { type:'bar', data:{ labels:SUBS, datasets:[{ label:'Alunos', data:subCount, backgroundColor:'#00aaff', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } } } });
     }
  
     function atualizarVeteranos() {
-        const alunosComTempo = todosAlunos.map(a => ({ ...a, tempoMeses: calcularTempoCasa(a.dataMatricula) })).filter(a => a.tempoMeses > 0).sort((a,b) => b.tempoMeses-a.tempoMeses);
-        const top = alunosComTempo.slice(0, 5);
+        const alunosComTempo = todosAlunos.map(a => ({ ...a, tempoMeses: calcularTempoCasa(a.dataMatricula) })).filter(a => a.tempoMeses>0).sort((a,b) => b.tempoMeses-a.tempoMeses);
+        const top = alunosComTempo.slice(0,5);
         const container = document.getElementById('rankingVeteranos');
         if (!top.length) { container.innerHTML = '<div>🏅 Nenhum veterano ainda</div>'; }
-        else {
-            container.innerHTML = top.map((a,i) => {
-                const medalha = getMedalhaClass(i);
-                const badge = getTempoBadge(a.tempoMeses);
-                return `<div class="veterano-card"><div class="veterano-medalha ${medalha}">${['🥇','🥈','🥉','🏅','🏅'][i]}</div><div class="veterano-info"><div class="veterano-nome"><strong>${a.nome}</strong><span class="tempo-badge ${badge.class}">${badge.texto}</span></div><div class="veterano-detalhes">${a.turma} • ${a.categoria} • ${formatarTempoCasa(a.tempoMeses)} de casa</div></div></div>`;
-            }).join('');
-        }
-        const veteranos = alunosComTempo.filter(a => a.tempoMeses >= 12);
-        const mediaTempo = veteranos.length ? Math.round(veteranos.reduce((s,a) => s+a.tempoMeses,0) / veteranos.length) : 0;
+        else { container.innerHTML = top.map((a,i) => { const medalha=getMedalhaClass(i); const badge=getTempoBadge(a.tempoMeses); return `<div class="veterano-card"><div class="veterano-medalha ${medalha}">${['🥇','🥈','🥉','🏅','🏅'][i]}</div><div class="veterano-info"><div class="veterano-nome"><strong>${a.nome}</strong><span class="tempo-badge ${badge.class}">${badge.texto}</span></div><div class="veterano-detalhes">${a.turma} • ${a.categoria} • ${formatarTempoCasa(a.tempoMeses)} de casa</div></div></div>`; }).join(''); }
+        const veteranos = alunosComTempo.filter(a => a.tempoMeses>=12);
+        const mediaTempo = veteranos.length ? Math.round(veteranos.reduce((s,a) => s+a.tempoMeses,0)/veteranos.length) : 0;
         const maiorTempo = veteranos.length ? Math.max(...veteranos.map(a => a.tempoMeses)) : 0;
-        document.getElementById('statsVeteranos').innerHTML = `
-            <div class="stat-veterano"><div class="numero">${veteranos.length}</div><div class="label">Veteranos (1+ ano)</div></div>
-            <div class="stat-veterano"><div class="numero">${mediaTempo} ${mediaTempo===1?'mês':'meses'}</div><div class="label">Média de tempo</div></div>
-            <div class="stat-veterano"><div class="numero">${formatarTempoCasa(maiorTempo)}</div><div class="label">Maior tempo</div></div>`;
+        document.getElementById('statsVeteranos').innerHTML = `<div class="stat-veterano"><div class="numero">${veteranos.length}</div><div class="label">Veteranos (1+ ano)</div></div><div class="stat-veterano"><div class="numero">${mediaTempo} ${mediaTempo===1?'mês':'meses'}</div><div class="label">Média de tempo</div></div><div class="stat-veterano"><div class="numero">${formatarTempoCasa(maiorTempo)}</div><div class="label">Maior tempo</div></div>`;
     }
  
     function exportarDados() {
@@ -616,15 +663,12 @@
  
     function exportarComoImagem() {
         const btn = document.querySelector('.btn-exportar-imagem'); btn.innerHTML = '📸 GERANDO...'; btn.disabled = true;
-        html2canvas(document.getElementById('abaDashboard'), { scale:2 }).then(canvas => {
-            const link = document.createElement('a'); link.download = `dashboard_${new Date().toISOString().slice(0,10)}.png`; link.href = canvas.toDataURL(); link.click();
-            mostrarToast('✅ Dashboard salvo como imagem!');
-        }).catch(() => mostrarToast('Erro ao gerar imagem', 'error')).finally(() => { btn.innerHTML = '📸 EXPORTAR IMAGEM'; btn.disabled = false; });
+        html2canvas(document.getElementById('abaDashboard'), { scale:2 }).then(canvas => { const link=document.createElement('a'); link.download=`dashboard_${new Date().toISOString().slice(0,10)}.png`; link.href=canvas.toDataURL(); link.click(); mostrarToast('✅ Dashboard salvo!'); }).catch(() => mostrarToast('Erro ao gerar imagem', 'error')).finally(() => { btn.innerHTML='📸 EXPORTAR IMAGEM'; btn.disabled=false; });
     }
  
     function atualizarDados() {
-        const btn = document.querySelector('.btn-atualizar'); btn.innerHTML = '🔄 ATUALIZANDO...'; btn.disabled = true;
-        carregarDadosDaPlanilha().finally(() => { btn.innerHTML = '🔄 ATUALIZAR'; btn.disabled = false; });
+        const btn = document.querySelector('.btn-atualizar'); btn.innerHTML='🔄 ATUALIZANDO...'; btn.disabled=true;
+        carregarDadosDaPlanilha().finally(() => { btn.innerHTML='🔄 ATUALIZAR'; btn.disabled=false; });
     }
  
     ['filtroNome','filtroResponsavel','filtroTelefone','filtroBairro'].forEach(id => document.getElementById(id).addEventListener('input', aplicarFiltros));
@@ -634,43 +678,33 @@
         const email = document.getElementById('emailLogin').value.trim();
         const senha = document.getElementById('senhaLogin').value;
         const btn = document.querySelector('#telaLogin button');
-        if (!email || !senha) { document.getElementById('erroLogin').innerText = 'Digite e-mail e senha!'; return; }
-        btn.disabled = true; btn.innerHTML = '⏳ VERIFICANDO...';
-        document.getElementById('erroLogin').innerText = '';
+        if (!email || !senha) { document.getElementById('erroLogin').innerText='Digite e-mail e senha!'; return; }
+        btn.disabled=true; btn.innerHTML='⏳ VERIFICANDO...'; document.getElementById('erroLogin').innerText='';
         try {
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 20000);
             const r = await fetch(`${API_URL}/alunos`, { signal: controller.signal });
             clearTimeout(timeout);
             if (r.ok) {
-                usuarioLogado = { email, cargo: 'Diretor' };
-                document.getElementById('telaLogin').style.display = 'none';
-                document.getElementById('painelAnalise').style.display = 'block';
-                document.getElementById('infoUsuario').innerHTML = `👤 ${email.split('@')[0]} | ✅ acesso registrado`;
+                usuarioLogado = { email, cargo:'Diretor' };
+                document.getElementById('telaLogin').style.display='none';
+                document.getElementById('painelAnalise').style.display='block';
+                document.getElementById('infoUsuario').innerHTML=`👤 ${email.split('@')[0]} | ✅ acesso registrado`;
                 carregarDadosDaPlanilha();
                 carregarStatus();
-                setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') carregarDadosDaPlanilha(); }, 60000);
+                setInterval(() => { if (document.getElementById('painelAnalise').style.display==='block') carregarDadosDaPlanilha(); }, 60000);
                 setInterval(atualizarTimestamp, 1000);
-            } else {
-                document.getElementById('erroLogin').innerText = 'Erro ao conectar com o servidor';
-            }
-        } catch(e) {
-            document.getElementById('erroLogin').innerText = 'Servidor demorou para responder. Tente novamente.';
-        } finally { btn.disabled = false; btn.innerHTML = 'ACESSAR'; }
+            } else { document.getElementById('erroLogin').innerText='Erro ao conectar com o servidor'; }
+        } catch(e) { document.getElementById('erroLogin').innerText='Servidor demorou para responder. Tente novamente.'; }
+        finally { btn.disabled=false; btn.innerHTML='ACESSAR'; }
     }
  
     function logout() {
-        // Coloca offline ao sair
-        if (statusAtual) {
-            fetch(`${API_URL}/status`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ online: false }) }).catch(()=>{});
-            statusAtual = false;
-        }
-        document.getElementById('telaLogin').style.display = 'flex';
-        document.getElementById('painelAnalise').style.display = 'none';
-        document.getElementById('emailLogin').value = '';
-        document.getElementById('senhaLogin').value = '';
-        document.getElementById('erroLogin').innerText = '';
-        usuarioLogado = null;
+        if (statusAtual) { fetch(`${API_URL}/status`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({online:false}) }).catch(()=>{}); statusAtual=false; }
+        document.getElementById('telaLogin').style.display='flex';
+        document.getElementById('painelAnalise').style.display='none';
+        document.getElementById('emailLogin').value=''; document.getElementById('senhaLogin').value=''; document.getElementById('erroLogin').innerText='';
+        usuarioLogado=null;
     }
 </script>
 </body>
