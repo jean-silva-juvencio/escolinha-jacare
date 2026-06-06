@@ -2,888 +2,690 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Escolinha do Jacaré | Unidos do Alvorada</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Diretoria | Escolinha do Jacaré</title>
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icones/icon-192.png">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Jacaré">
-    <meta name="theme-color" content="#003399">
-    <meta name="description" content="Escolinha do Jacaré - Unidos do Alvorada. Formando cidadãos através do esporte desde 1998.">
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').then(r => console.log('Service Worker registrado!')).catch(e => {});
+            navigator.serviceWorker.register('sw.js').then(() => console.log('SW registrado!')).catch(() => {});
         }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Open Sans', sans-serif; background: linear-gradient(135deg, #f0f7ff 0%, #e0ecf9 100%); min-height: 100vh; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
-        body.dark-mode { background: linear-gradient(135deg, #0f172a 0%, #1e1a3a 100%); color: #fff; }
-        body.dark-mode .barra-superior { background: rgba(30,41,59,0.95); backdrop-filter: blur(10px); }
-        body.dark-mode .barra-noticias { background: #0f172a; border-bottom: 1px solid #334155; }
-        body.dark-mode .barra-noticias .ticker-content span { background: rgba(255,255,255,0.1); color: #e2e8f0; }
-        body.dark-mode .card, body.dark-mode .categorias-container, body.dark-mode .patrocinadores, body.dark-mode .loc-card, body.dark-mode .info-card, body.dark-mode .equipe-section { background: #1e293b; color: #fff; }
-        body.dark-mode .card h2, body.dark-mode .categorias-container h2, body.dark-mode .patrocinadores h2, body.dark-mode .info-card h2, body.dark-mode .equipe-section h2 { color: #60a5fa; }
-        body.dark-mode .info-idades { background: #0f172a; color: #cbd5e1; }
-        body.dark-mode .cat-item { background: #0f172a; color: #e2e8f0; }
-        body.dark-mode .indicador-card { background: #0f172a; }
-        body.dark-mode .info-item { background: #0f172a; }
-        body.dark-mode .equipe-card { background: #0f172a; }
-        body.acessibilidade { background: #000 !important; color: #FFD700 !important; font-size: 1.1rem; }
-        body.acessibilidade .barra-superior, body.acessibilidade .card, body.acessibilidade .categorias-container, body.acessibilidade .patrocinadores, body.acessibilidade .loc-card, body.acessibilidade .info-card, body.acessibilidade footer { background: #000 !important; color: #FFD700 !important; border-color: #FFD700 !important; }
-        body.acessibilidade .btn-prematricula, body.acessibilidade .btn-mapa, body.acessibilidade .btn-tema, body.acessibilidade .hamburger { background: #FFD700 !important; color: #000 !important; }
-        body.acessibilidade .clima-widget { background: rgba(255,215,0,0.2) !important; color: #FFD700 !important; }
+        :root { --azul-escuro: #003399; --azul-premium: #0047AB; --azul-claro: #00aaff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; background: linear-gradient(135deg, #f0f7ff 0%, #e0ecf9 100%); min-height: 100vh; }
+        body.dark-mode { background: linear-gradient(135deg, #0f172a 0%, #1e1a3a 100%); color: #e2e8f0; }
+        body.dark-mode .card, body.dark-mode .grafico-card, body.dark-mode .veteranos-section { background: #1e293b; }
  
+        .nav-bar { background: white; border-radius: 60px; padding: 12px 24px; margin: 20px auto 0; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        body.dark-mode .nav-bar { background: #1e293b; }
+        .logo-text { text-decoration: none; font-family: 'Montserrat'; font-weight: 900; font-size: 1.5rem; background: linear-gradient(45deg, #003399, #00aaff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 12px; flex-wrap: wrap; }
+        .nav-link { text-decoration: none; padding: 8px 20px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; transition: all 0.2s; background: #f1f5f9; color: #1e293b; }
+        body.dark-mode .nav-link { background: #0f172a; color: #e2e8f0; }
+        .nav-link:hover { transform: translateY(-2px); }
+        .nav-link.ativo { background: #0047AB; color: white; }
+ 
+        .login-container { display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 100px); background: linear-gradient(135deg, #003399, #0047AB); }
+        .login-card { background: rgba(255,255,255,0.98); border-radius: 40px; padding: 50px 40px; width: 90%; max-width: 450px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.2); animation: fadeInUp 0.6s ease; }
+        body.dark-mode .login-card { background: #1e293b; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-        @keyframes pulseJump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+        .login-card .icone { font-size: 4rem; margin-bottom: 15px; }
+        .login-card h1 { font-family: 'Montserrat'; color: #003399; font-size: 1.8rem; margin-bottom: 10px; }
+        body.dark-mode .login-card h1 { color: #60a5fa; }
+        .login-card p { color: #666; margin-bottom: 30px; font-size: 0.9rem; }
+        body.dark-mode .login-card p { color: #94a3b8; }
+        .login-card input { width: 100%; padding: 15px 20px; border: 2px solid #e2e8f0; border-radius: 60px; font-size: 1rem; margin-bottom: 20px; outline: none; background: white; }
+        body.dark-mode .login-card input { background: #0f172a; border-color: #334155; color: white; }
+        .login-card input:focus { border-color: #00aaff; }
+        .login-card button { background: linear-gradient(135deg, #0047AB, #003399); color: white; padding: 15px; border: none; border-radius: 60px; width: 100%; cursor: pointer; font-size: 1rem; font-weight: 800; }
+        .erro { color: #ff4444; margin-top: 15px; font-size: 0.85rem; }
+        .info-acesso { margin-top: 20px; font-size: 0.7rem; color: #999; border-top: 1px solid #eee; padding-top: 15px; }
+ 
+        .painel { display: none; max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .header-painel { background: linear-gradient(135deg, #0047AB, #003399); color: white; padding: 20px; border-radius: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        body.dark-mode .header-painel { background: linear-gradient(135deg, #1e40af, #1e3a8a); }
+        .header-painel h1 { font-family: 'Montserrat'; font-size: 1.5rem; }
+        .info-usuario { background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 50px; font-size: 0.8rem; }
+        .btn-atualizar, .btn-exportar-imagem, .btn-exportar { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); color: white; padding: 8px 15px; border-radius: 50px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; }
+        .btn-atualizar:hover, .btn-exportar-imagem:hover, .btn-exportar:hover { background: rgba(255,255,255,0.3); transform: scale(1.02); }
+        .btn-sair { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); color: white; padding: 8px 15px; border-radius: 50px; cursor: pointer; font-size: 0.8rem; }
+ 
+        /* BOTÃO ONLINE/OFFLINE */
         @keyframes piscar { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-        @keyframes pulseSelo { 0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.4); } 50% { box-shadow: 0 0 0 3px rgba(220,38,38,0); } }
-        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        @keyframes galaxyShift { 0% { background-position: 0% 50%; } 25% { background-position: 50% 100%; } 50% { background-position: 100% 50%; } 75% { background-position: 50% 0%; } 100% { background-position: 0% 50%; } }
-        @keyframes starTwinkle { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
-        @keyframes nebulaFloat { 0%, 100% { transform: translate(0,0) scale(1); } 50% { transform: translate(5%,5%) scale(1.05); } }
-        @keyframes particleFloat { 0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.8; } 100% { transform: translateY(-200px) translateX(30px) scale(0.5); opacity: 0; } }
-        @keyframes lightScan { 0% { transform: rotate(45deg) translateX(-100%); } 100% { transform: rotate(45deg) translateX(100%); } }
-        @keyframes orbitRotate { 0% { transform: translate(-50%,-50%) rotate(0deg); } 100% { transform: translate(-50%,-50%) rotate(360deg); } }
-        @keyframes orbita1 { 0% { transform: translate(-50%,-50%) rotate(0deg) translateX(140px) rotate(0deg); } 100% { transform: translate(-50%,-50%) rotate(360deg) translateX(140px) rotate(-360deg); } }
-        @keyframes orbita2 { 0% { transform: translate(-50%,-50%) rotate(0deg) translateX(190px) rotate(0deg); } 100% { transform: translate(-50%,-50%) rotate(-360deg) translateX(190px) rotate(360deg); } }
-        @keyframes orbita3 { 0% { transform: translate(-50%,-50%) rotate(0deg) translateX(240px) rotate(0deg); } 100% { transform: translate(-50%,-50%) rotate(360deg) translateX(240px) rotate(-360deg); } }
-        @keyframes orbita4 { 0% { transform: translate(-50%,-50%) rotate(0deg) translateX(90px) rotate(0deg); } 100% { transform: translate(-50%,-50%) rotate(-360deg) translateX(90px) rotate(360deg); } }
-        @keyframes orbita5 { 0% { transform: translate(-50%,-50%) rotate(0deg) translateX(300px) rotate(0deg); } 100% { transform: translate(-50%,-50%) rotate(360deg) translateX(300px) rotate(-360deg); } }
-        @keyframes meteorShoot { 0% { transform: translateX(0) translateY(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateX(1300px) translateY(30px); opacity: 0; } }
-        @keyframes solPulse { 0%, 100% { transform: translate(-50%,-50%) scale(1); box-shadow: 0 0 30px #ffaa33, 0 0 60px #ffaa33; } 50% { transform: translate(-50%,-50%) scale(1.05); box-shadow: 0 0 50px #ffcc66, 0 0 100px #ffaa33; } }
-        @keyframes raiosRotate { 0% { transform: translate(-50%,-50%) rotate(0deg); } 100% { transform: translate(-50%,-50%) rotate(360deg); } }
-        @keyframes textGlow { 0%, 100% { text-shadow: 0 0 10px rgba(0,150,255,0.5); } 50% { text-shadow: 0 0 25px rgba(0,150,255,0.8); } }
-        @keyframes patScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-33.333%); } }
-        @keyframes pingAzul { 0% { box-shadow: 0 0 0 0 rgba(0,71,171,0.6); } 70% { box-shadow: 0 0 0 14px rgba(0,71,171,0); } 100% { box-shadow: 0 0 0 0 rgba(0,71,171,0); } }
-        @keyframes pingVerde { 0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.7); } 70% { box-shadow: 0 0 0 14px rgba(16,185,129,0); } 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); } }
-        @keyframes pingVermelho { 0% { box-shadow: 0 0 0 0 rgba(239,68,68,0.7); } 70% { box-shadow: 0 0 0 14px rgba(239,68,68,0); } 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); } }
-        .foto-online { animation: pingVerde 2s ease-in-out infinite !important; border-color: #10b981 !important; }
-        .foto-offline { animation: pingVermelho 2s ease-in-out infinite !important; border-color: #ef4444 !important; }
- 
-        .stagger-item { opacity: 0; }
- 
-        /* BARRA SUPERIOR */
-        .barra-superior { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 10px 5%; }
-        .container-superior { width: 100%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-        .logo-titulo { display: flex; align-items: center; gap: 10px; }
-        .logo-jacare { font-size: 2.2rem; display: inline-block; cursor: pointer; transition: all 0.3s ease; animation: pulseJump 2s ease-in-out infinite; }
-        .titulo-site { font-family: 'Montserrat'; font-size: 1.2rem; font-weight: 900; background: linear-gradient(45deg, #003399, #00aaff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .area-direita { display: flex; align-items: center; gap: 8px; }
-        .clima-widget { display: flex; align-items: center; gap: 6px; background: rgba(0,71,171,0.1); padding: 7px 14px; border-radius: 40px; font-size: 0.85rem; font-weight: 500; }
-        .redes-destaque { display: flex; align-items: center; gap: 6px; }
-        .btn-rede { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s; font-size: 0.85rem; border: none; cursor: pointer; overflow: hidden; }
-        .btn-rede img { width: 20px; height: 20px; object-fit: contain; }
-        .btn-instagram { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-        .btn-whatsapp { background: #25D366; }
-        .btn-email { background: #EA4335; }
-        .btn-rede:hover { transform: scale(1.1); }
-        .btn-acessibilidade { width: 38px; height: 38px; background: #f1f5f9; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; }
-        .btn-acessibilidade.ativo { background: #FFD700; color: #000; }
-        .btn-tema { width: 38px; height: 38px; background: #f1f5f9; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; }
-        .hamburger { width: 38px; height: 38px; background: #0047AB; border: none; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; cursor: pointer; transition: all 0.3s ease; z-index: 2000; }
-        .hamburger span { width: 18px; height: 2px; background: white; border-radius: 2px; transition: all 0.3s ease; }
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
- 
-        /* BARRA NOTICIAS */
-        .barra-noticias { position: fixed; top: 72px; left: 0; right: 0; z-index: 999; background: white; padding: 7px 5%; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; }
-        .container-noticias { width: 100%; display: flex; align-items: center; gap: 12px; }
-        .selo-ao-vivo { display: inline-flex; align-items: center; gap: 5px; background: #dc2626; color: white; font-weight: 700; font-size: 0.7rem; padding: 4px 10px; border-radius: 30px; white-space: nowrap; flex-shrink: 0; animation: pulseSelo 1.5s ease-in-out infinite; }
-        .ponto-vivo { width: 7px; height: 7px; background: white; border-radius: 50%; animation: piscar 1s step-end infinite; }
-        .ticker-wrapper { flex: 1; overflow: hidden; position: relative; }
-        .ticker-content { display: inline-block; white-space: nowrap; will-change: transform; }
-        .ticker-content span { display: inline-block; margin-right: 40px; background: rgba(0,51,153,0.08); padding: 4px 15px; border-radius: 40px; font-size: 0.8rem; font-weight: 600; color: #003399; }
- 
-        /* MENU MOBILE */
-        .menu-mobile { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background: white; z-index: 9999; transition: left 0.3s ease; padding: 100px 20px 20px; box-shadow: 2px 0 10px rgba(0,0,0,0.2); }
-        body.dark-mode .menu-mobile { background: #1e293b; }
-        .menu-mobile a { display: block; padding: 15px; text-decoration: none; color: #1e293b; font-weight: 600; border-bottom: 1px solid #e2e8f0; }
-        body.dark-mode .menu-mobile a { color: #e2e8f0; border-bottom-color: #334155; }
-        .menu-mobile a:hover { background: #0047AB; color: white; border-radius: 12px; }
-        .menu-mobile img { width: 22px; margin-right: 12px; vertical-align: middle; }
- 
-        /* CONTEUDO */
-        .conteudo { max-width: 80%; margin: 0 auto; padding: 170px 0 20px; position: relative; z-index: 1; }
- 
-        /* HERO */
-        .hero { position: relative; margin-top: 90px; margin-bottom: 30px; border-radius: 24px; overflow: hidden; min-height: 400px; background: linear-gradient(135deg, #003399, #0047AB); display: flex; align-items: center; justify-content: center; text-align: center; }
-        body.dark-mode .hero { background: transparent; overflow: visible; }
-        body.dark-mode .banner-espacial { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 24px; overflow: hidden; z-index: 0; }
-        body.dark-mode .banner-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #001133, #002244, #003355, #002244, #001133); background-size: 400% 400%; animation: galaxyShift 12s ease infinite; z-index: 0; }
-        body.dark-mode .stars-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 5% 10%, white, transparent), radial-gradient(1px 1px at 15% 30%, white, transparent), radial-gradient(3px 3px at 25% 50%, white, transparent), radial-gradient(1px 1px at 35% 70%, white, transparent), radial-gradient(2px 2px at 45% 20%, white, transparent), radial-gradient(1px 1px at 55% 80%, white, transparent), radial-gradient(3px 3px at 65% 40%, white, transparent), radial-gradient(1px 1px at 75% 60%, white, transparent), radial-gradient(2px 2px at 85% 15%, white, transparent), radial-gradient(1px 1px at 95% 85%, white, transparent); background-repeat: no-repeat; animation: starTwinkle 4s ease-in-out infinite; z-index: 1; }
-        body.dark-mode .nebula { position: absolute; top: -50%; left: -20%; width: 140%; height: 200%; background: radial-gradient(ellipse at 30% 40%, rgba(0,100,255,0.15), transparent 50%); border-radius: 50%; animation: nebulaFloat 15s ease-in-out infinite; z-index: 2; }
-        body.dark-mode .nebula:nth-child(4) { top: -30%; left: 20%; background: radial-gradient(ellipse at 70% 60%, rgba(0,150,255,0.1), transparent 60%); animation-duration: 18s; animation-delay: -5s; }
-        body.dark-mode .particle-system { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; overflow: hidden; }
-        body.dark-mode .particle { position: absolute; background: rgba(255,255,255,0.6); border-radius: 50%; box-shadow: 0 0 10px rgba(0,150,255,0.8); animation: particleFloat 8s infinite ease-in-out; }
-        body.dark-mode .light-scan { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.08), transparent); transform: rotate(45deg); animation: lightScan 8s linear infinite; z-index: 5; }
-        body.dark-mode .orbit-ring { position: absolute; top: 50%; left: 50%; border: 1px solid rgba(0,150,255,0.3); border-radius: 50%; transform: translate(-50%,-50%); animation: orbitRotate 20s linear infinite; z-index: 4; }
-        body.dark-mode .orbit-ring:nth-child(7) { width: 280px; height: 280px; animation-duration: 12s; border-color: rgba(0,150,255,0.25); }
-        body.dark-mode .orbit-ring:nth-child(8) { width: 380px; height: 380px; animation-duration: 18s; animation-direction: reverse; border-color: rgba(0,100,255,0.2); }
-        body.dark-mode .orbit-ring:nth-child(9) { width: 480px; height: 480px; animation-duration: 25s; border-color: rgba(0,150,255,0.15); }
-        body.dark-mode .orbit-ring:nth-child(10) { width: 180px; height: 180px; animation-duration: 8s; animation-direction: reverse; border-color: rgba(255,255,255,0.2); }
-        body.dark-mode .orbit-ring:nth-child(11) { width: 600px; height: 600px; animation-duration: 30s; border-color: rgba(0,100,255,0.1); }
-        body.dark-mode .planeta { position: absolute; top: 50%; left: 50%; border-radius: 50%; z-index: 5; }
-        body.dark-mode .planeta1 { width: 18px; height: 18px; background: radial-gradient(circle at 30% 30%, #ff6600, #cc4400); box-shadow: 0 0 10px #ff6600; animation: orbita1 12s linear infinite; }
-        body.dark-mode .planeta2 { width: 22px; height: 22px; background: radial-gradient(circle at 30% 30%, #33ccff, #0099cc); box-shadow: 0 0 12px #33ccff; animation: orbita2 18s linear infinite reverse; }
-        body.dark-mode .planeta3 { width: 28px; height: 28px; background: radial-gradient(circle at 30% 30%, #aa66ff, #7733cc); box-shadow: 0 0 15px #aa66ff; animation: orbita3 25s linear infinite; }
-        body.dark-mode .planeta4 { width: 14px; height: 14px; background: radial-gradient(circle at 30% 30%, #ff4444, #cc0000); box-shadow: 0 0 8px #ff4444; animation: orbita4 8s linear infinite reverse; }
-        body.dark-mode .planeta5 { width: 24px; height: 24px; background: radial-gradient(circle at 30% 30%, #ffcc33, #cc9900); box-shadow: 0 0 12px #ffcc33; animation: orbita5 30s linear infinite; }
-        body.dark-mode .planeta5::before { content: ""; position: absolute; top: 50%; left: 50%; width: 32px; height: 8px; background: rgba(255,204,51,0.5); border-radius: 50%; transform: translate(-50%,-50%) rotate(20deg); }
-        body.dark-mode .sol { position: absolute; top: 50%; left: 50%; width: 100px; height: 100px; transform: translate(-50%,-50%); background: radial-gradient(circle, #fff8e7, #ffdd77, #ffaa33); border-radius: 50%; z-index: 15; box-shadow: 0 0 30px #ffaa33, 0 0 60px #ffaa33; animation: solPulse 3s ease-in-out infinite; }
-        body.dark-mode .sol::before { content: ""; position: absolute; top: 50%; left: 50%; width: 140px; height: 140px; transform: translate(-50%,-50%); background: radial-gradient(circle, rgba(255,200,100,0.3), transparent 70%); border-radius: 50%; animation: raiosRotate 8s linear infinite; }
-        body.dark-mode .sol::after { content: ""; position: absolute; top: 50%; left: 50%; width: 180px; height: 180px; transform: translate(-50%,-50%); background: radial-gradient(circle, rgba(255,200,100,0.15), transparent 80%); border-radius: 50%; animation: raiosRotate 12s linear infinite reverse; }
-        body.dark-mode .meteor { position: absolute; top: 0; left: -100px; width: 80px; height: 3px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), white); border-radius: 50%; animation: meteorShoot 5s linear infinite; z-index: 6; box-shadow: 0 0 6px white; }
-        body.dark-mode .meteor:nth-child(12) { top: 15%; animation-delay: 2s; width: 60px; animation-duration: 4s; }
-        body.dark-mode .meteor:nth-child(13) { top: 45%; animation-delay: 3.5s; width: 100px; animation-duration: 6s; }
-        body.dark-mode .meteor:nth-child(14) { top: 75%; animation-delay: 1s; width: 70px; animation-duration: 5s; }
-        body.dark-mode .meteor:nth-child(15) { top: 30%; animation-delay: 4.2s; width: 50px; animation-duration: 4.5s; }
-        body.dark-mode .meteor:nth-child(16) { top: 85%; animation-delay: 0.5s; width: 90px; animation-duration: 5.5s; }
-        body.dark-mode .meteor:nth-child(17) { top: 60%; animation-delay: 5s; width: 40px; animation-duration: 3.5s; }
-        body.dark-mode .hero-content { background: rgba(0,0,0,0.3); backdrop-filter: blur(2px); border-radius: 24px; }
-        body.dark-mode .hero-content h1 { animation: textGlow 3s ease-in-out infinite; }
-        .hero-content { position: relative; z-index: 20; color: white; padding: 60px 20px; max-width: 800px; margin: 0 auto; text-align: center; }
-        .hero-content h1 { font-family: 'Montserrat'; font-size: 2rem; margin-bottom: 20px; }
-        .hero-content p { font-size: 1.1rem; margin-bottom: 30px; opacity: 0.9; }
-        .btn-prematricula { background: linear-gradient(135deg, #ff9800, #f57c00, #ff9800); background-size: 200% 200%; animation: gradientShift 3s ease infinite; color: white; border: none; padding: 14px 35px; border-radius: 50px; font-weight: 800; font-size: 1rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.3s; }
-        .btn-prematricula:hover { transform: scale(1.05); }
- 
-        /* INDICADORES */
-        .indicadores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
-        .indicador-card { background: white; border-radius: 20px; padding: 25px 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s; cursor: pointer; animation: bounce 2s ease-in-out infinite; }
-        .indicador-card:hover { transform: translateY(-5px); animation-play-state: paused; box-shadow: 0 15px 30px rgba(0,71,171,0.15); }
-        .indicador-card .icone { font-size: 2.5rem; margin-bottom: 10px; }
-        .indicador-card .valor { font-size: 2.5rem; font-weight: 800; font-family: 'Montserrat'; color: #003399; }
-        body.dark-mode .indicador-card .valor { color: #60a5fa; }
-        .indicador-card .label { font-size: 0.85rem; color: #666; }
-        body.dark-mode .indicador-card .label { color: #94a3b8; }
-        .indicador-card .detalhe { font-size: 0.7rem; color: #999; margin-top: 5px; }
- 
-        /* CARD GERAL */
-        .card { background: white; border-radius: 24px; padding: 35px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
-        .card h2 { font-family: 'Montserrat'; color: #003399; font-size: 1.8rem; margin-bottom: 20px; text-align: center; }
-        .valores-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 25px; }
-        .valor-item { text-align: center; padding: 25px; background: #f8f9fa; border-radius: 20px; transition: all 0.3s; }
-        body.dark-mode .valor-item { background: #0f172a; }
-        .valor-item:hover { transform: translateY(-5px); }
-        .valor-item .emoji { font-size: 2.5rem; margin-bottom: 12px; display: block; }
-        .valor-item h3 { font-size: 1.3rem; margin-bottom: 10px; color: #003399; }
-        body.dark-mode .valor-item h3 { color: #60a5fa; }
- 
-        /* CATEGORIAS */
-        .categorias-container { background: white; padding: 35px; border-radius: 24px; margin-bottom: 30px; }
-        .categorias-container h2 { font-family: 'Montserrat'; color: #003399; font-size: 1.8rem; margin-bottom: 30px; text-align: center; }
-        .grid-categorias { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 25px; }
-        .cat-item { background: #f8f9fa; padding: 25px; border-radius: 20px; text-align: center; font-weight: 800; font-size: 1.1rem; color: #003399; transition: all 0.3s; cursor: pointer; }
-        body.dark-mode .cat-item { background: #0f172a; }
-        .cat-item:hover { transform: translateY(-5px); background: #0047AB; color: white; }
-        .cat-item .emoji-cat { font-size: 2rem; display: block; margin-bottom: 10px; }
-        .info-idades { background: #f0f7ff; padding: 15px; border-radius: 16px; text-align: center; font-size: 0.9rem; }
- 
-        /* INFORMAÇÕES */
-        .info-card { background: white; border-radius: 24px; padding: 35px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
-        .info-card h2 { font-family: 'Montserrat'; color: #003399; font-size: 1.8rem; margin-bottom: 25px; text-align: center; }
-        .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .info-item { background: #f8fafc; border-radius: 20px; padding: 25px; text-align: center; transition: all 0.3s; }
-        .info-item:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,71,171,0.1); }
-        .info-item .info-icone { font-size: 2.5rem; margin-bottom: 12px; display: block; }
-        .info-item h3 { font-family: 'Montserrat'; color: #003399; font-size: 1rem; margin-bottom: 10px; }
-        body.dark-mode .info-item h3 { color: #60a5fa; }
-        .info-item p { font-size: 0.85rem; color: #555; line-height: 1.5; }
-        body.dark-mode .info-item p { color: #94a3b8; }
-        .info-item a { color: #0047AB; text-decoration: none; font-weight: 600; }
- 
-        /* PATROCINADORES TICKER */
-        .patrocinadores { background: white; padding: 35px; border-radius: 24px; margin-bottom: 30px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.05); overflow: hidden; }
-        .patrocinadores h2 { font-family: 'Montserrat'; color: #003399; font-size: 1.8rem; margin-bottom: 25px; }
-        body.dark-mode .patrocinadores h2 { color: #60a5fa; }
-        .pat-ticker-wrapper { overflow: hidden; position: relative; padding: 10px 0; }
-        .pat-ticker-wrapper::before, .pat-ticker-wrapper::after { content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; }
-        .pat-ticker-wrapper::before { left: 0; background: linear-gradient(to right, white, transparent); }
-        .pat-ticker-wrapper::after { right: 0; background: linear-gradient(to left, white, transparent); }
-        body.dark-mode .pat-ticker-wrapper::before { background: linear-gradient(to right, #1e293b, transparent); }
-        body.dark-mode .pat-ticker-wrapper::after { background: linear-gradient(to left, #1e293b, transparent); }
-        .pat-ticker-track { display: flex; align-items: center; animation: patScroll 12s linear infinite; width: max-content; }
-        .pat-ticker-track:hover { animation-play-state: paused; }
-        .pat-ticker-item { display: flex; align-items: center; justify-content: center; padding: 0 40px; }
-        .pat-ticker-item img { max-width: 160px; max-height: 90px; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.1)); transition: transform 0.3s; }
-        .pat-ticker-item img:hover { transform: scale(1.08); }
-        .chamada-patrocinio { margin-top: 20px; }
-        .chamada-patrocinio a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0047AB; font-weight: 600; }
-        body.dark-mode .chamada-patrocinio a { color: #60a5fa; }
- 
-        /* EQUIPE */
-        .equipe-section { background: white; padding: 35px; border-radius: 24px; margin-bottom: 30px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
-        .equipe-section h2 { font-family: 'Montserrat'; color: #003399; font-size: 1.8rem; margin-bottom: 30px; }
-        body.dark-mode .equipe-section h2 { color: #60a5fa; }
-        .equipe-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 30px; }
-        .equipe-card { background: #f8fafc; border-radius: 24px; padding: 30px 25px; text-align: center; width: 100%; max-width: 560px; transition: all 0.3s; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .equipe-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,71,171,0.15); }
-        .equipe-foto-container { position: relative; width: 110px; height: 110px; margin: 0 auto 15px; }
-        .equipe-foto { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; display: block; border: 4px solid #0047AB; position: relative; z-index: 1; animation: pingAzul 2s ease-in-out infinite; }
-        .equipe-nome { font-family: 'Montserrat'; font-weight: 900; font-size: 1rem; color: #003399; margin-bottom: 5px; }
-        body.dark-mode .equipe-nome { color: #60a5fa; }
-        .equipe-cargo { font-size: 0.8rem; color: #666; margin-bottom: 4px; font-weight: 500; }
-        body.dark-mode .equipe-cargo { color: #94a3b8; }
-        .equipe-frase { font-size: 0.75rem; color: #888; font-style: italic; margin-bottom: 15px; }
- 
-        /* INDICADOR ONLINE */
-        .status-online { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 700; padding: 5px 12px; border-radius: 40px; margin-bottom: 12px; }
-        .status-online.online { background: #d1fae5; color: #059669; }
-        .status-online.offline { background: #fee2e2; color: #dc2626; }
+        .btn-status { padding: 8px 18px; border-radius: 50px; cursor: pointer; font-size: 0.85rem; font-weight: 700; border: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-status.online { background: #10b981; color: white; box-shadow: 0 0 12px rgba(16,185,129,0.5); }
+        .btn-status.offline { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); color: white; }
+        .btn-status:hover { transform: scale(1.05); }
         .status-ponto { width: 8px; height: 8px; border-radius: 50%; }
-        .status-online.online .status-ponto { background: #10b981; animation: piscar 1.5s ease-in-out infinite; }
-        .status-online.offline .status-ponto { background: #ef4444; }
+        .btn-status.online .status-ponto { background: white; animation: piscar 1.5s ease-in-out infinite; }
+        .btn-status.offline .status-ponto { background: #ef4444; }
  
-        .equipe-instagram { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; text-decoration: none; padding: 8px 16px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; transition: all 0.3s; }
-        .equipe-instagram:hover { transform: scale(1.05); }
-        .contato-interno { border-top: 2px solid #e2e8f0; margin-top: 20px; padding-top: 20px; text-align: left; }
-        body.dark-mode .contato-interno { border-top-color: #334155; }
-        .contato-interno h3 { font-family: 'Montserrat'; color: #003399; font-size: 1rem; margin-bottom: 15px; text-align: center; }
-        body.dark-mode .contato-interno h3 { color: #60a5fa; }
-        .contato-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-        .contato-field { display: flex; flex-direction: column; gap: 5px; }
-        .contato-field label { font-size: 0.72rem; font-weight: 700; color: #003399; text-transform: uppercase; }
-        body.dark-mode .contato-field label { color: #60a5fa; }
-        .contato-field input, .contato-field select, .contato-field textarea { padding: 10px 14px; border: 2px solid #e2e8f0; border-radius: 12px; font-family: inherit; font-size: 0.85rem; background: white; outline: none; transition: border-color 0.3s; }
-        body.dark-mode .contato-field input, body.dark-mode .contato-field select, body.dark-mode .contato-field textarea { background: #0f172a; border-color: #334155; color: white; }
-        .contato-field input:focus, .contato-field select:focus, .contato-field textarea:focus { border-color: #0047AB; }
-        .contato-field textarea { resize: vertical; min-height: 90px; }
-        .contato-field.full { grid-column: 1 / -1; }
-        .btn-enviar-contato { width: 100%; background: linear-gradient(135deg, #0047AB, #003399); color: white; border: none; padding: 12px; border-radius: 50px; font-size: 0.9rem; font-weight: 800; cursor: pointer; transition: all 0.3s; margin-top: 5px; }
-        .btn-enviar-contato:hover { transform: scale(1.02); }
-        .btn-enviar-contato:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        .contato-sucesso { background: #d1fae5; border: 2px solid #10b981; border-radius: 12px; padding: 12px; text-align: center; display: none; margin-top: 10px; }
-        body.dark-mode .contato-sucesso { background: #064e3b; border-color: #10b981; }
-        .contato-sucesso p { color: #059669; font-weight: 600; font-size: 0.85rem; }
-        body.dark-mode .contato-sucesso p { color: #34d399; }
+        .info-atualizacao { text-align: right; font-size: 0.75rem; color: #666; margin-bottom: 15px; }
+        body.dark-mode .info-atualizacao { color: #94a3b8; }
  
-        /* LOCALIZAÇÃO */
-        .loc-card { background: white; padding: 30px; border-radius: 24px; text-align: center; border: 3px solid #00aaff; margin-bottom: 30px; }
-        body.dark-mode .loc-card { background: #1e293b; }
-        .mapa-container { width: 100%; height: 350px; border-radius: 15px; overflow: hidden; margin: 15px 0; }
-        .mapa-container iframe { width: 100%; height: 100%; border: 0; }
-        .btn-mapa { background: #0047AB; color: white; text-decoration: none; padding: 10px 20px; border-radius: 40px; display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; }
+        .abas-nav { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; background: white; padding: 10px 15px; border-radius: 60px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        body.dark-mode .abas-nav { background: #1e293b; }
+        .aba-nav-btn { padding: 10px 24px; border-radius: 40px; border: none; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s; background: #f1f5f9; color: #1e293b; text-decoration: none; display: inline-block; }
+        body.dark-mode .aba-nav-btn { background: #0f172a; color: #e2e8f0; }
+        .aba-nav-btn.ativa { background: #0047AB; color: white; }
+        body.dark-mode .aba-nav-btn.ativa { background: #3b82f6; }
+        .aba-nav-btn:hover { transform: translateY(-2px); }
+        .aba-conteudo { display: none; }
+        .aba-conteudo.ativa { display: block; }
  
-        /* RODAPÉ */
-        footer { background: #003399; color: white; text-align: center; padding: 35px 5%; width: 100%; }
-        footer a { color: white; text-decoration: none; }
-        .contato-footer { margin-top: 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .contato-footer a { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 40px; transition: all 0.3s; }
-        .contato-footer a:hover { background: rgba(255,255,255,0.25); }
-        .rights { margin-top: 20px; font-size: 0.8rem; opacity: 0.8; }
+        .cards-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card-analise { background: white; border-radius: 20px; padding: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        body.dark-mode .card-analise { background: #1e293b; }
+        .card-analise:hover { transform: translateY(-5px); }
+        .card-analise .valor { font-size: 2.5rem; font-weight: 800; font-family: 'Montserrat'; color: #003399; }
+        body.dark-mode .card-analise .valor { color: #60a5fa; }
+        .card-analise .label { color: #666; margin-top: 5px; font-size: 0.8rem; }
+        body.dark-mode .card-analise .label { color: #94a3b8; }
+        .card-analise .icone { font-size: 2rem; margin-bottom: 10px; }
+        .card-analise .detalhe { font-size: 0.7rem; color: #999; margin-top: 8px; }
+        .card-analise .valor#turmaMaisAlunos { font-size: 1.4rem; word-break: break-word; white-space: normal; line-height: 1.2; }
  
-        /* DEPOIMENTOS */
-        .depoimentos-section { max-width: 80%; margin: 30px auto 0; padding: 0 0 10px; position: relative; z-index: 1; }
-        .depoimentos-titulo { text-align: center; color: #003399; font-family: 'Montserrat'; font-size: 1.4rem; font-weight: 900; margin-bottom: 18px; }
-        body.dark-mode .depoimentos-titulo { color: white; }
-        .carrossel-wrapper { position: relative; overflow: hidden; border-radius: 20px; }
-        .carrossel-track { display: flex; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .depoimento-card { min-width: 100%; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.6); border-radius: 20px; padding: 24px 30px; box-sizing: border-box; color: #1e293b; }
-        body.dark-mode .depoimento-card { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: white; }
-        .depoimento-estrelas { font-size: 1.3rem; color: #FFD700; margin-bottom: 12px; }
-        .depoimento-texto { font-size: 0.95rem; line-height: 1.6; font-style: italic; margin-bottom: 16px; opacity: 0.95; }
-        .depoimento-autor { display: flex; align-items: center; gap: 10px; }
-        .depoimento-avatar { width: 40px; height: 40px; background: rgba(255,255,255,0.25); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
-        .depoimento-info .nome { font-weight: 700; font-size: 0.9rem; }
-        .depoimento-info .sub { font-size: 0.75rem; opacity: 0.8; }
-        .carrossel-controles { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 14px; }
-        .carrossel-btn { background: rgba(0,71,171,0.15); border: 1px solid rgba(0,71,171,0.3); color: #003399; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-        .carrossel-btn:hover { background: #0047AB; color: white; }
-        body.dark-mode .carrossel-btn { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); color: white; }
-        .carrossel-dots { display: flex; gap: 6px; }
-        .carrossel-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(0,71,171,0.25); cursor: pointer; transition: all 0.3s; }
-        body.dark-mode .carrossel-dot { background: rgba(255,255,255,0.4); }
-        .carrossel-dot.ativo { background: #0047AB; width: 22px; border-radius: 4px; }
-        body.dark-mode .carrossel-dot.ativo { background: white; }
-        .depoimentos-vazio { text-align: center; color: #003399; padding: 20px; font-size: 0.9rem; font-weight: 600; }
-        body.dark-mode .depoimentos-vazio { color: rgba(255,255,255,0.7); }
+        .filtros-container { background: white; border-radius: 20px; padding: 20px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        body.dark-mode .filtros-container { background: #1e293b; }
+        .filtros-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 15px; }
+        .filtro-group { display: flex; flex-direction: column; }
+        .filtro-group label { font-size: 0.7rem; font-weight: 600; color: #666; margin-bottom: 4px; text-transform: uppercase; }
+        body.dark-mode .filtro-group label { color: #94a3b8; }
+        .filtro-group input, .filtro-group select { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 0.85rem; background: white; }
+        body.dark-mode .filtro-group input, body.dark-mode .filtro-group select { background: #0f172a; border-color: #334155; color: white; }
+        .filtros-acoes { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
+        .btn-limpar-filtros { background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 30px; cursor: pointer; font-size: 0.75rem; }
  
-        /* CONTATO */
-        .contato-card { background: white; border-radius: 24px; padding: 35px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
-        body.dark-mode .contato-card { background: #1e293b; }
-        .contato-card h2 { font-family: 'Montserrat'; color: #003399; font-size: 1.8rem; margin-bottom: 8px; text-align: center; }
-        body.dark-mode .contato-card h2 { color: #60a5fa; }
-        .contato-sub { text-align: center; color: #666; font-size: 0.9rem; margin-bottom: 25px; }
-        body.dark-mode .contato-sub { color: #94a3b8; }
-        .contato-form { display: flex; flex-direction: column; gap: 15px; max-width: 600px; margin: 0 auto; }
-        .contato-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .contato-group { display: flex; flex-direction: column; gap: 6px; }
-        .contato-group label { font-size: 0.8rem; font-weight: 700; color: #003399; text-transform: uppercase; }
-        body.dark-mode .contato-group label { color: #60a5fa; }
-        .contato-group input, .contato-group select, .contato-group textarea { padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 14px; font-family: inherit; font-size: 0.9rem; background: #f8fafc; outline: none; transition: border-color 0.3s; }
-        body.dark-mode .contato-group input, body.dark-mode .contato-group select, body.dark-mode .contato-group textarea { background: #0f172a; border-color: #334155; color: white; }
-        .contato-group input:focus, .contato-group select:focus, .contato-group textarea:focus { border-color: #0047AB; }
-        .contato-group textarea { resize: vertical; min-height: 100px; }
-        .btn-enviar-contato { background: linear-gradient(135deg, #0047AB, #003399); color: white; border: none; padding: 14px; border-radius: 50px; font-size: 1rem; font-weight: 800; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-enviar-contato:hover { transform: scale(1.02); }
-        .btn-enviar-contato:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        .contato-sucesso { background: #d1fae5; border: 2px solid #10b981; border-radius: 16px; padding: 20px; text-align: center; display: none; }
-        body.dark-mode .contato-sucesso { background: #064e3b; }
-        .contato-sucesso p { color: #059669; font-weight: 600; }
-        body.dark-mode .contato-sucesso p { color: #34d399; }
+        .graficos-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 30px; }
+        .grafico-card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        body.dark-mode .grafico-card { background: #1e293b; }
+        .grafico-card.full-width { grid-column: span 3; }
+        .grafico-card h3 { font-family: 'Montserrat'; color: #003399; margin-bottom: 15px; text-align: center; font-size: 1rem; }
+        body.dark-mode .grafico-card h3 { color: #60a5fa; }
+        canvas { max-height: 250px; width: 100% !important; }
  
-                /* BOTÃO TOPO */
-        .btn-topo { position: fixed; bottom: 25px; right: 20px; width: 50px; height: 50px; background: #0047AB; color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.4rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s; }
-        .btn-topo.visible { opacity: 1; visibility: visible; }
-        .toast { position: fixed; bottom: 100px; right: 20px; background: white; padding: 8px 16px; border-radius: 40px; z-index: 1100; transform: translateX(120%); transition: transform 0.3s ease; font-size: 0.8rem; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-        .toast.show { transform: translateX(0); }
+        .veteranos-section { background: white; border-radius: 20px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        body.dark-mode .veteranos-section { background: #1e293b; }
+        .veteranos-section h2 { font-family: 'Montserrat'; color: #003399; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        body.dark-mode .veteranos-section h2 { color: #60a5fa; }
+        .ranking-veteranos { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
+        .veterano-card { background: #f8fafc; border-radius: 16px; padding: 15px; display: flex; align-items: center; gap: 15px; transition: all 0.3s; border-left: 4px solid #0047AB; }
+        body.dark-mode .veterano-card { background: #0f172a; }
+        .veterano-card:hover { transform: translateX(5px); }
+        .veterano-medalha { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .medalha-ouro { background: linear-gradient(135deg, #FFD700, #FDB931); }
+        .medalha-prata { background: linear-gradient(135deg, #C0C0C0, #A0A0A0); }
+        .medalha-bronze { background: linear-gradient(135deg, #CD7F32, #B86F2C); }
+        .medalha-geral { background: #0047AB; color: white; }
+        .veterano-info { flex: 1; }
+        .veterano-nome { font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .veterano-detalhes { font-size: 0.75rem; color: #666; margin-top: 4px; }
+        body.dark-mode .veterano-detalhes { color: #94a3b8; }
+        .tempo-badge { background: #0047AB; color: white; padding: 4px 10px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; }
+        .tempo-1ano { background: #10b981; } .tempo-2anos { background: #3b82f6; } .tempo-3anos { background: #8b5cf6; } .tempo-4anos { background: #f59e0b; } .tempo-5anos { background: #ef4444; }
+        .stats-veteranos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+        body.dark-mode .stats-veteranos { border-top-color: #334155; }
+        .stat-veterano { text-align: center; padding: 10px; background: #f8fafc; border-radius: 12px; }
+        body.dark-mode .stat-veterano { background: #0f172a; }
+        .stat-veterano .numero { font-size: 1.3rem; font-weight: 800; color: #0047AB; }
+        body.dark-mode .stat-veterano .numero { color: #60a5fa; }
+        .stat-veterano .label { font-size: 0.7rem; color: #666; }
+        body.dark-mode .stat-veterano .label { color: #94a3b8; }
  
-        /* RESPONSIVO */
-        @media (max-width: 768px) {
-            .depoimentos-section { max-width: 95%; }
-            .conteudo { max-width: 95%; padding: 115px 0 20px; }
-            .barra-noticias { position: relative; top: 0; margin-top: 10px; margin-bottom: 10px; }
-            .hero { margin-top: 50px; min-height: 280px; }
-            body.dark-mode .hero { min-height: 350px; }
-            .hero-content { padding: 30px 15px; }
-            .hero-content h1 { font-size: 1.2rem; }
-            .hero-content p { font-size: 0.8rem; }
-            .btn-prematricula { padding: 8px 20px; font-size: 0.8rem; }
-            .indicadores-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 25px; }
-            .indicador-card { padding: 15px 10px; }
-            .indicador-card .valor { font-size: 1.5rem; }
-            .grid-categorias { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .cat-item { padding: 15px; font-size: 0.9rem; }
-            .valores-grid { grid-template-columns: 1fr; gap: 15px; }
-            .card { padding: 20px; margin-bottom: 20px; }
-            .card h2 { font-size: 1.3rem; }
-            .info-grid { grid-template-columns: 1fr; gap: 15px; }
-            .clima-widget { display: none; }
-            .btn-acessibilidade, .btn-tema, .hamburger { width: 32px; height: 32px; font-size: 1rem; }
-            .btn-rede { width: 30px; height: 30px; }
-            .btn-rede img { width: 16px; height: 16px; }
-            .logo-jacare { font-size: 1.5rem; }
-            .titulo-site { font-size: 0.8rem; }
-            .ticker-content span { font-size: 0.65rem; padding: 2px 8px; margin-right: 15px; }
-            .equipe-card { width: 180px; padding: 20px 15px; }
-            .equipe-foto { width: 90px; height: 90px; }
-            .equipe-foto-container { width: 90px; height: 90px; }
-            body.dark-mode .sol { width: 60px; height: 60px; }
-            body.dark-mode .orbit-ring:nth-child(7) { width: 180px; height: 180px; }
-            body.dark-mode .orbit-ring:nth-child(8) { width: 250px; height: 250px; }
-            body.dark-mode .orbit-ring:nth-child(9) { width: 320px; height: 320px; }
-            body.dark-mode .orbit-ring:nth-child(10) { width: 120px; height: 120px; }
-            body.dark-mode .orbit-ring:nth-child(11) { width: 400px; height: 400px; }
-        }
-        @media (min-width: 1200px) { .conteudo { max-width: 70%; } }
+        /* ABA CONTATOS */
+        .contatos-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+        .contatos-header h2 { font-family: 'Montserrat'; color: #003399; font-size: 1.3rem; }
+        body.dark-mode .contatos-header h2 { color: #60a5fa; }
+        .contatos-filtros { display: flex; gap: 10px; flex-wrap: wrap; }
+        .contatos-filtros select, .contatos-filtros input { padding: 8px 14px; border: 1px solid #e2e8f0; border-radius: 40px; font-size: 0.8rem; background: white; outline: none; }
+        body.dark-mode .contatos-filtros select, body.dark-mode .contatos-filtros input { background: #0f172a; border-color: #334155; color: white; }
+        .contato-msg-card { background: #f8fafc; border-radius: 16px; padding: 18px 20px; margin-bottom: 12px; border-left: 4px solid #0047AB; transition: all 0.2s; }
+        body.dark-mode .contato-msg-card { background: #0f172a; }
+        .contato-msg-card:hover { transform: translateX(4px); }
+        .contato-msg-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+        .contato-msg-nome { font-weight: 700; font-size: 0.95rem; color: #1e293b; }
+        body.dark-mode .contato-msg-nome { color: #e2e8f0; }
+        .contato-msg-data { font-size: 0.7rem; color: #999; }
+        .contato-msg-assunto { display: inline-block; padding: 3px 12px; border-radius: 40px; font-size: 0.72rem; font-weight: 700; margin-bottom: 8px; }
+        .assunto-sugestao { background: #dbeafe; color: #1e40af; }
+        .assunto-elogio { background: #fce7f3; color: #9d174d; }
+        .assunto-reclamacao { background: #fee2e2; color: #991b1b; }
+        .assunto-duvida { background: #fef9c3; color: #854d0e; }
+        .assunto-outro { background: #f1f5f9; color: #475569; }
+        .contato-msg-texto { font-size: 0.85rem; color: #555; line-height: 1.5; margin-bottom: 10px; }
+        body.dark-mode .contato-msg-texto { color: #94a3b8; }
+        .contato-msg-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .contato-msg-whats { font-size: 0.8rem; color: #666; }
+        body.dark-mode .contato-msg-whats { color: #94a3b8; }
+        .btn-responder { background: #25D366; color: white; border: none; padding: 6px 14px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: all 0.2s; }
+        .btn-responder:hover { opacity: 0.9; transform: scale(1.03); }
+        .contatos-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 20px; }
+        .contato-stat { background: white; border-radius: 16px; padding: 15px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        body.dark-mode .contato-stat { background: #1e293b; }
+        .contato-stat .num { font-size: 1.8rem; font-weight: 800; font-family: 'Montserrat'; color: #003399; }
+        body.dark-mode .contato-stat .num { color: #60a5fa; }
+        .contato-stat .lbl { font-size: 0.72rem; color: #666; margin-top: 4px; }
+        body.dark-mode .contato-stat .lbl { color: #94a3b8; }
+        .contatos-vazio { text-align: center; padding: 50px; color: #888; font-size: 0.9rem; }
+ 
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #10b981; color: white; padding: 12px 20px; border-radius: 10px; z-index: 1100; animation: slideIn 0.3s ease; }
+        .toast.error { background: #ef4444; }
+        .toast.info { background: #3b82f6; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+ 
+        footer { background: #003399; color: white; text-align: center; padding: 30px; margin-top: 50px; }
+        body.dark-mode footer { background: #0f172a; }
+ 
+        @media (max-width: 1000px) { .graficos-container { grid-template-columns: repeat(2, 1fr); } .grafico-card.full-width { grid-column: span 2; } .stats-veteranos { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .graficos-container { grid-template-columns: 1fr; } .grafico-card.full-width { grid-column: span 1; } .header-painel { flex-direction: column; text-align: center; } .stats-veteranos { grid-template-columns: 1fr; } .filtros-grid { grid-template-columns: 1fr; } .abas-nav { justify-content: center; } .aba-nav-btn { padding: 8px 16px; font-size: 0.8rem; } }
     </style>
 </head>
 <body>
  
-<!-- MENU MOBILE -->
-<div class="menu-mobile" id="menuMobile">
-    <a href="index.html">🏠 INÍCIO</a>
-    <a href="diretoria.html">📊 DIRETORIA</a>
-    <a href="funcionarios.html">🔒 FUNCIONÁRIOS</a>
-    <a href="prematricula.html">📝 PRÉ-MATRÍCULA</a>
-    <div style="height:1px;background:#e2e8f0;margin:15px 0;"></div>
-    <a href="https://www.instagram.com/escolinha_jacare98/" target="_blank"><img src="icones/instagram.png" alt="Instagram"> INSTAGRAM</a>
-    <a href="#" id="menuFacebook"><img src="icones/facebook.png" alt="Facebook"> FACEBOOK</a>
-    <a href="https://wa.me/5592985603194" target="_blank"><img src="icones/whatsapp.png" alt="WhatsApp"> WHATSAPP</a>
-    <a href="mailto:escolinhajacare98@gmail.com"><img src="icones/gmail.png" alt="E-mail"> E-MAIL</a>
-    <a href="https://maps.app.goo.gl/Sz58rBrkoswb7wSq5" target="_blank"><img src="icones/maps.png" alt="Mapa"> LOCALIZAÇÃO</a>
+<div class="nav-bar">
+    <a href="index.html" class="logo-text">🐊 ESCOLINHA DO JACARÉ</a>
+    <div class="nav-links">
+        <a href="index.html" class="nav-link">🏠 INÍCIO</a>
+        <a href="diretoria.html" class="nav-link ativo">📊 DIRETORIA</a>
+        <a href="funcionarios.html" class="nav-link">🔒 FUNCIONÁRIOS</a>
+    </div>
 </div>
  
-<!-- BARRA SUPERIOR -->
-<div class="barra-superior">
-    <div class="container-superior">
-        <div class="logo-titulo">
-            <div class="logo-jacare">🐊</div>
-            <div class="titulo-site">ESCOLINHA DO JACARÉ</div>
-        </div>
-        <div class="area-direita">
-            <div class="clima-widget" id="climaWidget">
-                <span id="climaIcone">🌡️</span>
-                <span id="climaTemp">--°C</span>
-                <span id="climaDesc">Manaus</span>
-            </div>
-            <div class="redes-destaque">
-                <a href="https://www.instagram.com/escolinha_jacare98/" target="_blank" class="btn-rede btn-instagram" title="Instagram"><img src="icones/instagram.png" alt="Instagram"></a>
-                <a href="https://wa.me/5592985603194" target="_blank" class="btn-rede btn-whatsapp" title="WhatsApp"><img src="icones/whatsapp.png" alt="WhatsApp"></a>
-                <a href="mailto:escolinhajacare98@gmail.com" class="btn-rede btn-email" title="E-mail"><img src="icones/gmail.png" alt="E-mail"></a>
-            </div>
-            <button class="btn-acessibilidade" id="btnAcessibilidade" title="Modo Acessibilidade">♿</button>
-            <button class="btn-tema" id="btnTema" onclick="alternarTema()">🌞</button>
-            <button class="hamburger" id="hamburger" onclick="toggleMenu()">
-                <span></span><span></span><span></span>
+<div id="telaLogin" class="login-container">
+    <div class="login-card">
+        <div class="icone">🔐</div>
+        <h1>ÁREA DA DIRETORIA</h1>
+        <p>Análise de dados da Escolinha do Jacaré</p>
+        <input type="email" id="emailLogin" placeholder="E-mail" required>
+        <input type="password" id="senhaLogin" placeholder="Senha" onkeypress="if(event.key==='Enter') verificarLogin()">
+        <button onclick="verificarLogin()">ACESSAR</button>
+        <div id="erroLogin" class="erro"></div>
+        <div class="info-acesso">🔒 Acesso restrito a diretores autorizados</div>
+    </div>
+</div>
+ 
+<div id="painelAnalise" class="painel">
+    <div class="header-painel">
+        <h1>📊 DIRETORIA | ESCOLINHA DO JACARÉ</h1>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <div class="info-usuario" id="infoUsuario"></div>
+            <button id="btnStatus" class="btn-status offline" onclick="alternarStatus()">
+                <span class="status-ponto"></span>
+                <span id="textoStatus">OFFLINE</span>
             </button>
-        </div>
-    </div>
-</div>
- 
-<!-- BARRA DE NOTÍCIAS -->
-<div class="barra-noticias">
-    <div class="container-noticias">
-        <div class="selo-ao-vivo"><span class="ponto-vivo"></span>AO VIVO</div>
-        <div class="ticker-wrapper">
-            <div class="ticker-content" id="tickerNoticias"><span>🏆 Carregando notícias...</span></div>
-        </div>
-    </div>
-</div>
- 
-<!-- BANNER -->
-<div class="hero">
-    <div class="banner-espacial">
-        <div class="banner-bg"></div>
-        <div class="stars-bg"></div>
-        <div class="nebula"></div>
-        <div class="nebula"></div>
-        <div class="particle-system">
-            <div class="particle" style="width:3px;height:3px;bottom:0;left:10%;animation-duration:6s;"></div>
-            <div class="particle" style="width:5px;height:5px;bottom:0;left:25%;animation-duration:8s;animation-delay:1s;"></div>
-            <div class="particle" style="width:2px;height:2px;bottom:0;left:40%;animation-duration:5s;animation-delay:2s;"></div>
-            <div class="particle" style="width:4px;height:4px;bottom:0;left:55%;animation-duration:7s;animation-delay:0.5s;"></div>
-            <div class="particle" style="width:3px;height:3px;bottom:0;left:70%;animation-duration:9s;animation-delay:3s;"></div>
-            <div class="particle" style="width:6px;height:6px;bottom:0;left:85%;animation-duration:6.5s;animation-delay:1.5s;"></div>
-            <div class="particle" style="width:2px;height:2px;bottom:0;left:95%;animation-duration:7.5s;animation-delay:2.5s;"></div>
-        </div>
-        <div class="sol"></div>
-        <div class="orbit-ring"></div><div class="orbit-ring"></div><div class="orbit-ring"></div><div class="orbit-ring"></div><div class="orbit-ring"></div>
-        <div class="planeta planeta1"></div><div class="planeta planeta2"></div><div class="planeta planeta3"></div><div class="planeta planeta4"></div><div class="planeta planeta5"></div>
-        <div class="light-scan"></div>
-        <div class="meteor"></div><div class="meteor"></div><div class="meteor"></div><div class="meteor"></div><div class="meteor"></div><div class="meteor"></div>
-    </div>
-    <div class="hero-content">
-        <h1>🐊 ESCOLINHA DO JACARÉ - ALVORADA</h1>
-        <p>"Desde 15 de abril de 1998 formando cidadãos através do esporte"</p>
-        <a href="prematricula.html" class="btn-prematricula">📝 FAZER PRÉ-MATRÍCULA</a>
-    </div>
-</div>
- 
-<!-- DEPOIMENTOS -->
-<div class="depoimentos-section">
-    <div class="depoimentos-titulo">💬 O que as famílias dizem</div>
-    <div class="carrossel-wrapper">
-        <div class="carrossel-track" id="carrosselTrack">
-            <div class="depoimentos-vazio">⏳ Carregando depoimentos...</div>
-        </div>
-    </div>
-    <div class="carrossel-controles" id="carrosselControles" style="display:none;">
-        <button class="carrossel-btn" id="btnAnterior">‹</button>
-        <div class="carrossel-dots" id="carrosselDots"></div>
-        <button class="carrossel-btn" id="btnProximo">›</button>
-    </div>
-</div>
- 
-<!-- CONTEÚDO PRINCIPAL -->
-<div class="conteudo">
- 
-    <div class="indicadores-grid">
-        <div class="indicador-card stagger-item">
-            <div class="icone">🏆</div>
-            <div class="valor" id="anosHistoria">28</div>
-            <div class="label">Anos de história</div>
-            <div class="detalhe">desde 1998</div>
-        </div>
-        <div class="indicador-card stagger-item">
-            <div class="icone">👥</div>
-            <div class="valor" id="totalAlunos">0</div>
-            <div class="label">Alunos ativos</div>
-        </div>
-        <div class="indicador-card stagger-item">
-            <div class="icone">⚽</div>
-            <div class="valor">5</div>
-            <div class="label">Modalidades</div>
-            <div class="detalhe">Futebol, Taekwondo, Tênis de Mesa, Ginástica, Judô</div>
-        </div>
-        <div class="indicador-card stagger-item">
-            <div class="icone">🎂</div>
-            <div class="valor">1998</div>
-            <div class="label">Ano de fundação</div>
-            <div class="detalhe">15 de abril</div>
+            <button class="btn-atualizar" onclick="atualizarDados()">🔄 ATUALIZAR</button>
+            <button class="btn-exportar" onclick="exportarDados()">📥 EXPORTAR</button>
+            <button class="btn-exportar-imagem" onclick="exportarComoImagem()">📸 EXPORTAR IMAGEM</button>
+            <a href="club.html" class="aba-nav-btn" style="text-decoration:none;">🎲 CLUBE</a>
+            <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
         </div>
     </div>
  
-    <div class="card">
-        <h2>📖 NOSSA HISTÓRIA</h2>
-        <p style="text-align:center;margin-bottom:30px;">Fundada no coração do bairro Alvorada, a Escolinha do Jacaré nasceu do sonho de transformar vidas através do esporte. Mais que formar atletas, nosso objetivo é formar cidadãos com valores sólidos como respeito, disciplina e trabalho em equipe.</p>
-        <div class="valores-grid">
-            <div class="valor-item"><span class="emoji">🏆</span><h3>Missão</h3><p>Formar cidadãos através do esporte, promovendo saúde, educação e cidadania.</p></div>
-            <div class="valor-item"><span class="emoji">👁️</span><h3>Visão</h3><p>Ser referência em formação esportiva e educacional no bairro Alvorada.</p></div>
-            <div class="valor-item"><span class="emoji">❤️</span><h3>Valores</h3><p>Respeito, disciplina, inclusão, trabalho em equipe e paixão pelo esporte.</p></div>
-        </div>
+    <div class="info-atualizacao"><span id="ultimaAtualizacao">🕐 Última atualização: carregando...</span></div>
+ 
+    <div class="abas-nav">
+        <button class="aba-nav-btn ativa" data-aba="dashboard">📈 DASHBOARD</button>
+        <button class="aba-nav-btn" data-aba="comentarios">💬 COMENTÁRIOS</button>
+        <button class="aba-nav-btn" data-aba="contatos">📬 CONTATOS</button>
+        <button class="aba-nav-btn" data-aba="uniforme">👕 UNIFORMES</button>
+        <button class="aba-nav-btn" data-aba="aniversarios">🎂 ANIVERSÁRIOS</button>
     </div>
  
-    <div class="categorias-container">
-        <h2>🏆 CATEGORIAS</h2>
-        <div class="grid-categorias">
-            <div class="cat-item"><span class="emoji-cat">⚽</span><span>FUTEBOL</span></div>
-            <div class="cat-item"><span class="emoji-cat">🥋</span><span>TAEKWONDO</span></div>
-            <div class="cat-item"><span class="emoji-cat">🏓</span><span>TÊNIS DE MESA</span></div>
-            <div class="cat-item"><span class="emoji-cat">🤸</span><span>GINÁSTICA</span></div>
+    <!-- ABA DASHBOARD -->
+    <div id="abaDashboard" class="aba-conteudo ativa">
+        <div class="cards-container">
+            <div class="card-analise"><div class="icone">👥</div><div class="valor" id="totalAlunos">0</div><div class="label">Total de Alunos</div><div class="detalhe" id="novosAlunosMes">+0 este mês</div></div>
+            <div class="card-analise"><div class="icone">📊</div><div class="valor" id="mediaIdade">0</div><div class="label">Média de Idade</div><div class="detalhe">anos</div></div>
+            <div class="card-analise"><div class="icone">🏆</div><div class="valor" id="turmaMaisAlunos">-</div><div class="label">Turma com + Alunos</div><div class="detalhe" id="turmaPercentual">0% do total</div></div>
+            <div class="card-analise"><div class="icone">🏘️</div><div class="valor" id="bairroMaisAlunos">-</div><div class="label">Bairro com + Alunos</div><div class="detalhe" id="bairroPercentual">0% do total</div></div>
         </div>
-        <div class="info-idades">
-            📋 <strong>Categorias oficiais:</strong> Sub-07 • Sub-09 • Sub-11 • Sub-13 • Sub-15 • Sub-17<br>
-            <span>👉 Aceitamos alunos até 17 anos</span> (consulte disponibilidade de vaga)
+        <div class="cards-container">
+            <div class="card-analise"><div class="icone">⚠️</div><div class="valor" id="totalDeficiencia">0</div><div class="label">Alunos com Deficiência</div><div class="detalhe" id="tiposDeficiencia">-</div></div>
+            <div class="card-analise"><div class="icone">💊</div><div class="valor" id="totalRemedio">0</div><div class="label">Remédio Controlado</div><div class="detalhe" id="percentRemedio">0%</div><div class="detalhe" id="numerosRemedio" style="font-size:0.65rem;">0 alunos</div></div>
+            <div class="card-analise"><div class="icone">📢</div><div class="valor" id="totalOrigem">0</div><div class="label">Como conheceu</div><div class="detalhe" id="principalOrigem">-</div></div>
         </div>
-    </div>
- 
-    <div class="info-card">
-        <h2>ℹ️ INFORMAÇÕES</h2>
-        <div class="info-grid">
-            <div class="info-item">
-                <span class="info-icone">🕐</span>
-                <h3>HORÁRIOS</h3>
-                <p>Treinos aos <strong>sábados</strong><br>das <strong>7:30 às 12:00</strong></p>
+        <div class="filtros-container">
+            <div class="filtros-grid">
+                <div class="filtro-group"><label>🔍 NOME</label><input type="text" id="filtroNome" placeholder="Nome do aluno..."></div>
+                <div class="filtro-group"><label>👤 RESPONSÁVEL</label><input type="text" id="filtroResponsavel" placeholder="Nome do responsável..."></div>
+                <div class="filtro-group"><label>📞 TELEFONE</label><input type="text" id="filtroTelefone" placeholder="Telefone..."></div>
+                <div class="filtro-group"><label>⚽ TURMA</label><select id="filtroTurma"><option value="">Todas</option><option value="Futebol">Futebol</option><option value="Taekwondo">Taekwondo</option><option value="Ginástica">Ginástica</option><option value="Tênis de Mesa">Tênis de Mesa</option><option value="Judô">Judô</option></select></div>
+                <div class="filtro-group"><label>🏆 CATEGORIA</label><select id="filtroCategoria"><option value="">Todas</option><option value="Sub-5">Sub-5</option><option value="Sub-7">Sub-7</option><option value="Sub-9">Sub-9</option><option value="Sub-11">Sub-11</option><option value="Sub-13">Sub-13</option><option value="Sub-15">Sub-15</option><option value="Sub-17">Sub-17</option><option value="Acima-17">Acima-17</option></select></div>
+                <div class="filtro-group"><label>🏘️ BAIRRO</label><input type="text" id="filtroBairro" placeholder="Bairro..."></div>
+                <div class="filtro-group"><label>📋 STATUS</label><select id="filtroStatus"><option value="">Todos</option><option value="aprovado">✅ Ativos</option><option value="pendente">⏳ Pendentes</option><option value="recusado">❌ Desativados</option></select></div>
             </div>
-            <div class="info-item">
-                <span class="info-icone">📍</span>
-                <h3>LOCALIZAÇÃO</h3>
-                <p>R. São Bernardo, 88<br>Alvorada I, Manaus - AM<br><a href="https://maps.app.goo.gl/Sz58rBrkoswb7wSq5" target="_blank">Ver no mapa →</a></p>
-            </div>
-            <div class="info-item">
-                <span class="info-icone">👕</span>
-                <h3>UNIFORME</h3>
-                <p>O uniforme é <strong>doado</strong> pela escolinha para todos os alunos matriculados</p>
+            <div class="filtros-acoes"><button class="btn-limpar-filtros" onclick="limparFiltros()">🗑️ LIMPAR FILTROS</button></div>
+        </div>
+        <div class="graficos-container">
+            <div class="grafico-card"><h3>⚽ Alunos por Turma</h3><canvas id="graficoTurmas"></canvas></div>
+            <div class="grafico-card"><h3>🥧 Distribuição por Turma (%)</h3><canvas id="graficoPizza"></canvas></div>
+            <div class="grafico-card"><h3>🏆 Alunos por Categoria</h3><canvas id="graficoCategoria"></canvas></div>
+            <div class="grafico-card"><h3>🏘️ Alunos por Bairro</h3><canvas id="graficoBairro"></canvas></div>
+            <div class="grafico-card"><h3>📈 Evolução Mensal de Matrículas</h3><canvas id="graficoEvolucao"></canvas></div>
+            <div class="grafico-card"><h3>⚠️ Alunos com Deficiência</h3><canvas id="graficoDeficiencia"></canvas></div>
+            <div class="grafico-card"><h3>💊 Remédio Controlado</h3><canvas id="graficoRemedio"></canvas></div>
+            <div class="grafico-card"><h3>📢 Como conheceu a Escolinha (%)</h3><canvas id="graficoOrigem"></canvas></div>
+            <div class="grafico-card full-width"><h3>📊 Alunos por Faixa Etária (Sub)</h3><canvas id="graficoSub"></canvas></div>
+        </div>
+        <div class="veteranos-section">
+            <h2>🏅 ALUNOS VETERANOS <span style="font-size:0.8rem;">(mais tempo de casa)</span></h2>
+            <div class="ranking-veteranos" id="rankingVeteranos"><div>Carregando veteranos...</div></div>
+            <div class="stats-veteranos" id="statsVeteranos">
+                <div class="stat-veterano"><div class="numero">0</div><div class="label">Veteranos (1+ ano)</div></div>
+                <div class="stat-veterano"><div class="numero">0</div><div class="label">Média de tempo</div></div>
+                <div class="stat-veterano"><div class="numero">0</div><div class="label">Maior tempo</div></div>
             </div>
         </div>
     </div>
  
-    <!-- PATROCINADORES TICKER INFINITO -->
-    <div class="patrocinadores">
-        <h2>🏆 NOSSOS PATROCINADORES</h2>
-        <div class="pat-ticker-wrapper">
-            <div class="pat-ticker-track">
-                <div class="pat-ticker-item"><img src="dubom.png" alt="Dubom"></div>
-                <div class="pat-ticker-item"><img src="sao-jose.png" alt="São José"></div>
-                <div class="pat-ticker-item"><img src="joao.jpeg" alt="Café do João"></div>
-                <div class="pat-ticker-item"><img src="dubom.png" alt="Dubom"></div>
-                <div class="pat-ticker-item"><img src="sao-jose.png" alt="São José"></div>
-                <div class="pat-ticker-item"><img src="joao.jpeg" alt="Café do João"></div>
-                <div class="pat-ticker-item"><img src="dubom.png" alt="Dubom"></div>
-                <div class="pat-ticker-item"><img src="sao-jose.png" alt="São José"></div>
-                <div class="pat-ticker-item"><img src="joao.jpeg" alt="Café do João"></div>
-            </div>
-        </div>
-        <div class="chamada-patrocinio">
-            📢 <strong>Sua marca pode estar aqui!</strong><br>
-            Seja um patrocinador da Escolinha do Jacaré.<br>
-            <a href="mailto:escolinhajacare98@gmail.com">📧 escolinhajacare98@gmail.com</a>
+    <!-- ABA COMENTÁRIOS -->
+    <div id="abaComentarios" class="aba-conteudo">
+        <div class="card" style="background:white;border-radius:20px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+            <h2 style="margin-bottom:20px;">💬 COMENTÁRIOS E AVALIAÇÕES</h2>
+            <div id="comentariosCarregando">Carregando comentários...</div>
+            <div id="listaComentarios" style="display:none;"></div>
+            <button class="btn-exportar" onclick="exportarComentarios()" style="background:#10b981;margin-top:20px;">📥 EXPORTAR COMENTÁRIOS</button>
         </div>
     </div>
  
-    <!-- DESENVOLVIMENTO -->
-    <div class="equipe-section">
-        <h2>💻 DESENVOLVIMENTO</h2>
-        <div class="equipe-grid">
-            <div class="equipe-card">
-                <div class="equipe-foto-container">
-                    <img src="jean.png" alt="Jean Silva" class="equipe-foto">
-                </div>
-                <div class="equipe-nome">JEAN SILVA</div>
-                <div class="equipe-cargo">Diretoria</div>
-                <div id="statusOnline" class="status-online offline">
-                    <span class="status-ponto"></span> OFFLINE
-                </div>
-                <div class="equipe-frase">✨ Tecnologia a favor do esporte ✨</div>
-                <a href="https://www.instagram.com/jean.silva.juvencio/" target="_blank" class="equipe-instagram">📷 Instagram</a>
- 
-                <div class="contato-interno">
-                    <h3>📬 Entre em Contato</h3>
-                    <div class="contato-form-grid">
-                        <div class="contato-field">
-                            <label>Nome completo</label>
-                            <input type="text" id="contatoNome" placeholder="Seu nome..." maxlength="100">
-                        </div>
-                        <div class="contato-field">
-                            <label>WhatsApp</label>
-                            <input type="tel" id="contatoWhatsApp" placeholder="(92) 9 0000-0000" maxlength="20">
-                        </div>
-                        <div class="contato-field full">
-                            <label>Assunto</label>
-                            <select id="contatoAssunto">
-                                <option value="">Selecione...</option>
-                                <option value="Sugestão">💡 Sugestão</option>
-                                <option value="Elogio">❤️ Elogio</option>
-                                <option value="Reclamação">⚠️ Reclamação</option>
-                                <option value="Dúvida">❓ Dúvida</option>
-                                <option value="Outro">📋 Outro</option>
-                            </select>
-                        </div>
-                        <div class="contato-field full">
-                            <label>Mensagem</label>
-                            <textarea id="contatoMensagem" placeholder="Escreva sua mensagem aqui..."></textarea>
-                        </div>
-                    </div>
-                    <div class="contato-sucesso" id="contatoSucesso">
-                        <p>✅ Mensagem enviada! Obrigado pelo contato.</p>
-                    </div>
-                    <button class="btn-enviar-contato" id="btnEnviarContato" onclick="enviarContato()">
-                        📤 ENVIAR MENSAGEM
-                    </button>
+    <!-- ABA CONTATOS -->
+    <div id="abaContatos" class="aba-conteudo">
+        <div style="background:white;border-radius:20px;padding:25px;box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+            <div class="contatos-header">
+                <h2>📬 MENSAGENS RECEBIDAS</h2>
+                <div class="contatos-filtros">
+                    <select id="filtroContatoAssunto" onchange="filtrarContatos()">
+                        <option value="">Todos os assuntos</option>
+                        <option value="Sugestão">💡 Sugestão</option>
+                        <option value="Elogio">❤️ Elogio</option>
+                        <option value="Reclamação">⚠️ Reclamação</option>
+                        <option value="Dúvida">❓ Dúvida</option>
+                        <option value="Outro">📋 Outro</option>
+                    </select>
+                    <input type="text" id="filtroContatoNome" placeholder="Buscar por nome..." oninput="filtrarContatos()" style="width:180px;">
+                    <button onclick="carregarContatos()" style="background:#0047AB;color:white;border:none;padding:8px 16px;border-radius:40px;cursor:pointer;font-size:0.8rem;font-weight:700;">🔄 Atualizar</button>
                 </div>
             </div>
+ 
+            <div class="contatos-stats" id="contatosStats">
+                <div class="contato-stat"><div class="num" id="statTotal">0</div><div class="lbl">Total</div></div>
+                <div class="contato-stat"><div class="num" id="statSugestao">0</div><div class="lbl">Sugestões</div></div>
+                <div class="contato-stat"><div class="num" id="statElogio">0</div><div class="lbl">Elogios</div></div>
+                <div class="contato-stat"><div class="num" id="statReclamacao">0</div><div class="lbl">Reclamações</div></div>
+                <div class="contato-stat"><div class="num" id="statDuvida">0</div><div class="lbl">Dúvidas</div></div>
+            </div>
+ 
+            <div id="contatosCarregando" style="text-align:center;padding:30px;color:#666;">⏳ Carregando mensagens...</div>
+            <div id="listaContatos"></div>
         </div>
     </div>
  
-    <div class="loc-card">
-        <h2>📍 VENHA NOS CONHECER</h2>
-        <div class="mapa-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.203015457583!2d-60.028347!3d-3.091704!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x926c1bc79a881f0b%3A0x2b8f6e3d5c4a2f9!2sR.%20S%C3%A3o%20Bernardo%2C%2088%20-%20Alvorada%2C%20Manaus%20-%20AM%2C%2069043-180!5e0!3m2!1spt-BR!2sbr!4v1712345678901!5m2!1spt-BR!2sbr" allowfullscreen="" loading="lazy"></iframe>
+    <!-- ABA UNIFORMES -->
+    <div id="abaUniforme" class="aba-conteudo">
+        <div class="card" style="background:white;border-radius:20px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.05);text-align:center;">
+            <h2>👕 UNIFORMES</h2>
+            <iframe src="uniforme.html" style="width:100%;height:600px;border:none;border-radius:20px;"></iframe>
         </div>
-        <div class="endereco-info">
-            <p><strong>Unidos do Alvorada</strong></p>
-            <p>R. São Bernardo, 88 - Alvorada I, Manaus - AM</p>
-        </div>
-        <a href="https://maps.app.goo.gl/Sz58rBrkoswb7wSq5" target="_blank" class="btn-mapa">📍 ABRIR NO GOOGLE MAPS</a>
     </div>
  
-    <footer>
-        🐊 ESCOLINHA DO JACARÉ - ALVORADA<br>Manaus/AM - Brasil
-        <div class="contato-footer">
-            <a href="https://www.instagram.com/escolinha_jacare98/" target="_blank">📷 Instagram</a>
-            <a href="https://wa.me/5592985603194" target="_blank">💬 WhatsApp</a>
-            <a href="mailto:escolinhajacare98@gmail.com">📧 E-mail</a>
+    <!-- ABA ANIVERSÁRIOS -->
+    <div id="abaAniversarios" class="aba-conteudo">
+        <div class="card" style="background:white;border-radius:20px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.05);text-align:center;">
+            <h2>🎂 ANIVERSARIANTES</h2>
+            <iframe src="aniversario.html" style="width:100%;height:600px;border:none;border-radius:20px;"></iframe>
         </div>
-        <div class="rights">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</div>
-    </footer>
+    </div>
 </div>
  
-<button id="btnTopo" class="btn-topo" title="Voltar ao topo">⬆️</button>
+<footer>
+    ESCOLINHA DO JACARÉ - ALVORADA<br>Manaus/AM - Brasil<br>
+    © 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte
+</footer>
  
 <script>
     const API_URL = 'https://api-escolinha.onrender.com/api';
-    let tickerAnimation = null;
-    let tickerPosition = 0;
-    let tickerSpeed = 0.6;
+    const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz57NEpM8UiCTZfc-3qFbjOrZhrJ9mFjhC5VmuD7Oa-O_4EevWA9SgGCRycwxwmugSnzQ/exec';
  
-    document.getElementById('anosHistoria').innerText = new Date().getFullYear() - 1998;
+    let usuarioLogado = null;
+    let todosAlunos = [];
+    let alunosFiltrados = [];
+    let graficos = {};
+    let ultimaAtualizacao = new Date();
+    let statusAtual = false;
+    let todosContatos = [];
  
-    function toggleMenu() {
-        var menu = document.getElementById('menuMobile');
-        var hamburger = document.getElementById('hamburger');
-        if (menu.style.left === '0px') { menu.style.left = '-280px'; hamburger.classList.remove('active'); }
-        else { menu.style.left = '0px'; hamburger.classList.add('active'); }
-    }
+    const TURMAS = ['Futebol', 'Taekwondo', 'Ginástica', 'Tênis de Mesa', 'Judô'];
+    const CATEGORIAS = ['Sub-5', 'Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Acima-17'];
+    const SUBS = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Sub-20', 'Sub-30'];
  
-    async function carregarDados() {
-        try {
-            const r = await fetch(`${API_URL}/alunos`);
-            const dados = await r.json();
-            if (Array.isArray(dados)) {
-                const ativos = dados.filter(i => i.status === 'aprovado');
-                const el = document.getElementById('totalAlunos');
-                if (el && ativos.length > 0) el.innerText = ativos.length;
-            }
-        } catch(e) {
-            const el = document.getElementById('totalAlunos');
-            if (el) el.innerText = '--';
-        }
-    }
- 
-    async function verificarStatus() {
-        const foto = document.querySelector('.equipe-foto');
+    // ========== ONLINE/OFFLINE ==========
+    async function carregarStatus() {
         try {
             const r = await fetch(`${API_URL}/status`);
+            const d = await r.json();
+            statusAtual = d.online === true;
+            atualizarBotaoStatus();
+        } catch(e) { statusAtual = false; atualizarBotaoStatus(); }
+    }
+ 
+    async function alternarStatus() {
+        const btn = document.getElementById('btnStatus');
+        btn.disabled = true;
+        const novoStatus = !statusAtual;
+        try {
+            const r = await fetch(`${API_URL}/status`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ online: novoStatus }) });
+            if (r.ok) { statusAtual = novoStatus; atualizarBotaoStatus(); mostrarToast(novoStatus ? '🟢 Agora você está ONLINE!' : '🔴 Agora você está OFFLINE'); }
+        } catch(e) { mostrarToast('❌ Erro ao alterar status', 'error'); }
+        btn.disabled = false;
+    }
+ 
+    function atualizarBotaoStatus() {
+        const btn = document.getElementById('btnStatus');
+        const texto = document.getElementById('textoStatus');
+        if (statusAtual) { btn.className = 'btn-status online'; texto.innerText = 'ONLINE'; }
+        else { btn.className = 'btn-status offline'; texto.innerText = 'OFFLINE'; }
+    }
+ 
+    // ========== ABAS ==========
+    function alternarAba(abaId) {
+        document.querySelectorAll('.aba-nav-btn').forEach(btn => btn.classList.remove('ativa'));
+        document.querySelector(`.aba-nav-btn[data-aba="${abaId}"]`)?.classList.add('ativa');
+        document.querySelectorAll('.aba-conteudo').forEach(c => c.classList.remove('ativa'));
+        document.getElementById(`aba${abaId.charAt(0).toUpperCase() + abaId.slice(1)}`)?.classList.add('ativa');
+        if (abaId === 'comentarios') carregarComentarios();
+        if (abaId === 'contatos') carregarContatos();
+    }
+ 
+    document.querySelectorAll('.aba-nav-btn[data-aba]').forEach(btn => {
+        btn.addEventListener('click', () => alternarAba(btn.dataset.aba));
+    });
+ 
+    // ========== CONTATOS (GOOGLE SHEETS) ==========
+    async function carregarContatos() {
+        document.getElementById('contatosCarregando').style.display = 'block';
+        document.getElementById('listaContatos').innerHTML = '';
+        try {
+            const r = await fetch(SHEETS_URL);
             const dados = await r.json();
-            const el = document.getElementById('statusOnline');
-            if (dados.online) {
-                if (el) { el.className = 'status-online online'; el.innerHTML = '<span class="status-ponto"></span> ONLINE'; }
-                if (foto) { foto.classList.remove('foto-offline'); foto.classList.add('foto-online'); }
-            } else {
-                if (el) { el.className = 'status-online offline'; el.innerHTML = '<span class="status-ponto"></span> OFFLINE'; }
-                if (foto) { foto.classList.remove('foto-online'); foto.classList.add('foto-offline'); }
-            }
+            todosContatos = Array.isArray(dados) ? dados : [];
+            renderizarContatos(todosContatos);
         } catch(e) {
-            const el = document.getElementById('statusOnline');
-            if (el) { el.className = 'status-online offline'; el.innerHTML = '<span class="status-ponto"></span> OFFLINE'; }
-            if (foto) { foto.classList.remove('foto-online'); foto.classList.add('foto-offline'); }
+            document.getElementById('listaContatos').innerHTML = '<div class="contatos-vazio">❌ Erro ao carregar mensagens. Tente novamente.</div>';
         }
+        document.getElementById('contatosCarregando').style.display = 'none';
     }
  
-    async function buscarClima() {
-        try {
-            const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-3.1019&longitude=-60.0250&current_weather=true&timezone=America/Manaus');
-            const d = await r.json();
-            const temp = Math.round(d.current_weather.temperature);
-            const c = d.current_weather.weathercode;
-            let icone = '🌡️', desc = 'Manaus';
-            if (c === 0) { icone = '☀️'; desc = 'Céu limpo'; }
-            else if (c <= 2) { icone = '⛅'; desc = 'Parcialmente nublado'; }
-            else if (c === 3) { icone = '☁️'; desc = 'Nublado'; }
-            else if (c <= 48) { icone = '🌫️'; desc = 'Nevoeiro'; }
-            else if (c <= 82) { icone = '🌧️'; desc = 'Chuva'; }
-            else { icone = '⛈️'; desc = 'Tempestade'; }
-            document.getElementById('climaTemp').innerHTML = `${temp}°C`;
-            document.getElementById('climaDesc').innerHTML = `Manaus • ${desc}`;
-            document.getElementById('climaIcone').innerHTML = icone;
-        } catch(e) {}
-    }
+    function renderizarContatos(lista) {
+        const assuntoFiltro = document.getElementById('filtroContatoAssunto').value;
+        const nomeFiltro = document.getElementById('filtroContatoNome').value.toLowerCase();
  
-    let noticiasLista = [];
-    async function buscarNoticias() {
-        try {
-            const r = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://ge.globo.com/rss/ge/');
-            const d = await r.json();
-            if (d.items?.length > 0) {
-                noticiasLista = d.items.slice(0, 12).map(i => { let t = i.title; if (t.length > 70) t = t.substring(0, 67) + '...'; return `⚽ ${t}`; });
-                atualizarTicker(); return;
-            }
-        } catch(e) {}
-        noticiasLista = ["🏆 Futebol para todos na Escolinha do Jacaré", "⚽ Campeonato Brasileiro em andamento", "🎉 Formando cidadãos através do esporte"];
-        atualizarTicker();
-    }
+        const filtrados = lista.filter(c => {
+            if (assuntoFiltro && c.assunto !== assuntoFiltro) return false;
+            if (nomeFiltro && !(c.nome || '').toLowerCase().includes(nomeFiltro)) return false;
+            return true;
+        });
  
-    function atualizarTicker() {
-        const t = document.getElementById('tickerNoticias');
-        if (t && noticiasLista.length > 0) {
-            const c = noticiasLista.map(n => `<span>${n}</span>`).join('');
-            t.innerHTML = c + c + c;
-            if (tickerAnimation) cancelAnimationFrame(tickerAnimation);
-            tickerPosition = 0;
-            const largura = t.scrollWidth / 3;
-            function animar() { tickerPosition += tickerSpeed; if (tickerPosition >= largura) tickerPosition = 0; t.style.transform = `translateX(-${tickerPosition}px)`; tickerAnimation = requestAnimationFrame(animar); }
-            tickerAnimation = requestAnimationFrame(animar);
+        // Stats
+        document.getElementById('statTotal').innerText = lista.length;
+        document.getElementById('statSugestao').innerText = lista.filter(c => c.assunto === 'Sugestão').length;
+        document.getElementById('statElogio').innerText = lista.filter(c => c.assunto === 'Elogio').length;
+        document.getElementById('statReclamacao').innerText = lista.filter(c => c.assunto === 'Reclamação').length;
+        document.getElementById('statDuvida').innerText = lista.filter(c => c.assunto === 'Dúvida').length;
+ 
+        const container = document.getElementById('listaContatos');
+        if (filtrados.length === 0) {
+            container.innerHTML = '<div class="contatos-vazio">📭 Nenhuma mensagem encontrada</div>';
+            return;
         }
+ 
+        const assuntoClass = { 'Sugestão': 'assunto-sugestao', 'Elogio': 'assunto-elogio', 'Reclamação': 'assunto-reclamacao', 'Dúvida': 'assunto-duvida', 'Outro': 'assunto-outro' };
+        const assuntoEmoji = { 'Sugestão': '💡', 'Elogio': '❤️', 'Reclamação': '⚠️', 'Dúvida': '❓', 'Outro': '📋' };
+ 
+        container.innerHTML = [...filtrados].reverse().map(c => {
+            const cls = assuntoClass[c.assunto] || 'assunto-outro';
+            const emoji = assuntoEmoji[c.assunto] || '📋';
+            const whats = (c.whatsapp || '').replace(/\D/g, '');
+            const btnWhats = whats ? `<a class="btn-responder" href="https://wa.me/55${whats}?text=Olá ${encodeURIComponent(c.nome || '')}! Recebemos sua mensagem da Escolinha do Jacaré." target="_blank">💬 Responder no WhatsApp</a>` : '<span style="font-size:0.75rem;color:#999;">Sem WhatsApp</span>';
+            return `
+                <div class="contato-msg-card">
+                    <div class="contato-msg-header">
+                        <div class="contato-msg-nome">👤 ${c.nome || 'Anônimo'}</div>
+                        <div class="contato-msg-data">${c.data || ''}</div>
+                    </div>
+                    <span class="contato-msg-assunto ${cls}">${emoji} ${c.assunto || 'Outro'}</span>
+                    <div class="contato-msg-texto">"${c.mensagem || ''}"</div>
+                    <div class="contato-msg-footer">
+                        <span class="contato-msg-whats">${c.whatsapp ? '📱 ' + c.whatsapp : ''}</span>
+                        ${btnWhats}
+                    </div>
+                </div>`;
+        }).join('');
     }
  
-    function alternarTema() {
-        document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
-        document.getElementById('btnTema').innerHTML = isDark ? '🌙' : '🌞';
-        localStorage.setItem('tema', isDark ? 'dark' : 'light');
-    }
+    function filtrarContatos() { renderizarContatos(todosContatos); }
  
-    function alternarAcessibilidade() {
-        document.body.classList.toggle('acessibilidade');
-        const btn = document.getElementById('btnAcessibilidade');
-        if (document.body.classList.contains('acessibilidade')) { btn.classList.add('ativo'); localStorage.setItem('acessibilidade', 'active'); mostrarToast('♿ Modo ativado'); }
-        else { btn.classList.remove('ativo'); localStorage.setItem('acessibilidade', 'inactive'); mostrarToast('♿ Modo desativado'); }
-    }
- 
-    document.getElementById('btnTopo').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    window.addEventListener('scroll', () => { document.getElementById('btnTopo').classList.toggle('visible', window.scrollY > 300); });
- 
-    function mostrarToast(msg) {
-        const t = document.createElement('div'); t.className = 'toast'; t.innerHTML = `✅ ${msg}`; document.body.appendChild(t);
-        setTimeout(() => t.classList.add('show'), 10); setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 2500);
-    }
- 
-    document.getElementById('btnAcessibilidade')?.addEventListener('click', alternarAcessibilidade);
- 
-    // DEPOIMENTOS
-    let depoimentos = [], carrosselIndex = 0, carrosselTimer = null;
- 
-    async function carregarDepoimentos(t = 1) {
-        const msgs = ['⏳ Acordando o servidor...', '⏳ Ainda conectando...', '⏳ Quase lá...', '⏳ Última tentativa...'];
-        document.getElementById('carrosselTrack').innerHTML = `<div class="depoimentos-vazio">${msgs[t-1]}</div>`;
+    // ========== COMENTÁRIOS ==========
+    async function carregarComentarios() {
+        const container = document.getElementById('listaComentarios');
+        const loading = document.getElementById('comentariosCarregando');
+        loading.style.display = 'block'; container.style.display = 'none';
         try {
             const r = await fetch(`${API_URL}/alunos`);
-            if (!r.ok) throw new Error();
             const dados = await r.json();
             if (Array.isArray(dados)) {
-                depoimentos = dados.filter(i => {
-                    if ((parseInt(i.estrelas)||0) < 4) return false;
-                    return (i.observacao||'').replace(/⭐+\s*\d*\s*estrelas?\.\s*/gi,'').replace(/\[[^\]]+\]/gi,'').trim().length > 0;
-                }).map(i => ({ ...i, textoLimpo: (i.observacao||'').replace(/⭐+\s*\d*\s*estrelas?\.\s*/gi,'').replace(/\[[^\]]+\]/gi,'').trim() }))
-                .sort((a,b) => (parseInt(b.estrelas)||0)-(parseInt(a.estrelas)||0));
+                const comentarios = dados.filter(i => i.observacao && i.observacao.trim().length > 0);
+                if (!comentarios.length) { container.innerHTML = '<div style="text-align:center;padding:40px;">📭 Nenhum comentário encontrado</div>'; }
+                else { container.innerHTML = comentarios.map(item => { let estrelas = item.estrelas > 0 ? '⭐'.repeat(item.estrelas) + '☆'.repeat(5-item.estrelas) : ''; return `<div style="background:#f8fafc;border-radius:16px;padding:15px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;margin-bottom:8px;"><span style="font-weight:600;">👤 ${item.nome_aluno||'Anônimo'}</span><span style="color:#ff9800;">${estrelas}</span><span style="font-size:0.7rem;color:#666;">${formatarData(item.data_envio)}</span></div><div style="margin-top:8px;">"${item.observacao}"</div></div>`; }).join(''); }
+                loading.style.display = 'none'; container.style.display = 'block';
             }
-            renderizarCarrossel();
+        } catch(e) { container.innerHTML = '<div style="text-align:center;padding:40px;">❌ Erro ao carregar comentários</div>'; loading.style.display = 'none'; container.style.display = 'block'; }
+    }
+ 
+    function exportarComentarios() {
+        const comentarios = document.querySelectorAll('#listaComentarios > div');
+        if (!comentarios.length) { mostrarToast('Nenhum comentário para exportar', 'error'); return; }
+        let csv = 'Nome,Comentário,Data,Estrelas\n';
+        comentarios.forEach(div => { const nome = div.querySelector('span:first-child')?.innerText?.replace('👤 ','') || ''; const estrelas = (div.querySelector('span:nth-child(2)')?.innerText?.match(/⭐/g)||[]).length; const data = div.querySelector('span:last-child')?.innerText || ''; const texto = div.querySelector('div:last-child')?.innerText?.replace(/"/g,'""') || ''; csv += `"${nome}","${texto}","${data}","${estrelas}"\n`; });
+        const blob = new Blob(["\uFEFF" + csv], { type:'text/csv;charset=utf-8;' });
+        const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = `comentarios_${new Date().toISOString().slice(0,10)}.csv`; link.click(); URL.revokeObjectURL(link.href);
+        mostrarToast('📥 Comentários exportados!');
+    }
+ 
+    function mostrarToast(mensagem, tipo = 'success') {
+        const t = document.createElement('div'); t.className = `toast ${tipo}`; t.innerHTML = mensagem; document.body.appendChild(t);
+        setTimeout(() => t.remove(), 3500);
+    }
+ 
+    function formatarData(dataStr) {
+        if (!dataStr) return '-';
+        try { const d = new Date(dataStr); return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`; } catch { return dataStr; }
+    }
+ 
+    function capitalizar(str) { if (!str || str === 'Não informada' || str === 'Não informado') return 'Não informada'; return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase(); }
+    function atualizarTimestamp() { const diff = Math.floor((new Date() - ultimaAtualizacao) / 1000); document.getElementById('ultimaAtualizacao').innerHTML = `🕐 Última atualização: ${diff < 60 ? `há ${diff} segundos` : `há ${Math.floor(diff/60)} minutos`}`; }
+    function calcularTempoCasa(dataMatricula) { if (!dataMatricula) return 0; const data = new Date(dataMatricula); const hoje = new Date(); return (hoje.getFullYear() - data.getFullYear()) * 12 + (hoje.getMonth() - data.getMonth()); }
+    function formatarTempoCasa(meses) { if (meses === 0) return 'Menos de 1 mês'; if (meses < 12) return `${meses} ${meses===1?'mês':'meses'}`; const anos = Math.floor(meses/12); const m = meses%12; if (m===0) return `${anos} ${anos===1?'ano':'anos'}`; return `${anos} ${anos===1?'ano':'anos'} e ${m} ${m===1?'mês':'meses'}`; }
+    function getMedalhaClass(i) { return ['medalha-ouro','medalha-prata','medalha-bronze','medalha-geral'][i] || 'medalha-geral'; }
+    function getTempoBadge(meses) { if (meses>=60) return {class:'tempo-5anos',texto:'🏆 5+ anos'}; if (meses>=48) return {class:'tempo-4anos',texto:'⭐ 4 anos'}; if (meses>=36) return {class:'tempo-3anos',texto:'✨ 3 anos'}; if (meses>=24) return {class:'tempo-2anos',texto:'🌟 2 anos'}; if (meses>=12) return {class:'tempo-1ano',texto:'🎉 1 ano'}; return {class:'',texto:'🆕 Novato'}; }
+ 
+    async function carregarDadosDaPlanilha(tentativa = 1) {
+        if (tentativa === 1) mostrarToast('⏳ Conectando ao servidor...', 'info');
+        try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 15000);
+            const r = await fetch(`${API_URL}/alunos`, { signal: controller.signal });
+            clearTimeout(timeout);
+            const dados = await r.json();
+            if (Array.isArray(dados)) {
+                todosAlunos = dados.map(item => ({ nome: item.nome_aluno||'Não informado', turma: capitalizar(item.turma), categoria: item.categoria||'Não informada', bairro: item.bairro?capitalizar(item.bairro):'Não informado', responsavel: item.responsavel||'Não informado', telefone: item.telefone||'', idade: parseInt(item.idade)||0, dataMatricula: item.data_envio||new Date().toISOString(), deficiencia: item.deficiencia||'Nenhuma', remedio: item.remedio||'Não', origem: item.origem||'', status: item.status||'pendente' }));
+                aplicarFiltros(); atualizarCards(); atualizarCardsDeficienciaRemedioOrigem(); atualizarVeteranos();
+                ultimaAtualizacao = new Date(); atualizarTimestamp();
+                mostrarToast(`✅ ${dados.length} alunos carregados`);
+            }
         } catch(e) {
-            if (t < 4) setTimeout(() => carregarDepoimentos(t+1), 15000);
-            else document.getElementById('carrosselTrack').innerHTML = '<div class="depoimentos-vazio">📭 Nenhum depoimento disponível.</div>';
+            if (tentativa < 4) { mostrarToast(`⏳ Tentativa ${tentativa}/3...`, 'info'); setTimeout(() => carregarDadosDaPlanilha(tentativa+1), tentativa*5000); }
+            else mostrarToast('❌ Não foi possível conectar. Clique em ATUALIZAR.', 'error');
         }
     }
  
-    function renderizarCarrossel() {
-        const track = document.getElementById('carrosselTrack');
-        const controles = document.getElementById('carrosselControles');
-        const dots = document.getElementById('carrosselDots');
-        if (!depoimentos.length) { track.innerHTML = '<div class="depoimentos-vazio">📭 Nenhum depoimento ainda.</div>'; controles.style.display='none'; return; }
-        track.innerHTML = depoimentos.map(d => {
-            const e = parseInt(d.estrelas)||0;
-            const icone = (d.sexo_responsavel||'').toLowerCase().includes('f') ? '👩' : '👨';
-            return `<div class="depoimento-card"><div class="depoimento-estrelas">${'★'.repeat(e)}${'☆'.repeat(5-e)}</div><div class="depoimento-texto">"${d.textoLimpo}"</div><div class="depoimento-autor"><div class="depoimento-avatar">${icone}</div><div class="depoimento-info"><div class="nome">${d.responsavel||'Responsável'}</div><div class="sub">${d.nome_aluno?`Responsável por ${d.nome_aluno}`:'Família Jacaré'}</div></div></div></div>`;
-        }).join('');
-        dots.innerHTML = depoimentos.map((_,i) => `<div class="carrossel-dot ${i===0?'ativo':''}" data-index="${i}"></div>`).join('');
-        dots.querySelectorAll('.carrossel-dot').forEach(d => d.addEventListener('click', () => irParaSlide(parseInt(d.dataset.index))));
-        controles.style.display = 'flex';
-        if (depoimentos.length > 1) carrosselTimer = setInterval(() => irParaSlide(carrosselIndex+1), 5000);
+    function atualizarCards() {
+        const total = todosAlunos.length;
+        document.getElementById('totalAlunos').innerText = total;
+        document.getElementById('mediaIdade').innerText = total ? (todosAlunos.reduce((s,a) => s+a.idade,0)/total).toFixed(1) : 0;
+        const turmasCount = {}; todosAlunos.forEach(a => turmasCount[a.turma]=(turmasCount[a.turma]||0)+1);
+        let turmaMais = {nome:'-',count:0}; for (const [n,c] of Object.entries(turmasCount)) if (c>turmaMais.count) turmaMais={nome:n,count:c};
+        document.getElementById('turmaMaisAlunos').innerText = turmaMais.nome;
+        document.getElementById('turmaPercentual').innerHTML = total ? `${((turmaMais.count/total)*100).toFixed(1)}% do total` : '0%';
+        const bairrosCount = {}; todosAlunos.forEach(a => { if(a.bairro!=='Não informado') bairrosCount[a.bairro]=(bairrosCount[a.bairro]||0)+1; });
+        let bairroMais = {nome:'-',count:0}; for (const [n,c] of Object.entries(bairrosCount)) if (c>bairroMais.count) bairroMais={nome:n,count:c};
+        document.getElementById('bairroMaisAlunos').innerText = bairroMais.nome;
+        document.getElementById('bairroPercentual').innerHTML = total ? `${((bairroMais.count/total)*100).toFixed(1)}% do total` : '0%';
+        const mesAtual = new Date().getMonth();
+        document.getElementById('novosAlunosMes').innerHTML = `+${todosAlunos.filter(a => a.dataMatricula && new Date(a.dataMatricula).getMonth()===mesAtual).length} este mês`;
     }
  
-    function irParaSlide(index) {
-        carrosselIndex = (index+depoimentos.length)%depoimentos.length;
-        document.getElementById('carrosselTrack').style.transform = `translateX(-${carrosselIndex*100}%)`;
-        document.querySelectorAll('.carrossel-dot').forEach((d,i) => d.classList.toggle('ativo', i===carrosselIndex));
-        clearInterval(carrosselTimer);
-        if (depoimentos.length > 1) carrosselTimer = setInterval(() => irParaSlide(carrosselIndex+1), 5000);
+    function atualizarCardsDeficienciaRemedioOrigem() {
+        const total = todosAlunos.length;
+        document.getElementById('totalDeficiencia').innerText = todosAlunos.filter(a => a.deficiencia && a.deficiencia!=='Nenhuma').length;
+        const remedioCount = todosAlunos.filter(a => a.remedio && a.remedio!=='Não').length;
+        document.getElementById('totalRemedio').innerText = remedioCount;
+        document.getElementById('percentRemedio').innerHTML = total ? `${((remedioCount/total)*100).toFixed(1)}%` : '0%';
+        document.getElementById('numerosRemedio').innerHTML = `${remedioCount} de ${total} alunos`;
+        const origemCount = {}; todosAlunos.forEach(a => { if(a.origem?.trim()) { let o=a.origem.trim(); o=o.charAt(0).toUpperCase()+o.slice(1).toLowerCase(); origemCount[o]=(origemCount[o]||0)+1; } });
+        let origemMais = {nome:'-',count:0}; for (const [n,c] of Object.entries(origemCount)) if (c>origemMais.count) origemMais={nome:n,count:c};
+        document.getElementById('totalOrigem').innerText = Object.keys(origemCount).length;
+        document.getElementById('principalOrigem').innerHTML = origemMais.nome!=='-' ? `${origemMais.nome} (${origemMais.count})` : '-';
     }
  
-    document.getElementById('btnProximo')?.addEventListener('click', () => irParaSlide(carrosselIndex+1));
-    document.getElementById('btnAnterior')?.addEventListener('click', () => irParaSlide(carrosselIndex-1));
- 
- 
-    // ENTRE EM CONTATO
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz57NEpM8UiCTZfc-3qFbjOrZhrJ9mFjhC5VmuD7Oa-O_4EevWA9SgGCRycwxwmugSnzQ/exec';
- 
-    async function enviarContato() {
-        const nome = document.getElementById('contatoNome').value.trim();
-        const whatsapp = document.getElementById('contatoWhatsApp').value.trim();
-        const assunto = document.getElementById('contatoAssunto').value;
-        const mensagem = document.getElementById('contatoMensagem').value.trim();
- 
-        if (!nome) { mostrarToast('⚠️ Preencha seu nome!', 'error'); document.getElementById('contatoNome').focus(); return; }
-        if (!whatsapp) { mostrarToast('⚠️ Preencha seu WhatsApp!', 'error'); document.getElementById('contatoWhatsApp').focus(); return; }
-        if (!assunto) { mostrarToast('⚠️ Selecione um assunto!', 'error'); document.getElementById('contatoAssunto').focus(); return; }
-        if (!mensagem) { mostrarToast('⚠️ Escreva sua mensagem!', 'error'); document.getElementById('contatoMensagem').focus(); return; }
- 
-        const btn = document.getElementById('btnEnviarContato');
-        btn.disabled = true;
-        btn.innerHTML = '⏳ Enviando...';
- 
-        fetch(APPS_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nome, whatsapp, assunto, mensagem })
+    function aplicarFiltros() {
+        const nome = document.getElementById('filtroNome').value.toLowerCase();
+        const responsavel = document.getElementById('filtroResponsavel').value.toLowerCase();
+        const telefone = document.getElementById('filtroTelefone').value.toLowerCase();
+        const turma = document.getElementById('filtroTurma').value;
+        const categoria = document.getElementById('filtroCategoria').value;
+        const bairro = document.getElementById('filtroBairro').value.toLowerCase();
+        const status = document.getElementById('filtroStatus').value;
+        alunosFiltrados = todosAlunos.filter(a => {
+            if (nome && !a.nome.toLowerCase().includes(nome)) return false;
+            if (responsavel && !a.responsavel.toLowerCase().includes(responsavel)) return false;
+            if (telefone && !a.telefone.includes(telefone)) return false;
+            if (turma && a.turma!==turma) return false;
+            if (categoria && a.categoria!==categoria) return false;
+            if (bairro && !a.bairro.toLowerCase().includes(bairro)) return false;
+            if (status && a.status!==status) return false;
+            return true;
         });
- 
-        document.getElementById('contatoSucesso').style.display = 'block';
-        document.getElementById('contatoNome').value = '';
-        document.getElementById('contatoWhatsApp').value = '';
-        document.getElementById('contatoAssunto').value = '';
-        document.getElementById('contatoMensagem').value = '';
-        btn.innerHTML = '✅ ENVIADO!';
-        mostrarToastSucesso('✅ Mensagem enviada com sucesso! Entraremos em contato em breve.');
-        setTimeout(() => {
-            btn.disabled = false;
-            btn.innerHTML = '📤 ENVIAR MENSAGEM';
-            document.getElementById('contatoSucesso').style.display = 'none';
-        }, 5000);
+        atualizarTodosGraficos(); atualizarVeteranos();
     }
  
-    window.addEventListener('load', () => {
-        buscarClima();
-        buscarNoticias();
-        carregarDados();
-        carregarDepoimentos();
-        verificarStatus();
-        setInterval(buscarClima, 600000);
-        setInterval(buscarNoticias, 300000);
-        setInterval(verificarStatus, 30000);
+    function limparFiltros() {
+        ['filtroNome','filtroResponsavel','filtroTelefone','filtroBairro'].forEach(id => document.getElementById(id).value='');
+        ['filtroTurma','filtroCategoria','filtroStatus'].forEach(id => document.getElementById(id).value='');
+        aplicarFiltros();
+    }
  
-        document.querySelectorAll('.stagger-item').forEach((item,i) => {
-            setTimeout(() => { item.style.opacity='1'; item.style.animation='fadeInUp 0.5s ease forwards'; }, i*150);
-        });
+    function atualizarTodosGraficos() {
+        const dados = alunosFiltrados;
+        const turmasCount = TURMAS.map(t => dados.filter(a => a.turma===t).length);
+        if (graficos.turmas) graficos.turmas.destroy();
+        graficos.turmas = new Chart(document.getElementById('graficoTurmas'), { type:'bar', data:{ labels:TURMAS.map(t => t==='Taekwondo'?'Taekw.':t), datasets:[{ label:'Alunos', data:turmasCount, backgroundColor:'#0047AB', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } } } });
+        const totalTurmas = turmasCount.reduce((a,b) => a+b, 0);
+        if (graficos.pizza) graficos.pizza.destroy();
+        graficos.pizza = new Chart(document.getElementById('graficoPizza'), { type:'pie', data:{ labels:TURMAS, datasets:[{ data:turmasCount, backgroundColor:['#0047AB','#00aaff','#ff9800','#25d366','#ff69b4'], borderWidth:2, borderColor:'white' }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ tooltip:{ callbacks:{ label:(ctx) => `${ctx.label}: ${ctx.raw} alunos (${totalTurmas>0?((ctx.raw/totalTurmas)*100).toFixed(1):0}%)` } }, legend:{ position:'bottom', labels:{ font:{ size:11 } } } } } });
+        const categoriasCount = CATEGORIAS.map(cat => dados.filter(a => a.categoria===cat).length);
+        if (graficos.categoria) graficos.categoria.destroy();
+        graficos.categoria = new Chart(document.getElementById('graficoCategoria'), { type:'bar', data:{ labels:CATEGORIAS, datasets:[{ label:'Alunos', data:categoriasCount, backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } } } });
+        const bairrosMap = new Map(); dados.forEach(a => { if(a.bairro && a.bairro!=='Não informado') bairrosMap.set(a.bairro, (bairrosMap.get(a.bairro)||0)+1); });
+        const bairros = Array.from(bairrosMap.entries()).sort((a,b) => b[1]-a[1]).slice(0,8);
+        if (graficos.bairro) graficos.bairro.destroy();
+        graficos.bairro = new Chart(document.getElementById('graficoBairro'), { type:'bar', data:{ labels:bairros.map(b=>b[0]), datasets:[{ label:'Alunos', data:bairros.map(b=>b[1]), backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } } } });
+        const matriculasPorMes = new Array(12).fill(0); dados.forEach(a => { if(a.dataMatricula) matriculasPorMes[new Date(a.dataMatricula).getMonth()]++; });
+        if (graficos.evolucao) graficos.evolucao.destroy();
+        graficos.evolucao = new Chart(document.getElementById('graficoEvolucao'), { type:'line', data:{ labels:['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'], datasets:[{ label:'Matrículas', data:matriculasPorMes, borderColor:'#0047AB', backgroundColor:'rgba(0,71,171,0.1)', fill:true, tension:0.3 }] }, options:{ responsive:true, maintainAspectRatio:true } });
+        const deficienciaMap = new Map(); dados.forEach(a => { if(a.deficiencia && a.deficiencia!=='Nenhuma') { a.deficiencia.split(', ').forEach(t => { const tl=t.replace('Outra: ','').trim(); if(tl) deficienciaMap.set(tl,(deficienciaMap.get(tl)||0)+1); }); } });
+        if (graficos.deficiencia) graficos.deficiencia.destroy();
+        graficos.deficiencia = new Chart(document.getElementById('graficoDeficiencia'), { type:'bar', data:{ labels:deficienciaMap.size?Array.from(deficienciaMap.keys()):['Nenhuma'], datasets:[{ label:'Alunos', data:deficienciaMap.size?Array.from(deficienciaMap.values()):[dados.length], backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } } } });
+        const remedioSim = dados.filter(a => a.remedio && a.remedio!=='Não').length;
+        if (graficos.remedio) graficos.remedio.destroy();
+        graficos.remedio = new Chart(document.getElementById('graficoRemedio'), { type:'pie', data:{ labels:['Sim','Não'], datasets:[{ data:[remedioSim,dados.length-remedioSim], backgroundColor:['#f44336','#4caf50'] }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ position:'bottom' } } } });
+        const origemMap = new Map(); dados.forEach(a => { if(a.origem?.trim()) { let o=a.origem.trim(); o=o.charAt(0).toUpperCase()+o.slice(1).toLowerCase(); origemMap.set(o,(origemMap.get(o)||0)+1); } });
+        if (graficos.origem) graficos.origem.destroy();
+        graficos.origem = new Chart(document.getElementById('graficoOrigem'), { type:'bar', data:{ labels:Array.from(origemMap.keys()), datasets:[{ label:'Alunos (%)', data:Array.from(origemMap.values()).map(v => dados.length>0?((v/dados.length)*100).toFixed(1):0), backgroundColor:'#25d366', borderRadius:8 }] }, options:{ responsive:true, maintainAspectRatio:true, scales:{ y:{ title:{ display:true, text:'Percentual (%)' }, beginAtZero:true, max:100 } }, plugins:{ legend:{ display:false } } } });
+        const subCount = [0,0,0,0,0,0,0,0]; dados.forEach(a => { const idade=a.idade; if(!idade) return; if(idade<=7) subCount[0]++; else if(idade<=9) subCount[1]++; else if(idade<=11) subCount[2]++; else if(idade<=13) subCount[3]++; else if(idade<=15) subCount[4]++; else if(idade<=17) subCount[5]++; else if(idade<=20) subCount[6]++; else subCount[7]++; });
+        if (graficos.sub) graficos.sub.destroy();
+        graficos.sub = new Chart(document.getElementById('graficoSub'), { type:'bar', data:{ labels:SUBS, datasets:[{ label:'Alunos', data:subCount, backgroundColor:'#00aaff', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } } } });
+    }
  
-        if (localStorage.getItem('tema') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('btnTema').innerHTML='🌙'; }
-        if (localStorage.getItem('acessibilidade') === 'active') { document.body.classList.add('acessibilidade'); document.getElementById('btnAcessibilidade').classList.add('ativo'); }
+    function atualizarVeteranos() {
+        const alunosComTempo = todosAlunos.map(a => ({ ...a, tempoMeses: calcularTempoCasa(a.dataMatricula) })).filter(a => a.tempoMeses>0).sort((a,b) => b.tempoMeses-a.tempoMeses);
+        const top = alunosComTempo.slice(0,5);
+        const container = document.getElementById('rankingVeteranos');
+        if (!top.length) { container.innerHTML = '<div>🏅 Nenhum veterano ainda</div>'; }
+        else { container.innerHTML = top.map((a,i) => { const medalha=getMedalhaClass(i); const badge=getTempoBadge(a.tempoMeses); return `<div class="veterano-card"><div class="veterano-medalha ${medalha}">${['🥇','🥈','🥉','🏅','🏅'][i]}</div><div class="veterano-info"><div class="veterano-nome"><strong>${a.nome}</strong><span class="tempo-badge ${badge.class}">${badge.texto}</span></div><div class="veterano-detalhes">${a.turma} • ${a.categoria} • ${formatarTempoCasa(a.tempoMeses)} de casa</div></div></div>`; }).join(''); }
+        const veteranos = alunosComTempo.filter(a => a.tempoMeses>=12);
+        const mediaTempo = veteranos.length ? Math.round(veteranos.reduce((s,a) => s+a.tempoMeses,0)/veteranos.length) : 0;
+        const maiorTempo = veteranos.length ? Math.max(...veteranos.map(a => a.tempoMeses)) : 0;
+        document.getElementById('statsVeteranos').innerHTML = `<div class="stat-veterano"><div class="numero">${veteranos.length}</div><div class="label">Veteranos (1+ ano)</div></div><div class="stat-veterano"><div class="numero">${mediaTempo} ${mediaTempo===1?'mês':'meses'}</div><div class="label">Média de tempo</div></div><div class="stat-veterano"><div class="numero">${formatarTempoCasa(maiorTempo)}</div><div class="label">Maior tempo</div></div>`;
+    }
  
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(e => { if (e.isIntersecting) { e.target.style.animation='fadeInUp 0.6s ease forwards'; observer.unobserve(e.target); } });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.card, .categorias-container, .patrocinadores, .loc-card, .info-card, .equipe-section').forEach(el => { el.style.opacity='0'; observer.observe(el); });
+    function exportarDados() {
+        if (!todosAlunos.length) { mostrarToast('Nenhum dado para exportar', 'error'); return; }
+        let csv = 'Nome,Turma,Categoria,Idade,Responsável,Telefone,Status,Data Matrícula\n';
+        todosAlunos.forEach(a => { csv += `"${a.nome}","${a.turma}","${a.categoria}","${a.idade}","${a.responsavel}","${a.telefone}","${a.status}","${formatarData(a.dataMatricula)}"\n`; });
+        const blob = new Blob(["\uFEFF" + csv], { type:'text/csv;charset=utf-8;' });
+        const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = `diretoria_${new Date().toISOString().slice(0,10)}.csv`; link.click(); URL.revokeObjectURL(link.href);
+        mostrarToast('📥 Dados exportados!');
+    }
  
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.update()));
-        }
-    });
+    function exportarComoImagem() {
+        const btn = document.querySelector('.btn-exportar-imagem'); btn.innerHTML = '📸 GERANDO...'; btn.disabled = true;
+        html2canvas(document.getElementById('abaDashboard'), { scale:2 }).then(canvas => { const link=document.createElement('a'); link.download=`dashboard_${new Date().toISOString().slice(0,10)}.png`; link.href=canvas.toDataURL(); link.click(); mostrarToast('✅ Dashboard salvo!'); }).catch(() => mostrarToast('Erro ao gerar imagem', 'error')).finally(() => { btn.innerHTML='📸 EXPORTAR IMAGEM'; btn.disabled=false; });
+    }
+ 
+    function atualizarDados() {
+        const btn = document.querySelector('.btn-atualizar'); btn.innerHTML='🔄 ATUALIZANDO...'; btn.disabled=true;
+        carregarDadosDaPlanilha().finally(() => { btn.innerHTML='🔄 ATUALIZAR'; btn.disabled=false; });
+    }
+ 
+    ['filtroNome','filtroResponsavel','filtroTelefone','filtroBairro'].forEach(id => document.getElementById(id).addEventListener('input', aplicarFiltros));
+    ['filtroTurma','filtroCategoria','filtroStatus'].forEach(id => document.getElementById(id).addEventListener('change', aplicarFiltros));
+ 
+    async function verificarLogin() {
+        const email = document.getElementById('emailLogin').value.trim();
+        const senha = document.getElementById('senhaLogin').value;
+        const btn = document.querySelector('#telaLogin button');
+        if (!email || !senha) { document.getElementById('erroLogin').innerText='Digite e-mail e senha!'; return; }
+        btn.disabled=true; btn.innerHTML='⏳ VERIFICANDO...'; document.getElementById('erroLogin').innerText='';
+        try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 20000);
+            const r = await fetch(`${API_URL}/alunos`, { signal: controller.signal });
+            clearTimeout(timeout);
+            if (r.ok) {
+                usuarioLogado = { email, cargo:'Diretor' };
+                document.getElementById('telaLogin').style.display='none';
+                document.getElementById('painelAnalise').style.display='block';
+                document.getElementById('infoUsuario').innerHTML=`👤 ${email.split('@')[0]} | ✅ acesso registrado`;
+                carregarDadosDaPlanilha();
+                carregarStatus();
+                setInterval(() => { if (document.getElementById('painelAnalise').style.display==='block') carregarDadosDaPlanilha(); }, 60000);
+                setInterval(atualizarTimestamp, 1000);
+            } else { document.getElementById('erroLogin').innerText='Erro ao conectar com o servidor'; }
+        } catch(e) { document.getElementById('erroLogin').innerText='Servidor demorou para responder. Tente novamente.'; }
+        finally { btn.disabled=false; btn.innerHTML='ACESSAR'; }
+    }
+ 
+    function logout() {
+        if (statusAtual) { fetch(`${API_URL}/status`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({online:false}) }).catch(()=>{}); statusAtual=false; }
+        document.getElementById('telaLogin').style.display='flex';
+        document.getElementById('painelAnalise').style.display='none';
+        document.getElementById('emailLogin').value=''; document.getElementById('senhaLogin').value=''; document.getElementById('erroLogin').innerText='';
+        usuarioLogado=null;
+    }
 </script>
 </body>
 </html>
