@@ -12,10 +12,57 @@
     <meta name="apple-mobile-web-app-title" content="Jacaré">
     <meta name="theme-color" content="#003399">
     <meta name="description" content="Escolinha do Jacaré - Unidos do Alvorada. Formando cidadãos através do esporte desde 1998.">
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').then(r => console.log('Service Worker registrado!')).catch(e => {});
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+        import { getMessaging, getToken, onMessage } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUPquSeneayoS-eiCgJB0K47eLM44eqIs",
+            authDomain: "alvorada-4d410.firebaseapp.com",
+            projectId: "alvorada-4d410",
+            storageBucket: "alvorada-4d410.firebasestorage.app",
+            messagingSenderId: "12705241722",
+            appId: "1:12705241722:web:f95f70821505043e1f39c3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const messaging = getMessaging(app);
+
+        const VAPID_KEY = 'BHGLLbpMqsjtStrQe0W7gLrpQtt85CIpj0qD5ok84dM0-pH9euvw3JuOm-l0IlT5ydGetJbgiyQ400PiIa2ETJg';
+        const API_URL_FCM = 'https://api-escolinha.onrender.com/api';
+
+        async function registrarNotificacoes() {
+            try {
+                if (!('Notification' in window)) return;
+                const permission = await Notification.requestPermission();
+                if (permission !== 'granted') return;
+
+                const sw = await navigator.serviceWorker.register('sw.js');
+                const token = await getToken(messaging, { vapidKey: VAPID_KEY, serviceWorkerRegistration: sw });
+
+                if (token) {
+                    await fetch(`${API_URL_FCM}/fcm-token`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ token })
+                    });
+                    console.log('Token FCM registrado!');
+                }
+
+                onMessage(messaging, (payload) => {
+                    const { title, body } = payload.notification;
+                    new Notification(title, {
+                        body,
+                        icon: 'icones/icon-192.png'
+                    });
+                });
+            } catch(e) {
+                console.log('Erro FCM:', e);
+                navigator.serviceWorker.register('sw.js').catch(() => {});
+            }
         }
+
+        window.addEventListener('load', () => registrarNotificacoes());
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
