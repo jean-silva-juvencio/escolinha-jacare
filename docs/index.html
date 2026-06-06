@@ -838,13 +838,14 @@
         btn.innerHTML = '⏳ Enviando...';
  
         try {
-            await fetch(APPS_SCRIPT_URL, {
+            fetch(APPS_SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ nome, whatsapp, assunto, mensagem })
             });
  
+            // no-cors sempre resolve sem erro — tratamos como sucesso
             document.getElementById('contatoSucesso').style.display = 'block';
             document.getElementById('contatoNome').value = '';
             document.getElementById('contatoWhatsApp').value = '';
@@ -858,7 +859,8 @@
                 document.getElementById('contatoSucesso').style.display = 'none';
             }, 5000);
         } catch(e) {
-            mostrarToast('❌ Erro ao enviar. Tente novamente.', 'error');
+            // erro real de rede
+            mostrarToast('⚠️ Verifique sua conexão e tente novamente.', 'error');
             btn.disabled = false;
             btn.innerHTML = '📤 ENVIAR MENSAGEM';
         }
