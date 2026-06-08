@@ -248,7 +248,8 @@
         body.dark-mode .contato-interno { border-top-color: #334155; }
         .contato-interno h3 { font-family: 'Montserrat'; color: #003399; font-size: 1rem; margin-bottom: 15px; text-align: center; }
         body.dark-mode .contato-interno h3 { color: #60a5fa; }
-        .contato-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .contato-form-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 12px; }
+        @media (min-width: 480px) { .contato-form-grid { grid-template-columns: 1fr 1fr; } }
         .contato-field { display: flex; flex-direction: column; gap: 5px; }
         .contato-field label { font-size: 0.72rem; font-weight: 700; color: #003399; text-transform: uppercase; }
         body.dark-mode .contato-field label { color: #60a5fa; }
@@ -355,9 +356,10 @@
  
             /* CORREÇÃO PRINCIPAL: equipe-card full width no mobile */
             .equipe-card {
-                width: 100%;
-                max-width: 100%;
-                padding: 20px 15px;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 20px 15px !important;
+                overflow: hidden !important;
             }
  
             /* Foto do perfil */
@@ -366,19 +368,33 @@
  
             /* CORREÇÃO: form de contato em coluna única no mobile */
             .contato-form-grid {
-                grid-template-columns: 1fr;
-                gap: 10px;
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
             }
             .contato-field.full {
-                grid-column: 1;
+                grid-column: 1 !important;
             }
  
-            /* Inputs e textarea do form — garantir largura correta */
+            /* Inputs e textarea — coluna única, sem overflow */
+            .contato-field,
             .contato-field input,
             .contato-field select,
             .contato-field textarea {
-                font-size: 16px; /* evita zoom automático no iOS */
-                width: 100%;
+                width: 100% !important;
+                max-width: 100% !important;
+                font-size: 16px !important;
+                box-sizing: border-box !important;
+            }
+ 
+            /* Garante que nada vaze para fora */
+            .contato-interno {
+                overflow: hidden !important;
+                width: 100% !important;
+            }
+            .equipe-section, .equipe-grid {
+                overflow: hidden !important;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
             }
  
             /* Modo escuro — tamanhos do sistema solar */
