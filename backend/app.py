@@ -189,6 +189,132 @@ def atualizar_status(protocolo):
         print(f"❌ Erro ao atualizar status: {e}")
         return jsonify({'erro': 'Erro ao atualizar status'}), 500
 
+# ==================== NOVA ROTA: EDITAR ALUNO ====================
+@app.route('/api/aluno/editar/<protocolo>', methods=['PUT'])
+def atualizar_aluno(protocolo):
+    dados = request.json
+
+    def safe_str(valor):
+        return '' if valor is None else str(valor)
+
+    def safe_int(valor):
+        if valor is None or valor == '':
+            return 0
+        try:
+            return int(float(valor))
+        except:
+            return 0
+
+    def safe_int_min1(valor):
+        if valor is None or valor == '':
+            return 1
+        try:
+            return int(float(valor))
+        except:
+            return 1
+
+    def safe_float(valor):
+        if valor is None or valor == '':
+            return 0
+        try:
+            return float(valor)
+        except:
+            return 0
+
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        sql = """
+            UPDATE alunos SET
+                nome_aluno = %s,
+                data_nasc = %s,
+                idade = %s,
+                turma = %s,
+                categoria = %s,
+                responsavel = %s,
+                tipo_vinculo = %s,
+                sexo_responsavel = %s,
+                telefone = %s,
+                email = %s,
+                endereco = %s,
+                bairro = %s,
+                moradores = %s,
+                remedio = %s,
+                origem = %s,
+                rg = %s,
+                sexo = %s,
+                peso = %s,
+                altura = %s,
+                calcado = %s,
+                tamanho_uniforme = %s,
+                possui_uniforme = %s,
+                deficiencia = %s,
+                municipio = %s,
+                uf = %s,
+                escola = %s,
+                serie = %s,
+                observacao = %s,
+                estrelas = %s,
+                data_entrega_uniforme = %s
+            WHERE protocolo = %s
+        """
+
+        valores = (
+            safe_str(dados.get('nome_aluno')),
+            safe_str(dados.get('data_nasc')),
+            safe_int(dados.get('idade')),
+            safe_str(dados.get('turma')),
+            safe_str(dados.get('categoria')),
+            safe_str(dados.get('responsavel')),
+            safe_str(dados.get('tipo_vinculo')),
+            safe_str(dados.get('sexo_responsavel')),
+            safe_str(dados.get('telefone')),
+            safe_str(dados.get('email')),
+            safe_str(dados.get('endereco')),
+            safe_str(dados.get('bairro')),
+            safe_int_min1(dados.get('moradores')),
+            safe_str(dados.get('remedio')),
+            safe_str(dados.get('origem')),
+            safe_str(dados.get('rg')),
+            safe_str(dados.get('sexo')),
+            safe_float(dados.get('peso')),
+            safe_float(dados.get('altura')),
+            safe_str(dados.get('calcado')),
+            safe_str(dados.get('tamanho_uniforme')),
+            safe_str(dados.get('possui_uniforme')),
+            safe_str(dados.get('deficiencia')),
+            safe_str(dados.get('municipio')),
+            safe_str(dados.get('uf')),
+            safe_str(dados.get('escola')),
+            safe_str(dados.get('serie')),
+            safe_str(dados.get('observacao')),
+            safe_int(dados.get('estrelas')),
+            safe_str(dados.get('data_entrega_uniforme')),
+            protocolo
+        )
+
+        cursor.execute(sql, valores)
+        conn.commit()
+
+        if cursor.rowcount == 0:
+            cursor.close()
+            conn.close()
+            return jsonify({'erro': 'Aluno não encontrado'}), 404
+
+        cursor.close()
+        conn.close()
+
+        print(f"✅ Aluno atualizado! Protocolo: {protocolo}")
+        return jsonify({'mensagem': 'Aluno atualizado com sucesso!'}), 200
+
+    except Exception as e:
+        print(f"❌ Erro ao atualizar aluno: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'erro': str(e)}), 500
+# ==================== FIM DA NOVA ROTA ====================
+
 @app.route('/api/elogios', methods=['GET'])
 def get_elogios():
     try:
