@@ -1192,10 +1192,12 @@
         let alunoEditando = null;
         let modoEdicao = false;
 
+        // ==================== FUNÇÕES AUXILIARES ====================
         function alternarTema() {
             document.body.classList.toggle('dark-mode');
             localStorage.setItem('tema', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-            mostrarToast(document.body.classList.contains('dark-mode') ? '🌙 Modo escuro ativado' : '☀️ Modo claro ativado', 'info');
+            mostrarToast(document.body.classList.contains('dark-mode') ? '🌙 Modo escuro ativado' : '☀️ Modo claro ativado',
+            'info');
         }
 
         function mostrarToast(mensagem, tipo = 'success') {
@@ -1242,6 +1244,7 @@
             }
         }
 
+        // ==================== CARREGAR DADOS ====================
         async function carregarDados() {
             document.getElementById('loadingDados').style.display = 'block';
             try {
@@ -1360,6 +1363,7 @@
             filtrarEOrdenar();
         }
 
+        // ==================== ATUALIZAR STATUS ====================
         async function atualizarStatus(protocolo, novoStatus) {
             mostrarToast('Atualizando status...', 'info');
 
@@ -1382,23 +1386,29 @@
             }
         }
 
-        // ==================== ABRIR DETALHES / EDIÇÃO ====================
+        // ==================== ABRIR DETALHES ====================
         function abrirDetalhes(protocolo) {
             const item = todosAlunos.find(i => i.protocolo === protocolo);
-            if (!item) return;
+            if (!item) {
+                mostrarToast('Aluno não encontrado!', 'error');
+                return;
+            }
 
             alunoEditando = item;
             modoEdicao = false;
             document.getElementById('modalTitulo').innerHTML = '📄 FICHA DO ALUNO';
+            document.getElementById('modalDetalhes').style.display = 'flex';
             renderizarFicha(item);
         }
 
+        // ==================== RENDERIZAR FICHA ====================
         function renderizarFicha(item) {
             const conteudo = document.getElementById('detalhesConteudo');
             const modalAcoes = document.getElementById('modalAcoes');
 
             if (modoEdicao) {
                 // MODO EDIÇÃO
+                document.getElementById('modalTitulo').innerHTML = '✏️ EDITANDO ALUNO';
                 conteudo.innerHTML = `
                         <div class="detalhe-item"><div class="detalhe-label">📋 Nome</div><input type="text" id="edit_nome_aluno" value="${item.nome_aluno || ''}"></div>
                         <div class="detalhe-item"><div class="detalhe-label">🎂 Data Nasc</div><input type="date" id="edit_data_nasc" value="${formatarDataInput(item.data_nasc)}"></div>
@@ -1472,7 +1482,6 @@
                         <div class="detalhe-item"><div class="detalhe-label">📝 Observação</div><input type="text" id="edit_observacao" value="${item.observacao || ''}"></div>
                         <div class="detalhe-item"><div class="detalhe-label">⭐ Estrelas</div><input type="number" id="edit_estrelas" value="${item.estrelas || 0}" min="0" max="5"></div>
                     `;
-                document.getElementById('modalTitulo').innerHTML = '✏️ EDITANDO ALUNO';
 
                 modalAcoes.innerHTML = `
                         <button class="btn-salvar-edicao" onclick="salvarEdicao('${item.protocolo}')">💾 SALVAR</button>
@@ -1517,6 +1526,7 @@
             }
         }
 
+        // ==================== EDIÇÃO ====================
         function ativarEdicao() {
             modoEdicao = true;
             renderizarFicha(alunoEditando);
@@ -1588,6 +1598,7 @@
             }
         }
 
+        // ==================== FECHAR MODAL ====================
         function fecharModal() {
             document.getElementById('modalDetalhes').style.display = 'none';
             modoEdicao = false;
