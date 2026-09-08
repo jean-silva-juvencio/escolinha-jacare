@@ -11,6 +11,12 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
+# Status do sistema (persistido em memória)
+sistema_status = {
+    'online': True,
+    'ultima_atualizacao': datetime.now().isoformat()
+}
+
 def get_connection():
     return psycopg2.connect(
         host=os.getenv('NEON_HOST'),
@@ -96,7 +102,6 @@ def prematricula():
     observacao = safe_str(dados.get('observacao'))
     estrelas = safe_int(dados.get('estrelas'))
     data_inscricao = safe_str(dados.get('data_inscricao'))
-    # CORRIGIDO: usa None se estiver vazio
     data_entrega_uniforme = dados.get('data_entrega_uniforme') or None
     status = 'pendente'
 
@@ -261,7 +266,6 @@ def atualizar_aluno(protocolo):
             WHERE protocolo = %s
         """
 
-        # CORRIGIDO: data_entrega_uniforme usa None se estiver vazio
         valores = (
             safe_str(dados.get('nome_aluno')),
             safe_str(dados.get('data_nasc')),
@@ -292,7 +296,7 @@ def atualizar_aluno(protocolo):
             safe_str(dados.get('serie')),
             safe_str(dados.get('observacao')),
             safe_int(dados.get('estrelas')),
-            dados.get('data_entrega_uniforme') or None,  # <--- CORRIGIDO
+            dados.get('data_entrega_uniforme') or None,
             protocolo
         )
 
@@ -335,6 +339,88 @@ def get_elogios():
     except Exception as e:
         print(f"❌ Erro ao buscar elogios: {e}")
         return jsonify({'erro': 'Erro ao buscar elogios'}), 500
+
+# ==================== ROTA DE STATUS (ONLINE/OFFLINE) ====================
+@app.route('/api/status', methods=['GET', 'POST'])
+def status():
+    global sistema_status
+    
+    if request.method == 'GET':
+        return jsonify({
+            'online': sistema_status.get('online', True),
+            'ultima_atualizacao': sistema_status.get('ultima_atualizacao', datetime.now().isoformat())
+        }), 200
+    
+    elif request.method == 'POST':
+        dados = request.json
+        online = dados.get('online', True)
+        sistema_status['online'] = online
+        sistema_status['ultima_atualizacao'] = datetime.now().isoformat()
+        print(f"📡 Status alterado para: {'ONLINE' if online else 'OFFLINE'}")
+        return jsonify({
+            'online': online,
+            'mensagem': f"Status alterado para {'ONLINE' if online else 'OFFLINE'}"
+        }), 200
+
+# ==================== ROTA DE CONTATOS ====================
+@app.route('/api/contatos', methods=['GET', 'POST'])
+def contatos():
+    if request.method == 'GET':
+        try:
+            conn = get_connection()
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT id, nome, whatsapp, assunto, mensagem, data_envio as data
+                FROM contatos 
+                ORDER BY id DESC
+            """)
+            contatos = cursor.fetchall()
+            cursor.close()
+            conn.close()
+            return jsonify(contatos), 200
+        except Exception as e:
+            print(f"❌ Erro ao buscar contatos: {e}")
+            return jsonify({'erro': 'Erro ao buscar contatos'}), 500
+    
+    elif request.method == 'POST':
+        dados = request.json
+        nome = dados.get('nome', '')
+        whatsapp = dados.get('whatsapp', '')
+        assunto = dados.get('assunto', '')
+        mensagem = dados.get('mensagem', '')
+        data_envio = datetime.now().isoformat()
+        
+        try:
+            conn = get_connection()
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO contatos (nome, whatsapp, assunto, mensagem, data_envio)
+                VALUES (%s, %s, %s, %s, %s)
+                RETURNING id
+            """, (nome, whatsapp, assunto, mensagem, data_envio))
+            novo_id = cursor.fetchone()['id']
+            conn.commit()
+            cursor.close()
+            conn.close()
+            return jsonify({'mensagem': 'Contato salvo!', 'id': novo_id}), 201
+        except Exception as e:
+            print(f"❌ Erro ao salvar contato: {e}")
+            return jsonify({'erro': str(e)}), 500
+
+# ==================== ROTA PARA EXCLUIR CONTATO ====================
+@app.route('/api/contatos/<int:id>', methods=['DELETE'])
+def excluir_contato(id):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM contatos WHERE id = %s", (id,))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return jsonify({'mensagem': 'Contato excluído!'}), 200
+    except Exception as e:
+        print(f"❌ Erro ao excluir contato: {e}")
+        return jsonify({'erro': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
