@@ -96,7 +96,8 @@ def prematricula():
     observacao = safe_str(dados.get('observacao'))
     estrelas = safe_int(dados.get('estrelas'))
     data_inscricao = safe_str(dados.get('data_inscricao'))
-    data_entrega_uniforme = safe_str(dados.get('data_entrega_uniforme'))
+    # CORRIGIDO: usa None se estiver vazio
+    data_entrega_uniforme = dados.get('data_entrega_uniforme') or None
     status = 'pendente'
 
     print(f"📥 Recebido: {nome_aluno}, Idade: {idade}, Tamanho: {tamanho_uniforme}")
@@ -189,7 +190,7 @@ def atualizar_status(protocolo):
         print(f"❌ Erro ao atualizar status: {e}")
         return jsonify({'erro': 'Erro ao atualizar status'}), 500
 
-# ==================== NOVA ROTA: EDITAR ALUNO ====================
+# ==================== ROTA DE EDIÇÃO ====================
 @app.route('/api/aluno/editar/<protocolo>', methods=['PUT'])
 def atualizar_aluno(protocolo):
     dados = request.json
@@ -260,6 +261,7 @@ def atualizar_aluno(protocolo):
             WHERE protocolo = %s
         """
 
+        # CORRIGIDO: data_entrega_uniforme usa None se estiver vazio
         valores = (
             safe_str(dados.get('nome_aluno')),
             safe_str(dados.get('data_nasc')),
@@ -290,7 +292,7 @@ def atualizar_aluno(protocolo):
             safe_str(dados.get('serie')),
             safe_str(dados.get('observacao')),
             safe_int(dados.get('estrelas')),
-            safe_str(dados.get('data_entrega_uniforme')),
+            dados.get('data_entrega_uniforme') or None,  # <--- CORRIGIDO
             protocolo
         )
 
@@ -313,7 +315,6 @@ def atualizar_aluno(protocolo):
         import traceback
         traceback.print_exc()
         return jsonify({'erro': str(e)}), 500
-# ==================== FIM DA NOVA ROTA ====================
 
 @app.route('/api/elogios', methods=['GET'])
 def get_elogios():
