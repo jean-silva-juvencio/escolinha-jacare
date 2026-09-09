@@ -670,6 +670,7 @@
 
     function atualizarTodosGraficos() {
         const dados = alunosFiltrados;
+        const totalAlunos = dados.length;
         
         // 1. Alunos por Turma (barras verticais)
         const turmasCount = TURMAS.map(t => dados.filter(a => a.turma===t).length);
@@ -689,7 +690,6 @@
         });
 
         // 2. Distribuição por Turma (%) - Pizza com porcentagem
-        const totalTurmas = turmasCount.reduce((a,b) => a+b, 0);
         if (graficos.pizza) graficos.pizza.destroy();
         graficos.pizza = new Chart(document.getElementById('graficoPizza'), { 
             type: 'pie', 
@@ -729,7 +729,8 @@
                                     return {
                                         text: `${label} (${percent}%)`,
                                         fillStyle: data.datasets[0].backgroundColor[i],
-                                        index: i
+                                        index: i,
+                                        hidden: false
                                     };
                                 });
                             }
