@@ -697,25 +697,35 @@
         else { menu.style.left = '0px'; hamburger.classList.add('active'); }
     }
  
+    // ========== CARREGAR ALUNOS DO NEON ==========
     async function carregarDados() {
         try {
             const r = await fetch(`${API_URL}/alunos`);
+            if (!r.ok) throw new Error('Erro na API');
             const dados = await r.json();
             if (Array.isArray(dados)) {
+                // Filtra apenas alunos aprovados (ativos)
                 const ativos = dados.filter(i => i.status === 'aprovado');
+                const totalAtivos = ativos.length;
                 const el = document.getElementById('totalAlunos');
-                if (el && ativos.length > 0) el.innerText = ativos.length;
+                if (el) {
+                    el.innerText = totalAtivos > 0 ? totalAtivos : '0';
+                }
+                console.log(`✅ ${totalAtivos} alunos ativos carregados do Neon`);
             }
         } catch(e) {
+            console.error('❌ Erro ao carregar alunos:', e);
             const el = document.getElementById('totalAlunos');
             if (el) el.innerText = '--';
         }
     }
  
+    // ========== VERIFICAR STATUS DO SERVIDOR ==========
     async function verificarStatus() {
         const foto = document.querySelector('.equipe-foto');
         try {
             const r = await fetch(`${API_URL}/status`);
+            if (!r.ok) throw new Error('Erro na API');
             const dados = await r.json();
             const el = document.getElementById('statusOnline');
             if (dados.online) {
@@ -726,12 +736,14 @@
                 if (foto) { foto.classList.remove('foto-online'); foto.classList.add('foto-offline'); }
             }
         } catch(e) {
+            console.error('❌ Erro ao verificar status:', e);
             const el = document.getElementById('statusOnline');
             if (el) { el.className = 'status-online offline'; el.innerHTML = '<span class="status-ponto"></span> OFFLINE'; }
             if (foto) { foto.classList.remove('foto-online'); foto.classList.add('foto-offline'); }
         }
     }
  
+    // ========== CLIMA ==========
     async function buscarClima() {
         try {
             const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-3.1019&longitude=-60.0250&current_weather=true&timezone=America/Manaus');
@@ -748,9 +760,12 @@
             document.getElementById('climaTemp').innerHTML = `${temp}°C`;
             document.getElementById('climaDesc').innerHTML = `Manaus • ${desc}`;
             document.getElementById('climaIcone').innerHTML = icone;
-        } catch(e) {}
+        } catch(e) {
+            console.error('❌ Erro ao buscar clima:', e);
+        }
     }
  
+    // ========== NOTÍCIAS ==========
     let noticiasLista = [];
     async function buscarNoticias() {
         try {
@@ -802,7 +817,7 @@
  
     document.getElementById('btnAcessibilidade')?.addEventListener('click', alternarAcessibilidade);
  
-    // DEPOIMENTOS
+    // ========== DEPOIMENTOS ==========
     let depoimentos = [], carrosselIndex = 0, carrosselTimer = null;
  
     async function carregarDepoimentos(t = 1) {
@@ -853,7 +868,7 @@
     document.getElementById('btnProximo')?.addEventListener('click', () => irParaSlide(carrosselIndex+1));
     document.getElementById('btnAnterior')?.addEventListener('click', () => irParaSlide(carrosselIndex-1));
  
-    // ENTRE EM CONTATO
+    // ========== ENVIAR CONTATO ==========
     async function enviarContato() {
         const nome = document.getElementById('contatoNome').value.trim();
         const whatsapp = document.getElementById('contatoWhatsApp').value.trim();
@@ -869,19 +884,31 @@
         btn.disabled = true;
         btn.innerHTML = '⏳ Enviando...';
  
-        fetch(`${API_URL}/contatos`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nome, whatsapp, assunto, mensagem })
-        }).catch(() => {});
+        try {
+            const r = await fetch(`${API_URL}/contatos`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome, whatsapp, assunto, mensagem })
+            });
+            if (r.ok) {
+                document.getElementById('contatoSucesso').style.display = 'block';
+                document.getElementById('contatoNome').value = '';
+                document.getElementById('contatoWhatsApp').value = '';
+                document.getElementById('contatoAssunto').value = '';
+                document.getElementById('contatoMensagem').value = '';
+                btn.innerHTML = '✅ ENVIADO!';
+                mostrarToast('✅ Mensagem enviada com sucesso!');
+            } else {
+                mostrarToast('❌ Erro ao enviar mensagem', 'error');
+                btn.innerHTML = '📤 ENVIAR MENSAGEM';
+                btn.disabled = false;
+            }
+        } catch(e) {
+            mostrarToast('❌ Erro ao enviar mensagem', 'error');
+            btn.innerHTML = '📤 ENVIAR MENSAGEM';
+            btn.disabled = false;
+        }
  
-        document.getElementById('contatoSucesso').style.display = 'block';
-        document.getElementById('contatoNome').value = '';
-        document.getElementById('contatoWhatsApp').value = '';
-        document.getElementById('contatoAssunto').value = '';
-        document.getElementById('contatoMensagem').value = '';
-        btn.innerHTML = '✅ ENVIADO!';
-        mostrarToast('✅ Mensagem enviada com sucesso!');
         setTimeout(() => {
             btn.disabled = false;
             btn.innerHTML = '📤 ENVIAR MENSAGEM';
@@ -889,6 +916,7 @@
         }, 5000);
     }
  
+    // ========== INICIALIZAÇÃO ==========
     window.addEventListener('load', () => {
         buscarClima();
         buscarNoticias();
@@ -898,6 +926,7 @@
         setInterval(buscarClima, 600000);
         setInterval(buscarNoticias, 300000);
         setInterval(verificarStatus, 30000);
+        setInterval(carregarDados, 60000); // Atualiza alunos a cada minuto
  
         document.querySelectorAll('.stagger-item').forEach((item,i) => {
             setTimeout(() => { item.style.opacity='1'; item.style.animation='fadeInUp 0.5s ease forwards'; }, i*150);
