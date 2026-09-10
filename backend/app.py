@@ -5,11 +5,21 @@ import psycopg2.extras
 import os
 from dotenv import load_dotenv
 from datetime import datetime
+import cloudinary
+import cloudinary.uploader
 
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
+
+# ==================== CONFIGURAÇÃO CLOUDINARY ====================
+cloudinary.config(
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME', 'PBMaz3jx'),
+    api_key=os.getenv('CLOUDINARY_API_KEY', '545953851437675'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET', 'HNzome7Mzq0Ks1ZrhjeHcG8DvNQ'),
+    secure=True
+)
 
 # Status do sistema (persistido em memória)
 sistema_status = {
@@ -32,6 +42,7 @@ def get_connection():
 def home():
     return jsonify({'mensagem': 'API da Escolinha do Jacaré funcionando!'})
 
+# ==================== PRÉ-MATRÍCULA ====================
 @app.route('/api/prematricula', methods=['POST'])
 def prematricula():
     dados = request.json
@@ -111,7 +122,6 @@ def prematricula():
         conn = get_connection()
         cursor = conn.cursor()
 
-        # Verificar duplicata
         cursor.execute("""
             SELECT COUNT(*) as total FROM alunos 
             WHERE rg = %s AND responsavel = %s AND nome_aluno = %s
@@ -124,7 +134,6 @@ def prematricula():
             conn.close()
             return jsonify({'erro': 'Aluno já cadastrado'}), 409
 
-        # SQL de inserção com as novas colunas
         sql = """
             INSERT INTO alunos (
                 protocolo, data_envio, nome_aluno, data_nasc, idade, turma, 
@@ -164,6 +173,7 @@ def prematricula():
         traceback.print_exc()
         return jsonify({'erro': str(e)}), 500
 
+# ==================== LISTAR ALUNOS ====================
 @app.route('/api/alunos', methods=['GET'])
 def get_alunos():
     try:
@@ -178,6 +188,7 @@ def get_alunos():
         print(f"❌ Erro ao buscar alunos: {e}")
         return jsonify({'erro': 'Erro ao buscar alunos'}), 500
 
+# ==================== ATUALIZAR STATUS ====================
 @app.route('/api/aluno/<protocolo>', methods=['PUT'])
 def atualizar_status(protocolo):
     dados = request.json
@@ -195,7 +206,7 @@ def atualizar_status(protocolo):
         print(f"❌ Erro ao atualizar status: {e}")
         return jsonify({'erro': 'Erro ao atualizar status'}), 500
 
-# ==================== ROTA DE EDIÇÃO ====================
+# ==================== EDITAR ALUNO ====================
 @app.route('/api/aluno/editar/<protocolo>', methods=['PUT'])
 def atualizar_aluno(protocolo):
     dados = request.json
@@ -320,6 +331,7 @@ def atualizar_aluno(protocolo):
         traceback.print_exc()
         return jsonify({'erro': str(e)}), 500
 
+# ==================== ELOGIOS ====================
 @app.route('/api/elogios', methods=['GET'])
 def get_elogios():
     try:
@@ -340,7 +352,7 @@ def get_elogios():
         print(f"❌ Erro ao buscar elogios: {e}")
         return jsonify({'erro': 'Erro ao buscar elogios'}), 500
 
-# ==================== ROTA DE STATUS (ONLINE/OFFLINE) ====================
+# ==================== STATUS (ONLINE/OFFLINE) ====================
 @app.route('/api/status', methods=['GET', 'POST'])
 def status():
     global sistema_status
@@ -362,7 +374,7 @@ def status():
             'mensagem': f"Status alterado para {'ONLINE' if online else 'OFFLINE'}"
         }), 200
 
-# ==================== ROTA DE CONTATOS ====================
+# ==================== CONTATOS ====================
 @app.route('/api/contatos', methods=['GET', 'POST'])
 def contatos():
     if request.method == 'GET':
@@ -407,7 +419,6 @@ def contatos():
             print(f"❌ Erro ao salvar contato: {e}")
             return jsonify({'erro': str(e)}), 500
 
-# ==================== ROTA PARA EXCLUIR CONTATO ====================
 @app.route('/api/contatos/<int:id>', methods=['DELETE'])
 def excluir_contato(id):
     try:
@@ -420,6 +431,197 @@ def excluir_contato(id):
         return jsonify({'mensagem': 'Contato excluído!'}), 200
     except Exception as e:
         print(f"❌ Erro ao excluir contato: {e}")
+        return jsonify({'erro': str(e)}), 500
+
+# ==================== NOTÍCIAS ====================
+@app.route('/api/noticias', methods=['GET'])
+def get_noticias():
+    """Busca todas as notícias ativas (não expiradas)"""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT id, titulo, texto, imagem_url, data_publicacao, data_expiracao, ativo
+            FROM noticias 
+            WHERE ativo = TRUE 
+              AND (data_expiracao IS NULL OR data_expiracao > NOW())
+            ORDER BY data_publicacao DESC
+        """)
+        noticias = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return jsonify(noticias), 200
+    except Exception as e:
+        print(f"❌ Erro ao buscar notícias: {e}")
+        return jsonify({'erro': 'Erro ao buscar notícias'}), 500
+
+@app.route('/api/noticias/todas', methods=['GET'])
+def get_todas_noticias():
+    """Busca TODAS as notícias (para a diretoria)"""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT id, titulo, texto, imagem_url, data_publicacao, data_expiracao, ativo
+            FROM noticias 
+            ORDER BY data_publicacao DESC
+        """)
+        noticias = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return jsonify(noticias), 200
+    except Exception as e:
+        print(f"❌ Erro ao buscar notícias: {e}")
+        return jsonify({'erro': 'Erro ao buscar notícias'}), 500
+
+@app.route('/api/noticias', methods=['POST'])
+def publicar_noticia():
+    """Publica uma nova notícia com upload de imagem para o Cloudinary"""
+    dados = request.json
+    
+    titulo = dados.get('titulo', '').strip()
+    texto = dados.get('texto', '').strip()
+    imagem_base64 = dados.get('imagem_base64', '')
+    dias_expiracao = int(dados.get('dias_expiracao', 30))
+    
+    if not titulo:
+        return jsonify({'erro': 'Título é obrigatório'}), 400
+    
+    try:
+        imagem_url = None
+        
+        # Upload da imagem para o Cloudinary
+        if imagem_base64:
+            try:
+                upload_result = cloudinary.uploader.upload(
+                    imagem_base64,
+                    upload_preset='escolinha_jacare',
+                    folder='noticias'
+                )
+                imagem_url = upload_result.get('secure_url')
+                print(f"✅ Imagem enviada para Cloudinary: {imagem_url}")
+            except Exception as e:
+                print(f"⚠️ Erro ao enviar imagem: {e}")
+                return jsonify({'erro': f'Erro ao enviar imagem: {str(e)}'}), 500
+        
+        # Calcula a data de expiração
+        from datetime import timedelta
+        data_expiracao = datetime.now() + timedelta(days=dias_expiracao)
+        
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO noticias (titulo, texto, imagem_url, data_expiracao, ativo)
+            VALUES (%s, %s, %s, %s, TRUE)
+            RETURNING id
+        """, (titulo, texto, imagem_url, data_expiracao))
+        novo_id = cursor.fetchone()['id']
+        conn.commit()
+        cursor.close()
+        conn.close()
+        
+        print(f"✅ Notícia publicada! ID: {novo_id}")
+        return jsonify({
+            'mensagem': 'Notícia publicada com sucesso!',
+            'id': novo_id,
+            'imagem_url': imagem_url
+        }), 201
+        
+    except Exception as e:
+        print(f"❌ Erro ao publicar notícia: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'erro': str(e)}), 500
+
+@app.route('/api/noticias/<int:id>', methods=['DELETE'])
+def excluir_noticia(id):
+    """Exclui uma notícia e sua imagem do Cloudinary"""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        
+        # Primeiro, busca a URL da imagem
+        cursor.execute("SELECT imagem_url FROM noticias WHERE id = %s", (id,))
+        resultado = cursor.fetchone()
+        
+        if resultado and resultado['imagem_url']:
+            # Tenta extrair o public_id do Cloudinary da URL
+            try:
+                url = resultado['imagem_url']
+                # Exemplo: https://res.cloudinary.com/PBMaz3jx/image/upload/v123456/noticias/abc123.jpg
+                if 'cloudinary.com' in url:
+                    partes = url.split('/upload/')
+                    if len(partes) > 1:
+                        caminho = partes[1]
+                        # Remove a versão (v123456/)
+                        if caminho.startswith('v'):
+                            caminho = '/'.join(caminho.split('/')[1:])
+                        # Remove a extensão
+                        public_id = caminho.rsplit('.', 1)[0]
+                        cloudinary.uploader.destroy(public_id)
+                        print(f"🗑️ Imagem excluída do Cloudinary: {public_id}")
+            except Exception as e:
+                print(f"⚠️ Erro ao excluir imagem do Cloudinary: {e}")
+        
+        # Exclui do banco
+        cursor.execute("DELETE FROM noticias WHERE id = %s", (id,))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        
+        return jsonify({'mensagem': 'Notícia excluída!'}), 200
+    except Exception as e:
+        print(f"❌ Erro ao excluir notícia: {e}")
+        return jsonify({'erro': str(e)}), 500
+
+@app.route('/api/noticias/limpar-expiradas', methods=['POST'])
+def limpar_noticias_expiradas():
+    """Limpa notícias expiradas e suas imagens do Cloudinary"""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        
+        # Busca notícias expiradas
+        cursor.execute("""
+            SELECT id, imagem_url FROM noticias 
+            WHERE ativo = TRUE 
+              AND data_expiracao IS NOT NULL 
+              AND data_expiracao <= NOW()
+        """)
+        expiradas = cursor.fetchall()
+        
+        # Exclui imagens do Cloudinary
+        for noticia in expiradas:
+            if noticia['imagem_url'] and 'cloudinary.com' in noticia['imagem_url']:
+                try:
+                    url = noticia['imagem_url']
+                    partes = url.split('/upload/')
+                    if len(partes) > 1:
+                        caminho = partes[1]
+                        if caminho.startswith('v'):
+                            caminho = '/'.join(caminho.split('/')[1:])
+                        public_id = caminho.rsplit('.', 1)[0]
+                        cloudinary.uploader.destroy(public_id)
+                except Exception as e:
+                    print(f"⚠️ Erro ao excluir imagem: {e}")
+        
+        # Marca como inativas (ou exclui de vez)
+        cursor.execute("""
+            UPDATE noticias SET ativo = FALSE 
+            WHERE ativo = TRUE 
+              AND data_expiracao IS NOT NULL 
+              AND data_expiracao <= NOW()
+        """)
+        conn.commit()
+        cursor.close()
+        conn.close()
+        
+        return jsonify({
+            'mensagem': f'{len(expiradas)} notícias expiradas foram limpas!',
+            'total': len(expiradas)
+        }), 200
+    except Exception as e:
+        print(f"❌ Erro ao limpar notícias: {e}")
         return jsonify({'erro': str(e)}), 500
 
 if __name__ == '__main__':
