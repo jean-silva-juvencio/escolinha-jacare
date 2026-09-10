@@ -1,5 +1,6 @@
-Frasco
+flask
 flask-cors
-Psycopg2-binário
+psycopg2-binary
 python-dotenv
-Nublado-inário
+cloudinary
+gunicorn
