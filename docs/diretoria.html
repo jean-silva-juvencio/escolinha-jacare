@@ -171,7 +171,61 @@
         .btn-excluir { background: #fee2e2; color: #dc2626; border: none; padding: 6px 14px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
         .btn-excluir:hover { background: #dc2626; color: white; }
 
-        .toast { position: fixed; bottom: 30px; right: 30px; background: #10b981; color: white; padding: 12px 20px; border-radius: 10px; z-index: 1100; animation: slideIn 0.3s ease; }
+        /* ==================== NOTÍCIAS ==================== */
+        .noticia-card { background: #f8fafc; border-radius: 16px; padding: 20px; margin-bottom: 15px; border-left: 5px solid #0047AB; transition: all 0.3s; }
+        body.dark-mode .noticia-card { background: #0f172a; }
+        .noticia-card:hover { transform: translateX(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .noticia-card.expirada { border-left-color: #ef4444; opacity: 0.7; }
+        .noticia-card.ativa-status { border-left-color: #10b981; }
+        .noticia-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+        .noticia-titulo { font-family: 'Montserrat'; font-weight: 800; font-size: 1.1rem; color: #003399; }
+        body.dark-mode .noticia-titulo { color: #60a5fa; }
+        .noticia-status { padding: 4px 12px; border-radius: 40px; font-size: 0.7rem; font-weight: 700; }
+        .noticia-status.ativa { background: #d1fae5; color: #059669; }
+        .noticia-status.expirada { background: #fee2e2; color: #dc2626; }
+        .noticia-imagem { max-width: 250px; max-height: 150px; border-radius: 12px; margin-bottom: 12px; object-fit: cover; }
+        .noticia-texto { font-size: 0.9rem; color: #555; line-height: 1.6; margin-bottom: 12px; }
+        body.dark-mode .noticia-texto { color: #94a3b8; }
+        .noticia-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 0.75rem; color: #888; padding-top: 12px; border-top: 1px solid #e2e8f0; }
+        body.dark-mode .noticia-footer { border-top-color: #334155; }
+        .noticia-datas { display: flex; gap: 15px; flex-wrap: wrap; }
+        .btn-nova-noticia { background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 12px 24px; border-radius: 40px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-nova-noticia:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(16,185,129,0.3); }
+        .btn-excluir-noticia { background: #fee2e2; color: #dc2626; border: none; padding: 8px 16px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .btn-excluir-noticia:hover { background: #dc2626; color: white; }
+
+        /* MODAL NOTÍCIA */
+        .modal-noticia { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
+        .modal-noticia.ativo { display: flex; }
+        .modal-noticia-content { background: white; border-radius: 32px; max-width: 650px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 32px; animation: modalFadeIn 0.3s ease; }
+        body.dark-mode .modal-noticia-content { background: #1e293b; }
+        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .modal-noticia-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #e2e8f0; }
+        body.dark-mode .modal-noticia-header { border-bottom-color: #334155; }
+        .modal-noticia-header h3 { font-family: 'Montserrat'; color: #003399; font-size: 1.4rem; }
+        body.dark-mode .modal-noticia-header h3 { color: #60a5fa; }
+        .btn-fechar-modal { font-size: 28px; cursor: pointer; color: #94a3b8; background: none; border: none; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.85rem; color: #1e293b; }
+        body.dark-mode .form-group label { color: #e2e8f0; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 14px; font-size: 0.95rem; font-family: inherit; background: white; outline: none; transition: border-color 0.3s; }
+        body.dark-mode .form-group input, body.dark-mode .form-group textarea, body.dark-mode .form-group select { background: #0f172a; border-color: #334155; color: white; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: #0047AB; }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .upload-area { border: 3px dashed #cbd5e1; border-radius: 16px; padding: 30px; text-align: center; cursor: pointer; transition: all 0.3s; background: #f8fafc; }
+        .upload-area:hover { border-color: #0047AB; background: #f0f7ff; }
+        body.dark-mode .upload-area { background: #0f172a; border-color: #334155; }
+        .upload-area .icone { font-size: 3rem; margin-bottom: 10px; }
+        .upload-area p { color: #64748b; font-size: 0.9rem; }
+        .upload-area input { display: none; }
+        .preview-imagem { margin-top: 15px; display: none; }
+        .preview-imagem img { max-width: 100%; max-height: 200px; border-radius: 12px; }
+        .btn-publicar { width: 100%; background: linear-gradient(135deg, #0047AB, #003399); color: white; border: none; padding: 16px; border-radius: 50px; font-weight: 800; font-size: 1rem; cursor: pointer; margin-top: 10px; transition: all 0.3s; }
+        .btn-publicar:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,71,171,0.3); }
+        .btn-publicar:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        /* TOAST */
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #10b981; color: white; padding: 12px 20px; border-radius: 10px; z-index: 3000; animation: slideIn 0.3s ease; font-weight: 600; }
         .toast.error { background: #ef4444; }
         .toast.info { background: #3b82f6; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
@@ -180,7 +234,16 @@
         body.dark-mode footer { background: #0f172a; }
 
         @media (max-width: 1000px) { .graficos-container { grid-template-columns: repeat(2, 1fr); } .grafico-card.full-width { grid-column: span 2; } .stats-veteranos { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 768px) { .graficos-container { grid-template-columns: 1fr; } .grafico-card.full-width { grid-column: span 1; } .header-painel { flex-direction: column; text-align: center; } .stats-veteranos { grid-template-columns: 1fr; } .filtros-grid { grid-template-columns: 1fr; } .abas-nav { justify-content: center; } .aba-nav-btn { padding: 8px 16px; font-size: 0.8rem; } }
+        @media (max-width: 768px) { 
+            .graficos-container { grid-template-columns: 1fr; } 
+            .grafico-card.full-width { grid-column: span 1; } 
+            .header-painel { flex-direction: column; text-align: center; } 
+            .stats-veteranos { grid-template-columns: 1fr; } 
+            .filtros-grid { grid-template-columns: 1fr; } 
+            .abas-nav { justify-content: center; } 
+            .aba-nav-btn { padding: 8px 16px; font-size: 0.8rem; } 
+            .noticia-imagem { max-width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -230,6 +293,7 @@
         <button class="aba-nav-btn ativa" data-aba="dashboard">📈 DASHBOARD</button>
         <button class="aba-nav-btn" data-aba="comentarios">💬 COMENTÁRIOS</button>
         <button class="aba-nav-btn" data-aba="contatos">📬 CONTATOS</button>
+        <button class="aba-nav-btn" data-aba="noticias">📰 NOTÍCIAS</button>
         <button class="aba-nav-btn" data-aba="uniforme">👕 UNIFORMES</button>
         <button class="aba-nav-btn" data-aba="aniversarios">🎂 ANIVERSÁRIOS</button>
     </div>
@@ -325,6 +389,20 @@
         </div>
     </div>
 
+    <!-- ABA NOTÍCIAS -->
+    <div id="abaNoticias" class="aba-conteudo">
+        <div style="background:white;border-radius:20px;padding:25px;box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:25px;">
+                <h2 style="font-family:'Montserrat';color:#003399;font-size:1.5rem;">📰 GERENCIAR NOTÍCIAS</h2>
+                <button class="btn-nova-noticia" onclick="abrirModalNoticia()">➕ NOVA NOTÍCIA</button>
+            </div>
+
+            <div id="listaNoticias">
+                <div style="text-align:center;padding:40px;color:#666;">⏳ Carregando notícias...</div>
+            </div>
+        </div>
+    </div>
+
     <!-- ABA UNIFORMES -->
     <div id="abaUniforme" class="aba-conteudo">
         <div class="card" style="background:white;border-radius:20px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.05);text-align:center;">
@@ -339,6 +417,53 @@
             <h2>🎂 ANIVERSARIANTES</h2>
             <iframe src="aniversario.html" style="width:100%;height:600px;border:none;border-radius:20px;"></iframe>
         </div>
+    </div>
+</div>
+
+<!-- MODAL NOVA NOTÍCIA -->
+<div id="modalNoticia" class="modal-noticia">
+    <div class="modal-noticia-content">
+        <div class="modal-noticia-header">
+            <h3>📰 PUBLICAR NOTÍCIA</h3>
+            <button class="btn-fechar-modal" onclick="fecharModalNoticia()">&times;</button>
+        </div>
+
+        <div class="form-group">
+            <label>📌 Título *</label>
+            <input type="text" id="noticiaTitulo" placeholder="Ex: Novo treino de Ginástica" maxlength="200">
+        </div>
+
+        <div class="form-group">
+            <label>📝 Texto da notícia *</label>
+            <textarea id="noticiaTexto" placeholder="Escreva o conteúdo da notícia..." rows="5"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>📷 Imagem (opcional)</label>
+            <div class="upload-area" onclick="document.getElementById('noticiaImagem').click()">
+                <div class="icone">📸</div>
+                <p>Clique para escolher uma imagem</p>
+                <p style="font-size:0.75rem;margin-top:5px;">JPG, PNG ou WEBP (máx. 5MB)</p>
+                <input type="file" id="noticiaImagem" accept="image/*">
+            </div>
+            <div class="preview-imagem" id="previewImagem">
+                <img id="imgPreview">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>⏱️ Tempo de expiração</label>
+            <select id="noticiaExpiracao">
+                <option value="1">1 dia</option>
+                <option value="7">1 semana</option>
+                <option value="15">15 dias</option>
+                <option value="30" selected>1 mês</option>
+                <option value="90">3 meses</option>
+                <option value="365">1 ano</option>
+            </select>
+        </div>
+
+        <button class="btn-publicar" id="btnPublicar" onclick="publicarNoticia()">📤 PUBLICAR NOTÍCIA</button>
     </div>
 </div>
 
@@ -357,6 +482,7 @@
     let ultimaAtualizacao = new Date();
     let statusAtual = false;
     let todosContatos = [];
+    let imagemBase64 = '';
 
     const TURMAS = ['Futebol', 'Taekwondo', 'Ginástica', 'Tênis de Mesa', 'Judô'];
     const CATEGORIAS = ['Sub-5', 'Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Acima-17'];
@@ -392,6 +518,166 @@
             }
             return aluno;
         });
+    }
+
+    // ========== NOTÍCIAS ==========
+    function abrirModalNoticia() {
+        document.getElementById('modalNoticia').classList.add('ativo');
+        document.getElementById('noticiaTitulo').value = '';
+        document.getElementById('noticiaTexto').value = '';
+        document.getElementById('noticiaImagem').value = '';
+        document.getElementById('previewImagem').style.display = 'none';
+        imagemBase64 = '';
+    }
+
+    function fecharModalNoticia() {
+        document.getElementById('modalNoticia').classList.remove('ativo');
+        imagemBase64 = '';
+    }
+
+    // Fechar modal clicando fora
+    document.getElementById('modalNoticia')?.addEventListener('click', function(e) {
+        if (e.target === this) fecharModalNoticia();
+    });
+
+    // Upload da imagem
+    document.getElementById('noticiaImagem')?.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        if (file.size > 5 * 1024 * 1024) {
+            mostrarToast('⚠️ Imagem muito grande! Máx. 5MB', 'error');
+            this.value = '';
+            return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            imagemBase64 = event.target.result;
+            document.getElementById('imgPreview').src = imagemBase64;
+            document.getElementById('previewImagem').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    });
+
+    async function publicarNoticia() {
+        const titulo = document.getElementById('noticiaTitulo').value.trim();
+        const texto = document.getElementById('noticiaTexto').value.trim();
+        const diasExpiracao = document.getElementById('noticiaExpiracao').value;
+        
+        if (!titulo) { mostrarToast('⚠️ Digite o título!', 'error'); return; }
+        if (!texto) { mostrarToast('⚠️ Digite o texto!', 'error'); return; }
+        
+        const btn = document.getElementById('btnPublicar');
+        btn.disabled = true;
+        btn.innerHTML = '⏳ Publicando...';
+        
+        try {
+            const r = await fetch(`${API_URL}/noticias`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    titulo: titulo,
+                    texto: texto,
+                    imagem_base64: imagemBase64,
+                    dias_expiracao: parseInt(diasExpiracao)
+                })
+            });
+            
+            const resultado = await r.json();
+            
+            if (r.ok) {
+                mostrarToast('✅ Notícia publicada!');
+                fecharModalNoticia();
+                carregarNoticias();
+            } else {
+                mostrarToast('❌ ' + (resultado.erro || 'Erro ao publicar'), 'error');
+            }
+        } catch(e) {
+            console.error(e);
+            mostrarToast('❌ Erro ao conectar com o servidor', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '📤 PUBLICAR NOTÍCIA';
+        }
+    }
+
+    async function carregarNoticias() {
+        const container = document.getElementById('listaNoticias');
+        if (!container) return;
+        
+        container.innerHTML = '<div style="text-align:center;padding:40px;color:#666;">⏳ Carregando notícias...</div>';
+        
+        try {
+            const r = await fetch(`${API_URL}/noticias/todas`);
+            const noticias = await r.json();
+            
+            if (!Array.isArray(noticias) || noticias.length === 0) {
+                container.innerHTML = '<div style="text-align:center;padding:60px;color:#888;"><div style="font-size:3rem;margin-bottom:15px;">📭</div><p>Nenhuma notícia publicada ainda</p><p style="font-size:0.85rem;margin-top:10px;">Clique em "➕ NOVA NOTÍCIA" para começar</p></div>';
+                return;
+            }
+            
+            container.innerHTML = noticias.map(n => {
+                const dataPub = new Date(n.data_publicacao).toLocaleDateString('pt-BR');
+                const dataExp = n.data_expiracao ? new Date(n.data_expiracao).toLocaleDateString('pt-BR') : 'Sem expiração';
+                const expirada = n.data_expiracao && new Date(n.data_expiracao) < new Date();
+                const ativa = n.ativo && !expirada;
+                
+                return `
+                    <div class="noticia-card ${ativa ? 'ativa-status' : 'expirada'}">
+                        <div class="noticia-header">
+                            <div class="noticia-titulo">${n.titulo}</div>
+                            <span class="noticia-status ${ativa ? 'ativa' : 'expirada'}">
+                                ${ativa ? '✅ Ativa' : '❌ Expirada'}
+                            </span>
+                        </div>
+                        ${n.imagem_url ? `<img src="${n.imagem_url}" class="noticia-imagem" alt="${n.titulo}">` : ''}
+                        <div class="noticia-texto">${n.texto}</div>
+                        <div class="noticia-footer">
+                            <div class="noticia-datas">
+                                <span>📅 Publicada: ${dataPub}</span>
+                                <span>⏱️ Expira: ${dataExp}</span>
+                            </div>
+                            <button class="btn-excluir-noticia" onclick="excluirNoticia(${n.id})">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        } catch(e) {
+            console.error(e);
+            container.innerHTML = '<div style="text-align:center;padding:40px;color:#888;">❌ Erro ao carregar notícias</div>';
+        }
+    }
+
+    async function excluirNoticia(id) {
+        if (!confirm('Tem certeza que deseja excluir esta notícia? A imagem também será removida.')) return;
+        
+        try {
+            const r = await fetch(`${API_URL}/noticias/${id}`, { method: 'DELETE' });
+            if (r.ok) {
+                mostrarToast('🗑️ Notícia excluída!');
+                carregarNoticias();
+            } else {
+                mostrarToast('❌ Erro ao excluir', 'error');
+            }
+        } catch(e) {
+            mostrarToast('❌ Erro ao conectar', 'error');
+        }
+    }
+
+    async function limparNoticiasExpiradas() {
+        try {
+            const r = await fetch(`${API_URL}/noticias/limpar-expiradas`, { method: 'POST' });
+            const dados = await r.json();
+            if (r.ok) {
+                if (dados.total > 0) {
+                    mostrarToast(`🧹 ${dados.total} notícias expiradas removidas!`);
+                    carregarNoticias();
+                }
+            }
+        } catch(e) {
+            console.error('Erro ao limpar notícias expiradas:', e);
+        }
     }
 
     // ========== ONLINE/OFFLINE ==========
@@ -430,6 +716,7 @@
         document.getElementById(`aba${abaId.charAt(0).toUpperCase() + abaId.slice(1)}`)?.classList.add('ativa');
         if (abaId === 'comentarios') carregarComentarios();
         if (abaId === 'contatos') carregarContatos();
+        if (abaId === 'noticias') carregarNoticias();
     }
 
     document.querySelectorAll('.aba-nav-btn[data-aba]').forEach(btn => {
@@ -670,289 +957,47 @@
 
     function atualizarTodosGraficos() {
         const dados = alunosFiltrados;
-        const totalAlunos = dados.length;
-        
-        // 1. Alunos por Turma (barras verticais)
         const turmasCount = TURMAS.map(t => dados.filter(a => a.turma===t).length);
         if (graficos.turmas) graficos.turmas.destroy();
-        graficos.turmas = new Chart(document.getElementById('graficoTurmas'), { 
-            type: 'bar', 
-            data: { 
-                labels: TURMAS, 
-                datasets: [{ label: 'Alunos', data: turmasCount, backgroundColor: '#0047AB', borderRadius: 8 }] 
-            }, 
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: true,
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-            } 
-        });
-
-        // 2. Distribuição por Turma (%) - Pizza com porcentagem
+        graficos.turmas = new Chart(document.getElementById('graficoTurmas'), { type:'bar', data:{ labels:TURMAS, datasets:[{ label:'Alunos', data:turmasCount, backgroundColor:'#0047AB', borderRadius:8 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
+        
         if (graficos.pizza) graficos.pizza.destroy();
-        graficos.pizza = new Chart(document.getElementById('graficoPizza'), { 
-            type: 'pie', 
-            data: { 
-                labels: TURMAS, 
-                datasets: [{ 
-                    data: turmasCount, 
-                    backgroundColor: ['#0047AB', '#00aaff', '#ff9800', '#25d366', '#ff69b4'], 
-                    borderWidth: 2, 
-                    borderColor: 'white' 
-                }] 
-            }, 
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: true, 
-                plugins: { 
-                    tooltip: {
-                        callbacks: {
-                            label: function(ctx) {
-                                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
-                                const value = ctx.raw;
-                                const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                                return `${ctx.label}: ${value} alunos (${percent}%)`;
-                            }
-                        }
-                    },
-                    legend: { 
-                        position: 'bottom', 
-                        labels: { 
-                            font: { size: 11 },
-                            generateLabels: function(chart) {
-                                const data = chart.data;
-                                const total = data.datasets[0].data.reduce((a, b) => a + b, 0);
-                                return data.labels.map((label, i) => {
-                                    const value = data.datasets[0].data[i];
-                                    const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                                    return {
-                                        text: `${label} (${percent}%)`,
-                                        fillStyle: data.datasets[0].backgroundColor[i],
-                                        index: i,
-                                        hidden: false
-                                    };
-                                });
-                            }
-                        } 
-                    } 
-                } 
-            } 
-        });
-
-        // 3. Alunos por Categoria
+        graficos.pizza = new Chart(document.getElementById('graficoPizza'), { type:'pie', data:{ labels:TURMAS, datasets:[{ data:turmasCount, backgroundColor:['#0047AB','#00aaff','#ff9800','#25d366','#ff69b4'], borderWidth:2, borderColor:'white' }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ tooltip:{ callbacks:{ label:(ctx) => { const total = ctx.dataset.data.reduce((a,b) => a+b, 0); const percent = total > 0 ? ((ctx.raw/total)*100).toFixed(1) : 0; return `${ctx.label}: ${ctx.raw} alunos (${percent}%)`; } } }, legend:{ position:'bottom', labels:{ font:{ size:11 }, generateLabels: (chart) => { const data = chart.data; const total = data.datasets[0].data.reduce((a,b) => a+b, 0); return data.labels.map((label, i) => { const value = data.datasets[0].data[i]; const percent = total > 0 ? ((value/total)*100).toFixed(1) : 0; return { text: `${label} (${percent}%)`, fillStyle: data.datasets[0].backgroundColor[i], index: i, hidden: false }; }); } } } } } });
+        
         const categoriasCount = CATEGORIAS.map(cat => dados.filter(a => a.categoria===cat).length);
         if (graficos.categoria) graficos.categoria.destroy();
-        graficos.categoria = new Chart(document.getElementById('graficoCategoria'), { 
-            type: 'bar', 
-            data: { 
-                labels: CATEGORIAS, 
-                datasets: [{ label: 'Alunos', data: categoriasCount, backgroundColor: '#ff9800', borderRadius: 8 }] 
-            }, 
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: true, 
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-            } 
-        });
-
-        // 4. Alunos por Bairro
-        const bairrosMap = new Map(); 
-        dados.forEach(a => { 
-            if(a.bairro && a.bairro!=='Não informado' && a.bairro!=='Não informada') 
-                bairrosMap.set(a.bairro, (bairrosMap.get(a.bairro)||0)+1); 
-        });
+        graficos.categoria = new Chart(document.getElementById('graficoCategoria'), { type:'bar', data:{ labels:CATEGORIAS, datasets:[{ label:'Alunos', data:categoriasCount, backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
+        
+        const bairrosMap = new Map(); dados.forEach(a => { if(a.bairro && a.bairro!=='Não informado' && a.bairro!=='Não informada') bairrosMap.set(a.bairro, (bairrosMap.get(a.bairro)||0)+1); });
         const bairros = Array.from(bairrosMap.entries()).sort((a,b) => b[1]-a[1]).slice(0,10);
         if (graficos.bairro) graficos.bairro.destroy();
-        graficos.bairro = new Chart(document.getElementById('graficoBairro'), { 
-            type: 'bar', 
-            data: { 
-                labels: bairros.map(b=>b[0]), 
-                datasets: [{ label: 'Alunos', data: bairros.map(b=>b[1]), backgroundColor: '#ff9800', borderRadius: 8 }] 
-            }, 
-            options: { 
-                indexAxis: 'y', 
-                responsive: true, 
-                maintainAspectRatio: true, 
-                plugins: { legend: { display: false } },
-                scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
-            } 
-        });
-
-        // 5. Evolução Mensal de Matrículas
-        const matriculasPorMes = new Array(12).fill(0); 
-        dados.forEach(a => { if(a.dataMatricula) matriculasPorMes[new Date(a.dataMatricula).getMonth()]++; });
+        graficos.bairro = new Chart(document.getElementById('graficoBairro'), { type:'bar', data:{ labels:bairros.map(b=>b[0]), datasets:[{ label:'Alunos', data:bairros.map(b=>b[1]), backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ x:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
+        
+        const matriculasPorMes = new Array(12).fill(0); dados.forEach(a => { if(a.dataMatricula) matriculasPorMes[new Date(a.dataMatricula).getMonth()]++; });
         if (graficos.evolucao) graficos.evolucao.destroy();
-        graficos.evolucao = new Chart(document.getElementById('graficoEvolucao'), { 
-            type: 'line', 
-            data: { 
-                labels: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'], 
-                datasets: [{ label: 'Matrículas', data: matriculasPorMes, borderColor: '#0047AB', backgroundColor: 'rgba(0,71,171,0.1)', fill: true, tension: 0.3 }] 
-            }, 
-            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } } 
-        });
-
-        // 6. Alunos com Deficiência
-        const deficienciaMap = new Map(); 
-        dados.forEach(a => { 
-            if(a.deficiencia && a.deficiencia!=='Nenhuma') { 
-                a.deficiencia.split(', ').forEach(t => { 
-                    const tl = t.replace('Outra: ','').trim(); 
-                    if(tl) deficienciaMap.set(tl, (deficienciaMap.get(tl)||0)+1); 
-                }); 
-            } 
-        });
-        const defLabels = deficienciaMap.size ? Array.from(deficienciaMap.keys()) : ['Nenhuma'];
-        const defData = deficienciaMap.size ? Array.from(deficienciaMap.values()) : [dados.length];
+        graficos.evolucao = new Chart(document.getElementById('graficoEvolucao'), { type:'line', data:{ labels:['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'], datasets:[{ label:'Matrículas', data:matriculasPorMes, borderColor:'#0047AB', backgroundColor:'rgba(0,71,171,0.1)', fill:true, tension:0.3 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } } } });
+        
+        const deficienciaMap = new Map(); dados.forEach(a => { if(a.deficiencia && a.deficiencia!=='Nenhuma') { a.deficiencia.split(', ').forEach(t => { const tl=t.replace('Outra: ','').trim(); if(tl) deficienciaMap.set(tl,(deficienciaMap.get(tl)||0)+1); }); } });
         if (graficos.deficiencia) graficos.deficiencia.destroy();
-        graficos.deficiencia = new Chart(document.getElementById('graficoDeficiencia'), { 
-            type: 'bar', 
-            data: { 
-                labels: defLabels, 
-                datasets: [{ label: 'Alunos', data: defData, backgroundColor: '#ff9800', borderRadius: 8 }] 
-            }, 
-            options: { 
-                indexAxis: 'y', 
-                responsive: true, 
-                maintainAspectRatio: true, 
-                plugins: { legend: { display: false } },
-                scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
-            } 
-        });
-
-        // 7. Remédio Controlado (Pizza)
+        graficos.deficiencia = new Chart(document.getElementById('graficoDeficiencia'), { type:'bar', data:{ labels:deficienciaMap.size?Array.from(deficienciaMap.keys()):['Nenhuma'], datasets:[{ label:'Alunos', data:deficienciaMap.size?Array.from(deficienciaMap.values()):[dados.length], backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ x:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
+        
         const remedioSim = dados.filter(a => a.remedio && a.remedio!=='Não').length;
         const remedioNao = dados.length - remedioSim;
         if (graficos.remedio) graficos.remedio.destroy();
-        graficos.remedio = new Chart(document.getElementById('graficoRemedio'), { 
-            type: 'pie', 
-            data: { 
-                labels: ['Sim', 'Não'], 
-                datasets: [{ 
-                    data: [remedioSim, remedioNao], 
-                    backgroundColor: ['#f44336', '#4caf50'],
-                    borderWidth: 2,
-                    borderColor: 'white'
-                }] 
-            }, 
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: true, 
-                plugins: { 
-                    tooltip: {
-                        callbacks: {
-                            label: function(ctx) {
-                                const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
-                                const value = ctx.raw;
-                                const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                                return `${ctx.label}: ${value} alunos (${percent}%)`;
-                            }
-                        }
-                    },
-                    legend: { 
-                        position: 'bottom',
-                        labels: {
-                            generateLabels: function(chart) {
-                                const data = chart.data;
-                                const total = data.datasets[0].data.reduce((a, b) => a + b, 0);
-                                return data.labels.map((label, i) => {
-                                    const value = data.datasets[0].data[i];
-                                    const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                                    return {
-                                        text: `${label} (${percent}%)`,
-                                        fillStyle: data.datasets[0].backgroundColor[i],
-                                        index: i
-                                    };
-                                });
-                            }
-                        }
-                    }
-                } 
-            } 
-        });
-
-        // 8. Como conheceu a Escolinha (barras verticais - RANKING)
+        graficos.remedio = new Chart(document.getElementById('graficoRemedio'), { type:'pie', data:{ labels:['Sim','Não'], datasets:[{ data:[remedioSim,remedioNao], backgroundColor:['#f44336','#4caf50'], borderWidth:2, borderColor:'white' }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ tooltip:{ callbacks:{ label:(ctx) => { const total = ctx.dataset.data.reduce((a,b) => a+b, 0); const percent = total > 0 ? ((ctx.raw/total)*100).toFixed(1) : 0; return `${ctx.label}: ${ctx.raw} alunos (${percent}%)`; } } }, legend:{ position:'bottom', labels:{ generateLabels: (chart) => { const data = chart.data; const total = data.datasets[0].data.reduce((a,b) => a+b, 0); return data.labels.map((label, i) => { const value = data.datasets[0].data[i]; const percent = total > 0 ? ((value/total)*100).toFixed(1) : 0; return { text: `${label} (${percent}%)`, fillStyle: data.datasets[0].backgroundColor[i], index: i }; }); } } } } } });
+        
         const origemMap = new Map();
-        dados.forEach(a => { 
-            if (a.origem?.trim()) { 
-                let o = a.origem.trim(); 
-                o = o.charAt(0).toUpperCase() + o.slice(1).toLowerCase(); 
-                if (o.includes('Amigo') || o.includes('Indicação')) o = 'Amigo/Indicação';
-                if (o.includes('Passou')) o = 'Passou em frente';
-                origemMap.set(o, (origemMap.get(o) || 0) + 1); 
-            } 
-        });
+        dados.forEach(a => { if (a.origem?.trim()) { let o = a.origem.trim(); o = o.charAt(0).toUpperCase() + o.slice(1).toLowerCase(); if (o.includes('Amigo') || o.includes('Indicação')) o = 'Amigo/Indicação'; if (o.includes('Passou')) o = 'Passou em frente'; origemMap.set(o, (origemMap.get(o) || 0) + 1); } });
         const sortedOrigem = Array.from(origemMap.entries()).sort((a, b) => b[1] - a[1]);
         const origemLabels = sortedOrigem.map(item => item[0]);
         const origemData = sortedOrigem.map(item => item[1]);
         const origemColors = ['#0047AB', '#00aaff', '#ff9800', '#25d366', '#ff69b4', '#8b5cf6', '#f59e0b', '#ef4444'];
         if (graficos.origem) graficos.origem.destroy();
-        graficos.origem = new Chart(document.getElementById('graficoOrigem'), { 
-            type: 'bar', 
-            data: { 
-                labels: origemLabels, 
-                datasets: [{ 
-                    label: 'Alunos', 
-                    data: origemData, 
-                    backgroundColor: origemColors.slice(0, origemLabels.length),
-                    borderRadius: 8 
-                }] 
-            }, 
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: true,
-                plugins: { 
-                    legend: { display: false },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                const total = dados.length;
-                                const value = context.raw;
-                                const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                                return `${value} alunos (${percent}%)`;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: { stepSize: 1 }
-                    }
-                }
-            } 
-        });
-
-        // 9. Alunos por Faixa Etária (Sub)
-        const subCount = [0,0,0,0,0,0,0,0]; 
-        dados.forEach(a => { 
-            const idade=a.idade; 
-            if(!idade) return; 
-            if(idade<=7) subCount[0]++; 
-            else if(idade<=9) subCount[1]++; 
-            else if(idade<=11) subCount[2]++; 
-            else if(idade<=13) subCount[3]++; 
-            else if(idade<=15) subCount[4]++; 
-            else if(idade<=17) subCount[5]++; 
-            else if(idade<=20) subCount[6]++; 
-            else subCount[7]++; 
-        });
+        graficos.origem = new Chart(document.getElementById('graficoOrigem'), { type:'bar', data:{ labels:origemLabels, datasets:[{ label:'Alunos', data:origemData, backgroundColor:origemColors.slice(0, origemLabels.length), borderRadius:8 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: (context) => { const total = dados.length; const percent = total > 0 ? ((context.raw/total)*100).toFixed(1) : 0; return `${context.raw} alunos (${percent}%)`; } } } }, scales:{ y:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
+        
+        const subCount = [0,0,0,0,0,0,0,0]; dados.forEach(a => { const idade=a.idade; if(!idade) return; if(idade<=7) subCount[0]++; else if(idade<=9) subCount[1]++; else if(idade<=11) subCount[2]++; else if(idade<=13) subCount[3]++; else if(idade<=15) subCount[4]++; else if(idade<=17) subCount[5]++; else if(idade<=20) subCount[6]++; else subCount[7]++; });
         if (graficos.sub) graficos.sub.destroy();
-        graficos.sub = new Chart(document.getElementById('graficoSub'), { 
-            type: 'bar', 
-            data: { 
-                labels: SUBS, 
-                datasets: [{ label: 'Alunos', data: subCount, backgroundColor: '#00aaff', borderRadius: 8 }] 
-            }, 
-            options: { 
-                indexAxis: 'y', 
-                responsive: true, 
-                maintainAspectRatio: true, 
-                plugins: { legend: { display: false } },
-                scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
-            } 
-        });
+        graficos.sub = new Chart(document.getElementById('graficoSub'), { type:'bar', data:{ labels:SUBS, datasets:[{ label:'Alunos', data:subCount, backgroundColor:'#00aaff', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ x:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
     }
 
     function atualizarVeteranos() {
@@ -1007,8 +1052,10 @@
                 document.getElementById('infoUsuario').innerHTML=`👤 ${email.split('@')[0]} | ✅ acesso registrado`;
                 carregarDadosDaPlanilha();
                 carregarStatus();
+                limparNoticiasExpiradas();
                 setInterval(() => { if (document.getElementById('painelAnalise').style.display==='block') carregarDadosDaPlanilha(); }, 60000);
                 setInterval(atualizarTimestamp, 1000);
+                setInterval(limparNoticiasExpiradas, 3600000);
             } else { document.getElementById('erroLogin').innerText='Erro ao conectar com o servidor'; }
         } catch(e) { document.getElementById('erroLogin').innerText='Servidor demorou para responder. Tente novamente.'; }
         finally { btn.disabled=false; btn.innerHTML='ACESSAR'; }
