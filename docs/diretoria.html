@@ -1,635 +1,1073 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-import psycopg2
-import psycopg2.extras
-import os
-from dotenv import load_dotenv
-from datetime import datetime
-import cloudinary
-import cloudinary.uploader
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Diretoria | Escolinha do Jacaré</title>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(() => console.log('SW registrado!')).catch(() => {});
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        :root { --azul-escuro: #003399; --azul-premium: #0047AB; --azul-claro: #00aaff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; background: linear-gradient(135deg, #f0f7ff 0%, #e0ecf9 100%); min-height: 100vh; }
+        body.dark-mode { background: linear-gradient(135deg, #0f172a 0%, #1e1a3a 100%); color: #e2e8f0; }
+        body.dark-mode .card, body.dark-mode .grafico-card, body.dark-mode .veteranos-section { background: #1e293b; }
 
-load_dotenv()
+        .nav-bar { background: white; border-radius: 60px; padding: 12px 24px; margin: 20px auto 0; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        body.dark-mode .nav-bar { background: #1e293b; }
+        .logo-text { text-decoration: none; font-family: 'Montserrat'; font-weight: 900; font-size: 1.5rem; background: linear-gradient(45deg, #003399, #00aaff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 12px; flex-wrap: wrap; }
+        .nav-link { text-decoration: none; padding: 8px 20px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; transition: all 0.2s; background: #f1f5f9; color: #1e293b; }
+        body.dark-mode .nav-link { background: #0f172a; color: #e2e8f0; }
+        .nav-link:hover { transform: translateY(-2px); }
+        .nav-link.ativo { background: #0047AB; color: white; }
 
-app = Flask(__name__)
-CORS(app)
+        .login-container { display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 100px); background: linear-gradient(135deg, #003399, #0047AB); }
+        .login-card { background: rgba(255,255,255,0.98); border-radius: 40px; padding: 50px 40px; width: 90%; max-width: 450px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.2); animation: fadeInUp 0.6s ease; }
+        body.dark-mode .login-card { background: #1e293b; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .login-card .icone { font-size: 4rem; margin-bottom: 15px; }
+        .login-card h1 { font-family: 'Montserrat'; color: #003399; font-size: 1.8rem; margin-bottom: 10px; }
+        body.dark-mode .login-card h1 { color: #60a5fa; }
+        .login-card p { color: #666; margin-bottom: 30px; font-size: 0.9rem; }
+        body.dark-mode .login-card p { color: #94a3b8; }
+        .login-card input { width: 100%; padding: 15px 20px; border: 2px solid #e2e8f0; border-radius: 60px; font-size: 1rem; margin-bottom: 20px; outline: none; background: white; }
+        body.dark-mode .login-card input { background: #0f172a; border-color: #334155; color: white; }
+        .login-card input:focus { border-color: #00aaff; }
+        .login-card button { background: linear-gradient(135deg, #0047AB, #003399); color: white; padding: 15px; border: none; border-radius: 60px; width: 100%; cursor: pointer; font-size: 1rem; font-weight: 800; }
+        .erro { color: #ff4444; margin-top: 15px; font-size: 0.85rem; }
+        .info-acesso { margin-top: 20px; font-size: 0.7rem; color: #999; border-top: 1px solid #eee; padding-top: 15px; }
 
-# ==================== CONFIGURAÇÃO CLOUDINARY ====================
-# IMPORTANTE: sem valores padrão fixos no código - as credenciais devem vir
-# SEMPRE das variáveis de ambiente (configuradas no Render, nunca no código).
-cloudinary.config(
-    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
-    api_key=os.getenv('CLOUDINARY_API_KEY'),
-    api_secret=os.getenv('CLOUDINARY_API_SECRET'),
-    secure=True
-)
+        .painel { display: none; max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .header-painel { background: linear-gradient(135deg, #0047AB, #003399); color: white; padding: 20px; border-radius: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        body.dark-mode .header-painel { background: linear-gradient(135deg, #1e40af, #1e3a8a); }
+        .header-painel h1 { font-family: 'Montserrat'; font-size: 1.5rem; }
+        .info-usuario { background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 50px; font-size: 0.8rem; }
+        .btn-atualizar, .btn-exportar-imagem, .btn-exportar { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); color: white; padding: 8px 15px; border-radius: 50px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; }
+        .btn-atualizar:hover, .btn-exportar-imagem:hover, .btn-exportar:hover { background: rgba(255,255,255,0.3); transform: scale(1.02); }
+        .btn-sair { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); color: white; padding: 8px 15px; border-radius: 50px; cursor: pointer; font-size: 0.8rem; }
 
-# Status do sistema (persistido em memória)
-sistema_status = {
-    'online': True,
-    'ultima_atualizacao': datetime.now().isoformat()
-}
+        .btn-status { padding: 8px 18px; border-radius: 50px; cursor: pointer; font-size: 0.85rem; font-weight: 700; border: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-status.online { background: #10b981; color: white; box-shadow: 0 0 12px rgba(16,185,129,0.5); }
+        .btn-status.offline { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); color: white; }
+        .btn-status:hover { transform: scale(1.05); }
+        .status-ponto { width: 8px; height: 8px; border-radius: 50%; }
+        .btn-status.online .status-ponto { background: white; animation: piscar 1.5s ease-in-out infinite; }
+        .btn-status.offline .status-ponto { background: #ef4444; }
+        @keyframes piscar { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-def get_connection():
-    return psycopg2.connect(
-        host=os.getenv('NEON_HOST'),
-        port=int(os.getenv('NEON_PORT', 5432)),
-        user=os.getenv('NEON_USER'),
-        password=os.getenv('NEON_PASSWORD'),
-        database=os.getenv('NEON_DATABASE'),
-        sslmode='require',
-        cursor_factory=psycopg2.extras.RealDictCursor
-    )
+        .info-atualizacao { text-align: right; font-size: 0.75rem; color: #666; margin-bottom: 15px; }
+        body.dark-mode .info-atualizacao { color: #94a3b8; }
 
-@app.route('/')
-def home():
-    return jsonify({'mensagem': 'API da Escolinha do Jacaré funcionando!'})
+        .abas-nav { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; background: white; padding: 10px 15px; border-radius: 60px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        body.dark-mode .abas-nav { background: #1e293b; }
+        .aba-nav-btn { padding: 10px 24px; border-radius: 40px; border: none; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s; background: #f1f5f9; color: #1e293b; text-decoration: none; display: inline-block; }
+        body.dark-mode .aba-nav-btn { background: #0f172a; color: #e2e8f0; }
+        .aba-nav-btn.ativa { background: #0047AB; color: white; }
+        body.dark-mode .aba-nav-btn.ativa { background: #3b82f6; }
+        .aba-nav-btn:hover { transform: translateY(-2px); }
+        .aba-conteudo { display: none; }
+        .aba-conteudo.ativa { display: block; }
 
-# ==================== PRÉ-MATRÍCULA ====================
-@app.route('/api/prematricula', methods=['POST'])
-def prematricula():
-    dados = request.json
+        .cards-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card-analise { background: white; border-radius: 20px; padding: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        body.dark-mode .card-analise { background: #1e293b; }
+        .card-analise:hover { transform: translateY(-5px); }
+        .card-analise .valor { font-size: 2.5rem; font-weight: 800; font-family: 'Montserrat'; color: #003399; }
+        body.dark-mode .card-analise .valor { color: #60a5fa; }
+        .card-analise .label { color: #666; margin-top: 5px; font-size: 0.8rem; }
+        body.dark-mode .card-analise .label { color: #94a3b8; }
+        .card-analise .icone { font-size: 2rem; margin-bottom: 10px; }
+        .card-analise .detalhe { font-size: 0.7rem; color: #999; margin-top: 8px; }
 
-    def safe_str(valor):
-        return '' if valor is None else str(valor)
+        .filtros-container { background: white; border-radius: 20px; padding: 20px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        body.dark-mode .filtros-container { background: #1e293b; }
+        .filtros-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 15px; }
+        .filtro-group { display: flex; flex-direction: column; }
+        .filtro-group label { font-size: 0.7rem; font-weight: 600; color: #666; margin-bottom: 4px; text-transform: uppercase; }
+        body.dark-mode .filtro-group label { color: #94a3b8; }
+        .filtro-group input, .filtro-group select { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 0.85rem; background: white; }
+        body.dark-mode .filtro-group input, body.dark-mode .filtro-group select { background: #0f172a; border-color: #334155; color: white; }
+        .filtros-acoes { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
+        .btn-limpar-filtros { background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 30px; cursor: pointer; font-size: 0.75rem; }
 
-    def safe_int(valor):
-        if valor is None or valor == '':
-            return 0
-        try:
-            return int(float(valor))
-        except:
-            return 0
+        .graficos-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 30px; }
+        .grafico-card { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        body.dark-mode .grafico-card { background: #1e293b; }
+        .grafico-card.full-width { grid-column: span 3; }
+        .grafico-card h3 { font-family: 'Montserrat'; color: #003399; margin-bottom: 15px; text-align: center; font-size: 1rem; }
+        body.dark-mode .grafico-card h3 { color: #60a5fa; }
+        canvas { max-height: 250px; width: 100% !important; }
 
-    def safe_int_min1(valor):
-        if valor is None or valor == '':
-            return 1
-        try:
-            return int(float(valor))
-        except:
-            return 1
+        .veteranos-section { background: white; border-radius: 20px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        body.dark-mode .veteranos-section { background: #1e293b; }
+        .veteranos-section h2 { font-family: 'Montserrat'; color: #003399; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        body.dark-mode .veteranos-section h2 { color: #60a5fa; }
+        .ranking-veteranos { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
+        .veterano-card { background: #f8fafc; border-radius: 16px; padding: 15px; display: flex; align-items: center; gap: 15px; transition: all 0.3s; border-left: 4px solid #0047AB; }
+        body.dark-mode .veterano-card { background: #0f172a; }
+        .veterano-card:hover { transform: translateX(5px); }
+        .veterano-medalha { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .medalha-ouro { background: linear-gradient(135deg, #FFD700, #FDB931); }
+        .medalha-prata { background: linear-gradient(135deg, #C0C0C0, #A0A0A0); }
+        .medalha-bronze { background: linear-gradient(135deg, #CD7F32, #B86F2C); }
+        .medalha-geral { background: #0047AB; color: white; }
+        .veterano-info { flex: 1; }
+        .veterano-nome { font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .veterano-detalhes { font-size: 0.75rem; color: #666; margin-top: 4px; }
+        body.dark-mode .veterano-detalhes { color: #94a3b8; }
+        .tempo-badge { background: #0047AB; color: white; padding: 4px 10px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; }
+        .tempo-1ano { background: #10b981; } .tempo-2anos { background: #3b82f6; } .tempo-3anos { background: #8b5cf6; } .tempo-4anos { background: #f59e0b; } .tempo-5anos { background: #ef4444; }
+        .stats-veteranos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+        body.dark-mode .stats-veteranos { border-top-color: #334155; }
+        .stat-veterano { text-align: center; padding: 10px; background: #f8fafc; border-radius: 12px; }
+        body.dark-mode .stat-veterano { background: #0f172a; }
+        .stat-veterano .numero { font-size: 1.3rem; font-weight: 800; color: #0047AB; }
+        body.dark-mode .stat-veterano .numero { color: #60a5fa; }
+        .stat-veterano .label { font-size: 0.7rem; color: #666; }
+        body.dark-mode .stat-veterano .label { color: #94a3b8; }
 
-    def safe_float(valor):
-        if valor is None or valor == '':
-            return 0
-        try:
-            return float(valor)
-        except:
-            return 0
+        .contatos-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+        .contatos-header h2 { font-family: 'Montserrat'; color: #003399; font-size: 1.3rem; }
+        body.dark-mode .contatos-header h2 { color: #60a5fa; }
+        .contatos-filtros { display: flex; gap: 10px; flex-wrap: wrap; }
+        .contatos-filtros select, .contatos-filtros input { padding: 8px 14px; border: 1px solid #e2e8f0; border-radius: 40px; font-size: 0.8rem; background: white; outline: none; }
+        body.dark-mode .contatos-filtros select, body.dark-mode .contatos-filtros input { background: #0f172a; border-color: #334155; color: white; }
+        .contato-msg-card { background: #f8fafc; border-radius: 16px; padding: 18px 20px; margin-bottom: 12px; border-left: 4px solid #0047AB; transition: all 0.2s; }
+        body.dark-mode .contato-msg-card { background: #0f172a; }
+        .contato-msg-card:hover { transform: translateX(4px); }
+        .contato-msg-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+        .contato-msg-nome { font-weight: 700; font-size: 0.95rem; color: #1e293b; }
+        body.dark-mode .contato-msg-nome { color: #e2e8f0; }
+        .contato-msg-data { font-size: 0.7rem; color: #999; }
+        .contato-msg-assunto { display: inline-block; padding: 3px 12px; border-radius: 40px; font-size: 0.72rem; font-weight: 700; margin-bottom: 8px; }
+        .assunto-sugestao { background: #dbeafe; color: #1e40af; }
+        .assunto-elogio { background: #fce7f3; color: #9d174d; }
+        .assunto-reclamacao { background: #fee2e2; color: #991b1b; }
+        .assunto-duvida { background: #fef9c3; color: #854d0e; }
+        .assunto-outro { background: #f1f5f9; color: #475569; }
+        .contato-msg-texto { font-size: 0.85rem; color: #555; line-height: 1.5; margin-bottom: 10px; }
+        body.dark-mode .contato-msg-texto { color: #94a3b8; }
+        .contato-msg-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+        .contato-msg-whats { font-size: 0.8rem; color: #666; }
+        body.dark-mode .contato-msg-whats { color: #94a3b8; }
+        .btn-responder { background: #25D366; color: white; border: none; padding: 6px 14px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: all 0.2s; }
+        .btn-responder:hover { opacity: 0.9; transform: scale(1.03); }
+        .contatos-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 20px; }
+        .contato-stat { background: white; border-radius: 16px; padding: 15px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        body.dark-mode .contato-stat { background: #1e293b; }
+        .contato-stat .num { font-size: 1.8rem; font-weight: 800; font-family: 'Montserrat'; color: #003399; }
+        body.dark-mode .contato-stat .num { color: #60a5fa; }
+        .contato-stat .lbl { font-size: 0.72rem; color: #666; margin-top: 4px; }
+        body.dark-mode .contato-stat .lbl { color: #94a3b8; }
+        .contatos-vazio { text-align: center; padding: 50px; color: #888; font-size: 0.9rem; }
+        .btn-excluir { background: #fee2e2; color: #dc2626; border: none; padding: 6px 14px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .btn-excluir:hover { background: #dc2626; color: white; }
 
-    protocolo = safe_str(dados.get('protocolo'))
+        /* ==================== NOTÍCIAS ==================== */
+        .noticia-card { background: #f8fafc; border-radius: 16px; padding: 20px; margin-bottom: 15px; border-left: 5px solid #0047AB; transition: all 0.3s; }
+        body.dark-mode .noticia-card { background: #0f172a; }
+        .noticia-card:hover { transform: translateX(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .noticia-card.expirada { border-left-color: #ef4444; opacity: 0.7; }
+        .noticia-card.ativa-status { border-left-color: #10b981; }
+        .noticia-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+        .noticia-titulo { font-family: 'Montserrat'; font-weight: 800; font-size: 1.1rem; color: #003399; }
+        body.dark-mode .noticia-titulo { color: #60a5fa; }
+        .noticia-status { padding: 4px 12px; border-radius: 40px; font-size: 0.7rem; font-weight: 700; }
+        .noticia-status.ativa { background: #d1fae5; color: #059669; }
+        .noticia-status.expirada { background: #fee2e2; color: #dc2626; }
+        .noticia-imagem { max-width: 250px; max-height: 150px; border-radius: 12px; margin-bottom: 12px; object-fit: cover; }
+        .noticia-texto { font-size: 0.9rem; color: #555; line-height: 1.6; margin-bottom: 12px; }
+        body.dark-mode .noticia-texto { color: #94a3b8; }
+        .noticia-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 0.75rem; color: #888; padding-top: 12px; border-top: 1px solid #e2e8f0; }
+        body.dark-mode .noticia-footer { border-top-color: #334155; }
+        .noticia-datas { display: flex; gap: 15px; flex-wrap: wrap; }
+        .btn-nova-noticia { background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 12px 24px; border-radius: 40px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-nova-noticia:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(16,185,129,0.3); }
+        .btn-excluir-noticia { background: #fee2e2; color: #dc2626; border: none; padding: 8px 16px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .btn-excluir-noticia:hover { background: #dc2626; color: white; }
 
-    data_envio_raw = safe_str(dados.get('dataEnvio'))
-    try:
-        dt = datetime.strptime(data_envio_raw, "%d/%m/%Y, %H:%M:%S")
-        data_envio = dt.strftime("%Y-%m-%d %H:%M:%S")
-    except:
-        data_envio = data_envio_raw.replace('/', '-').replace(',', '')
+        /* MODAL NOTÍCIA */
+        .modal-noticia { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
+        .modal-noticia.ativo { display: flex; }
+        .modal-noticia-content { background: white; border-radius: 32px; max-width: 650px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 32px; animation: modalFadeIn 0.3s ease; }
+        body.dark-mode .modal-noticia-content { background: #1e293b; }
+        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .modal-noticia-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #e2e8f0; }
+        body.dark-mode .modal-noticia-header { border-bottom-color: #334155; }
+        .modal-noticia-header h3 { font-family: 'Montserrat'; color: #003399; font-size: 1.4rem; }
+        body.dark-mode .modal-noticia-header h3 { color: #60a5fa; }
+        .btn-fechar-modal { font-size: 28px; cursor: pointer; color: #94a3b8; background: none; border: none; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 0.85rem; color: #1e293b; }
+        body.dark-mode .form-group label { color: #e2e8f0; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 14px; font-size: 0.95rem; font-family: inherit; background: white; outline: none; transition: border-color 0.3s; }
+        body.dark-mode .form-group input, body.dark-mode .form-group textarea, body.dark-mode .form-group select { background: #0f172a; border-color: #334155; color: white; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: #0047AB; }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .upload-area { border: 3px dashed #cbd5e1; border-radius: 16px; padding: 30px; text-align: center; cursor: pointer; transition: all 0.3s; background: #f8fafc; }
+        .upload-area:hover { border-color: #0047AB; background: #f0f7ff; }
+        body.dark-mode .upload-area { background: #0f172a; border-color: #334155; }
+        .upload-area .icone { font-size: 3rem; margin-bottom: 10px; }
+        .upload-area p { color: #64748b; font-size: 0.9rem; }
+        .upload-area input { display: none; }
+        .preview-imagem { margin-top: 15px; display: none; }
+        .preview-imagem img { max-width: 100%; max-height: 200px; border-radius: 12px; }
+        .btn-publicar { width: 100%; background: linear-gradient(135deg, #0047AB, #003399); color: white; border: none; padding: 16px; border-radius: 50px; font-weight: 800; font-size: 1rem; cursor: pointer; margin-top: 10px; transition: all 0.3s; }
+        .btn-publicar:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,71,171,0.3); }
+        .btn-publicar:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-    nome_aluno = safe_str(dados.get('nomeAluno'))
-    data_nasc = safe_str(dados.get('dataNasc'))
-    idade = safe_int(dados.get('idade'))
-    turma = safe_str(dados.get('turma'))
-    categoria = safe_str(dados.get('categoria'))
-    responsavel = safe_str(dados.get('responsavel'))
-    tipo_vinculo = safe_str(dados.get('tipo_vinculo'))
-    sexo_responsavel = safe_str(dados.get('sexo_responsavel'))
-    telefone = safe_str(dados.get('telefone'))
-    email = safe_str(dados.get('email'))
-    endereco = safe_str(dados.get('endereco'))
-    bairro = safe_str(dados.get('bairro'))
-    moradores = safe_int_min1(dados.get('moradores'))
-    remedio = safe_str(dados.get('remedio'))
-    origem = safe_str(dados.get('origem'))
-    rg = safe_str(dados.get('rg'))
-    sexo = safe_str(dados.get('sexo'))
-    peso = safe_float(dados.get('peso'))
-    altura = safe_float(dados.get('altura'))
-    calcado = safe_str(dados.get('calcado'))
-    tamanho_uniforme = safe_str(dados.get('tamanho_uniforme'))
-    possui_uniforme = safe_str(dados.get('possui_uniforme'))
-    deficiencia = safe_str(dados.get('deficiencia'))
-    municipio = safe_str(dados.get('municipio'))
-    uf = safe_str(dados.get('uf'))
-    escola = safe_str(dados.get('escola'))
-    serie = safe_str(dados.get('serie'))
-    observacao = safe_str(dados.get('observacao'))
-    estrelas = safe_int(dados.get('estrelas'))
-    data_inscricao = dados.get('data_inscricao') or None
-    data_entrega_uniforme = dados.get('data_entrega_uniforme') or None
-    status = 'pendente'
+        /* TOAST */
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #10b981; color: white; padding: 12px 20px; border-radius: 10px; z-index: 3000; animation: slideIn 0.3s ease; font-weight: 600; }
+        .toast.error { background: #ef4444; }
+        .toast.info { background: #3b82f6; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-    print(f"📥 Recebido: {nome_aluno}, Idade: {idade}, Tamanho: {tamanho_uniforme}")
+        footer { background: #003399; color: white; text-align: center; padding: 30px; margin-top: 50px; }
+        body.dark-mode footer { background: #0f172a; }
 
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
+        @media (max-width: 1000px) { .graficos-container { grid-template-columns: repeat(2, 1fr); } .grafico-card.full-width { grid-column: span 2; } .stats-veteranos { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { 
+            .graficos-container { grid-template-columns: 1fr; } 
+            .grafico-card.full-width { grid-column: span 1; } 
+            .header-painel { flex-direction: column; text-align: center; } 
+            .stats-veteranos { grid-template-columns: 1fr; } 
+            .filtros-grid { grid-template-columns: 1fr; } 
+            .abas-nav { justify-content: center; } 
+            .aba-nav-btn { padding: 8px 16px; font-size: 0.8rem; } 
+            .noticia-imagem { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
 
-        cursor.execute("""
-            SELECT COUNT(*) as total FROM alunos 
-            WHERE rg = %s AND responsavel = %s AND nome_aluno = %s
-        """, (rg, responsavel, nome_aluno))
+<div class="nav-bar">
+    <a href="index.html" class="logo-text">🐊 ESCOLINHA DO JACARÉ</a>
+    <div class="nav-links">
+        <a href="index.html" class="nav-link">🏠 INÍCIO</a>
+        <a href="diretoria.html" class="nav-link ativo">📊 DIRETORIA</a>
+        <a href="funcionarios.html" class="nav-link">🔒 FUNCIONÁRIOS</a>
+    </div>
+</div>
+
+<div id="telaLogin" class="login-container">
+    <div class="login-card">
+        <div class="icone">🔐</div>
+        <h1>ÁREA DA DIRETORIA</h1>
+        <p>Análise de dados da Escolinha do Jacaré</p>
+        <input type="email" id="emailLogin" placeholder="E-mail" required>
+        <input type="password" id="senhaLogin" placeholder="Senha" onkeypress="if(event.key==='Enter') verificarLogin()">
+        <button onclick="verificarLogin()">ACESSAR</button>
+        <div id="erroLogin" class="erro"></div>
+        <div class="info-acesso">🔒 Acesso restrito a diretores autorizados</div>
+    </div>
+</div>
+
+<div id="painelAnalise" class="painel">
+    <div class="header-painel">
+        <h1>📊 DIRETORIA | ESCOLINHA DO JACARÉ</h1>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <div class="info-usuario" id="infoUsuario"></div>
+            <button id="btnStatus" class="btn-status offline" onclick="alternarStatus()">
+                <span class="status-ponto"></span>
+                <span id="textoStatus">OFFLINE</span>
+            </button>
+            <button class="btn-atualizar" onclick="atualizarDados()">🔄 ATUALIZAR</button>
+            <button class="btn-exportar" onclick="exportarDados()">📥 EXPORTAR</button>
+            <button class="btn-exportar-imagem" onclick="exportarComoImagem()">📸 EXPORTAR IMAGEM</button>
+            <a href="club.html" class="aba-nav-btn" style="text-decoration:none;">🎲 CLUBE</a>
+            <button class="btn-sair" onclick="logout()">🚪 SAIR</button>
+        </div>
+    </div>
+
+    <div class="info-atualizacao"><span id="ultimaAtualizacao">🕐 Última atualização: carregando...</span></div>
+
+    <div class="abas-nav">
+        <button class="aba-nav-btn ativa" data-aba="dashboard">📈 DASHBOARD</button>
+        <button class="aba-nav-btn" data-aba="comentarios">💬 COMENTÁRIOS</button>
+        <button class="aba-nav-btn" data-aba="contatos">📬 CONTATOS</button>
+        <button class="aba-nav-btn" data-aba="noticias">📰 NOTÍCIAS</button>
+        <button class="aba-nav-btn" data-aba="uniforme">👕 UNIFORMES</button>
+        <button class="aba-nav-btn" data-aba="aniversarios">🎂 ANIVERSÁRIOS</button>
+    </div>
+
+    <!-- ABA DASHBOARD -->
+    <div id="abaDashboard" class="aba-conteudo ativa">
+        <div class="cards-container">
+            <div class="card-analise"><div class="icone">👥</div><div class="valor" id="totalAlunos">0</div><div class="label">Total de Alunos</div><div class="detalhe" id="novosAlunosMes">+0 este mês</div></div>
+            <div class="card-analise"><div class="icone">📊</div><div class="valor" id="mediaIdade">0</div><div class="label">Média de Idade</div><div class="detalhe">anos</div></div>
+            <div class="card-analise"><div class="icone">🏆</div><div class="valor" id="turmaMaisAlunos">-</div><div class="label">Turma com + Alunos</div><div class="detalhe" id="turmaPercentual">0% do total</div></div>
+            <div class="card-analise"><div class="icone">🏘️</div><div class="valor" id="bairroMaisAlunos">-</div><div class="label">Bairro com + Alunos</div><div class="detalhe" id="bairroPercentual">0% do total</div></div>
+        </div>
+        <div class="cards-container">
+            <div class="card-analise"><div class="icone">⚠️</div><div class="valor" id="totalDeficiencia">0</div><div class="label">Alunos com Deficiência</div><div class="detalhe" id="tiposDeficiencia">-</div></div>
+            <div class="card-analise"><div class="icone">💊</div><div class="valor" id="totalRemedio">0</div><div class="label">Remédio Controlado</div><div class="detalhe" id="percentRemedio">0%</div><div class="detalhe" id="numerosRemedio" style="font-size:0.65rem;">0 alunos</div></div>
+        </div>
+
+        <div class="filtros-container">
+            <div class="filtros-grid">
+                <div class="filtro-group"><label>🔍 NOME</label><input type="text" id="filtroNome" placeholder="Nome do aluno..."></div>
+                <div class="filtro-group"><label>👤 RESPONSÁVEL</label><input type="text" id="filtroResponsavel" placeholder="Nome do responsável..."></div>
+                <div class="filtro-group"><label>📞 TELEFONE</label><input type="text" id="filtroTelefone" placeholder="Telefone..."></div>
+                <div class="filtro-group"><label>⚽ TURMA</label><select id="filtroTurma"><option value="">Todas</option><option value="Futebol">Futebol</option><option value="Taekwondo">Taekwondo</option><option value="Ginástica">Ginástica</option><option value="Tênis de Mesa">Tênis de Mesa</option><option value="Judô">Judô</option></select></div>
+                <div class="filtro-group"><label>🏆 CATEGORIA</label><select id="filtroCategoria"><option value="">Todas</option><option value="Sub-5">Sub-5</option><option value="Sub-7">Sub-7</option><option value="Sub-9">Sub-9</option><option value="Sub-11">Sub-11</option><option value="Sub-13">Sub-13</option><option value="Sub-15">Sub-15</option><option value="Sub-17">Sub-17</option><option value="Acima-17">Acima-17</option></select></div>
+                <div class="filtro-group"><label>🏘️ BAIRRO</label><input type="text" id="filtroBairro" placeholder="Bairro..."></div>
+                <div class="filtro-group"><label>📋 STATUS</label><select id="filtroStatus"><option value="">Todos</option><option value="aprovado">✅ Ativos</option><option value="pendente">⏳ Pendentes</option><option value="recusado">❌ Desativados</option></select></div>
+            </div>
+            <div class="filtros-acoes"><button class="btn-limpar-filtros" onclick="limparFiltros()">🗑️ LIMPAR FILTROS</button></div>
+        </div>
+
+        <div class="graficos-container">
+            <div class="grafico-card"><h3>⚽ Alunos por Turma</h3><canvas id="graficoTurmas"></canvas></div>
+            <div class="grafico-card"><h3>🥧 Distribuição por Turma (%)</h3><canvas id="graficoPizza"></canvas></div>
+            <div class="grafico-card"><h3>🏆 Alunos por Categoria</h3><canvas id="graficoCategoria"></canvas></div>
+            <div class="grafico-card"><h3>🏘️ Alunos por Bairro</h3><canvas id="graficoBairro"></canvas></div>
+            <div class="grafico-card"><h3>📈 Evolução Mensal de Matrículas</h3><canvas id="graficoEvolucao"></canvas></div>
+            <div class="grafico-card"><h3>⚠️ Alunos com Deficiência</h3><canvas id="graficoDeficiencia"></canvas></div>
+            <div class="grafico-card"><h3>💊 Remédio Controlado</h3><canvas id="graficoRemedio"></canvas></div>
+            <div class="grafico-card"><h3>📢 Como conheceu a Escolinha</h3><canvas id="graficoOrigem"></canvas></div>
+            <div class="grafico-card full-width"><h3>📊 Alunos por Faixa Etária (Sub)</h3><canvas id="graficoSub"></canvas></div>
+        </div>
+
+        <div class="veteranos-section">
+            <h2>🏅 ALUNOS VETERANOS <span style="font-size:0.8rem;">(mais tempo de casa)</span></h2>
+            <div class="ranking-veteranos" id="rankingVeteranos"><div>Carregando veteranos...</div></div>
+            <div class="stats-veteranos" id="statsVeteranos">
+                <div class="stat-veterano"><div class="numero">0</div><div class="label">Veteranos (1+ ano)</div></div>
+                <div class="stat-veterano"><div class="numero">0</div><div class="label">Média de tempo</div></div>
+                <div class="stat-veterano"><div class="numero">0</div><div class="label">Maior tempo</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABA COMENTÁRIOS -->
+    <div id="abaComentarios" class="aba-conteudo">
+        <div class="card" style="background:white;border-radius:20px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+            <h2 style="margin-bottom:20px;">💬 COMENTÁRIOS E AVALIAÇÕES</h2>
+            <div id="comentariosCarregando">Carregando comentários...</div>
+            <div id="listaComentarios" style="display:none;"></div>
+            <button class="btn-exportar" onclick="exportarComentarios()" style="background:#10b981;margin-top:20px;">📥 EXPORTAR COMENTÁRIOS</button>
+        </div>
+    </div>
+
+    <!-- ABA CONTATOS -->
+    <div id="abaContatos" class="aba-conteudo">
+        <div style="background:white;border-radius:20px;padding:25px;box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+            <div class="contatos-header">
+                <h2>📬 MENSAGENS RECEBIDAS</h2>
+                <div class="contatos-filtros">
+                    <select id="filtroContatoAssunto" onchange="filtrarContatos()">
+                        <option value="">Todos os assuntos</option>
+                        <option value="Sugestão">💡 Sugestão</option>
+                        <option value="Elogio">❤️ Elogio</option>
+                        <option value="Reclamação">⚠️ Reclamação</option>
+                        <option value="Dúvida">❓ Dúvida</option>
+                        <option value="Outro">📋 Outro</option>
+                    </select>
+                    <input type="text" id="filtroContatoNome" placeholder="Buscar por nome..." oninput="filtrarContatos()" style="width:180px;">
+                    <button onclick="carregarContatos()" style="background:#0047AB;color:white;border:none;padding:8px 16px;border-radius:40px;cursor:pointer;font-size:0.8rem;font-weight:700;">🔄 Atualizar</button>
+                </div>
+            </div>
+
+            <div class="contatos-stats" id="contatosStats">
+                <div class="contato-stat"><div class="num" id="statTotal">0</div><div class="lbl">Total</div></div>
+                <div class="contato-stat"><div class="num" id="statSugestao">0</div><div class="lbl">Sugestões</div></div>
+                <div class="contato-stat"><div class="num" id="statElogio">0</div><div class="lbl">Elogios</div></div>
+                <div class="contato-stat"><div class="num" id="statReclamacao">0</div><div class="lbl">Reclamações</div></div>
+                <div class="contato-stat"><div class="num" id="statDuvida">0</div><div class="lbl">Dúvidas</div></div>
+            </div>
+
+            <div id="contatosCarregando" style="text-align:center;padding:30px;color:#666;">⏳ Carregando mensagens...</div>
+            <div id="listaContatos"></div>
+        </div>
+    </div>
+
+    <!-- ABA NOTÍCIAS -->
+    <div id="abaNoticias" class="aba-conteudo">
+        <div style="background:white;border-radius:20px;padding:25px;box-shadow:0 5px 15px rgba(0,0,0,0.05);">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:25px;">
+                <h2 style="font-family:'Montserrat';color:#003399;font-size:1.5rem;">📰 GERENCIAR NOTÍCIAS</h2>
+                <button class="btn-nova-noticia" onclick="abrirModalNoticia()">➕ NOVA NOTÍCIA</button>
+            </div>
+
+            <div id="listaNoticias">
+                <div style="text-align:center;padding:40px;color:#666;">⏳ Carregando notícias...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABA UNIFORMES -->
+    <div id="abaUniforme" class="aba-conteudo">
+        <div class="card" style="background:white;border-radius:20px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.05);text-align:center;">
+            <h2>👕 UNIFORMES</h2>
+            <iframe src="uniforme.html" style="width:100%;height:600px;border:none;border-radius:20px;"></iframe>
+        </div>
+    </div>
+
+    <!-- ABA ANIVERSÁRIOS -->
+    <div id="abaAniversarios" class="aba-conteudo">
+        <div class="card" style="background:white;border-radius:20px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.05);text-align:center;">
+            <h2>🎂 ANIVERSARIANTES</h2>
+            <iframe src="aniversario.html" style="width:100%;height:600px;border:none;border-radius:20px;"></iframe>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL NOVA NOTÍCIA -->
+<div id="modalNoticia" class="modal-noticia">
+    <div class="modal-noticia-content">
+        <div class="modal-noticia-header">
+            <h3>📰 PUBLICAR NOTÍCIA</h3>
+            <button class="btn-fechar-modal" onclick="fecharModalNoticia()">&times;</button>
+        </div>
+
+        <div class="form-group">
+            <label>📌 Título *</label>
+            <input type="text" id="noticiaTitulo" placeholder="Ex: Novo treino de Ginástica" maxlength="200">
+        </div>
+
+        <div class="form-group">
+            <label>📝 Texto da notícia *</label>
+            <textarea id="noticiaTexto" placeholder="Escreva o conteúdo da notícia..." rows="5"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>📷 Imagem (opcional)</label>
+            <div class="upload-area" onclick="document.getElementById('noticiaImagem').click()">
+                <div class="icone">📸</div>
+                <p>Clique para escolher uma imagem</p>
+                <p style="font-size:0.75rem;margin-top:5px;">JPG, PNG ou WEBP (máx. 5MB)</p>
+                <input type="file" id="noticiaImagem" accept="image/*">
+            </div>
+            <div class="preview-imagem" id="previewImagem">
+                <img id="imgPreview">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>⏱️ Tempo de expiração</label>
+            <select id="noticiaExpiracao">
+                <option value="1">1 dia</option>
+                <option value="7">1 semana</option>
+                <option value="15">15 dias</option>
+                <option value="30" selected>1 mês</option>
+                <option value="90">3 meses</option>
+                <option value="365">1 ano</option>
+            </select>
+        </div>
+
+        <button class="btn-publicar" id="btnPublicar" onclick="publicarNoticia()">📤 PUBLICAR NOTÍCIA</button>
+    </div>
+</div>
+
+<footer>
+    ESCOLINHA DO JACARÉ - ALVORADA<br>Manaus/AM - Brasil<br>
+    © 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte
+</footer>
+
+<script>
+    const API_URL = 'https://api-escolinha.onrender.com/api';
+
+    let usuarioLogado = null;
+    let todosAlunos = [];
+    let alunosFiltrados = [];
+    let graficos = {};
+    let ultimaAtualizacao = new Date();
+    let statusAtual = false;
+    let todosContatos = [];
+    let imagemBase64 = '';
+
+    const TURMAS = ['Futebol', 'Taekwondo', 'Ginástica', 'Tênis de Mesa', 'Judô'];
+    const CATEGORIAS = ['Sub-5', 'Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Acima-17'];
+    const SUBS = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Sub-20', 'Sub-30'];
+
+    // ========== PADRONIZAR BAIRROS ==========
+    function padronizarBairros(dados) {
+        const mapaBairros = {
+            'Alvorada': ['Alvorada', 'Alvorada 1', 'Alvorada I', 'Alvorada1', 'alvorada', 'alvorada 1'],
+            'Dom Pedro I': ['Dom Pedro', 'Dom Pedro I', 'Dom Pedro 1', 'dom pedro'],
+            'Tarumã': ['Tarumã', 'taruma'],
+            'Novo Israel': ['Novo Israel', 'novo israel'],
+            'Lago Azul': ['Lago Azul', 'lago azul'],
+            'Santa Etelvina': ['Santa Etelvina', 'santa etelvina'],
+            'Nova Cidade': ['Nova Cidade', 'nova cidade'],
+            'Redenção': ['Redenção', 'redenção'],
+            'Morro da Liberdade': ['Morro da Liberdade', 'morro da liberdade'],
+            'Planalto': ['Planalto', 'planalto']
+        };
+
+        return dados.map(aluno => {
+            if (aluno.bairro) {
+                const bairroOriginal = aluno.bairro.trim();
+                let bairroPadrao = bairroOriginal;
+                for (const [padrao, variacoes] of Object.entries(mapaBairros)) {
+                    if (variacoes.some(v => bairroOriginal.toLowerCase().includes(v.toLowerCase()) || 
+                                          v.toLowerCase().includes(bairroOriginal.toLowerCase()))) {
+                        bairroPadrao = padrao;
+                        break;
+                    }
+                }
+                return { ...aluno, bairro: bairroPadrao };
+            }
+            return aluno;
+        });
+    }
+
+    // ========== NOTÍCIAS ==========
+    function abrirModalNoticia() {
+        document.getElementById('modalNoticia').classList.add('ativo');
+        document.getElementById('noticiaTitulo').value = '';
+        document.getElementById('noticiaTexto').value = '';
+        document.getElementById('noticiaImagem').value = '';
+        document.getElementById('previewImagem').style.display = 'none';
+        imagemBase64 = '';
+    }
+
+    function fecharModalNoticia() {
+        document.getElementById('modalNoticia').classList.remove('ativo');
+        imagemBase64 = '';
+    }
+
+    // Fechar modal clicando fora
+    document.getElementById('modalNoticia')?.addEventListener('click', function(e) {
+        if (e.target === this) fecharModalNoticia();
+    });
+
+    // Upload da imagem
+    document.getElementById('noticiaImagem')?.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
         
-        resultado = cursor.fetchone()
+        if (file.size > 5 * 1024 * 1024) {
+            mostrarToast('⚠️ Imagem muito grande! Máx. 5MB', 'error');
+            this.value = '';
+            return;
+        }
         
-        if resultado['total'] > 0:
-            cursor.close()
-            conn.close()
-            return jsonify({'erro': 'Aluno já cadastrado'}), 409
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            imagemBase64 = event.target.result;
+            document.getElementById('imgPreview').src = imagemBase64;
+            document.getElementById('previewImagem').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    });
 
-        sql = """
-            INSERT INTO alunos (
-                protocolo, data_envio, nome_aluno, data_nasc, idade, turma, 
-                categoria, responsavel, tipo_vinculo, sexo_responsavel, telefone, email, 
-                endereco, bairro, moradores, remedio, origem, rg, sexo, 
-                peso, altura, calcado, tamanho_uniforme, deficiencia, municipio, 
-                uf, escola, serie, status, possui_uniforme, observacao, estrelas,
-                data_inscricao, data_entrega_uniforme
-            ) VALUES (
-                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
-                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
-                %s, %s, %s, %s, %s, %s, %s, %s, %s
-            )
-        """
-
-        valores = (
-            protocolo, data_envio, nome_aluno, data_nasc, idade, turma, categoria,
-            responsavel, tipo_vinculo, sexo_responsavel, telefone, email, 
-            endereco, bairro, moradores, remedio, origem, rg, sexo, 
-            peso, altura, calcado, tamanho_uniforme, deficiencia, municipio, 
-            uf, escola, serie, status, possui_uniforme, observacao, estrelas,
-            data_inscricao, data_entrega_uniforme
-        )
-
-        cursor.execute(sql, valores)
-        conn.commit()
-
-        cursor.close()
-        conn.close()
-
-        print(f"✅ Aluno salvo! Protocolo: {protocolo}")
-        return jsonify({'mensagem': 'Pré-matrícula enviada com sucesso!', 'protocolo': protocolo}), 201
-
-    except Exception as e:
-        print(f"❌ Erro: {e}")
-        import traceback
-        traceback.print_exc()
-        return jsonify({'erro': str(e)}), 500
-
-# ==================== LISTAR ALUNOS ====================
-@app.route('/api/alunos', methods=['GET'])
-def get_alunos():
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM alunos ORDER BY id DESC")
-        alunos = cursor.fetchall()
-        cursor.close()
-        conn.close()
-        return jsonify(alunos), 200
-    except Exception as e:
-        print(f"❌ Erro ao buscar alunos: {e}")
-        return jsonify({'erro': 'Erro ao buscar alunos'}), 500
-
-# ==================== ATUALIZAR STATUS ====================
-@app.route('/api/aluno/<protocolo>', methods=['PUT'])
-def atualizar_status(protocolo):
-    dados = request.json
-    novo_status = dados.get('status')
-
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("UPDATE alunos SET status = %s WHERE protocolo = %s", (novo_status, protocolo))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return jsonify({'mensagem': f'Status atualizado para {novo_status}'}), 200
-    except Exception as e:
-        print(f"❌ Erro ao atualizar status: {e}")
-        return jsonify({'erro': 'Erro ao atualizar status'}), 500
-
-# ==================== EDITAR ALUNO ====================
-@app.route('/api/aluno/editar/<protocolo>', methods=['PUT'])
-def atualizar_aluno(protocolo):
-    dados = request.json
-
-    def safe_str(valor):
-        return '' if valor is None else str(valor)
-
-    def safe_int(valor):
-        if valor is None or valor == '':
-            return 0
-        try:
-            return int(float(valor))
-        except:
-            return 0
-
-    def safe_int_min1(valor):
-        if valor is None or valor == '':
-            return 1
-        try:
-            return int(float(valor))
-        except:
-            return 1
-
-    def safe_float(valor):
-        if valor is None or valor == '':
-            return 0
-        try:
-            return float(valor)
-        except:
-            return 0
-
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-
-        sql = """
-            UPDATE alunos SET
-                nome_aluno = %s,
-                data_nasc = %s,
-                idade = %s,
-                turma = %s,
-                categoria = %s,
-                responsavel = %s,
-                tipo_vinculo = %s,
-                sexo_responsavel = %s,
-                telefone = %s,
-                email = %s,
-                endereco = %s,
-                bairro = %s,
-                moradores = %s,
-                remedio = %s,
-                origem = %s,
-                rg = %s,
-                sexo = %s,
-                peso = %s,
-                altura = %s,
-                calcado = %s,
-                tamanho_uniforme = %s,
-                possui_uniforme = %s,
-                deficiencia = %s,
-                municipio = %s,
-                uf = %s,
-                escola = %s,
-                serie = %s,
-                observacao = %s,
-                estrelas = %s,
-                data_entrega_uniforme = %s
-            WHERE protocolo = %s
-        """
-
-        valores = (
-            safe_str(dados.get('nome_aluno')),
-            safe_str(dados.get('data_nasc')),
-            safe_int(dados.get('idade')),
-            safe_str(dados.get('turma')),
-            safe_str(dados.get('categoria')),
-            safe_str(dados.get('responsavel')),
-            safe_str(dados.get('tipo_vinculo')),
-            safe_str(dados.get('sexo_responsavel')),
-            safe_str(dados.get('telefone')),
-            safe_str(dados.get('email')),
-            safe_str(dados.get('endereco')),
-            safe_str(dados.get('bairro')),
-            safe_int_min1(dados.get('moradores')),
-            safe_str(dados.get('remedio')),
-            safe_str(dados.get('origem')),
-            safe_str(dados.get('rg')),
-            safe_str(dados.get('sexo')),
-            safe_float(dados.get('peso')),
-            safe_float(dados.get('altura')),
-            safe_str(dados.get('calcado')),
-            safe_str(dados.get('tamanho_uniforme')),
-            safe_str(dados.get('possui_uniforme')),
-            safe_str(dados.get('deficiencia')),
-            safe_str(dados.get('municipio')),
-            safe_str(dados.get('uf')),
-            safe_str(dados.get('escola')),
-            safe_str(dados.get('serie')),
-            safe_str(dados.get('observacao')),
-            safe_int(dados.get('estrelas')),
-            dados.get('data_entrega_uniforme') or None,
-            protocolo
-        )
-
-        cursor.execute(sql, valores)
-        conn.commit()
-
-        if cursor.rowcount == 0:
-            cursor.close()
-            conn.close()
-            return jsonify({'erro': 'Aluno não encontrado'}), 404
-
-        cursor.close()
-        conn.close()
-
-        print(f"✅ Aluno atualizado! Protocolo: {protocolo}")
-        return jsonify({'mensagem': 'Aluno atualizado com sucesso!'}), 200
-
-    except Exception as e:
-        print(f"❌ Erro ao atualizar aluno: {e}")
-        import traceback
-        traceback.print_exc()
-        return jsonify({'erro': str(e)}), 500
-
-# ==================== ELOGIOS ====================
-@app.route('/api/elogios', methods=['GET'])
-def get_elogios():
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("""
-            SELECT nome_aluno, observacao, data_envio, estrelas
-            FROM alunos 
-            WHERE observacao IS NOT NULL AND observacao != ''
-            ORDER BY data_envio DESC
-            LIMIT 50
-        """)
-        elogios = cursor.fetchall()
-        cursor.close()
-        conn.close()
-        return jsonify(elogios), 200
-    except Exception as e:
-        print(f"❌ Erro ao buscar elogios: {e}")
-        return jsonify({'erro': 'Erro ao buscar elogios'}), 500
-
-# ==================== STATUS (ONLINE/OFFLINE) ====================
-@app.route('/api/status', methods=['GET', 'POST'])
-def status():
-    global sistema_status
-    
-    if request.method == 'GET':
-        return jsonify({
-            'online': sistema_status.get('online', True),
-            'ultima_atualizacao': sistema_status.get('ultima_atualizacao', datetime.now().isoformat())
-        }), 200
-    
-    elif request.method == 'POST':
-        dados = request.json
-        online = dados.get('online', True)
-        sistema_status['online'] = online
-        sistema_status['ultima_atualizacao'] = datetime.now().isoformat()
-        print(f"📡 Status alterado para: {'ONLINE' if online else 'OFFLINE'}")
-        return jsonify({
-            'online': online,
-            'mensagem': f"Status alterado para {'ONLINE' if online else 'OFFLINE'}"
-        }), 200
-
-# ==================== CONTATOS ====================
-@app.route('/api/contatos', methods=['GET', 'POST'])
-def contatos():
-    if request.method == 'GET':
-        try:
-            conn = get_connection()
-            cursor = conn.cursor()
-            cursor.execute("""
-                SELECT id, nome, whatsapp, assunto, mensagem, data_envio as data
-                FROM contatos 
-                ORDER BY id DESC
-            """)
-            contatos = cursor.fetchall()
-            cursor.close()
-            conn.close()
-            return jsonify(contatos), 200
-        except Exception as e:
-            print(f"❌ Erro ao buscar contatos: {e}")
-            return jsonify({'erro': 'Erro ao buscar contatos'}), 500
-    
-    elif request.method == 'POST':
-        dados = request.json
-        nome = dados.get('nome', '')
-        whatsapp = dados.get('whatsapp', '')
-        assunto = dados.get('assunto', '')
-        mensagem = dados.get('mensagem', '')
-        data_envio = datetime.now().isoformat()
+    async function publicarNoticia() {
+        const titulo = document.getElementById('noticiaTitulo').value.trim();
+        const texto = document.getElementById('noticiaTexto').value.trim();
+        const diasExpiracao = document.getElementById('noticiaExpiracao').value;
         
-        try:
-            conn = get_connection()
-            cursor = conn.cursor()
-            cursor.execute("""
-                INSERT INTO contatos (nome, whatsapp, assunto, mensagem, data_envio)
-                VALUES (%s, %s, %s, %s, %s)
-                RETURNING id
-            """, (nome, whatsapp, assunto, mensagem, data_envio))
-            novo_id = cursor.fetchone()['id']
-            conn.commit()
-            cursor.close()
-            conn.close()
-            return jsonify({'mensagem': 'Contato salvo!', 'id': novo_id}), 201
-        except Exception as e:
-            print(f"❌ Erro ao salvar contato: {e}")
-            return jsonify({'erro': str(e)}), 500
-
-@app.route('/api/contatos/<int:id>', methods=['DELETE'])
-def excluir_contato(id):
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM contatos WHERE id = %s", (id,))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        return jsonify({'mensagem': 'Contato excluído!'}), 200
-    except Exception as e:
-        print(f"❌ Erro ao excluir contato: {e}")
-        return jsonify({'erro': str(e)}), 500
-
-# ==================== NOTÍCIAS ====================
-@app.route('/api/noticias', methods=['GET'])
-def get_noticias():
-    """Busca todas as notícias ativas (não expiradas)"""
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("""
-            SELECT id, titulo, texto, imagem_url, data_publicacao, data_expiracao, ativo
-            FROM noticias 
-            WHERE ativo = TRUE 
-              AND (data_expiracao IS NULL OR data_expiracao > NOW())
-            ORDER BY data_publicacao DESC
-        """)
-        noticias = cursor.fetchall()
-        cursor.close()
-        conn.close()
-        return jsonify(noticias), 200
-    except Exception as e:
-        print(f"❌ Erro ao buscar notícias: {e}")
-        return jsonify({'erro': 'Erro ao buscar notícias'}), 500
-
-@app.route('/api/noticias/todas', methods=['GET'])
-def get_todas_noticias():
-    """Busca TODAS as notícias (para a diretoria)"""
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("""
-            SELECT id, titulo, texto, imagem_url, data_publicacao, data_expiracao, ativo
-            FROM noticias 
-            ORDER BY data_publicacao DESC
-        """)
-        noticias = cursor.fetchall()
-        cursor.close()
-        conn.close()
-        return jsonify(noticias), 200
-    except Exception as e:
-        print(f"❌ Erro ao buscar notícias: {e}")
-        return jsonify({'erro': 'Erro ao buscar notícias'}), 500
-
-@app.route('/api/noticias', methods=['POST'])
-def publicar_noticia():
-    """Publica uma nova notícia com upload de imagem para o Cloudinary"""
-    dados = request.json
-    
-    titulo = dados.get('titulo', '').strip()
-    texto = dados.get('texto', '').strip()
-    imagem_base64 = dados.get('imagem_base64', '')
-    dias_expiracao = int(dados.get('dias_expiracao', 30))
-    
-    if not titulo:
-        return jsonify({'erro': 'Título é obrigatório'}), 400
-    
-    try:
-        imagem_url = None
+        if (!titulo) { mostrarToast('⚠️ Digite o título!', 'error'); return; }
+        if (!texto) { mostrarToast('⚠️ Digite o texto!', 'error'); return; }
         
-        # Upload da imagem para o Cloudinary
-        # CORRIGIDO: removido o upload_preset, que causava "Invalid Signature"
-        # em uploads assinados (o preset estava configurado como "Unsigned"
-        # no painel do Cloudinary, o que conflita com uploads assinados via
-        # api_key/api_secret). Como já autenticamos com api_key/api_secret,
-        # não precisamos de preset nenhum - usamos uma pasta fixa em vez disso.
-        if imagem_base64:
-            try:
-                upload_result = cloudinary.uploader.upload(
-                    imagem_base64,
-                    folder='noticias'
-                )
+        const btn = document.getElementById('btnPublicar');
+        btn.disabled = true;
+        btn.innerHTML = '⏳ Publicando...';
+        
+        try {
+            const r = await fetch(`${API_URL}/noticias`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    titulo: titulo,
+                    texto: texto,
+                    imagem_base64: imagemBase64,
+                    dias_expiracao: parseInt(diasExpiracao)
+                })
+            });
+            
+            const resultado = await r.json();
+            
+            if (r.ok) {
+                mostrarToast('✅ Notícia publicada!');
+                fecharModalNoticia();
+                carregarNoticias();
+            } else {
+                mostrarToast('❌ ' + (resultado.erro || 'Erro ao publicar'), 'error');
+            }
+        } catch(e) {
+            console.error(e);
+            mostrarToast('❌ Erro ao conectar com o servidor', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '📤 PUBLICAR NOTÍCIA';
+        }
+    }
+
+    async function carregarNoticias() {
+        const container = document.getElementById('listaNoticias');
+        if (!container) return;
+        
+        container.innerHTML = '<div style="text-align:center;padding:40px;color:#666;">⏳ Carregando notícias...</div>';
+        
+        try {
+            const r = await fetch(`${API_URL}/noticias/todas`);
+            const noticias = await r.json();
+            
+            if (!Array.isArray(noticias) || noticias.length === 0) {
+                container.innerHTML = '<div style="text-align:center;padding:60px;color:#888;"><div style="font-size:3rem;margin-bottom:15px;">📭</div><p>Nenhuma notícia publicada ainda</p><p style="font-size:0.85rem;margin-top:10px;">Clique em "➕ NOVA NOTÍCIA" para começar</p></div>';
+                return;
+            }
+            
+            container.innerHTML = noticias.map(n => {
+                const dataPub = new Date(n.data_publicacao).toLocaleDateString('pt-BR');
+                const dataExp = n.data_expiracao ? new Date(n.data_expiracao).toLocaleDateString('pt-BR') : 'Sem expiração';
+                const expirada = n.data_expiracao && new Date(n.data_expiracao) < new Date();
+                const ativa = n.ativo && !expirada;
                 
-                imagem_url = upload_result.get('secure_url')
-                print(f"✅ Imagem enviada para Cloudinary: {imagem_url}")
-            except Exception as e:
-                print(f"⚠️ Erro ao enviar imagem: {e}")
-                return jsonify({'erro': f'Erro ao enviar imagem: {str(e)}'}), 500
-        
-        # Calcula a data de expiração
-        from datetime import timedelta
-        data_expiracao = datetime.now() + timedelta(days=dias_expiracao)
-        
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("""
-            INSERT INTO noticias (titulo, texto, imagem_url, data_expiracao, ativo)
-            VALUES (%s, %s, %s, %s, TRUE)
-            RETURNING id
-        """, (titulo, texto, imagem_url, data_expiracao))
-        novo_id = cursor.fetchone()['id']
-        conn.commit()
-        cursor.close()
-        conn.close()
-        
-        print(f"✅ Notícia publicada! ID: {novo_id}")
-        return jsonify({
-            'mensagem': 'Notícia publicada com sucesso!',
-            'id': novo_id,
-            'imagem_url': imagem_url
-        }), 201
-        
-    except Exception as e:
-        print(f"❌ Erro ao publicar notícia: {e}")
-        import traceback
-        traceback.print_exc()
-        return jsonify({'erro': str(e)}), 500
+                return `
+                    <div class="noticia-card ${ativa ? 'ativa-status' : 'expirada'}">
+                        <div class="noticia-header">
+                            <div class="noticia-titulo">${n.titulo}</div>
+                            <span class="noticia-status ${ativa ? 'ativa' : 'expirada'}">
+                                ${ativa ? '✅ Ativa' : '❌ Expirada'}
+                            </span>
+                        </div>
+                        ${n.imagem_url ? `<img src="${n.imagem_url}" class="noticia-imagem" alt="${n.titulo}">` : ''}
+                        <div class="noticia-texto">${n.texto}</div>
+                        <div class="noticia-footer">
+                            <div class="noticia-datas">
+                                <span>📅 Publicada: ${dataPub}</span>
+                                <span>⏱️ Expira: ${dataExp}</span>
+                            </div>
+                            <button class="btn-excluir-noticia" onclick="excluirNoticia(${n.id})">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        } catch(e) {
+            console.error(e);
+            container.innerHTML = '<div style="text-align:center;padding:40px;color:#888;">❌ Erro ao carregar notícias</div>';
+        }
+    }
 
-@app.route('/api/noticias/<int:id>', methods=['DELETE'])
-def excluir_noticia(id):
-    """Exclui uma notícia e sua imagem do Cloudinary"""
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
+    async function excluirNoticia(id) {
+        if (!confirm('Tem certeza que deseja excluir esta notícia? A imagem também será removida.')) return;
         
-        # Primeiro, busca a URL da imagem
-        cursor.execute("SELECT imagem_url FROM noticias WHERE id = %s", (id,))
-        resultado = cursor.fetchone()
-        
-        if resultado and resultado['imagem_url']:
-            # Tenta extrair o public_id do Cloudinary da URL
-            try:
-                url = resultado['imagem_url']
-                # Exemplo: https://res.cloudinary.com/<cloud_name>/image/upload/v123456/noticias/abc123.jpg
-                if 'cloudinary.com' in url:
-                    partes = url.split('/upload/')
-                    if len(partes) > 1:
-                        caminho = partes[1]
-                        # Remove a versão (v123456/)
-                        if caminho.startswith('v'):
-                            caminho = '/'.join(caminho.split('/')[1:])
-                        # Remove a extensão
-                        public_id = caminho.rsplit('.', 1)[0]
-                        cloudinary.uploader.destroy(public_id)
-                        print(f"🗑️ Imagem excluída do Cloudinary: {public_id}")
-            except Exception as e:
-                print(f"⚠️ Erro ao excluir imagem do Cloudinary: {e}")
-        
-        # Exclui do banco
-        cursor.execute("DELETE FROM noticias WHERE id = %s", (id,))
-        conn.commit()
-        cursor.close()
-        conn.close()
-        
-        return jsonify({'mensagem': 'Notícia excluída!'}), 200
-    except Exception as e:
-        print(f"❌ Erro ao excluir notícia: {e}")
-        return jsonify({'erro': str(e)}), 500
+        try {
+            const r = await fetch(`${API_URL}/noticias/${id}`, { method: 'DELETE' });
+            if (r.ok) {
+                mostrarToast('🗑️ Notícia excluída!');
+                carregarNoticias();
+            } else {
+                mostrarToast('❌ Erro ao excluir', 'error');
+            }
+        } catch(e) {
+            mostrarToast('❌ Erro ao conectar', 'error');
+        }
+    }
 
-@app.route('/api/noticias/limpar-expiradas', methods=['POST'])
-def limpar_noticias_expiradas():
-    """Limpa notícias expiradas e suas imagens do Cloudinary"""
-    try:
-        conn = get_connection()
-        cursor = conn.cursor()
-        
-        # Busca notícias expiradas
-        cursor.execute("""
-            SELECT id, imagem_url FROM noticias 
-            WHERE ativo = TRUE 
-              AND data_expiracao IS NOT NULL 
-              AND data_expiracao <= NOW()
-        """)
-        expiradas = cursor.fetchall()
-        
-        # Exclui imagens do Cloudinary
-        for noticia in expiradas:
-            if noticia['imagem_url'] and 'cloudinary.com' in noticia['imagem_url']:
-                try:
-                    url = noticia['imagem_url']
-                    partes = url.split('/upload/')
-                    if len(partes) > 1:
-                        caminho = partes[1]
-                        if caminho.startswith('v'):
-                            caminho = '/'.join(caminho.split('/')[1:])
-                        public_id = caminho.rsplit('.', 1)[0]
-                        cloudinary.uploader.destroy(public_id)
-                except Exception as e:
-                    print(f"⚠️ Erro ao excluir imagem: {e}")
-        
-        # Marca como inativas (ou exclui de vez)
-        cursor.execute("""
-            UPDATE noticias SET ativo = FALSE 
-            WHERE ativo = TRUE 
-              AND data_expiracao IS NOT NULL 
-              AND data_expiracao <= NOW()
-        """)
-        conn.commit()
-        cursor.close()
-        conn.close()
-        
-        return jsonify({
-            'mensagem': f'{len(expiradas)} notícias expiradas foram limpas!',
-            'total': len(expiradas)
-        }), 200
-    except Exception as e:
-        print(f"❌ Erro ao limpar notícias: {e}")
-        return jsonify({'erro': str(e)}), 500
+    async function limparNoticiasExpiradas() {
+        try {
+            const r = await fetch(`${API_URL}/noticias/limpar-expiradas`, { method: 'POST' });
+            const dados = await r.json();
+            if (r.ok) {
+                if (dados.total > 0) {
+                    mostrarToast(`🧹 ${dados.total} notícias expiradas removidas!`);
+                    carregarNoticias();
+                }
+            }
+        } catch(e) {
+            console.error('Erro ao limpar notícias expiradas:', e);
+        }
+    }
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    // ========== ONLINE/OFFLINE ==========
+    async function carregarStatus() {
+        try {
+            const r = await fetch(`${API_URL}/status`);
+            const d = await r.json();
+            statusAtual = d.online === true;
+            atualizarBotaoStatus();
+        } catch(e) { statusAtual = false; atualizarBotaoStatus(); }
+    }
+
+    async function alternarStatus() {
+        const btn = document.getElementById('btnStatus');
+        btn.disabled = true;
+        const novoStatus = !statusAtual;
+        try {
+            const r = await fetch(`${API_URL}/status`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ online: novoStatus }) });
+            if (r.ok) { statusAtual = novoStatus; atualizarBotaoStatus(); mostrarToast(novoStatus ? '🟢 Agora você está ONLINE!' : '🔴 Agora você está OFFLINE'); }
+        } catch(e) { mostrarToast('❌ Erro ao alterar status', 'error'); }
+        btn.disabled = false;
+    }
+
+    function atualizarBotaoStatus() {
+        const btn = document.getElementById('btnStatus');
+        const texto = document.getElementById('textoStatus');
+        if (statusAtual) { btn.className = 'btn-status online'; texto.innerText = 'ONLINE'; }
+        else { btn.className = 'btn-status offline'; texto.innerText = 'OFFLINE'; }
+    }
+
+    // ========== ABAS ==========
+    function alternarAba(abaId) {
+        document.querySelectorAll('.aba-nav-btn').forEach(btn => btn.classList.remove('ativa'));
+        document.querySelector(`.aba-nav-btn[data-aba="${abaId}"]`)?.classList.add('ativa');
+        document.querySelectorAll('.aba-conteudo').forEach(c => c.classList.remove('ativa'));
+        document.getElementById(`aba${abaId.charAt(0).toUpperCase() + abaId.slice(1)}`)?.classList.add('ativa');
+        if (abaId === 'comentarios') carregarComentarios();
+        if (abaId === 'contatos') carregarContatos();
+        if (abaId === 'noticias') carregarNoticias();
+    }
+
+    document.querySelectorAll('.aba-nav-btn[data-aba]').forEach(btn => {
+        btn.addEventListener('click', () => alternarAba(btn.dataset.aba));
+    });
+
+    // ========== CONTATOS ==========
+    async function carregarContatos() {
+        document.getElementById('contatosCarregando').style.display = 'block';
+        document.getElementById('listaContatos').innerHTML = '';
+        try {
+            const r = await fetch(`${API_URL}/contatos`);
+            const dados = await r.json();
+            todosContatos = Array.isArray(dados) ? dados : [];
+            renderizarContatos(todosContatos);
+        } catch(e) {
+            document.getElementById('listaContatos').innerHTML = '<div class="contatos-vazio">❌ Erro ao carregar mensagens. Tente novamente.</div>';
+        }
+        document.getElementById('contatosCarregando').style.display = 'none';
+    }
+
+    function renderizarContatos(lista) {
+        const assuntoFiltro = document.getElementById('filtroContatoAssunto').value;
+        const nomeFiltro = document.getElementById('filtroContatoNome').value.toLowerCase();
+
+        const filtrados = lista.filter(c => {
+            if (assuntoFiltro && c.assunto !== assuntoFiltro) return false;
+            if (nomeFiltro && !(c.nome || '').toLowerCase().includes(nomeFiltro)) return false;
+            return true;
+        });
+
+        document.getElementById('statTotal').innerText = lista.length;
+        document.getElementById('statSugestao').innerText = lista.filter(c => c.assunto === 'Sugestão').length;
+        document.getElementById('statElogio').innerText = lista.filter(c => c.assunto === 'Elogio').length;
+        document.getElementById('statReclamacao').innerText = lista.filter(c => c.assunto === 'Reclamação').length;
+        document.getElementById('statDuvida').innerText = lista.filter(c => c.assunto === 'Dúvida').length;
+
+        filtrados.forEach(c => { if (!c.data && c.data_envio) c.data = c.data_envio; });
+
+        const container = document.getElementById('listaContatos');
+        if (filtrados.length === 0) {
+            container.innerHTML = '<div class="contatos-vazio">📭 Nenhuma mensagem encontrada</div>';
+            return;
+        }
+
+        const assuntoClass = { 'Sugestão': 'assunto-sugestao', 'Elogio': 'assunto-elogio', 'Reclamação': 'assunto-reclamacao', 'Dúvida': 'assunto-duvida', 'Outro': 'assunto-outro' };
+        const assuntoEmoji = { 'Sugestão': '💡', 'Elogio': '❤️', 'Reclamação': '⚠️', 'Dúvida': '❓', 'Outro': '📋' };
+
+        container.innerHTML = [...filtrados].reverse().map(c => {
+            const cls = assuntoClass[c.assunto] || 'assunto-outro';
+            const emoji = assuntoEmoji[c.assunto] || '📋';
+            const whats = (c.whatsapp || '').replace(/\D/g, '');
+            const btnWhats = whats ? `<a class="btn-responder" href="https://wa.me/55${whats}?text=Olá ${encodeURIComponent(c.nome || '')}! Recebemos sua mensagem da Escolinha do Jacaré." target="_blank">💬 Responder no WhatsApp</a>` : '<span style="font-size:0.75rem;color:#999;">Sem WhatsApp</span>';
+            return `
+                <div class="contato-msg-card">
+                    <div class="contato-msg-header">
+                        <div class="contato-msg-nome">👤 ${c.nome || 'Anônimo'}</div>
+                        <div class="contato-msg-data">${c.data || ''}</div>
+                    </div>
+                    <span class="contato-msg-assunto ${cls}">${emoji} ${c.assunto || 'Outro'}</span>
+                    <div class="contato-msg-texto">"${c.mensagem || ''}"</div>
+                    <div class="contato-msg-footer">
+                        <span class="contato-msg-whats">${c.whatsapp ? '📱 ' + c.whatsapp : ''}</span>
+                        <div style="display:flex;gap:8px;align-items:center;">
+                            ${btnWhats}
+                            <button class="btn-excluir" onclick="excluirContato(${c.id}, this)">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                </div>`;
+        }).join('');
+    }
+
+    function filtrarContatos() { renderizarContatos(todosContatos); }
+
+    async function excluirContato(id, btn) {
+        if (!confirm('Tem certeza que deseja excluir esta mensagem?')) return;
+        btn.disabled = true;
+        btn.innerHTML = '⏳';
+        try {
+            const r = await fetch(`${API_URL}/contatos/${id}`, { method: 'DELETE' });
+            if (r.ok) {
+                todosContatos = todosContatos.filter(c => c.id !== id);
+                renderizarContatos(todosContatos);
+                mostrarToast('🗑️ Mensagem excluída!');
+            } else {
+                mostrarToast('❌ Erro ao excluir', 'error');
+                btn.disabled = false;
+                btn.innerHTML = '🗑️ Excluir';
+            }
+        } catch(e) {
+            mostrarToast('❌ Erro ao excluir', 'error');
+            btn.disabled = false;
+            btn.innerHTML = '🗑️ Excluir';
+        }
+    }
+
+    // ========== COMENTÁRIOS ==========
+    async function carregarComentarios() {
+        const container = document.getElementById('listaComentarios');
+        const loading = document.getElementById('comentariosCarregando');
+        loading.style.display = 'block'; container.style.display = 'none';
+        try {
+            const r = await fetch(`${API_URL}/alunos`);
+            const dados = await r.json();
+            if (Array.isArray(dados)) {
+                const comentarios = dados.filter(i => i.observacao && i.observacao.trim().length > 0);
+                if (!comentarios.length) { container.innerHTML = '<div style="text-align:center;padding:40px;">📭 Nenhum comentário encontrado</div>'; }
+                else { container.innerHTML = comentarios.map(item => { let estrelas = item.estrelas > 0 ? '⭐'.repeat(item.estrelas) + '☆'.repeat(5-item.estrelas) : ''; return `<div style="background:#f8fafc;border-radius:16px;padding:15px;margin-bottom:12px;"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;margin-bottom:8px;"><span style="font-weight:600;">👤 ${item.nome_aluno||'Anônimo'}</span><span style="color:#ff9800;">${estrelas}</span><span style="font-size:0.7rem;color:#666;">${formatarData(item.data_envio)}</span></div><div style="margin-top:8px;">"${item.observacao}"</div></div>`; }).join(''); }
+                loading.style.display = 'none'; container.style.display = 'block';
+            }
+        } catch(e) { container.innerHTML = '<div style="text-align:center;padding:40px;">❌ Erro ao carregar comentários</div>'; loading.style.display = 'none'; container.style.display = 'block'; }
+    }
+
+    function exportarComentarios() {
+        const comentarios = document.querySelectorAll('#listaComentarios > div');
+        if (!comentarios.length) { mostrarToast('Nenhum comentário para exportar', 'error'); return; }
+        let csv = 'Nome,Comentário,Data,Estrelas\n';
+        comentarios.forEach(div => { const nome = div.querySelector('span:first-child')?.innerText?.replace('👤 ','') || ''; const estrelas = (div.querySelector('span:nth-child(2)')?.innerText?.match(/⭐/g)||[]).length; const data = div.querySelector('span:last-child')?.innerText || ''; const texto = div.querySelector('div:last-child')?.innerText?.replace(/"/g,'""') || ''; csv += `"${nome}","${texto}","${data}","${estrelas}"\n`; });
+        const blob = new Blob(["\uFEFF" + csv], { type:'text/csv;charset=utf-8;' });
+        const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = `comentarios_${new Date().toISOString().slice(0,10)}.csv`; link.click(); URL.revokeObjectURL(link.href);
+        mostrarToast('📥 Comentários exportados!');
+    }
+
+    function mostrarToast(mensagem, tipo = 'success') {
+        const t = document.createElement('div'); t.className = `toast ${tipo}`; t.innerHTML = mensagem; document.body.appendChild(t);
+        setTimeout(() => t.remove(), 3500);
+    }
+
+    function formatarData(dataStr) {
+        if (!dataStr) return '-';
+        try { const d = new Date(dataStr); return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`; } catch { return dataStr; }
+    }
+
+    function capitalizar(str) { if (!str || str === 'Não informada' || str === 'Não informado') return 'Não informada'; return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase(); }
+    function atualizarTimestamp() { const diff = Math.floor((new Date() - ultimaAtualizacao) / 1000); document.getElementById('ultimaAtualizacao').innerHTML = `🕐 Última atualização: ${diff < 60 ? `há ${diff} segundos` : `há ${Math.floor(diff/60)} minutos`}`; }
+    function calcularTempoCasa(dataMatricula) { if (!dataMatricula) return 0; const data = new Date(dataMatricula); const hoje = new Date(); return (hoje.getFullYear() - data.getFullYear()) * 12 + (hoje.getMonth() - data.getMonth()); }
+    function formatarTempoCasa(meses) { if (meses === 0) return 'Menos de 1 mês'; if (meses < 12) return `${meses} ${meses===1?'mês':'meses'}`; const anos = Math.floor(meses/12); const m = meses%12; if (m===0) return `${anos} ${anos===1?'ano':'anos'}`; return `${anos} ${anos===1?'ano':'anos'} e ${m} ${m===1?'mês':'meses'}`; }
+    function getMedalhaClass(i) { return ['medalha-ouro','medalha-prata','medalha-bronze','medalha-geral'][i] || 'medalha-geral'; }
+    function getTempoBadge(meses) { if (meses>=60) return {class:'tempo-5anos',texto:'🏆 5+ anos'}; if (meses>=48) return {class:'tempo-4anos',texto:'⭐ 4 anos'}; if (meses>=36) return {class:'tempo-3anos',texto:'✨ 3 anos'}; if (meses>=24) return {class:'tempo-2anos',texto:'🌟 2 anos'}; if (meses>=12) return {class:'tempo-1ano',texto:'🎉 1 ano'}; return {class:'',texto:'🆕 Novato'}; }
+
+    async function carregarDadosDaPlanilha(tentativa = 1) {
+        if (tentativa === 1) mostrarToast('⏳ Conectando ao servidor...', 'info');
+        try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 15000);
+            const r = await fetch(`${API_URL}/alunos`, { signal: controller.signal });
+            clearTimeout(timeout);
+            const dados = await r.json();
+            if (Array.isArray(dados)) {
+                todosAlunos = dados.map(item => ({ 
+                    id: item.id,
+                    protocolo: item.protocolo,
+                    nome: item.nome_aluno || 'Não informado', 
+                    turma: capitalizar(item.turma), 
+                    categoria: item.categoria || 'Não informada', 
+                    bairro: item.bairro ? capitalizar(item.bairro) : 'Não informado', 
+                    responsavel: item.responsavel || 'Não informado', 
+                    telefone: item.telefone || '', 
+                    idade: parseInt(item.idade) || 0, 
+                    dataMatricula: item.data_envio || new Date().toISOString(), 
+                    deficiencia: item.deficiencia || 'Nenhuma', 
+                    remedio: item.remedio || 'Não', 
+                    origem: item.origem || '', 
+                    status: item.status || 'pendente',
+                    data_entrega_uniforme: item.data_entrega_uniforme || '',
+                    possui_uniforme: item.possui_uniforme || '',
+                    observacao: item.observacao || '',
+                    estrelas: parseInt(item.estrelas) || 0
+                }));
+                
+                todosAlunos = padronizarBairros(todosAlunos);
+                
+                aplicarFiltros(); 
+                atualizarCards(); 
+                atualizarCardsDeficienciaRemedio(); 
+                atualizarVeteranos();
+                ultimaAtualizacao = new Date(); 
+                atualizarTimestamp();
+                mostrarToast(`✅ ${dados.length} alunos carregados`);
+            }
+        } catch(e) {
+            if (tentativa < 4) { mostrarToast(`⏳ Tentativa ${tentativa}/3...`, 'info'); setTimeout(() => carregarDadosDaPlanilha(tentativa+1), tentativa*5000); }
+            else mostrarToast('❌ Não foi possível conectar. Clique em ATUALIZAR.', 'error');
+        }
+    }
+
+    function atualizarCards() {
+        const total = todosAlunos.length;
+        document.getElementById('totalAlunos').innerText = total;
+        document.getElementById('mediaIdade').innerText = total ? (todosAlunos.reduce((s,a) => s+a.idade,0)/total).toFixed(1) : 0;
+        const turmasCount = {}; todosAlunos.forEach(a => turmasCount[a.turma]=(turmasCount[a.turma]||0)+1);
+        let turmaMais = {nome:'-',count:0}; for (const [n,c] of Object.entries(turmasCount)) if (c>turmaMais.count) turmaMais={nome:n,count:c};
+        document.getElementById('turmaMaisAlunos').innerText = turmaMais.nome;
+        document.getElementById('turmaPercentual').innerHTML = total ? `${((turmaMais.count/total)*100).toFixed(1)}% do total` : '0%';
+        const bairrosCount = {}; todosAlunos.forEach(a => { if(a.bairro!=='Não informado' && a.bairro!=='Não informada') bairrosCount[a.bairro]=(bairrosCount[a.bairro]||0)+1; });
+        let bairroMais = {nome:'-',count:0}; for (const [n,c] of Object.entries(bairrosCount)) if (c>bairroMais.count) bairroMais={nome:n,count:c};
+        document.getElementById('bairroMaisAlunos').innerText = bairroMais.nome;
+        document.getElementById('bairroPercentual').innerHTML = total ? `${((bairroMais.count/total)*100).toFixed(1)}% do total` : '0%';
+        const mesAtual = new Date().getMonth();
+        document.getElementById('novosAlunosMes').innerHTML = `+${todosAlunos.filter(a => a.dataMatricula && new Date(a.dataMatricula).getMonth()===mesAtual).length} este mês`;
+    }
+
+    function atualizarCardsDeficienciaRemedio() {
+        const total = todosAlunos.length;
+        document.getElementById('totalDeficiencia').innerText = todosAlunos.filter(a => a.deficiencia && a.deficiencia!=='Nenhuma').length;
+        const remedioCount = todosAlunos.filter(a => a.remedio && a.remedio!=='Não').length;
+        document.getElementById('totalRemedio').innerText = remedioCount;
+        document.getElementById('percentRemedio').innerHTML = total ? `${((remedioCount/total)*100).toFixed(1)}%` : '0%';
+        document.getElementById('numerosRemedio').innerHTML = `${remedioCount} de ${total} alunos`;
+    }
+
+    function aplicarFiltros() {
+        const nome = document.getElementById('filtroNome').value.toLowerCase();
+        const responsavel = document.getElementById('filtroResponsavel').value.toLowerCase();
+        const telefone = document.getElementById('filtroTelefone').value.toLowerCase();
+        const turma = document.getElementById('filtroTurma').value;
+        const categoria = document.getElementById('filtroCategoria').value;
+        const bairro = document.getElementById('filtroBairro').value.toLowerCase();
+        const status = document.getElementById('filtroStatus').value;
+        alunosFiltrados = todosAlunos.filter(a => {
+            if (nome && !a.nome.toLowerCase().includes(nome)) return false;
+            if (responsavel && !a.responsavel.toLowerCase().includes(responsavel)) return false;
+            if (telefone && !a.telefone.includes(telefone)) return false;
+            if (turma && a.turma!==turma) return false;
+            if (categoria && a.categoria!==categoria) return false;
+            if (bairro && !a.bairro.toLowerCase().includes(bairro)) return false;
+            if (status && a.status!==status) return false;
+            return true;
+        });
+        atualizarTodosGraficos(); atualizarVeteranos();
+    }
+
+    function limparFiltros() {
+        ['filtroNome','filtroResponsavel','filtroTelefone','filtroBairro'].forEach(id => document.getElementById(id).value='');
+        ['filtroTurma','filtroCategoria','filtroStatus'].forEach(id => document.getElementById(id).value='');
+        aplicarFiltros();
+    }
+
+    function atualizarTodosGraficos() {
+        const dados = alunosFiltrados;
+        const turmasCount = TURMAS.map(t => dados.filter(a => a.turma===t).length);
+        if (graficos.turmas) graficos.turmas.destroy();
+        graficos.turmas = new Chart(document.getElementById('graficoTurmas'), { type:'bar', data:{ labels:TURMAS, datasets:[{ label:'Alunos', data:turmasCount, backgroundColor:'#0047AB', borderRadius:8 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
+        
+        if (graficos.pizza) graficos.pizza.destroy();
+        graficos.pizza = new Chart(document.getElementById('graficoPizza'), { type:'pie', data:{ labels:TURMAS, datasets:[{ data:turmasCount, backgroundColor:['#0047AB','#00aaff','#ff9800','#25d366','#ff69b4'], borderWidth:2, borderColor:'white' }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ tooltip:{ callbacks:{ label:(ctx) => { const total = ctx.dataset.data.reduce((a,b) => a+b, 0); const percent = total > 0 ? ((ctx.raw/total)*100).toFixed(1) : 0; return `${ctx.label}: ${ctx.raw} alunos (${percent}%)`; } } }, legend:{ position:'bottom', labels:{ font:{ size:11 }, generateLabels: (chart) => { const data = chart.data; const total = data.datasets[0].data.reduce((a,b) => a+b, 0); return data.labels.map((label, i) => { const value = data.datasets[0].data[i]; const percent = total > 0 ? ((value/total)*100).toFixed(1) : 0; return { text: `${label} (${percent}%)`, fillStyle: data.datasets[0].backgroundColor[i], index: i, hidden: false }; }); } } } } } });
+        
+        const categoriasCount = CATEGORIAS.map(cat => dados.filter(a => a.categoria===cat).length);
+        if (graficos.categoria) graficos.categoria.destroy();
+        graficos.categoria = new Chart(document.getElementById('graficoCategoria'), { type:'bar', data:{ labels:CATEGORIAS, datasets:[{ label:'Alunos', data:categoriasCount, backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
+        
+        const bairrosMap = new Map(); dados.forEach(a => { if(a.bairro && a.bairro!=='Não informado' && a.bairro!=='Não informada') bairrosMap.set(a.bairro, (bairrosMap.get(a.bairro)||0)+1); });
+        const bairros = Array.from(bairrosMap.entries()).sort((a,b) => b[1]-a[1]).slice(0,10);
+        if (graficos.bairro) graficos.bairro.destroy();
+        graficos.bairro = new Chart(document.getElementById('graficoBairro'), { type:'bar', data:{ labels:bairros.map(b=>b[0]), datasets:[{ label:'Alunos', data:bairros.map(b=>b[1]), backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ x:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
+        
+        const matriculasPorMes = new Array(12).fill(0); dados.forEach(a => { if(a.dataMatricula) matriculasPorMes[new Date(a.dataMatricula).getMonth()]++; });
+        if (graficos.evolucao) graficos.evolucao.destroy();
+        graficos.evolucao = new Chart(document.getElementById('graficoEvolucao'), { type:'line', data:{ labels:['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'], datasets:[{ label:'Matrículas', data:matriculasPorMes, borderColor:'#0047AB', backgroundColor:'rgba(0,71,171,0.1)', fill:true, tension:0.3 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } } } });
+        
+        const deficienciaMap = new Map(); dados.forEach(a => { if(a.deficiencia && a.deficiencia!=='Nenhuma') { a.deficiencia.split(', ').forEach(t => { const tl=t.replace('Outra: ','').trim(); if(tl) deficienciaMap.set(tl,(deficienciaMap.get(tl)||0)+1); }); } });
+        if (graficos.deficiencia) graficos.deficiencia.destroy();
+        graficos.deficiencia = new Chart(document.getElementById('graficoDeficiencia'), { type:'bar', data:{ labels:deficienciaMap.size?Array.from(deficienciaMap.keys()):['Nenhuma'], datasets:[{ label:'Alunos', data:deficienciaMap.size?Array.from(deficienciaMap.values()):[dados.length], backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ x:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
+        
+        const remedioSim = dados.filter(a => a.remedio && a.remedio!=='Não').length;
+        const remedioNao = dados.length - remedioSim;
+        if (graficos.remedio) graficos.remedio.destroy();
+        graficos.remedio = new Chart(document.getElementById('graficoRemedio'), { type:'pie', data:{ labels:['Sim','Não'], datasets:[{ data:[remedioSim,remedioNao], backgroundColor:['#f44336','#4caf50'], borderWidth:2, borderColor:'white' }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ tooltip:{ callbacks:{ label:(ctx) => { const total = ctx.dataset.data.reduce((a,b) => a+b, 0); const percent = total > 0 ? ((ctx.raw/total)*100).toFixed(1) : 0; return `${ctx.label}: ${ctx.raw} alunos (${percent}%)`; } } }, legend:{ position:'bottom', labels:{ generateLabels: (chart) => { const data = chart.data; const total = data.datasets[0].data.reduce((a,b) => a+b, 0); return data.labels.map((label, i) => { const value = data.datasets[0].data[i]; const percent = total > 0 ? ((value/total)*100).toFixed(1) : 0; return { text: `${label} (${percent}%)`, fillStyle: data.datasets[0].backgroundColor[i], index: i }; }); } } } } } });
+        
+        const origemMap = new Map();
+        dados.forEach(a => { if (a.origem?.trim()) { let o = a.origem.trim(); o = o.charAt(0).toUpperCase() + o.slice(1).toLowerCase(); if (o.includes('Amigo') || o.includes('Indicação')) o = 'Amigo/Indicação'; if (o.includes('Passou')) o = 'Passou em frente'; origemMap.set(o, (origemMap.get(o) || 0) + 1); } });
+        const sortedOrigem = Array.from(origemMap.entries()).sort((a, b) => b[1] - a[1]);
+        const origemLabels = sortedOrigem.map(item => item[0]);
+        const origemData = sortedOrigem.map(item => item[1]);
+        const origemColors = ['#0047AB', '#00aaff', '#ff9800', '#25d366', '#ff69b4', '#8b5cf6', '#f59e0b', '#ef4444'];
+        if (graficos.origem) graficos.origem.destroy();
+        graficos.origem = new Chart(document.getElementById('graficoOrigem'), { type:'bar', data:{ labels:origemLabels, datasets:[{ label:'Alunos', data:origemData, backgroundColor:origemColors.slice(0, origemLabels.length), borderRadius:8 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: (context) => { const total = dados.length; const percent = total > 0 ? ((context.raw/total)*100).toFixed(1) : 0; return `${context.raw} alunos (${percent}%)`; } } } }, scales:{ y:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
+        
+        const subCount = [0,0,0,0,0,0,0,0]; dados.forEach(a => { const idade=a.idade; if(!idade) return; if(idade<=7) subCount[0]++; else if(idade<=9) subCount[1]++; else if(idade<=11) subCount[2]++; else if(idade<=13) subCount[3]++; else if(idade<=15) subCount[4]++; else if(idade<=17) subCount[5]++; else if(idade<=20) subCount[6]++; else subCount[7]++; });
+        if (graficos.sub) graficos.sub.destroy();
+        graficos.sub = new Chart(document.getElementById('graficoSub'), { type:'bar', data:{ labels:SUBS, datasets:[{ label:'Alunos', data:subCount, backgroundColor:'#00aaff', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ x:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
+    }
+
+    function atualizarVeteranos() {
+        const alunosComTempo = todosAlunos.map(a => ({ ...a, tempoMeses: calcularTempoCasa(a.dataMatricula) })).filter(a => a.tempoMeses>0).sort((a,b) => b.tempoMeses-a.tempoMeses);
+        const top = alunosComTempo.slice(0,5);
+        const container = document.getElementById('rankingVeteranos');
+        if (!top.length) { container.innerHTML = '<div>🏅 Nenhum veterano ainda</div>'; }
+        else { container.innerHTML = top.map((a,i) => { const medalha=getMedalhaClass(i); const badge=getTempoBadge(a.tempoMeses); return `<div class="veterano-card"><div class="veterano-medalha ${medalha}">${['🥇','🥈','🥉','🏅','🏅'][i]}</div><div class="veterano-info"><div class="veterano-nome"><strong>${a.nome}</strong><span class="tempo-badge ${badge.class}">${badge.texto}</span></div><div class="veterano-detalhes">${a.turma} • ${a.categoria} • ${formatarTempoCasa(a.tempoMeses)} de casa</div></div></div>`; }).join(''); }
+        const veteranos = alunosComTempo.filter(a => a.tempoMeses>=12);
+        const mediaTempo = veteranos.length ? Math.round(veteranos.reduce((s,a) => s+a.tempoMeses,0)/veteranos.length) : 0;
+        const maiorTempo = veteranos.length ? Math.max(...veteranos.map(a => a.tempoMeses)) : 0;
+        document.getElementById('statsVeteranos').innerHTML = `<div class="stat-veterano"><div class="numero">${veteranos.length}</div><div class="label">Veteranos (1+ ano)</div></div><div class="stat-veterano"><div class="numero">${mediaTempo} ${mediaTempo===1?'mês':'meses'}</div><div class="label">Média de tempo</div></div><div class="stat-veterano"><div class="numero">${formatarTempoCasa(maiorTempo)}</div><div class="label">Maior tempo</div></div>`;
+    }
+
+    function exportarDados() {
+        if (!todosAlunos.length) { mostrarToast('Nenhum dado para exportar', 'error'); return; }
+        let csv = 'Nome,Turma,Categoria,Idade,Responsável,Telefone,Status,Data Matrícula\n';
+        todosAlunos.forEach(a => { csv += `"${a.nome}","${a.turma}","${a.categoria}","${a.idade}","${a.responsavel}","${a.telefone}","${a.status}","${formatarData(a.dataMatricula)}"\n`; });
+        const blob = new Blob(["\uFEFF" + csv], { type:'text/csv;charset=utf-8;' });
+        const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = `diretoria_${new Date().toISOString().slice(0,10)}.csv`; link.click(); URL.revokeObjectURL(link.href);
+        mostrarToast('📥 Dados exportados!');
+    }
+
+    function exportarComoImagem() {
+        const btn = document.querySelector('.btn-exportar-imagem'); btn.innerHTML = '📸 GERANDO...'; btn.disabled = true;
+        html2canvas(document.getElementById('abaDashboard'), { scale:2 }).then(canvas => { const link=document.createElement('a'); link.download=`dashboard_${new Date().toISOString().slice(0,10)}.png`; link.href=canvas.toDataURL(); link.click(); mostrarToast('✅ Dashboard salvo!'); }).catch(() => mostrarToast('Erro ao gerar imagem', 'error')).finally(() => { btn.innerHTML='📸 EXPORTAR IMAGEM'; btn.disabled=false; });
+    }
+
+    function atualizarDados() {
+        const btn = document.querySelector('.btn-atualizar'); btn.innerHTML='🔄 ATUALIZANDO...'; btn.disabled=true;
+        carregarDadosDaPlanilha().finally(() => { btn.innerHTML='🔄 ATUALIZAR'; btn.disabled=false; });
+    }
+
+    ['filtroNome','filtroResponsavel','filtroTelefone','filtroBairro'].forEach(id => document.getElementById(id).addEventListener('input', aplicarFiltros));
+    ['filtroTurma','filtroCategoria','filtroStatus'].forEach(id => document.getElementById(id).addEventListener('change', aplicarFiltros));
+
+    async function verificarLogin() {
+        const email = document.getElementById('emailLogin').value.trim();
+        const senha = document.getElementById('senhaLogin').value;
+        const btn = document.querySelector('#telaLogin button');
+        if (!email || !senha) { document.getElementById('erroLogin').innerText='Digite e-mail e senha!'; return; }
+        btn.disabled=true; btn.innerHTML='⏳ VERIFICANDO...'; document.getElementById('erroLogin').innerText='';
+        try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 20000);
+            const r = await fetch(`${API_URL}/alunos`, { signal: controller.signal });
+            clearTimeout(timeout);
+            if (r.ok) {
+                usuarioLogado = { email, cargo:'Diretor' };
+                document.getElementById('telaLogin').style.display='none';
+                document.getElementById('painelAnalise').style.display='block';
+                document.getElementById('infoUsuario').innerHTML=`👤 ${email.split('@')[0]} | ✅ acesso registrado`;
+                carregarDadosDaPlanilha();
+                carregarStatus();
+                limparNoticiasExpiradas();
+                setInterval(() => { if (document.getElementById('painelAnalise').style.display==='block') carregarDadosDaPlanilha(); }, 60000);
+                setInterval(atualizarTimestamp, 1000);
+                setInterval(limparNoticiasExpiradas, 3600000);
+            } else { document.getElementById('erroLogin').innerText='Erro ao conectar com o servidor'; }
+        } catch(e) { document.getElementById('erroLogin').innerText='Servidor demorou para responder. Tente novamente.'; }
+        finally { btn.disabled=false; btn.innerHTML='ACESSAR'; }
+    }
+
+    function logout() {
+        if (statusAtual) { fetch(`${API_URL}/status`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({online:false}) }).catch(()=>{}); statusAtual=false; }
+        document.getElementById('telaLogin').style.display='flex';
+        document.getElementById('painelAnalise').style.display='none';
+        document.getElementById('emailLogin').value=''; document.getElementById('senhaLogin').value=''; document.getElementById('erroLogin').innerText='';
+        usuarioLogado=null;
+    }
+</script>
+</body>
+</html>
