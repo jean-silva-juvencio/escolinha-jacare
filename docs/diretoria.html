@@ -54,7 +54,6 @@
         .btn-atualizar:hover, .btn-exportar-imagem:hover, .btn-exportar:hover { background: rgba(255,255,255,0.3); transform: scale(1.02); }
         .btn-sair { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); color: white; padding: 8px 15px; border-radius: 50px; cursor: pointer; font-size: 0.8rem; }
 
-                /* ==================== NOTIFICAÇÕES (SINO) ==================== */
         .notif-container { position: relative; display: inline-block; }
         .btn-notif { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); color: white; padding: 8px 14px; border-radius: 50px; cursor: pointer; font-size: 1.1rem; position: relative; transition: all 0.2s; }
         .btn-notif:hover { background: rgba(255,255,255,0.3); transform: scale(1.05); }
@@ -82,7 +81,6 @@
         body.dark-mode .notif-section-title { background: #0f172a; color: #94a3b8; border-bottom-color: #334155; }
         body.dark-mode .notif-vazio { color: #94a3b8; }
 
-        /* BARRA DE NOTIFICAÇÃO FIXA */
         .barra-notif { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #0047AB, #003399); color: white; padding: 12px 20px; text-align: center; font-weight: 600; font-size: 0.85rem; z-index: 4000; transform: translateY(-100%); transition: transform 0.4s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .barra-notif.ativa { transform: translateY(0); }
         .barra-notif .fechar-barra { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.2); border: none; color: white; width: 26px; height: 26px; border-radius: 50%; cursor: pointer; font-size: 16px; line-height: 1; }
@@ -205,7 +203,6 @@
         .btn-excluir { background: #fee2e2; color: #dc2626; border: none; padding: 6px 14px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
         .btn-excluir:hover { background: #dc2626; color: white; }
 
-        /* ==================== NOTÍCIAS ==================== */
         .noticia-card { background: #f8fafc; border-radius: 16px; padding: 20px; margin-bottom: 15px; border-left: 5px solid #0047AB; transition: all 0.3s; }
         body.dark-mode .noticia-card { background: #0f172a; }
         .noticia-card:hover { transform: translateX(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
@@ -228,7 +225,6 @@
         .btn-excluir-noticia { background: #fee2e2; color: #dc2626; border: none; padding: 8px 16px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
         .btn-excluir-noticia:hover { background: #dc2626; color: white; }
 
-        /* MODAL NOTÍCIA */
         .modal-noticia { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
         .modal-noticia.ativo { display: flex; }
         .modal-noticia-content { background: white; border-radius: 32px; max-width: 650px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 32px; animation: modalFadeIn 0.3s ease; }
@@ -258,7 +254,6 @@
         .btn-publicar:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,71,171,0.3); }
         .btn-publicar:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-        /* TOAST */
         .toast { position: fixed; bottom: 30px; right: 30px; background: #10b981; color: white; padding: 12px 20px; border-radius: 10px; z-index: 3000; animation: slideIn 0.3s ease; font-weight: 600; }
         .toast.error { background: #ef4444; }
         .toast.info { background: #3b82f6; }
@@ -317,7 +312,7 @@
             <button class="btn-exportar" onclick="exportarDados()">📥 EXPORTAR</button>
             <button class="btn-exportar-imagem" onclick="exportarComoImagem()">📸 EXPORTAR IMAGEM</button>
             <a href="club.html" class="aba-nav-btn" style="text-decoration:none;">🎲 CLUBE</a>
-                        <div class="notif-container">
+            <div class="notif-container">
                 <button class="btn-notif" onclick="toggleNotificacoes()" id="btnNotif">
                     🔔
                     <span class="notif-badge" id="notifBadge" style="display:none;">0</span>
@@ -347,7 +342,6 @@
         <button class="aba-nav-btn" data-aba="aniversarios">🎂 ANIVERSÁRIOS</button>
     </div>
 
-    <!-- ABA DASHBOARD -->
     <div id="abaDashboard" class="aba-conteudo ativa">
         <div class="cards-container">
             <div class="card-analise"><div class="icone">👥</div><div class="valor" id="totalAlunos">0</div><div class="label">Total de Alunos</div><div class="detalhe" id="novosAlunosMes">+0 este mês</div></div>
@@ -396,7 +390,6 @@
         </div>
     </div>
 
-    <!-- ABA COMENTÁRIOS -->
     <div id="abaComentarios" class="aba-conteudo">
         <div class="card" style="background:white;border-radius:20px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.05);">
             <h2 style="margin-bottom:20px;">💬 COMENTÁRIOS E AVALIAÇÕES</h2>
@@ -406,7 +399,6 @@
         </div>
     </div>
 
-    <!-- ABA CONTATOS -->
     <div id="abaContatos" class="aba-conteudo">
         <div style="background:white;border-radius:20px;padding:25px;box-shadow:0 5px 15px rgba(0,0,0,0.05);">
             <div class="contatos-header">
@@ -438,7 +430,6 @@
         </div>
     </div>
 
-    <!-- ABA NOTÍCIAS -->
     <div id="abaNoticias" class="aba-conteudo">
         <div style="background:white;border-radius:20px;padding:25px;box-shadow:0 5px 15px rgba(0,0,0,0.05);">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-bottom:25px;">
@@ -452,7 +443,6 @@
         </div>
     </div>
 
-    <!-- ABA UNIFORMES -->
     <div id="abaUniforme" class="aba-conteudo">
         <div class="card" style="background:white;border-radius:20px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.05);text-align:center;">
             <h2>👕 UNIFORMES</h2>
@@ -460,7 +450,6 @@
         </div>
     </div>
 
-    <!-- ABA ANIVERSÁRIOS -->
     <div id="abaAniversarios" class="aba-conteudo">
         <div class="card" style="background:white;border-radius:20px;padding:20px;box-shadow:0 5px 15px rgba(0,0,0,0.05);text-align:center;">
             <h2>🎂 ANIVERSARIANTES</h2>
@@ -469,7 +458,6 @@
     </div>
 </div>
 
-<!-- MODAL NOVA NOTÍCIA -->
 <div id="modalNoticia" class="modal-noticia">
     <div class="modal-noticia-content">
         <div class="modal-noticia-header">
@@ -532,12 +520,12 @@
     let statusAtual = false;
     let todosContatos = [];
     let imagemBase64 = '';
+    let pushInicializado = false;
 
     const TURMAS = ['Futebol', 'Taekwondo', 'Ginástica', 'Tênis de Mesa', 'Judô'];
     const CATEGORIAS = ['Sub-5', 'Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Acima-17'];
     const SUBS = ['Sub-7', 'Sub-9', 'Sub-11', 'Sub-13', 'Sub-15', 'Sub-17', 'Sub-20', 'Sub-30'];
 
-    // ========== PADRONIZAR BAIRROS ==========
     function padronizarBairros(dados) {
         const mapaBairros = {
             'Alvorada': ['Alvorada', 'Alvorada 1', 'Alvorada I', 'Alvorada1', 'alvorada', 'alvorada 1'],
@@ -551,14 +539,12 @@
             'Morro da Liberdade': ['Morro da Liberdade', 'morro da liberdade'],
             'Planalto': ['Planalto', 'planalto']
         };
-
         return dados.map(aluno => {
             if (aluno.bairro) {
                 const bairroOriginal = aluno.bairro.trim();
                 let bairroPadrao = bairroOriginal;
                 for (const [padrao, variacoes] of Object.entries(mapaBairros)) {
-                    if (variacoes.some(v => bairroOriginal.toLowerCase().includes(v.toLowerCase()) || 
-                                          v.toLowerCase().includes(bairroOriginal.toLowerCase()))) {
+                    if (variacoes.some(v => bairroOriginal.toLowerCase().includes(v.toLowerCase()) || v.toLowerCase().includes(bairroOriginal.toLowerCase()))) {
                         bairroPadrao = padrao;
                         break;
                     }
@@ -569,7 +555,6 @@
         });
     }
 
-    // ========== NOTÍCIAS ==========
     function abrirModalNoticia() {
         document.getElementById('modalNoticia').classList.add('ativo');
         document.getElementById('noticiaTitulo').value = '';
@@ -591,13 +576,7 @@
     document.getElementById('noticiaImagem')?.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
-        
-        if (file.size > 5 * 1024 * 1024) {
-            mostrarToast('⚠️ Imagem muito grande! Máx. 5MB', 'error');
-            this.value = '';
-            return;
-        }
-        
+        if (file.size > 5 * 1024 * 1024) { mostrarToast('⚠️ Imagem muito grande! Máx. 5MB', 'error'); this.value = ''; return; }
         const reader = new FileReader();
         reader.onload = function(event) {
             imagemBase64 = event.target.result;
@@ -611,140 +590,82 @@
         const titulo = document.getElementById('noticiaTitulo').value.trim();
         const texto = document.getElementById('noticiaTexto').value.trim();
         const diasExpiracao = document.getElementById('noticiaExpiracao').value;
-        
         if (!titulo) { mostrarToast('⚠️ Digite o título!', 'error'); return; }
         if (!texto) { mostrarToast('⚠️ Digite o texto!', 'error'); return; }
-        
         const btn = document.getElementById('btnPublicar');
         btn.disabled = true;
         btn.innerHTML = '⏳ Publicando...';
-        
         try {
             const r = await fetch(`${API_URL}/noticias`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    titulo: titulo,
-                    texto: texto,
-                    imagem_base64: imagemBase64,
-                    dias_expiracao: parseInt(diasExpiracao)
-                })
+                body: JSON.stringify({ titulo: titulo, texto: texto, imagem_base64: imagemBase64, dias_expiracao: parseInt(diasExpiracao) })
             });
-            
             const resultado = await r.json();
-            
-            if (r.ok) {
-                mostrarToast('✅ Notícia publicada!');
-                fecharModalNoticia();
-                carregarNoticias();
-            } else {
-                mostrarToast('❌ ' + (resultado.erro || 'Erro ao publicar'), 'error');
-            }
-        } catch(e) {
-            console.error(e);
-            mostrarToast('❌ Erro ao conectar com o servidor', 'error');
-        } finally {
-            btn.disabled = false;
-            btn.innerHTML = '📤 PUBLICAR NOTÍCIA';
-        }
+            if (r.ok) { mostrarToast('✅ Notícia publicada!'); fecharModalNoticia(); carregarNoticias(); }
+            else { mostrarToast('❌ ' + (resultado.erro || 'Erro ao publicar'), 'error'); }
+        } catch(e) { console.error(e); mostrarToast('❌ Erro ao conectar com o servidor', 'error'); }
+        finally { btn.disabled = false; btn.innerHTML = '📤 PUBLICAR NOTÍCIA'; }
     }
 
     async function carregarNoticias() {
         const container = document.getElementById('listaNoticias');
         if (!container) return;
-        
         container.innerHTML = '<div style="text-align:center;padding:40px;color:#666;">⏳ Carregando notícias...</div>';
-        
         try {
             const r = await fetch(`${API_URL}/noticias/todas`);
             const noticias = await r.json();
-            
             if (!Array.isArray(noticias) || noticias.length === 0) {
                 container.innerHTML = '<div style="text-align:center;padding:60px;color:#888;"><div style="font-size:3rem;margin-bottom:15px;">📭</div><p>Nenhuma notícia publicada ainda</p><p style="font-size:0.85rem;margin-top:10px;">Clique em "➕ NOVA NOTÍCIA" para começar</p></div>';
                 return;
             }
-            
             container.innerHTML = noticias.map(n => {
                 const dataPub = new Date(n.data_publicacao).toLocaleDateString('pt-BR');
                 const dataExp = n.data_expiracao ? new Date(n.data_expiracao).toLocaleDateString('pt-BR') : 'Sem expiração';
                 const expirada = n.data_expiracao && new Date(n.data_expiracao) < new Date();
                 const ativa = n.ativo && !expirada;
-                
                 return `
                     <div class="noticia-card ${ativa ? 'ativa-status' : 'expirada'}">
                         <div class="noticia-header">
                             <div class="noticia-titulo">${n.titulo}</div>
-                            <span class="noticia-status ${ativa ? 'ativa' : 'expirada'}">
-                                ${ativa ? '✅ Ativa' : '❌ Expirada'}
-                            </span>
+                            <span class="noticia-status ${ativa ? 'ativa' : 'expirada'}">${ativa ? '✅ Ativa' : '❌ Expirada'}</span>
                         </div>
                         ${n.imagem_url ? `<img src="${n.imagem_url}" class="noticia-imagem" alt="${n.titulo}">` : ''}
                         <div class="noticia-texto">${n.texto}</div>
                         <div class="noticia-footer">
-                            <div class="noticia-datas">
-                                <span>📅 Publicada: ${dataPub}</span>
-                                <span>⏱️ Expira: ${dataExp}</span>
-                            </div>
+                            <div class="noticia-datas"><span>📅 Publicada: ${dataPub}</span><span>⏱️ Expira: ${dataExp}</span></div>
                             <button class="btn-excluir-noticia" onclick="excluirNoticia(${n.id})">🗑️ Excluir</button>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             }).join('');
-        } catch(e) {
-            console.error(e);
-            container.innerHTML = '<div style="text-align:center;padding:40px;color:#888;">❌ Erro ao carregar notícias</div>';
-        }
+        } catch(e) { console.error(e); container.innerHTML = '<div style="text-align:center;padding:40px;color:#888;">❌ Erro ao carregar notícias</div>'; }
     }
 
     async function excluirNoticia(id) {
         if (!confirm('Tem certeza que deseja excluir esta notícia? A imagem também será removida.')) return;
-        
         try {
             const r = await fetch(`${API_URL}/noticias/${id}`, { method: 'DELETE' });
-            if (r.ok) {
-                mostrarToast('🗑️ Notícia excluída!');
-                carregarNoticias();
-            } else {
-                mostrarToast('❌ Erro ao excluir', 'error');
-            }
-        } catch(e) {
-            mostrarToast('❌ Erro ao conectar', 'error');
-        }
+            if (r.ok) { mostrarToast('🗑️ Notícia excluída!'); carregarNoticias(); }
+            else { mostrarToast('❌ Erro ao excluir', 'error'); }
+        } catch(e) { mostrarToast('❌ Erro ao conectar', 'error'); }
     }
 
     async function limparNoticiasExpiradas() {
         try {
             const r = await fetch(`${API_URL}/noticias/limpar-expiradas`, { method: 'POST' });
             const dados = await r.json();
-            if (r.ok && dados.total > 0) {
-                mostrarToast(`🧹 ${dados.total} notícias expiradas removidas!`);
-                carregarNoticias();
-            }
-        } catch(e) {
-            console.error('Erro ao limpar notícias expiradas:', e);
-        }
+            if (r.ok && dados.total > 0) { mostrarToast(`🧹 ${dados.total} notícias expiradas removidas!`); carregarNoticias(); }
+        } catch(e) { console.error('Erro ao limpar notícias expiradas:', e); }
     }
 
-    // ========== ONLINE/OFFLINE ==========
     async function carregarStatus() {
         const statusSalvo = localStorage.getItem('statusOnline');
-        if (statusSalvo !== null) {
-            statusAtual = statusSalvo === 'true';
-            atualizarBotaoStatus();
-        }
+        if (statusSalvo !== null) { statusAtual = statusSalvo === 'true'; atualizarBotaoStatus(); }
         try {
             const r = await fetch(`${API_URL}/status`);
             const d = await r.json();
-            if (statusSalvo === null) {
-                statusAtual = d.online === true;
-                atualizarBotaoStatus();
-            }
-        } catch(e) {
-            if (statusSalvo === null) {
-                statusAtual = false;
-                atualizarBotaoStatus();
-            }
-        }
+            if (statusSalvo === null) { statusAtual = d.online === true; atualizarBotaoStatus(); }
+        } catch(e) { if (statusSalvo === null) { statusAtual = false; atualizarBotaoStatus(); } }
     }
 
     async function alternarStatus() {
@@ -752,20 +673,9 @@
         btn.disabled = true;
         const novoStatus = !statusAtual;
         try {
-            const r = await fetch(`${API_URL}/status`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ online: novoStatus })
-            });
-            if (r.ok) {
-                statusAtual = novoStatus;
-                localStorage.setItem('statusOnline', novoStatus.toString());
-                atualizarBotaoStatus();
-                mostrarToast(novoStatus ? '🟢 Agora você está ONLINE!' : '🔴 Agora você está OFFLINE');
-            }
-        } catch(e) {
-            mostrarToast('❌ Erro ao alterar status', 'error');
-        }
+            const r = await fetch(`${API_URL}/status`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ online: novoStatus }) });
+            if (r.ok) { statusAtual = novoStatus; localStorage.setItem('statusOnline', novoStatus.toString()); atualizarBotaoStatus(); mostrarToast(novoStatus ? '🟢 Agora você está ONLINE!' : '🔴 Agora você está OFFLINE'); }
+        } catch(e) { mostrarToast('❌ Erro ao alterar status', 'error'); }
         btn.disabled = false;
     }
 
@@ -776,7 +686,6 @@
         else { btn.className = 'btn-status offline'; texto.innerText = 'OFFLINE'; }
     }
 
-    // ========== ABAS ==========
     function alternarAba(abaId) {
         document.querySelectorAll('.aba-nav-btn').forEach(btn => btn.classList.remove('ativa'));
         document.querySelector(`.aba-nav-btn[data-aba="${abaId}"]`)?.classList.add('ativa');
@@ -791,7 +700,6 @@
         btn.addEventListener('click', () => alternarAba(btn.dataset.aba));
     });
 
-    // ========== CONTATOS ==========
     async function carregarContatos() {
         document.getElementById('contatosCarregando').style.display = 'block';
         document.getElementById('listaContatos').innerHTML = '';
@@ -800,39 +708,28 @@
             const dados = await r.json();
             todosContatos = Array.isArray(dados) ? dados : [];
             renderizarContatos(todosContatos);
-        } catch(e) {
-            document.getElementById('listaContatos').innerHTML = '<div class="contatos-vazio">❌ Erro ao carregar mensagens. Tente novamente.</div>';
-        }
+        } catch(e) { document.getElementById('listaContatos').innerHTML = '<div class="contatos-vazio">❌ Erro ao carregar mensagens. Tente novamente.</div>'; }
         document.getElementById('contatosCarregando').style.display = 'none';
     }
 
     function renderizarContatos(lista) {
         const assuntoFiltro = document.getElementById('filtroContatoAssunto').value;
         const nomeFiltro = document.getElementById('filtroContatoNome').value.toLowerCase();
-
         const filtrados = lista.filter(c => {
             if (assuntoFiltro && c.assunto !== assuntoFiltro) return false;
             if (nomeFiltro && !(c.nome || '').toLowerCase().includes(nomeFiltro)) return false;
             return true;
         });
-
         document.getElementById('statTotal').innerText = lista.length;
         document.getElementById('statSugestao').innerText = lista.filter(c => c.assunto === 'Sugestão').length;
         document.getElementById('statElogio').innerText = lista.filter(c => c.assunto === 'Elogio').length;
         document.getElementById('statReclamacao').innerText = lista.filter(c => c.assunto === 'Reclamação').length;
         document.getElementById('statDuvida').innerText = lista.filter(c => c.assunto === 'Dúvida').length;
-
         filtrados.forEach(c => { if (!c.data && c.data_envio) c.data = c.data_envio; });
-
         const container = document.getElementById('listaContatos');
-        if (filtrados.length === 0) {
-            container.innerHTML = '<div class="contatos-vazio">📭 Nenhuma mensagem encontrada</div>';
-            return;
-        }
-
+        if (filtrados.length === 0) { container.innerHTML = '<div class="contatos-vazio">📭 Nenhuma mensagem encontrada</div>'; return; }
         const assuntoClass = { 'Sugestão': 'assunto-sugestao', 'Elogio': 'assunto-elogio', 'Reclamação': 'assunto-reclamacao', 'Dúvida': 'assunto-duvida', 'Outro': 'assunto-outro' };
         const assuntoEmoji = { 'Sugestão': '💡', 'Elogio': '❤️', 'Reclamação': '⚠️', 'Dúvida': '❓', 'Outro': '📋' };
-
         container.innerHTML = [...filtrados].reverse().map(c => {
             const cls = assuntoClass[c.assunto] || 'assunto-outro';
             const emoji = assuntoEmoji[c.assunto] || '📋';
@@ -840,18 +737,12 @@
             const btnWhats = whats ? `<a class="btn-responder" href="https://wa.me/55${whats}?text=Olá ${encodeURIComponent(c.nome || '')}! Recebemos sua mensagem da Escolinha do Jacaré." target="_blank">💬 Responder no WhatsApp</a>` : '<span style="font-size:0.75rem;color:#999;">Sem WhatsApp</span>';
             return `
                 <div class="contato-msg-card">
-                    <div class="contato-msg-header">
-                        <div class="contato-msg-nome">👤 ${c.nome || 'Anônimo'}</div>
-                        <div class="contato-msg-data">${c.data || ''}</div>
-                    </div>
+                    <div class="contato-msg-header"><div class="contato-msg-nome">👤 ${c.nome || 'Anônimo'}</div><div class="contato-msg-data">${c.data || ''}</div></div>
                     <span class="contato-msg-assunto ${cls}">${emoji} ${c.assunto || 'Outro'}</span>
                     <div class="contato-msg-texto">"${c.mensagem || ''}"</div>
                     <div class="contato-msg-footer">
                         <span class="contato-msg-whats">${c.whatsapp ? '📱 ' + c.whatsapp : ''}</span>
-                        <div style="display:flex;gap:8px;align-items:center;">
-                            ${btnWhats}
-                            <button class="btn-excluir" onclick="excluirContato(${c.id}, this)">🗑️ Excluir</button>
-                        </div>
+                        <div style="display:flex;gap:8px;align-items:center;">${btnWhats}<button class="btn-excluir" onclick="excluirContato(${c.id}, this)">🗑️ Excluir</button></div>
                     </div>
                 </div>`;
         }).join('');
@@ -861,27 +752,14 @@
 
     async function excluirContato(id, btn) {
         if (!confirm('Tem certeza que deseja excluir esta mensagem?')) return;
-        btn.disabled = true;
-        btn.innerHTML = '⏳';
+        btn.disabled = true; btn.innerHTML = '⏳';
         try {
             const r = await fetch(`${API_URL}/contatos/${id}`, { method: 'DELETE' });
-            if (r.ok) {
-                todosContatos = todosContatos.filter(c => c.id !== id);
-                renderizarContatos(todosContatos);
-                mostrarToast('🗑️ Mensagem excluída!');
-            } else {
-                mostrarToast('❌ Erro ao excluir', 'error');
-                btn.disabled = false;
-                btn.innerHTML = '🗑️ Excluir';
-            }
-        } catch(e) {
-            mostrarToast('❌ Erro ao excluir', 'error');
-            btn.disabled = false;
-            btn.innerHTML = '🗑️ Excluir';
-        }
+            if (r.ok) { todosContatos = todosContatos.filter(c => c.id !== id); renderizarContatos(todosContatos); mostrarToast('🗑️ Mensagem excluída!'); }
+            else { mostrarToast('❌ Erro ao excluir', 'error'); btn.disabled = false; btn.innerHTML = '🗑️ Excluir'; }
+        } catch(e) { mostrarToast('❌ Erro ao excluir', 'error'); btn.disabled = false; btn.innerHTML = '🗑️ Excluir'; }
     }
 
-    // ========== COMENTÁRIOS ==========
     async function carregarComentarios() {
         const container = document.getElementById('listaComentarios');
         const loading = document.getElementById('comentariosCarregando');
@@ -935,34 +813,19 @@
             const dados = await r.json();
             if (Array.isArray(dados)) {
                 todosAlunos = dados.map(item => ({ 
-                    id: item.id,
-                    protocolo: item.protocolo,
-                    nome: item.nome_aluno || 'Não informado', 
-                    turma: capitalizar(item.turma), 
-                    categoria: item.categoria || 'Não informada', 
+                    id: item.id, protocolo: item.protocolo, nome: item.nome_aluno || 'Não informado', 
+                    turma: capitalizar(item.turma), categoria: item.categoria || 'Não informada', 
                     bairro: item.bairro ? capitalizar(item.bairro) : 'Não informado', 
-                    responsavel: item.responsavel || 'Não informado', 
-                    telefone: item.telefone || '', 
-                    idade: parseInt(item.idade) || 0, 
-                    dataMatricula: item.data_envio || new Date().toISOString(), 
-                    deficiencia: item.deficiencia || 'Nenhuma', 
-                    remedio: item.remedio || 'Não', 
-                    origem: item.origem || '', 
-                    status: item.status || 'pendente',
-                    data_entrega_uniforme: item.data_entrega_uniforme || '',
-                    possui_uniforme: item.possui_uniforme || '',
-                    observacao: item.observacao || '',
-                    estrelas: parseInt(item.estrelas) || 0
+                    responsavel: item.responsavel || 'Não informado', telefone: item.telefone || '', 
+                    idade: parseInt(item.idade) || 0, dataMatricula: item.data_envio || new Date().toISOString(), 
+                    deficiencia: item.deficiencia || 'Nenhuma', remedio: item.remedio || 'Não', 
+                    origem: item.origem || '', status: item.status || 'pendente',
+                    data_entrega_uniforme: item.data_entrega_uniforme || '', possui_uniforme: item.possui_uniforme || '',
+                    observacao: item.observacao || '', estrelas: parseInt(item.estrelas) || 0
                 }));
-                
                 todosAlunos = padronizarBairros(todosAlunos);
-                
-                aplicarFiltros(); 
-                atualizarCards(); 
-                atualizarCardsDeficienciaRemedio(); 
-                atualizarVeteranos();
-                ultimaAtualizacao = new Date(); 
-                atualizarTimestamp();
+                aplicarFiltros(); atualizarCards(); atualizarCardsDeficienciaRemedio(); atualizarVeteranos();
+                ultimaAtualizacao = new Date(); atualizarTimestamp();
                 mostrarToast(`✅ ${dados.length} alunos carregados`);
             }
         } catch(e) {
@@ -1028,32 +891,25 @@
         const turmasCount = TURMAS.map(t => dados.filter(a => a.turma===t).length);
         if (graficos.turmas) graficos.turmas.destroy();
         graficos.turmas = new Chart(document.getElementById('graficoTurmas'), { type:'bar', data:{ labels:TURMAS, datasets:[{ label:'Alunos', data:turmasCount, backgroundColor:'#0047AB', borderRadius:8 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
-        
         if (graficos.pizza) graficos.pizza.destroy();
         graficos.pizza = new Chart(document.getElementById('graficoPizza'), { type:'pie', data:{ labels:TURMAS, datasets:[{ data:turmasCount, backgroundColor:['#0047AB','#00aaff','#ff9800','#25d366','#ff69b4'], borderWidth:2, borderColor:'white' }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ tooltip:{ callbacks:{ label:(ctx) => { const total = ctx.dataset.data.reduce((a,b) => a+b, 0); const percent = total > 0 ? ((ctx.raw/total)*100).toFixed(1) : 0; return `${ctx.label}: ${ctx.raw} alunos (${percent}%)`; } } }, legend:{ position:'bottom', labels:{ font:{ size:11 }, generateLabels: (chart) => { const data = chart.data; const total = data.datasets[0].data.reduce((a,b) => a+b, 0); return data.labels.map((label, i) => { const value = data.datasets[0].data[i]; const percent = total > 0 ? ((value/total)*100).toFixed(1) : 0; return { text: `${label} (${percent}%)`, fillStyle: data.datasets[0].backgroundColor[i], index: i, hidden: false }; }); } } } } } });
-        
         const categoriasCount = CATEGORIAS.map(cat => dados.filter(a => a.categoria===cat).length);
         if (graficos.categoria) graficos.categoria.destroy();
         graficos.categoria = new Chart(document.getElementById('graficoCategoria'), { type:'bar', data:{ labels:CATEGORIAS, datasets:[{ label:'Alunos', data:categoriasCount, backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
-        
         const bairrosMap = new Map(); dados.forEach(a => { if(a.bairro && a.bairro!=='Não informado' && a.bairro!=='Não informada') bairrosMap.set(a.bairro, (bairrosMap.get(a.bairro)||0)+1); });
         const bairros = Array.from(bairrosMap.entries()).sort((a,b) => b[1]-a[1]).slice(0,10);
         if (graficos.bairro) graficos.bairro.destroy();
         graficos.bairro = new Chart(document.getElementById('graficoBairro'), { type:'bar', data:{ labels:bairros.map(b=>b[0]), datasets:[{ label:'Alunos', data:bairros.map(b=>b[1]), backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ x:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
-        
         const matriculasPorMes = new Array(12).fill(0); dados.forEach(a => { if(a.dataMatricula) matriculasPorMes[new Date(a.dataMatricula).getMonth()]++; });
         if (graficos.evolucao) graficos.evolucao.destroy();
         graficos.evolucao = new Chart(document.getElementById('graficoEvolucao'), { type:'line', data:{ labels:['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'], datasets:[{ label:'Matrículas', data:matriculasPorMes, borderColor:'#0047AB', backgroundColor:'rgba(0,71,171,0.1)', fill:true, tension:0.3 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } } } });
-        
         const deficienciaMap = new Map(); dados.forEach(a => { if(a.deficiencia && a.deficiencia!=='Nenhuma') { a.deficiencia.split(', ').forEach(t => { const tl=t.replace('Outra: ','').trim(); if(tl) deficienciaMap.set(tl,(deficienciaMap.get(tl)||0)+1); }); } });
         if (graficos.deficiencia) graficos.deficiencia.destroy();
         graficos.deficiencia = new Chart(document.getElementById('graficoDeficiencia'), { type:'bar', data:{ labels:deficienciaMap.size?Array.from(deficienciaMap.keys()):['Nenhuma'], datasets:[{ label:'Alunos', data:deficienciaMap.size?Array.from(deficienciaMap.values()):[dados.length], backgroundColor:'#ff9800', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ x:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
-        
         const remedioSim = dados.filter(a => a.remedio && a.remedio!=='Não').length;
         const remedioNao = dados.length - remedioSim;
         if (graficos.remedio) graficos.remedio.destroy();
         graficos.remedio = new Chart(document.getElementById('graficoRemedio'), { type:'pie', data:{ labels:['Sim','Não'], datasets:[{ data:[remedioSim,remedioNao], backgroundColor:['#f44336','#4caf50'], borderWidth:2, borderColor:'white' }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ tooltip:{ callbacks:{ label:(ctx) => { const total = ctx.dataset.data.reduce((a,b) => a+b, 0); const percent = total > 0 ? ((ctx.raw/total)*100).toFixed(1) : 0; return `${ctx.label}: ${ctx.raw} alunos (${percent}%)`; } } }, legend:{ position:'bottom', labels:{ generateLabels: (chart) => { const data = chart.data; const total = data.datasets[0].data.reduce((a,b) => a+b, 0); return data.labels.map((label, i) => { const value = data.datasets[0].data[i]; const percent = total > 0 ? ((value/total)*100).toFixed(1) : 0; return { text: `${label} (${percent}%)`, fillStyle: data.datasets[0].backgroundColor[i], index: i }; }); } } } } } });
-        
         const origemMap = new Map();
         dados.forEach(a => { if (a.origem?.trim()) { let o = a.origem.trim(); o = o.charAt(0).toUpperCase() + o.slice(1).toLowerCase(); if (o.includes('Amigo') || o.includes('Indicação')) o = 'Amigo/Indicação'; if (o.includes('Passou')) o = 'Passou em frente'; origemMap.set(o, (origemMap.get(o) || 0) + 1); } });
         const sortedOrigem = Array.from(origemMap.entries()).sort((a, b) => b[1] - a[1]);
@@ -1062,7 +918,6 @@
         const origemColors = ['#0047AB', '#00aaff', '#ff9800', '#25d366', '#ff69b4', '#8b5cf6', '#f59e0b', '#ef4444'];
         if (graficos.origem) graficos.origem.destroy();
         graficos.origem = new Chart(document.getElementById('graficoOrigem'), { type:'bar', data:{ labels:origemLabels, datasets:[{ label:'Alunos', data:origemData, backgroundColor:origemColors.slice(0, origemLabels.length), borderRadius:8 }] }, options:{ responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label: (context) => { const total = dados.length; const percent = total > 0 ? ((context.raw/total)*100).toFixed(1) : 0; return `${context.raw} alunos (${percent}%)`; } } } }, scales:{ y:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
-        
         const subCount = [0,0,0,0,0,0,0,0]; dados.forEach(a => { const idade=a.idade; if(!idade) return; if(idade<=7) subCount[0]++; else if(idade<=9) subCount[1]++; else if(idade<=11) subCount[2]++; else if(idade<=13) subCount[3]++; else if(idade<=15) subCount[4]++; else if(idade<=17) subCount[5]++; else if(idade<=20) subCount[6]++; else subCount[7]++; });
         if (graficos.sub) graficos.sub.destroy();
         graficos.sub = new Chart(document.getElementById('graficoSub'), { type:'bar', data:{ labels:SUBS, datasets:[{ label:'Alunos', data:subCount, backgroundColor:'#00aaff', borderRadius:8 }] }, options:{ indexAxis:'y', responsive:true, maintainAspectRatio:true, plugins:{ legend:{ display:false } }, scales:{ x:{ beginAtZero:true, ticks:{ stepSize:1 } } } } });
@@ -1102,86 +957,45 @@
     ['filtroNome','filtroResponsavel','filtroTelefone','filtroBairro'].forEach(id => document.getElementById(id).addEventListener('input', aplicarFiltros));
     ['filtroTurma','filtroCategoria','filtroStatus'].forEach(id => document.getElementById(id).addEventListener('change', aplicarFiltros));
 
-    // ========== LOGIN REAL ==========
     async function verificarLogin() {
         const email = document.getElementById('emailLogin').value.trim();
         const senha = document.getElementById('senhaLogin').value;
         const btn = document.querySelector('#telaLogin button');
-        
-        if (!email || !senha) {
-            document.getElementById('erroLogin').innerText = 'Digite e-mail e senha!';
-            return;
-        }
-        
-        btn.disabled = true;
-        btn.innerHTML = '⏳ VERIFICANDO...';
-        document.getElementById('erroLogin').innerText = '';
-        
+        if (!email || !senha) { document.getElementById('erroLogin').innerText = 'Digite e-mail e senha!'; return; }
+        btn.disabled = true; btn.innerHTML = '⏳ VERIFICANDO...'; document.getElementById('erroLogin').innerText = '';
         try {
-            const r = await fetch(`${API_URL}/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, senha })
-            });
-            
+            const r = await fetch(`${API_URL}/login`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, senha }) });
             const dados = await r.json();
-            
             if (r.ok) {
-                const usuario = {
-                    ...dados.usuario,
-                    loginEm: new Date().toISOString()
-                };
+                const usuario = { ...dados.usuario, loginEm: new Date().toISOString() };
                 localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
                 usuarioLogado = usuario;
                 entrarNoPainel();
-            } else {
-                document.getElementById('erroLogin').innerText = dados.erro || 'E-mail ou senha incorretos';
-            }
-        } catch(e) {
-            console.error(e);
-            document.getElementById('erroLogin').innerText = 'Erro ao conectar. Tente novamente.';
-        } finally {
-            btn.disabled = false;
-            btn.innerHTML = 'ACESSAR';
-        }
+            } else { document.getElementById('erroLogin').innerText = dados.erro || 'E-mail ou senha incorretos'; }
+        } catch(e) { console.error(e); document.getElementById('erroLogin').innerText = 'Erro ao conectar. Tente novamente.'; }
+        finally { btn.disabled = false; btn.innerHTML = 'ACESSAR'; }
     }
 
     function entrarNoPainel() {
         document.getElementById('telaLogin').style.display = 'none';
         document.getElementById('painelAnalise').style.display = 'block';
-        
         const nomeUsuario = usuarioLogado?.nome || usuarioLogado?.email?.split('@')[0] || 'Diretor';
         document.getElementById('infoUsuario').innerHTML = `👤 ${nomeUsuario} | ✅ acesso registrado`;
-        
         carregarDadosDaPlanilha();
         carregarStatus();
         limparNoticiasExpiradas();
-        
-        setInterval(() => {
-            if (document.getElementById('painelAnalise').style.display === 'block') {
-                carregarDadosDaPlanilha();
-            }
-        }, 60000);
+        setInterval(() => { if (document.getElementById('painelAnalise').style.display === 'block') { carregarDadosDaPlanilha(); } }, 60000);
         setInterval(atualizarTimestamp, 1000);
         setInterval(limparNoticiasExpiradas, 3600000);
-                carregarNotificacoes();
+        carregarNotificacoes();
         setInterval(carregarNotificacoes, 30000);
-         inicializarPush();
+        setTimeout(() => { if (!pushInicializado) { pushInicializado = true; inicializarPush(); } }, 2000);
     }
 
     function logout() {
-        if (statusAtual) {
-            fetch(`${API_URL}/status`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ online: false })
-            }).catch(() => {});
-            statusAtual = false;
-        }
-        
+        if (statusAtual) { fetch(`${API_URL}/status`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ online: false }) }).catch(() => {}); statusAtual = false; }
         localStorage.removeItem('usuarioLogado');
         localStorage.removeItem('statusOnline');
-        
         document.getElementById('telaLogin').style.display = 'flex';
         document.getElementById('painelAnalise').style.display = 'none';
         document.getElementById('emailLogin').value = '';
@@ -1190,161 +1004,84 @@
         usuarioLogado = null;
     }
 
-
-        // ==================== NOTIFICAÇÕES ====================
     let notifAbertas = false;
     let ultimoTotalNotif = 0;
 
     async function carregarNotificacoes() {
         if (!usuarioLogado) return;
-        
         try {
             const r = await fetch(`${API_URL}/notificacoes`);
             const dados = await r.json();
-            
             if (!r.ok) return;
-            
-            // Atualiza badge
             const badge = document.getElementById('notifBadge');
-            if (dados.total > 0) {
-                badge.style.display = 'block';
-                badge.innerText = dados.total > 99 ? '99+' : dados.total;
-            } else {
-                badge.style.display = 'none';
-            }
-            
-            // Se aumentou, mostra a barra
-            if (dados.total > ultimoTotalNotif && ultimoTotalNotif > 0) {
-                mostrarBarraNotif(dados);
-            }
+            if (dados.total > 0) { badge.style.display = 'block'; badge.innerText = dados.total > 99 ? '99+' : dados.total; }
+            else { badge.style.display = 'none'; }
+            if (dados.total > ultimoTotalNotif && ultimoTotalNotif > 0) { mostrarBarraNotif(dados); }
             ultimoTotalNotif = dados.total;
-            
-            // Atualiza dropdown
             renderizarNotificacoes(dados);
-            
-        } catch(e) {
-            console.error('Erro ao carregar notificações:', e);
-        }
+        } catch(e) { console.error('Erro ao carregar notificações:', e); }
     }
 
     function renderizarNotificacoes(dados) {
         const body = document.getElementById('notifBody');
         let html = '';
-        
-        if (dados.total === 0) {
-            body.innerHTML = '<div class="notif-vazio">🎉 Tudo em dia!<br>Nenhuma notificação nova.</div>';
-            return;
-        }
-        
-        // Matrículas pendentes
+        if (dados.total === 0) { body.innerHTML = '<div class="notif-vazio">🎉 Tudo em dia!<br>Nenhuma notificação nova.</div>'; return; }
         if (dados.ultimas_matriculas && dados.ultimas_matriculas.length > 0) {
             html += `<div class="notif-section-title">👥 Matrículas Pendentes (${dados.matriculas})</div>`;
-            dados.ultimas_matriculas.forEach(m => {
-                html += `
-                    <div class="notif-item" onclick="alternarAba('dashboard'); toggleNotificacoes();">
-                        <div class="icone">👥</div>
-                        <div class="texto">
-                            <strong>${m.nome_aluno || 'Aluno'}</strong>
-                            Turma: ${m.turma || '-'}
-                            <div class="data">${formatarData(m.data_envio)}</div>
-                        </div>
-                    </div>`;
-            });
+            dados.ultimas_matriculas.forEach(m => { html += `<div class="notif-item" onclick="alternarAba('dashboard'); toggleNotificacoes();"><div class="icone">👥</div><div class="texto"><strong>${m.nome_aluno || 'Aluno'}</strong>Turma: ${m.turma || '-'}<div class="data">${formatarData(m.data_envio)}</div></div></div>`; });
         }
-        
-        // Contatos recentes
         if (dados.ultimos_contatos && dados.ultimos_contatos.length > 0) {
             html += `<div class="notif-section-title">📬 Contatos (${dados.contatos})</div>`;
-            dados.ultimos_contatos.forEach(c => {
-                html += `
-                    <div class="notif-item" onclick="alternarAba('contatos'); toggleNotificacoes();">
-                        <div class="icone">📬</div>
-                        <div class="texto">
-                            <strong>${c.nome || 'Anônimo'}</strong>
-                            ${c.assunto || 'Mensagem'}
-                            <div class="data">${formatarData(c.data_envio)}</div>
-                        </div>
-                    </div>`;
-            });
+            dados.ultimos_contatos.forEach(c => { html += `<div class="notif-item" onclick="alternarAba('contatos'); toggleNotificacoes();"><div class="icone">📬</div><div class="texto"><strong>${c.nome || 'Anônimo'}</strong>${c.assunto || 'Mensagem'}<div class="data">${formatarData(c.data_envio)}</div></div></div>`; });
         }
-        
-        // Notícias recentes
         if (dados.ultimas_noticias && dados.ultimas_noticias.length > 0) {
             html += `<div class="notif-section-title">📰 Notícias (${dados.noticias})</div>`;
-            dados.ultimas_noticias.forEach(n => {
-                html += `
-                    <div class="notif-item" onclick="alternarAba('noticias'); toggleNotificacoes();">
-                        <div class="icone">📰</div>
-                        <div class="texto">
-                            <strong>${n.titulo}</strong>
-                            <div class="data">${formatarData(n.data_publicacao)}</div>
-                        </div>
-                    </div>`;
-            });
+            dados.ultimas_noticias.forEach(n => { html += `<div class="notif-item" onclick="alternarAba('noticias'); toggleNotificacoes();"><div class="icone">📰</div><div class="texto"><strong>${n.titulo}</strong><div class="data">${formatarData(n.data_publicacao)}</div></div></div>`; });
         }
-        
         body.innerHTML = html;
     }
 
     function toggleNotificacoes() {
         const dropdown = document.getElementById('notifDropdown');
         notifAbertas = !notifAbertas;
-        if (notifAbertas) {
-            dropdown.classList.add('ativo');
-            carregarNotificacoes();
-        } else {
-            dropdown.classList.remove('ativo');
-        }
+        if (notifAbertas) { dropdown.classList.add('ativo'); carregarNotificacoes(); }
+        else { dropdown.classList.remove('ativo'); }
     }
 
-    // Fechar dropdown ao clicar fora
     document.addEventListener('click', function(e) {
         const container = document.querySelector('.notif-container');
-        if (container && !container.contains(e.target)) {
-            document.getElementById('notifDropdown')?.classList.remove('ativo');
-            notifAbertas = false;
-        }
+        if (container && !container.contains(e.target)) { document.getElementById('notifDropdown')?.classList.remove('ativo'); notifAbertas = false; }
     });
 
     function mostrarBarraNotif(dados) {
         const barra = document.getElementById('barraNotif');
         const texto = document.getElementById('barraNotifTexto');
-        
         let msg = '📢 ';
         const partes = [];
         if (dados.matriculas > 0) partes.push(`${dados.matriculas} matrícula(s) pendente(s)`);
         if (dados.contatos > 0) partes.push(`${dados.contatos} contato(s) novo(s)`);
         if (dados.noticias > 0) partes.push(`${dados.noticias} notícia(s) nova(s)`);
-        
         msg += partes.join(' • ');
         texto.innerText = msg;
         barra.classList.add('ativa');
-        
         setTimeout(() => { barra.classList.remove('ativa'); }, 8000);
     }
 
-    function fecharBarraNotif() {
-        document.getElementById('barraNotif').classList.remove('ativa');
-    }
+    function fecharBarraNotif() { document.getElementById('barraNotif').classList.remove('ativa'); }
 
-        // ==================== PUSH NOTIFICATIONS ====================
     async function inicializarPush() {
         try {
-            // Verifica se o navegador suporta
             if (!('Notification' in window) || !('serviceWorker' in navigator)) {
-                console.log('⚠️ Push não suportado neste navegador');
+                console.log('⚠️ Push não suportado');
                 return;
             }
-
-            // Pede permissão
-            const permissao = await Notification.requestPermission();
-            if (permissao !== 'granted') {
-                console.log('⚠️ Permissão de notificação negada');
-                return;
-            }
-
-            // Pega o token do Firebase
+            console.log('⏳ Esperando Service Worker...');
             const registration = await navigator.serviceWorker.ready;
+            console.log('✅ SW pronto');
+
+            const permissao = await Notification.requestPermission();
+            if (permissao !== 'granted') { console.log('⚠️ Permissão negada'); return; }
+            console.log('✅ Permissão OK');
 
             const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
             const { getMessaging, getToken } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js');
@@ -1360,43 +1097,31 @@
 
             const firebaseApp = initializeApp(firebaseConfig);
             const messaging = getMessaging(firebaseApp);
+            console.log('✅ Firebase OK');
 
             const token = await getToken(messaging, {
                 vapidKey: 'BHGLLbpMqsjtStrQe0W7gLrpQtt85CIpj0qD5ok84dM0-pH9euvw3JuOm-l0IlT5ydGetJbgiyQ400PiIa2ETJg',
                 serviceWorkerRegistration: registration
             });
+            console.log('🔑 Token:', token);
 
             if (token) {
-                console.log('✅ Token push:', token);
-
-                // Envia pro backend
-                await fetch(`${API_URL}/salvar-token`, {
+                const resposta = await fetch(`${API_URL}/salvar-token`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        token: token,
-                        email: usuarioLogado?.email || ''
-                    })
+                    body: JSON.stringify({ token: token, email: usuarioLogado?.email || '' })
                 });
-
-                console.log('✅ Token salvo no backend');
-            }
-        } catch(e) {
-            console.error('❌ Erro ao inicializar push:', e);
-        }
+                if (resposta.ok) { console.log('✅ Token salvo!'); alert('✅ Notificações ativadas!'); }
+                else { console.error('❌ Erro ao salvar token:', resposta.status); alert('❌ Erro: ' + resposta.status); }
+            } else { console.error('❌ Token vazio'); }
+        } catch(e) { console.error('❌ Erro push:', e); alert('❌ Erro: ' + e.message); }
     }
 
-
-    // ==================== VERIFICA LOGIN SALVO ====================
     window.addEventListener('load', () => {
         const salvo = localStorage.getItem('usuarioLogado');
         if (salvo) {
-            try {
-                usuarioLogado = JSON.parse(salvo);
-                entrarNoPainel();
-            } catch(e) {
-                localStorage.removeItem('usuarioLogado');
-            }
+            try { usuarioLogado = JSON.parse(salvo); entrarNoPainel(); }
+            catch(e) { localStorage.removeItem('usuarioLogado'); }
         }
     });
 </script>
