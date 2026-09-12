@@ -67,6 +67,86 @@
  
         .stagger-item { opacity: 0; }
  
+        /* ==================== SPLASH SCREEN ==================== */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .splash-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            max-width: 90%;
+        }
+        .splash-logo {
+            width: 70%;
+            max-width: 350px;
+            height: auto;
+            margin-bottom: 40px;
+            animation: splashLogo 2s ease-in-out infinite;
+        }
+        @keyframes splashLogo {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        .splash-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .splash-dots {
+            display: flex;
+            gap: 10px;
+        }
+        .splash-dots span {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #003399;
+            animation: splashDots 1.4s ease-in-out infinite;
+        }
+        .splash-dots span:nth-child(1) { animation-delay: 0s; }
+        .splash-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .splash-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes splashDots {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            40% { transform: scale(1.2); opacity: 1; }
+        }
+        .splash-text {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            color: #003399;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        @media (max-width: 400px) {
+            .splash-logo { max-width: 250px; margin-bottom: 30px; }
+            .splash-text { font-size: 0.9rem; }
+        }
+        @media (min-width: 768px) {
+            .splash-logo { max-width: 400px; }
+            .splash-text { font-size: 1.1rem; }
+        }
+ 
         /* BARRA SUPERIOR */
         .barra-superior { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 10px 5%; }
         .container-superior { width: 100%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
@@ -411,7 +491,22 @@
     </style>
 </head>
 <body>
- 
+
+<!-- ==================== SPLASH SCREEN ==================== -->
+<div id="splashScreen" class="splash-screen">
+    <div class="splash-content">
+        <img src="icons/jacare.jpeg" alt="Escolinha do Jacaré" class="splash-logo">
+        <div class="splash-loading">
+            <div class="splash-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <p class="splash-text">Carregando...</p>
+        </div>
+    </div>
+</div>
+
 <!-- MENU MOBILE -->
 <div class="menu-mobile" id="menuMobile">
     <a href="index.html">🏠 INÍCIO</a>
@@ -425,7 +520,7 @@
     <a href="mailto:escolinhajacare98@gmail.com"><img src="icones/gmail.png" alt="E-mail"> E-MAIL</a>
     <a href="https://maps.app.goo.gl/Sz58rBrkoswb7wSq5" target="_blank"><img src="icones/maps.png" alt="Mapa"> LOCALIZAÇÃO</a>
 </div>
- 
+
 <!-- BARRA SUPERIOR -->
 <div class="barra-superior">
     <div class="container-superior">
@@ -452,7 +547,7 @@
         </div>
     </div>
 </div>
- 
+
 <!-- BARRA DE NOTÍCIAS -->
 <div class="barra-noticias">
     <div class="container-noticias">
@@ -462,7 +557,7 @@
         </div>
     </div>
 </div>
- 
+
 <!-- BANNER -->
 <div class="hero">
     <div class="banner-espacial">
@@ -517,7 +612,7 @@
         </div>
     </div>
 </div>
- 
+
 <!-- DEPOIMENTOS -->
 <div class="depoimentos-section">
     <div class="depoimentos-titulo">💬 O que as famílias dizem</div>
@@ -532,10 +627,10 @@
         <button class="carrossel-btn" id="btnProximo">›</button>
     </div>
 </div>
- 
+
 <!-- CONTEÚDO PRINCIPAL -->
 <div class="conteudo">
- 
+
     <div class="indicadores-grid">
         <div class="indicador-card stagger-item">
             <div class="icone">🏆</div>
@@ -561,7 +656,7 @@
             <div class="detalhe">15 de abril</div>
         </div>
     </div>
- 
+
     <div class="card">
         <h2>📖 NOSSA HISTÓRIA</h2>
         <p style="text-align:center;margin-bottom:30px;">Fundada no coração do bairro Alvorada, a Escolinha do Jacaré nasceu do sonho de transformar vidas através do esporte. Mais que formar atletas, nosso objetivo é formar cidadãos com valores sólidos como respeito, disciplina e trabalho em equipe.</p>
@@ -571,7 +666,7 @@
             <div class="valor-item"><span class="emoji">❤️</span><h3>Valores</h3><p>Respeito, disciplina, inclusão, trabalho em equipe e paixão pelo esporte.</p></div>
         </div>
     </div>
- 
+
     <div class="categorias-container">
         <h2>🏆 CATEGORIAS</h2>
         <div class="grid-categorias">
@@ -585,7 +680,7 @@
             <span>👉 Aceitamos alunos até 17 anos</span> (consulte disponibilidade de vaga)
         </div>
     </div>
- 
+
     <div class="info-card">
         <h2>ℹ️ INFORMAÇÕES</h2>
         <div class="info-grid">
@@ -606,7 +701,7 @@
             </div>
         </div>
     </div>
- 
+
     <!-- PATROCINADORES TICKER INFINITO -->
     <div class="patrocinadores">
         <h2>🏆 NOSSOS PATROCINADORES</h2>
@@ -629,7 +724,7 @@
             <a href="mailto:escolinhajacare98@gmail.com">📧 escolinhajacare98@gmail.com</a>
         </div>
     </div>
- 
+
     <!-- DESENVOLVIMENTO -->
     <div class="equipe-section">
         <h2>💻 DESENVOLVIMENTO</h2>
@@ -645,7 +740,7 @@
                 </div>
                 <div class="equipe-frase">✨ Tecnologia a favor do esporte ✨</div>
                 <a href="https://www.instagram.com/jean.silva.juvencio/" target="_blank" class="equipe-instagram">📷 Instagram</a>
- 
+
                 <div class="contato-interno">
                     <h3>📬 Entre em Contato</h3>
                     <div class="contato-form-grid">
@@ -683,7 +778,7 @@
             </div>
         </div>
     </div>
- 
+
     <div class="loc-card">
         <h2>📍 VENHA NOS CONHECER</h2>
         <div class="mapa-container">
@@ -695,7 +790,7 @@
         </div>
         <a href="https://maps.app.goo.gl/Sz58rBrkoswb7wSq5" target="_blank" class="btn-mapa">📍 ABRIR NO GOOGLE MAPS</a>
     </div>
- 
+
     <footer>
         🐊 ESCOLINHA DO JACARÉ - ALVORADA<br>Manaus/AM - Brasil
         <div class="contato-footer">
@@ -706,24 +801,35 @@
         <div class="rights">© 2026 - Todos os direitos reservados. 🌐 Desenvolvido por Jean Silva | Tecnologia a serviço do esporte</div>
     </footer>
 </div>
- 
+
 <button id="btnTopo" class="btn-topo" title="Voltar ao topo">⬆️</button>
- 
+
 <script>
     const API_URL = 'https://api-escolinha.onrender.com/api';
     let tickerAnimation = null;
     let tickerPosition = 0;
     let tickerSpeed = 0.6;
- 
+
     document.getElementById('anosHistoria').innerText = new Date().getFullYear() - 1998;
- 
+
+    // ==================== SPLASH SCREEN ====================
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const splash = document.getElementById('splashScreen');
+            if (splash) {
+                splash.classList.add('hidden');
+                setTimeout(() => { splash.remove(); }, 500);
+            }
+        }, 5000);
+    });
+
     function toggleMenu() {
         var menu = document.getElementById('menuMobile');
         var hamburger = document.getElementById('hamburger');
         if (menu.style.left === '0px') { menu.style.left = '-280px'; hamburger.classList.remove('active'); }
         else { menu.style.left = '0px'; hamburger.classList.add('active'); }
     }
- 
+
     // ========== CARREGAR ALUNOS DO NEON ==========
     async function carregarDados() {
         try {
@@ -745,7 +851,7 @@
             if (el) el.innerText = '--';
         }
     }
- 
+
     // ========== CARREGAR NOTÍCIAS (MURAL) ==========
     async function carregarMuralNoticias() {
         const container = document.getElementById('muralNoticias');
@@ -766,7 +872,6 @@
                 return;
             }
             
-            // Mostra apenas as 5 notícias mais recentes
             const noticiasRecentes = noticias.slice(0, 5);
             
             container.innerHTML = noticiasRecentes.map(n => {
@@ -805,13 +910,12 @@
             `;
         }
     }
- 
+
     // ========== MODAL NOTÍCIA COMPLETA ==========
     let noticiasCompletas = [];
- 
+
     async function abrirNoticiaCompleta(id) {
         try {
-            // Busca todas as notícias (para ter o texto completo)
             if (noticiasCompletas.length === 0) {
                 const r = await fetch(`${API_URL}/noticias`);
                 noticiasCompletas = await r.json();
@@ -840,21 +944,19 @@
             console.error('Erro ao abrir notícia:', e);
         }
     }
- 
+
     function fecharModalNoticiaCompleta() {
         document.getElementById('modalNoticiaCompleta').classList.remove('ativo');
     }
- 
-    // Fechar modal clicando fora
+
     document.getElementById('modalNoticiaCompleta')?.addEventListener('click', function(e) {
         if (e.target === this) fecharModalNoticiaCompleta();
     });
- 
-    // Fechar modal com ESC
+
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') fecharModalNoticiaCompleta();
     });
- 
+
     // ========== VERIFICAR STATUS DO SERVIDOR ==========
     async function verificarStatus() {
         const foto = document.querySelector('.equipe-foto');
@@ -877,7 +979,7 @@
             if (foto) { foto.classList.remove('foto-online'); foto.classList.add('foto-offline'); }
         }
     }
- 
+
     // ========== CLIMA ==========
     async function buscarClima() {
         try {
@@ -899,7 +1001,7 @@
             console.error('❌ Erro ao buscar clima:', e);
         }
     }
- 
+
     // ========== NOTÍCIAS TICKER ==========
     let noticiasLista = [];
     async function buscarNoticias() {
@@ -914,7 +1016,7 @@
         noticiasLista = ["🏆 Futebol para todos na Escolinha do Jacaré", "⚽ Campeonato Brasileiro em andamento", "🎉 Formando cidadãos através do esporte"];
         atualizarTicker();
     }
- 
+
     function atualizarTicker() {
         const t = document.getElementById('tickerNoticias');
         if (t && noticiasLista.length > 0) {
@@ -927,34 +1029,34 @@
             tickerAnimation = requestAnimationFrame(animar);
         }
     }
- 
+
     function alternarTema() {
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
         document.getElementById('btnTema').innerHTML = isDark ? '🌙' : '🌞';
         localStorage.setItem('tema', isDark ? 'dark' : 'light');
     }
- 
+
     function alternarAcessibilidade() {
         document.body.classList.toggle('acessibilidade');
         const btn = document.getElementById('btnAcessibilidade');
         if (document.body.classList.contains('acessibilidade')) { btn.classList.add('ativo'); localStorage.setItem('acessibilidade', 'active'); mostrarToast('♿ Modo ativado'); }
         else { btn.classList.remove('ativo'); localStorage.setItem('acessibilidade', 'inactive'); mostrarToast('♿ Modo desativado'); }
     }
- 
+
     document.getElementById('btnTopo').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     window.addEventListener('scroll', () => { document.getElementById('btnTopo').classList.toggle('visible', window.scrollY > 300); });
- 
+
     function mostrarToast(msg) {
         const t = document.createElement('div'); t.className = 'toast'; t.innerHTML = `✅ ${msg}`; document.body.appendChild(t);
         setTimeout(() => t.classList.add('show'), 10); setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 2500);
     }
- 
+
     document.getElementById('btnAcessibilidade')?.addEventListener('click', alternarAcessibilidade);
- 
+
     // ========== DEPOIMENTOS ==========
     let depoimentos = [], carrosselIndex = 0, carrosselTimer = null;
- 
+
     async function carregarDepoimentos(t = 1) {
         const msgs = ['⏳ Acordando o servidor...', '⏳ Ainda conectando...', '⏳ Quase lá...', '⏳ Última tentativa...'];
         document.getElementById('carrosselTrack').innerHTML = `<div class="depoimentos-vazio">${msgs[t-1]}</div>`;
@@ -975,7 +1077,7 @@
             else document.getElementById('carrosselTrack').innerHTML = '<div class="depoimentos-vazio">📭 Nenhum depoimento disponível.</div>';
         }
     }
- 
+
     function renderizarCarrossel() {
         const track = document.getElementById('carrosselTrack');
         const controles = document.getElementById('carrosselControles');
@@ -991,7 +1093,7 @@
         controles.style.display = 'flex';
         if (depoimentos.length > 1) carrosselTimer = setInterval(() => irParaSlide(carrosselIndex+1), 5000);
     }
- 
+
     function irParaSlide(index) {
         carrosselIndex = (index+depoimentos.length)%depoimentos.length;
         document.getElementById('carrosselTrack').style.transform = `translateX(-${carrosselIndex*100}%)`;
@@ -999,26 +1101,26 @@
         clearInterval(carrosselTimer);
         if (depoimentos.length > 1) carrosselTimer = setInterval(() => irParaSlide(carrosselIndex+1), 5000);
     }
- 
+
     document.getElementById('btnProximo')?.addEventListener('click', () => irParaSlide(carrosselIndex+1));
     document.getElementById('btnAnterior')?.addEventListener('click', () => irParaSlide(carrosselIndex-1));
- 
+
     // ========== ENVIAR CONTATO ==========
     async function enviarContato() {
         const nome = document.getElementById('contatoNome').value.trim();
         const whatsapp = document.getElementById('contatoWhatsApp').value.trim();
         const assunto = document.getElementById('contatoAssunto').value;
         const mensagem = document.getElementById('contatoMensagem').value.trim();
- 
+
         if (!nome) { mostrarToast('⚠️ Preencha seu nome!'); document.getElementById('contatoNome').focus(); return; }
         if (!whatsapp) { mostrarToast('⚠️ Preencha seu WhatsApp!'); document.getElementById('contatoWhatsApp').focus(); return; }
         if (!assunto) { mostrarToast('⚠️ Selecione um assunto!'); document.getElementById('contatoAssunto').focus(); return; }
         if (!mensagem) { mostrarToast('⚠️ Escreva sua mensagem!'); document.getElementById('contatoMensagem').focus(); return; }
- 
+
         const btn = document.getElementById('btnEnviarContato');
         btn.disabled = true;
         btn.innerHTML = '⏳ Enviando...';
- 
+
         try {
             const r = await fetch(`${API_URL}/contatos`, {
                 method: 'POST',
@@ -1043,14 +1145,14 @@
             btn.innerHTML = '📤 ENVIAR MENSAGEM';
             btn.disabled = false;
         }
- 
+
         setTimeout(() => {
             btn.disabled = false;
             btn.innerHTML = '📤 ENVIAR MENSAGEM';
             document.getElementById('contatoSucesso').style.display = 'none';
         }, 5000);
     }
- 
+
     // ========== INICIALIZAÇÃO ==========
     window.addEventListener('load', () => {
         buscarClima();
@@ -1063,20 +1165,20 @@
         setInterval(buscarNoticias, 300000);
         setInterval(verificarStatus, 30000);
         setInterval(carregarDados, 60000);
-        setInterval(carregarMuralNoticias, 300000); // Atualiza notícias a cada 5 minutos
- 
+        setInterval(carregarMuralNoticias, 300000);
+
         document.querySelectorAll('.stagger-item').forEach((item,i) => {
             setTimeout(() => { item.style.opacity='1'; item.style.animation='fadeInUp 0.5s ease forwards'; }, i*150);
         });
- 
+
         if (localStorage.getItem('tema') === 'dark') { document.body.classList.add('dark-mode'); document.getElementById('btnTema').innerHTML='🌙'; }
         if (localStorage.getItem('acessibilidade') === 'active') { document.body.classList.add('acessibilidade'); document.getElementById('btnAcessibilidade').classList.add('ativo'); }
- 
+
         const observer = new IntersectionObserver(entries => {
             entries.forEach(e => { if (e.isIntersecting) { e.target.style.animation='fadeInUp 0.6s ease forwards'; observer.unobserve(e.target); } });
         }, { threshold: 0.1 });
         document.querySelectorAll('.card, .categorias-container, .patrocinadores, .loc-card, .info-card, .equipe-section').forEach(el => { el.style.opacity='0'; observer.observe(el); });
- 
+
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.update()));
         }
