@@ -1166,6 +1166,7 @@
         setInterval(limparNoticiasExpiradas, 3600000);
                 carregarNotificacoes();
         setInterval(carregarNotificacoes, 30000);
+         inicializarPush();
     }
 
     function logout() {
@@ -1324,6 +1325,65 @@
 
     function fecharBarraNotif() {
         document.getElementById('barraNotif').classList.remove('ativa');
+    }
+
+        // ==================== PUSH NOTIFICATIONS ====================
+    async function inicializarPush() {
+        try {
+            // Verifica se o navegador suporta
+            if (!('Notification' in window) || !('serviceWorker' in navigator)) {
+                console.log('⚠️ Push não suportado neste navegador');
+                return;
+            }
+
+            // Pede permissão
+            const permissao = await Notification.requestPermission();
+            if (permissao !== 'granted') {
+                console.log('⚠️ Permissão de notificação negada');
+                return;
+            }
+
+            // Pega o token do Firebase
+            const registration = await navigator.serviceWorker.ready;
+
+            const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
+            const { getMessaging, getToken } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js');
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyBUPquSeneayoS-eiCgJB0K47eLM44eqIs",
+                authDomain: "alvorada-4d410.firebaseapp.com",
+                projectId: "alvorada-4d410",
+                storageBucket: "alvorada-4d410.firebasestorage.app",
+                messagingSenderId: "12705241722",
+                appId: "1:12705241722:web:f95f70821505043e1f39c3"
+            };
+
+            const firebaseApp = initializeApp(firebaseConfig);
+            const messaging = getMessaging(firebaseApp);
+
+            const token = await getToken(messaging, {
+                vapidKey: 'BHGLLbpMqsjtStrQe0W7gLrpQtt85CIpj0qD5ok84dM0-pH9euvw3JuOm-l0IlT5ydGetJbgiyQ400PiIa2ETJg',
+                serviceWorkerRegistration: registration
+            });
+
+            if (token) {
+                console.log('✅ Token push:', token);
+
+                // Envia pro backend
+                await fetch(`${API_URL}/salvar-token`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        token: token,
+                        email: usuarioLogado?.email || ''
+                    })
+                });
+
+                console.log('✅ Token salvo no backend');
+            }
+        } catch(e) {
+            console.error('❌ Erro ao inicializar push:', e);
+        }
     }
 
 
