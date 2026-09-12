@@ -1,10 +1,9 @@
-
 {
   "name": "Escolinha do Jacaré",
   "short_name": "Jacaré",
   "description": "Sistema da Escolinha do Jacaré - Alvorada. Informações, diretoria, funcionários e muito mais.",
-  "start_url": "/escolinha-jacare/index.html",
-  "scope": "/escolinha-jacare/",
+  "start_url": "index.html",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#003399",
