@@ -535,12 +535,10 @@
         imagemBase64 = '';
     }
 
-    // Fechar modal clicando fora
     document.getElementById('modalNoticia')?.addEventListener('click', function(e) {
         if (e.target === this) fecharModalNoticia();
     });
 
-    // Upload da imagem
     document.getElementById('noticiaImagem')?.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -669,11 +667,9 @@
         try {
             const r = await fetch(`${API_URL}/noticias/limpar-expiradas`, { method: 'POST' });
             const dados = await r.json();
-            if (r.ok) {
-                if (dados.total > 0) {
-                    mostrarToast(`🧹 ${dados.total} notícias expiradas removidas!`);
-                    carregarNoticias();
-                }
+            if (r.ok && dados.total > 0) {
+                mostrarToast(`🧹 ${dados.total} notícias expiradas removidas!`);
+                carregarNoticias();
             }
         } catch(e) {
             console.error('Erro ao limpar notícias expiradas:', e);
@@ -682,12 +678,24 @@
 
     // ========== ONLINE/OFFLINE ==========
     async function carregarStatus() {
+        const statusSalvo = localStorage.getItem('statusOnline');
+        if (statusSalvo !== null) {
+            statusAtual = statusSalvo === 'true';
+            atualizarBotaoStatus();
+        }
         try {
             const r = await fetch(`${API_URL}/status`);
             const d = await r.json();
-            statusAtual = d.online === true;
-            atualizarBotaoStatus();
-        } catch(e) { statusAtual = false; atualizarBotaoStatus(); }
+            if (statusSalvo === null) {
+                statusAtual = d.online === true;
+                atualizarBotaoStatus();
+            }
+        } catch(e) {
+            if (statusSalvo === null) {
+                statusAtual = false;
+                atualizarBotaoStatus();
+            }
+        }
     }
 
     async function alternarStatus() {
@@ -695,9 +703,20 @@
         btn.disabled = true;
         const novoStatus = !statusAtual;
         try {
-            const r = await fetch(`${API_URL}/status`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ online: novoStatus }) });
-            if (r.ok) { statusAtual = novoStatus; atualizarBotaoStatus(); mostrarToast(novoStatus ? '🟢 Agora você está ONLINE!' : '🔴 Agora você está OFFLINE'); }
-        } catch(e) { mostrarToast('❌ Erro ao alterar status', 'error'); }
+            const r = await fetch(`${API_URL}/status`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ online: novoStatus })
+            });
+            if (r.ok) {
+                statusAtual = novoStatus;
+                localStorage.setItem('statusOnline', novoStatus.toString());
+                atualizarBotaoStatus();
+                mostrarToast(novoStatus ? '🟢 Agora você está ONLINE!' : '🔴 Agora você está OFFLINE');
+            }
+        } catch(e) {
+            mostrarToast('❌ Erro ao alterar status', 'error');
+        }
         btn.disabled = false;
     }
 
@@ -1034,40 +1053,103 @@
     ['filtroNome','filtroResponsavel','filtroTelefone','filtroBairro'].forEach(id => document.getElementById(id).addEventListener('input', aplicarFiltros));
     ['filtroTurma','filtroCategoria','filtroStatus'].forEach(id => document.getElementById(id).addEventListener('change', aplicarFiltros));
 
+    // ========== LOGIN REAL ==========
     async function verificarLogin() {
         const email = document.getElementById('emailLogin').value.trim();
         const senha = document.getElementById('senhaLogin').value;
         const btn = document.querySelector('#telaLogin button');
-        if (!email || !senha) { document.getElementById('erroLogin').innerText='Digite e-mail e senha!'; return; }
-        btn.disabled=true; btn.innerHTML='⏳ VERIFICANDO...'; document.getElementById('erroLogin').innerText='';
+        
+        if (!email || !senha) {
+            document.getElementById('erroLogin').innerText = 'Digite e-mail e senha!';
+            return;
+        }
+        
+        btn.disabled = true;
+        btn.innerHTML = '⏳ VERIFICANDO...';
+        document.getElementById('erroLogin').innerText = '';
+        
         try {
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 20000);
-            const r = await fetch(`${API_URL}/alunos`, { signal: controller.signal });
-            clearTimeout(timeout);
+            const r = await fetch(`${API_URL}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, senha })
+            });
+            
+            const dados = await r.json();
+            
             if (r.ok) {
-                usuarioLogado = { email, cargo:'Diretor' };
-                document.getElementById('telaLogin').style.display='none';
-                document.getElementById('painelAnalise').style.display='block';
-                document.getElementById('infoUsuario').innerHTML=`👤 ${email.split('@')[0]} | ✅ acesso registrado`;
+                const usuario = {
+                    ...dados.usuario,
+                    loginEm: new Date().toISOString()
+                };
+                localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+                usuarioLogado = usuario;
+                entrarNoPainel();
+            } else {
+                document.getElementById('erroLogin').innerText = dados.erro || 'E-mail ou senha incorretos';
+            }
+        } catch(e) {
+            console.error(e);
+            document.getElementById('erroLogin').innerText = 'Erro ao conectar. Tente novamente.';
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = 'ACESSAR';
+        }
+    }
+
+    function entrarNoPainel() {
+        document.getElementById('telaLogin').style.display = 'none';
+        document.getElementById('painelAnalise').style.display = 'block';
+        
+        const nomeUsuario = usuarioLogado?.nome || usuarioLogado?.email?.split('@')[0] || 'Diretor';
+        document.getElementById('infoUsuario').innerHTML = `👤 ${nomeUsuario} | ✅ acesso registrado`;
+        
+        carregarDadosDaPlanilha();
+        carregarStatus();
+        limparNoticiasExpiradas();
+        
+        setInterval(() => {
+            if (document.getElementById('painelAnalise').style.display === 'block') {
                 carregarDadosDaPlanilha();
-                carregarStatus();
-                limparNoticiasExpiradas();
-                setInterval(() => { if (document.getElementById('painelAnalise').style.display==='block') carregarDadosDaPlanilha(); }, 60000);
-                setInterval(atualizarTimestamp, 1000);
-                setInterval(limparNoticiasExpiradas, 3600000);
-            } else { document.getElementById('erroLogin').innerText='Erro ao conectar com o servidor'; }
-        } catch(e) { document.getElementById('erroLogin').innerText='Servidor demorou para responder. Tente novamente.'; }
-        finally { btn.disabled=false; btn.innerHTML='ACESSAR'; }
+            }
+        }, 60000);
+        setInterval(atualizarTimestamp, 1000);
+        setInterval(limparNoticiasExpiradas, 3600000);
     }
 
     function logout() {
-        if (statusAtual) { fetch(`${API_URL}/status`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({online:false}) }).catch(()=>{}); statusAtual=false; }
-        document.getElementById('telaLogin').style.display='flex';
-        document.getElementById('painelAnalise').style.display='none';
-        document.getElementById('emailLogin').value=''; document.getElementById('senhaLogin').value=''; document.getElementById('erroLogin').innerText='';
-        usuarioLogado=null;
+        if (statusAtual) {
+            fetch(`${API_URL}/status`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ online: false })
+            }).catch(() => {});
+            statusAtual = false;
+        }
+        
+        localStorage.removeItem('usuarioLogado');
+        localStorage.removeItem('statusOnline');
+        
+        document.getElementById('telaLogin').style.display = 'flex';
+        document.getElementById('painelAnalise').style.display = 'none';
+        document.getElementById('emailLogin').value = '';
+        document.getElementById('senhaLogin').value = '';
+        document.getElementById('erroLogin').innerText = '';
+        usuarioLogado = null;
     }
+
+    // ==================== VERIFICA LOGIN SALVO ====================
+    window.addEventListener('load', () => {
+        const salvo = localStorage.getItem('usuarioLogado');
+        if (salvo) {
+            try {
+                usuarioLogado = JSON.parse(salvo);
+                entrarNoPainel();
+            } catch(e) {
+                localStorage.removeItem('usuarioLogado');
+            }
+        }
+    });
 </script>
 </body>
 </html>
