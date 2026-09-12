@@ -3,10 +3,15 @@ from flask_cors import CORS
 import psycopg2
 import psycopg2.extras
 import os
+import json
 from dotenv import load_dotenv
 from datetime import datetime
 import cloudinary
 import cloudinary.uploader
+
+# ==================== FIREBASE ADMIN ====================
+import firebase_admin
+from firebase_admin import credentials, messaging
 
 load_dotenv()
 
@@ -20,6 +25,21 @@ cloudinary.config(
     api_secret=os.getenv('CLOUDINARY_API_SECRET', 'HNzome7Mzq0Ks1ZrhjeHcG8DvNQ'),
     secure=True
 )
+
+# ==================== CONFIGURAÇÃO FIREBASE ====================
+# Lê o JSON do Firebase das variáveis de ambiente
+firebase_json_str = os.getenv('FIREBASE_CREDENTIALS')
+
+if firebase_json_str:
+    try:
+        cred_dict = json.loads(firebase_json_str)
+        cred = credentials.Certificate(cred_dict)
+        firebase_admin.initialize_app(cred)
+        print("✅ Firebase Admin inicializado via variável de ambiente")
+    except Exception as e:
+        print(f"⚠️ Erro ao inicializar Firebase: {e}")
+else:
+    print("⚠️ FIREBASE_CREDENTIALS não configurado. Push desativado.")
 
 # Status do sistema (persistido em memória)
 sistema_status = {
@@ -38,9 +58,96 @@ def get_connection():
         cursor_factory=psycopg2.extras.RealDictCursor
     )
 
+# ==================== ENVIAR PUSH ====================
+def enviar_push(titulo, corpo, dados_extras=None):
+    """Envia notificação push para todos os dispositivos registrados"""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT token FROM tokens_push")
+        tokens = [row['token'] for row in cursor.fetchall()]
+        cursor.close()
+        conn.close()
+        
+        if not tokens:
+            print("📭 Nenhum token registrado")
+            return
+        
+        # Envia para até 500 tokens por vez (limite do Firebase)
+        sucesso = 0
+        falha = 0
+        
+        for token in tokens:
+            try:
+                message = messaging.Message(
+                    notification=messaging.Notification(
+                        title=titulo,
+                        body=corpo
+                    ),
+                    data=dados_extras or {},
+                    token=token
+                )
+                messaging.send(message)
+                sucesso += 1
+            except Exception as e:
+                print(f"⚠️ Erro ao enviar para token: {e}")
+                falha += 1
+                # Se o token for inválido, remove do banco
+                if 'not found' in str(e).lower() or 'invalid' in str(e).lower():
+                    try:
+                        conn = get_connection()
+                        cur = conn.cursor()
+                        cur.execute("DELETE FROM tokens_push WHERE token = %s", (token,))
+                        conn.commit()
+                        cur.close()
+                        conn.close()
+                        print(f"🗑️ Token inválido removido")
+                    except:
+                        pass
+        
+        print(f"📤 Push enviado: {sucesso} sucesso, {falha} falha")
+        
+    except Exception as e:
+        print(f"❌ Erro ao enviar push: {e}")
+        import traceback
+        traceback.print_exc()
+
 @app.route('/')
 def home():
     return jsonify({'mensagem': 'API da Escolinha do Jacaré funcionando!'})
+
+# ==================== SALVAR TOKEN PUSH ====================
+@app.route('/api/salvar-token', methods=['POST'])
+def salvar_token():
+    """Salva o token de push do dispositivo"""
+    dados = request.json
+    token = dados.get('token', '').strip()
+    email = dados.get('email', '').strip()
+    
+    if not token:
+        return jsonify({'erro': 'Token é obrigatório'}), 400
+    
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        
+        # Insere ou atualiza
+        cursor.execute("""
+            INSERT INTO tokens_push (token, usuario_email, criado_em)
+            VALUES (%s, %s, NOW())
+            ON CONFLICT (token) DO UPDATE SET usuario_email = %s, criado_em = NOW()
+        """, (token, email, email))
+        
+        conn.commit()
+        cursor.close()
+        conn.close()
+        
+        print(f"✅ Token salvo: {token[:20]}...")
+        return jsonify({'mensagem': 'Token salvo!'}), 200
+        
+    except Exception as e:
+        print(f"❌ Erro ao salvar token: {e}")
+        return jsonify({'erro': str(e)}), 500
 
 # ==================== LOGIN ====================
 @app.route('/api/login', methods=['POST'])
@@ -55,14 +162,11 @@ def login():
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        
-        # Busca o usuário pelo email
         cursor.execute("""
             SELECT id, nome, email, senha, cargo, ativo 
             FROM usuarios 
             WHERE email = %s
         """, (email,))
-        
         usuario = cursor.fetchone()
         
         if not usuario:
@@ -75,16 +179,13 @@ def login():
             conn.close()
             return jsonify({'erro': 'Usuário desativado. Fale com o administrador.'}), 401
         
-        # Verifica a senha (comparação direta)
         if usuario['senha'] != senha:
             cursor.close()
             conn.close()
             return jsonify({'erro': 'E-mail ou senha incorretos'}), 401
         
-        # Atualiza último acesso
         cursor.execute("UPDATE usuarios SET ultimo_acesso = NOW() WHERE id = %s", (usuario['id'],))
         conn.commit()
-        
         cursor.close()
         conn.close()
         
@@ -190,7 +291,6 @@ def prematricula():
             SELECT COUNT(*) as total FROM alunos 
             WHERE rg = %s AND responsavel = %s AND nome_aluno = %s
         """, (rg, responsavel, nome_aluno))
-        
         resultado = cursor.fetchone()
         
         if resultado['total'] > 0:
@@ -212,7 +312,6 @@ def prematricula():
                 %s, %s, %s, %s, %s, %s, %s, %s, %s
             )
         """
-
         valores = (
             protocolo, data_envio, nome_aluno, data_nasc, idade, turma, categoria,
             responsavel, tipo_vinculo, sexo_responsavel, telefone, email, 
@@ -221,14 +320,20 @@ def prematricula():
             uf, escola, serie, status, possui_uniforme, observacao, estrelas,
             data_inscricao, data_entrega_uniforme
         )
-
         cursor.execute(sql, valores)
         conn.commit()
-
         cursor.close()
         conn.close()
 
         print(f"✅ Aluno salvo! Protocolo: {protocolo}")
+        
+        # 🔔 ENVIA PUSH
+        enviar_push(
+            titulo="👥 Nova Matrícula!",
+            corpo=f"{nome_aluno} - {turma} ({categoria})",
+            dados_extras={'tipo': 'matricula', 'protocolo': protocolo}
+        )
+        
         return jsonify({'mensagem': 'Pré-matrícula enviada com sucesso!', 'protocolo': protocolo}), 201
 
     except Exception as e:
@@ -395,6 +500,21 @@ def atualizar_aluno(protocolo):
         traceback.print_exc()
         return jsonify({'erro': str(e)}), 500
 
+# ==================== DELETAR ALUNO ====================
+@app.route('/api/aluno/<protocolo>', methods=['DELETE'])
+def deletar_aluno(protocolo):
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM alunos WHERE protocolo = %s", (protocolo,))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return jsonify({'mensagem': 'Aluno excluído!'}), 200
+    except Exception as e:
+        print(f"❌ Erro ao excluir aluno: {e}")
+        return jsonify({'erro': str(e)}), 500
+
 # ==================== ELOGIOS ====================
 @app.route('/api/elogios', methods=['GET'])
 def get_elogios():
@@ -478,6 +598,14 @@ def contatos():
             conn.commit()
             cursor.close()
             conn.close()
+            
+            # 🔔 ENVIA PUSH
+            enviar_push(
+                titulo="📬 Novo Contato!",
+                corpo=f"{nome} - {assunto}",
+                dados_extras={'tipo': 'contato', 'id': str(novo_id)}
+            )
+            
             return jsonify({'mensagem': 'Contato salvo!', 'id': novo_id}), 201
         except Exception as e:
             print(f"❌ Erro ao salvar contato: {e}")
@@ -500,7 +628,6 @@ def excluir_contato(id):
 # ==================== NOTÍCIAS ====================
 @app.route('/api/noticias', methods=['GET'])
 def get_noticias():
-    """Busca todas as notícias ativas (não expiradas)"""
     try:
         conn = get_connection()
         cursor = conn.cursor()
@@ -521,7 +648,6 @@ def get_noticias():
 
 @app.route('/api/noticias/todas', methods=['GET'])
 def get_todas_noticias():
-    """Busca TODAS as notícias (para a diretoria)"""
     try:
         conn = get_connection()
         cursor = conn.cursor()
@@ -540,9 +666,7 @@ def get_todas_noticias():
 
 @app.route('/api/noticias', methods=['POST'])
 def publicar_noticia():
-    """Publica uma nova notícia com upload de imagem para o Cloudinary"""
     dados = request.json
-    
     titulo = dados.get('titulo', '').strip()
     texto = dados.get('texto', '').strip()
     imagem_base64 = dados.get('imagem_base64', '')
@@ -553,22 +677,18 @@ def publicar_noticia():
     
     try:
         imagem_url = None
-        
-        # Upload da imagem para o Cloudinary
         if imagem_base64:
             try:
                 upload_result = cloudinary.uploader.upload(
                  imagem_base64,
                  upload_preset='escolinha_jacare'
                 )
-                
                 imagem_url = upload_result.get('secure_url')
                 print(f"✅ Imagem enviada para Cloudinary: {imagem_url}")
             except Exception as e:
                 print(f"⚠️ Erro ao enviar imagem: {e}")
                 return jsonify({'erro': f'Erro ao enviar imagem: {str(e)}'}), 500
         
-        # Calcula a data de expiração
         from datetime import timedelta
         data_expiracao = datetime.now() + timedelta(days=dias_expiracao)
         
@@ -599,35 +719,27 @@ def publicar_noticia():
 
 @app.route('/api/noticias/<int:id>', methods=['DELETE'])
 def excluir_noticia(id):
-    """Exclui uma notícia e sua imagem do Cloudinary"""
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        
-        # Primeiro, busca a URL da imagem
         cursor.execute("SELECT imagem_url FROM noticias WHERE id = %s", (id,))
         resultado = cursor.fetchone()
         
         if resultado and resultado['imagem_url']:
-            # Tenta extrair o public_id do Cloudinary da URL
             try:
                 url = resultado['imagem_url']
-                # Exemplo: https://res.cloudinary.com/PBMaz3jx/image/upload/v123456/noticias/abc123.jpg
                 if 'cloudinary.com' in url:
                     partes = url.split('/upload/')
                     if len(partes) > 1:
                         caminho = partes[1]
-                        # Remove a versão (v123456/)
                         if caminho.startswith('v'):
                             caminho = '/'.join(caminho.split('/')[1:])
-                        # Remove a extensão
                         public_id = caminho.rsplit('.', 1)[0]
                         cloudinary.uploader.destroy(public_id)
                         print(f"🗑️ Imagem excluída do Cloudinary: {public_id}")
             except Exception as e:
                 print(f"⚠️ Erro ao excluir imagem do Cloudinary: {e}")
         
-        # Exclui do banco
         cursor.execute("DELETE FROM noticias WHERE id = %s", (id,))
         conn.commit()
         cursor.close()
@@ -640,12 +752,9 @@ def excluir_noticia(id):
 
 @app.route('/api/noticias/limpar-expiradas', methods=['POST'])
 def limpar_noticias_expiradas():
-    """Limpa notícias expiradas e suas imagens do Cloudinary"""
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        
-        # Busca notícias expiradas
         cursor.execute("""
             SELECT id, imagem_url FROM noticias 
             WHERE ativo = TRUE 
@@ -654,7 +763,6 @@ def limpar_noticias_expiradas():
         """)
         expiradas = cursor.fetchall()
         
-        # Exclui imagens do Cloudinary
         for noticia in expiradas:
             if noticia['imagem_url'] and 'cloudinary.com' in noticia['imagem_url']:
                 try:
@@ -669,7 +777,6 @@ def limpar_noticias_expiradas():
                 except Exception as e:
                     print(f"⚠️ Erro ao excluir imagem: {e}")
         
-        # Marca como inativas (ou exclui de vez)
         cursor.execute("""
             UPDATE noticias SET ativo = FALSE 
             WHERE ativo = TRUE 
@@ -691,23 +798,19 @@ def limpar_noticias_expiradas():
 # ==================== NOTIFICAÇÕES ====================
 @app.route('/api/notificacoes', methods=['GET'])
 def get_notificacoes():
-    """Retorna contadores e listas de notificações para o sino"""
     try:
         conn = get_connection()
         cursor = conn.cursor()
         
-        # 1. Matrículas pendentes (total)
         cursor.execute("SELECT COUNT(*) as total FROM alunos WHERE status = 'pendente'")
         matriculas = cursor.fetchone()['total']
         
-        # 2. Contatos dos últimos 7 dias
         cursor.execute("""
             SELECT COUNT(*) as total FROM contatos 
-            WHERE data_envio > NOW() - INTERVAL '7 days'
+            WHERE data_envio::timestamp > NOW() - INTERVAL '7 days'
         """)
         contatos = cursor.fetchone()['total']
         
-        # 3. Notícias ativas dos últimos 7 dias
         cursor.execute("""
             SELECT COUNT(*) as total FROM noticias 
             WHERE ativo = TRUE 
@@ -716,7 +819,6 @@ def get_notificacoes():
         """)
         noticias = cursor.fetchone()['total']
         
-        # Últimas 5 matrículas pendentes
         cursor.execute("""
             SELECT protocolo, nome_aluno, turma, data_envio 
             FROM alunos 
@@ -726,7 +828,6 @@ def get_notificacoes():
         """)
         ultimas_matriculas = cursor.fetchall()
         
-        # Últimos 5 contatos
         cursor.execute("""
             SELECT id, nome, assunto, mensagem, data_envio 
             FROM contatos 
@@ -735,7 +836,6 @@ def get_notificacoes():
         """)
         ultimos_contatos = cursor.fetchall()
         
-        # Últimas 5 notícias ativas
         cursor.execute("""
             SELECT id, titulo, data_publicacao 
             FROM noticias 
@@ -750,8 +850,6 @@ def get_notificacoes():
         conn.close()
         
         total = matriculas + contatos + noticias
-        
-        print(f"🔔 Notificações: {total} total (M:{matriculas} C:{contatos} N:{noticias})")
         
         return jsonify({
             'total': total,
