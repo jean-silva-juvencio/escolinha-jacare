@@ -70,81 +70,80 @@
         /* ==================== SPLASH SCREEN ==================== */
         .splash-screen {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: #ffffff;
             z-index: 99999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
         }
-        .splash-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
+        .splash-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .splash-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-            max-width: 90%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 20px; max-width: 90%;
         }
-        .splash-logo {
-            width: 70%;
-            max-width: 350px;
-            height: auto;
-            margin-bottom: 40px;
-            animation: splashLogo 2s ease-in-out infinite;
+        .splash-titulo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem; font-weight: 900;
+            letter-spacing: 2px; margin-bottom: 12px;
+            background: linear-gradient(90deg, #003399 0%, #003399 50%, #FFD700 50%, #FFD700 100%);
+            background-size: 200% 100%;
+            background-position: 100% 0;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: splashTexto 5s linear forwards;
         }
-        @keyframes splashLogo {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
+        @keyframes splashTexto {
+            0% { background-position: 100% 0; }
+            100% { background-position: 0% 0; }
         }
-        .splash-loading {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
+        .splash-subtitulo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem; font-weight: 700;
+            letter-spacing: 4px;
+            color: #00aaff;
+            margin-bottom: 35px;
         }
-        .splash-dots {
-            display: flex;
-            gap: 10px;
+        .splash-barra {
+            width: 280px; max-width: 80vw;
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
         }
-        .splash-dots span {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #003399;
-            animation: splashDots 1.4s ease-in-out infinite;
+        .splash-barra-progresso {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, #003399, #00aaff);
+            border-radius: 4px;
+            animation: splashBarra 5s linear forwards;
+            position: relative;
         }
-        .splash-dots span:nth-child(1) { animation-delay: 0s; }
-        .splash-dots span:nth-child(2) { animation-delay: 0.2s; }
-        .splash-dots span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes splashDots {
-            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-            40% { transform: scale(1.2); opacity: 1; }
+        .splash-barra-progresso::after {
+            content: '';
+            position: absolute; top: 0; right: 0;
+            width: 40px; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8));
+            animation: splashBrilho 1s linear infinite;
         }
-        .splash-text {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1rem;
-            color: #003399;
-            font-weight: 600;
-            letter-spacing: 1px;
-            margin: 0;
+        @keyframes splashBarra {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        @keyframes splashBrilho {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
         @media (max-width: 400px) {
-            .splash-logo { max-width: 250px; margin-bottom: 30px; }
-            .splash-text { font-size: 0.9rem; }
+            .splash-titulo { font-size: 1.4rem; }
+            .splash-subtitulo { font-size: 0.75rem; letter-spacing: 3px; }
+            .splash-barra { width: 220px; }
         }
         @media (min-width: 768px) {
-            .splash-logo { max-width: 400px; }
-            .splash-text { font-size: 1.1rem; }
+            .splash-titulo { font-size: 2.5rem; }
+            .splash-subtitulo { font-size: 1.1rem; }
+            .splash-barra { width: 350px; }
         }
  
         /* BARRA SUPERIOR */
@@ -489,20 +488,15 @@
  
         @media (min-width: 1200px) { .conteudo { max-width: 70%; } .mural-noticias-section { max-width: 70%; } }
     </style>
-</head>
-<body>
+</head>    <body>
 
 <!-- ==================== SPLASH SCREEN ==================== -->
 <div id="splashScreen" class="splash-screen">
     <div class="splash-content">
-        <img src="icons/jacare.jpeg" alt="Escolinha do Jacaré" class="splash-logo">
-        <div class="splash-loading">
-            <div class="splash-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <p class="splash-text">Carregando...</p>
+        <h1 class="splash-titulo">ESCOLINHA DO JACARÉ</h1>
+        <p class="splash-subtitulo">ALVORADA 1 • 2 • 3</p>
+        <div class="splash-barra">
+            <div class="splash-barra-progresso"></div>
         </div>
     </div>
 </div>
@@ -802,9 +796,8 @@
     </footer>
 </div>
 
-<button id="btnTopo" class="btn-topo" title="Voltar ao topo">⬆️</button>
-
-<script>
+<button id="btnTopo" class="btn-topo" title="Voltar ao topo">⬆️</button> 
+    <script>
     const API_URL = 'https://api-escolinha.onrender.com/api';
     let tickerAnimation = null;
     let tickerPosition = 0;
@@ -818,7 +811,7 @@
             const splash = document.getElementById('splashScreen');
             if (splash) {
                 splash.classList.add('hidden');
-                setTimeout(() => { splash.remove(); }, 500);
+                setTimeout(() => { splash.remove(); }, 600);
             }
         }, 5000);
     });
