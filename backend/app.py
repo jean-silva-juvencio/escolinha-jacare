@@ -688,5 +688,86 @@ def limpar_noticias_expiradas():
         print(f"❌ Erro ao limpar notícias: {e}")
         return jsonify({'erro': str(e)}), 500
 
+# ==================== NOTIFICAÇÕES ====================
+@app.route('/api/notificacoes', methods=['GET'])
+def get_notificacoes():
+    """Retorna contadores e listas de notificações para o sino"""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        
+        # 1. Matrículas pendentes (total)
+        cursor.execute("SELECT COUNT(*) as total FROM alunos WHERE status = 'pendente'")
+        matriculas = cursor.fetchone()['total']
+        
+        # 2. Contatos dos últimos 7 dias
+        cursor.execute("""
+            SELECT COUNT(*) as total FROM contatos 
+            WHERE data_envio > NOW() - INTERVAL '7 days'
+        """)
+        contatos = cursor.fetchone()['total']
+        
+        # 3. Notícias ativas dos últimos 7 dias
+        cursor.execute("""
+            SELECT COUNT(*) as total FROM noticias 
+            WHERE ativo = TRUE 
+              AND data_publicacao > NOW() - INTERVAL '7 days'
+              AND (data_expiracao IS NULL OR data_expiracao > NOW())
+        """)
+        noticias = cursor.fetchone()['total']
+        
+        # Últimas 5 matrículas pendentes
+        cursor.execute("""
+            SELECT protocolo, nome_aluno, turma, data_envio 
+            FROM alunos 
+            WHERE status = 'pendente' 
+            ORDER BY id DESC 
+            LIMIT 5
+        """)
+        ultimas_matriculas = cursor.fetchall()
+        
+        # Últimos 5 contatos
+        cursor.execute("""
+            SELECT id, nome, assunto, mensagem, data_envio 
+            FROM contatos 
+            ORDER BY id DESC 
+            LIMIT 5
+        """)
+        ultimos_contatos = cursor.fetchall()
+        
+        # Últimas 5 notícias ativas
+        cursor.execute("""
+            SELECT id, titulo, data_publicacao 
+            FROM noticias 
+            WHERE ativo = TRUE 
+              AND (data_expiracao IS NULL OR data_expiracao > NOW())
+            ORDER BY data_publicacao DESC 
+            LIMIT 5
+        """)
+        ultimas_noticias = cursor.fetchall()
+        
+        cursor.close()
+        conn.close()
+        
+        total = matriculas + contatos + noticias
+        
+        print(f"🔔 Notificações: {total} total (M:{matriculas} C:{contatos} N:{noticias})")
+        
+        return jsonify({
+            'total': total,
+            'matriculas': matriculas,
+            'contatos': contatos,
+            'noticias': noticias,
+            'ultimas_matriculas': ultimas_matriculas,
+            'ultimos_contatos': ultimos_contatos,
+            'ultimas_noticias': ultimas_noticias
+        }), 200
+        
+    except Exception as e:
+        print(f"❌ Erro ao buscar notificações: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'erro': str(e)}), 500
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
