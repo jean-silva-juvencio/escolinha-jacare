@@ -14,828 +14,160 @@
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fc 0%, #e9eef5 100%);
-            min-height: 100vh;
-            padding: 20px;
-            transition: background 0.3s, color 0.3s;
-        }
-        body.dark-mode {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #eee;
-        }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        .nav-bar {
-            background: white;
-            border-radius: 60px;
-            padding: 12px 24px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: background 0.3s;
-        }
-        body.dark-mode .nav-bar {
-            background: #1e293b;
-        }
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, #003399, #00aaff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .nav-links {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .nav-link {
-            text-decoration: none;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-            background: #f1f5f9;
-            color: #1e293b;
-        }
-        body.dark-mode .nav-link {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
-        .nav-link:hover {
-            transform: translateY(-2px);
-        }
-        .nav-link.ativo {
-            background: #0047AB;
-            color: white;
-        }
-        body.dark-mode .nav-link.ativo {
-            background: #3b82f6;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #f5f7fc 0%, #e9eef5 100%); min-height: 100vh; padding: 20px; transition: background 0.3s, color 0.3s; }
+        body.dark-mode { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #eee; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .nav-bar { background: white; border-radius: 60px; padding: 12px 24px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: background 0.3s; }
+        body.dark-mode .nav-bar { background: #1e293b; }
+        .logo { font-size: 1.3rem; font-weight: 800; background: linear-gradient(45deg, #003399, #00aaff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 12px; flex-wrap: wrap; }
+        .nav-link { text-decoration: none; padding: 8px 20px; border-radius: 40px; font-weight: 600; font-size: 0.85rem; transition: all 0.2s; background: #f1f5f9; color: #1e293b; }
+        body.dark-mode .nav-link { background: #0f172a; color: #e2e8f0; }
+        .nav-link:hover { transform: translateY(-2px); }
+        .nav-link.ativo { background: #0047AB; color: white; }
+        body.dark-mode .nav-link.ativo { background: #3b82f6; }
 
-        .login-box {
-            background: white;
-            max-width: 420px;
-            margin: 40px auto;
-            padding: 40px;
-            border-radius: 32px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            transition: background 0.3s;
-        }
-        body.dark-mode .login-box {
-            background: #1e293b;
-        }
-        .login-box h2 {
-            color: #003399;
-            margin-bottom: 8px;
-            font-size: 28px;
-        }
-        body.dark-mode .login-box h2 {
-            color: #60a5fa;
-        }
-        .login-box p {
-            color: #666;
-            margin-bottom: 24px;
-            font-size: 14px;
-        }
-        body.dark-mode .login-box p {
-            color: #94a3b8;
-        }
-        .login-box input {
-            width: 100%;
-            padding: 14px 18px;
-            margin: 12px 0;
-            border: 2px solid #e2e8f0;
-            border-radius: 16px;
-            font-size: 15px;
-            transition: all 0.2s;
-            background: white;
-        }
-        body.dark-mode .login-box input {
-            background: #0f172a;
-            border-color: #334155;
-            color: white;
-        }
-        .login-box input:focus {
-            outline: none;
-            border-color: #0047AB;
-            box-shadow: 0 0 0 3px rgba(0, 71, 171, 0.1);
-        }
-        .login-box button {
-            background: linear-gradient(135deg, #0047AB, #003399);
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 16px;
-            width: 100%;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            margin-top: 8px;
-            transition: transform 0.2s;
-        }
-        .login-box button:hover {
-            transform: translateY(-2px);
-        }
-        .erro {
-            color: #dc2626;
-            margin-top: 12px;
-            font-size: 13px;
-        }
-        .painel {
-            display: none;
-        }
+        .login-box { background: white; max-width: 420px; margin: 40px auto; padding: 40px; border-radius: 32px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.1); transition: background 0.3s; }
+        body.dark-mode .login-box { background: #1e293b; }
+        .login-box h2 { color: #003399; margin-bottom: 8px; font-size: 28px; }
+        body.dark-mode .login-box h2 { color: #60a5fa; }
+        .login-box p { color: #666; margin-bottom: 24px; font-size: 14px; }
+        body.dark-mode .login-box p { color: #94a3b8; }
+        .login-box input { width: 100%; padding: 14px 18px; margin: 12px 0; border: 2px solid #e2e8f0; border-radius: 16px; font-size: 15px; transition: all 0.2s; background: white; }
+        body.dark-mode .login-box input { background: #0f172a; border-color: #334155; color: white; }
+        .login-box input:focus { outline: none; border-color: #0047AB; box-shadow: 0 0 0 3px rgba(0,71,171,0.1); }
+        .login-box button { background: linear-gradient(135deg, #0047AB, #003399); color: white; padding: 14px; border: none; border-radius: 16px; width: 100%; cursor: pointer; font-size: 16px; font-weight: 600; margin-top: 8px; transition: transform 0.2s; }
+        .login-box button:hover { transform: translateY(-2px); }
+        .erro { color: #dc2626; margin-top: 12px; font-size: 13px; }
+        .painel { display: none; }
 
-        .header {
-            background: linear-gradient(135deg, #0047AB, #003399);
-            color: white;
-            padding: 20px 24px;
-            border-radius: 24px;
-            margin-bottom: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: background 0.3s;
-        }
-        body.dark-mode .header {
-            background: linear-gradient(135deg, #1e40af, #1e3a8a);
-        }
+        .header { background: linear-gradient(135deg, #0047AB, #003399); color: white; padding: 20px 24px; border-radius: 24px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: background 0.3s; }
+        body.dark-mode .header { background: linear-gradient(135deg, #1e40af, #1e3a8a); }
+        .header h1 { font-size: 1.5rem; font-weight: 700; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        .header-info { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .ultima-atualizacao { background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 40px; font-size: 11px; color: white; }
+        .btn-tema, .btn-exportar, .btn-atualizar, .btn-cadastrar, .btn-relatorio { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); padding: 8px 14px; border-radius: 40px; cursor: pointer; font-weight: 600; font-size: 12px; transition: all 0.2s; color: white; }
+        .btn-tema:hover, .btn-exportar:hover, .btn-atualizar:hover, .btn-cadastrar:hover, .btn-relatorio:hover { background: rgba(255,255,255,0.3); }
+        .btn-sair { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); padding: 8px 20px; border-radius: 40px; cursor: pointer; font-weight: 600; color: white; }
+        .btn-sair:hover { background: rgba(255,255,255,0.3); }
+        .btn-cadastrar { background: #10b981; border-color: #10b981; color: white; }
+        .btn-cadastrar:hover { background: #059669; }
 
-        .header h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-        }
-        .header-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .ultima-atualizacao {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 6px 14px;
-            border-radius: 40px;
-            font-size: 11px;
-            color: white;
-        }
-        .btn-tema,
-        .btn-exportar,
-        .btn-atualizar,
-        .btn-cadastrar,
-        .btn-relatorio {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 8px 14px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 12px;
-            transition: all 0.2s;
-            color: white;
-        }
-        .btn-tema:hover,
-        .btn-exportar:hover,
-        .btn-atualizar:hover,
-        .btn-cadastrar:hover,
-        .btn-relatorio:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        .btn-sair {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 8px 20px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: 600;
-            color: white;
-        }
-        .btn-sair:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        .btn-cadastrar {
-            background: #10b981;
-            border-color: #10b981;
-            color: white;
-        }
-        .btn-cadastrar:hover {
-            background: #059669;
-        }
+        .abas-container { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+        .aba-btn { padding: 12px 24px; border-radius: 40px; border: none; cursor: pointer; font-weight: 700; font-size: 14px; transition: all 0.3s; background: #e2e8f0; color: #1e293b; }
+        body.dark-mode .aba-btn { background: #334155; color: #e2e8f0; }
+        .aba-btn.ativa { background: #0047AB; color: white; }
+        body.dark-mode .aba-btn.ativa { background: #3b82f6; }
+        .aba-btn .badge { background: rgba(0,0,0,0.2); border-radius: 30px; padding: 2px 8px; margin-left: 8px; font-size: 11px; }
 
-        .abas-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-        .aba-btn {
-            padding: 12px 24px;
-            border-radius: 40px;
-            border: none;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 14px;
-            transition: all 0.3s;
-            background: #e2e8f0;
-            color: #1e293b;
-        }
-        body.dark-mode .aba-btn {
-            background: #334155;
-            color: #e2e8f0;
-        }
-        .aba-btn.ativa {
-            background: #0047AB;
-            color: white;
-        }
-        body.dark-mode .aba-btn.ativa {
-            background: #3b82f6;
-        }
-        .aba-btn .badge {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 30px;
-            padding: 2px 8px;
-            margin-left: 8px;
-            font-size: 11px;
-        }
+        .secao { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: background 0.3s; margin-bottom: 30px; }
+        body.dark-mode .secao { background: #1e293b; }
+        .secao-header { background: linear-gradient(135deg, #f8fafc, #f1f5f9); padding: 18px 20px; border-bottom: 2px solid #e2e8f0; transition: background 0.3s; }
+        body.dark-mode .secao-header { background: #0f172a; border-bottom-color: #334155; }
+        .secao-header h2 { font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .secao-header .badge { background: #0047AB; color: white; padding: 2px 10px; border-radius: 40px; font-size: 12px; }
+        .secao-content { padding: 20px; }
 
-        .secao {
-            background: white;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: background 0.3s;
-            margin-bottom: 30px;
-        }
-        body.dark-mode .secao {
-            background: #1e293b;
-        }
-        .secao-header {
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-            padding: 18px 20px;
-            border-bottom: 2px solid #e2e8f0;
-            transition: background 0.3s;
-        }
-        body.dark-mode .secao-header {
-            background: #0f172a;
-            border-bottom-color: #334155;
-        }
-        .secao-header h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .secao-header .badge {
-            background: #0047AB;
-            color: white;
-            padding: 2px 10px;
-            border-radius: 40px;
-            font-size: 12px;
-        }
-        .secao-content {
-            padding: 20px;
-        }
+        .filtros { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+        .filtro-group { flex: 1; min-width: 140px; }
+        .filtro-group label { display: block; font-size: 11px; font-weight: 600; color: #64748b; margin-bottom: 4px; text-transform: uppercase; }
+        body.dark-mode .filtro-group label { color: #94a3b8; }
+        .filtro-group select, .filtro-group input { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 13px; background: white; transition: background 0.3s; }
+        body.dark-mode .filtro-group select, body.dark-mode .filtro-group input { background: #0f172a; border-color: #334155; color: white; }
+        .busca-input { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 13px; }
+        .resultados-info { font-size: 11px; color: #64748b; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0; }
+        body.dark-mode .resultados-info { color: #94a3b8; border-bottom-color: #334155; }
+        .acoes-massa { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #e2e8f0; }
+        body.dark-mode .acoes-massa { border-bottom-color: #334155; }
+        .selecionar-todos { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+        .btn-excluir-massa { background: #fee2e2; color: #dc2626; border: none; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .btn-excluir-massa:hover { background: #fecaca; }
+        .tabela-container { overflow-x: auto; max-height: 500px; overflow-y: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid #f1f5f9; font-size: 13px; white-space: nowrap; }
+        body.dark-mode th, body.dark-mode td { border-bottom-color: #334155; }
+        th { background: #f8fafc; font-weight: 600; color: #1e293b; position: sticky; top: 0; cursor: pointer; user-select: none; transition: background 0.3s; }
+        th:hover { background: #e2e8f0; }
+        body.dark-mode th { background: #0f172a; color: #e2e8f0; }
+        body.dark-mode th:hover { background: #1e293b; }
+        tr { cursor: pointer; transition: background 0.2s; }
+        tr:hover { background: #f8fafc; }
+        body.dark-mode tr:hover { background: #334155; }
+        .status-pendente { background: #fef3c7; color: #d97706; padding: 4px 10px; border-radius: 40px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .status-aprovado { background: #d1fae5; color: #059669; padding: 4px 10px; border-radius: 40px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .status-recusado { background: #fee2e2; color: #dc2626; padding: 4px 10px; border-radius: 40px; font-size: 11px; font-weight: 600; display: inline-block; }
+        .btn-acao { padding: 5px 12px; border: none; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 11px; margin: 0 3px; transition: all 0.2s; }
+        .btn-aprovar { background: #10b981; color: white; }
+        .btn-aprovar:hover { background: #059669; transform: scale(1.02); }
+        .btn-recusar { background: #ef4444; color: white; }
+        .btn-recusar:hover { background: #dc2626; transform: scale(1.02); }
+        .btn-ver { background: #3b82f6; color: white; }
+        .btn-ver:hover { background: #2563eb; }
 
-        .filtros {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .filtro-group {
-            flex: 1;
-            min-width: 140px;
-        }
-        .filtro-group label {
-            display: block;
-            font-size: 11px;
-            font-weight: 600;
-            color: #64748b;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-        }
-        body.dark-mode .filtro-group label {
-            color: #94a3b8;
-        }
-        .filtro-group select,
-        .filtro-group input {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 13px;
-            background: white;
-            transition: background 0.3s;
-        }
-        body.dark-mode .filtro-group select,
-        body.dark-mode .filtro-group input {
-            background: #0f172a;
-            border-color: #334155;
-            color: white;
-        }
-        .busca-input {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 13px;
-        }
-        .resultados-info {
-            font-size: 11px;
-            color: #64748b;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        body.dark-mode .resultados-info {
-            color: #94a3b8;
-            border-bottom-color: #334155;
-        }
-        .acoes-massa {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        body.dark-mode .acoes-massa {
-            border-bottom-color: #334155;
-        }
-        .selecionar-todos {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-        }
-        .btn-excluir-massa {
-            background: #fee2e2;
-            color: #dc2626;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-excluir-massa:hover {
-            background: #fecaca;
-        }
-        .tabela-container {
-            overflow-x: auto;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th,
-        td {
-            padding: 12px 10px;
-            text-align: left;
-            border-bottom: 1px solid #f1f5f9;
-            font-size: 13px;
-            white-space: nowrap;
-        }
-        body.dark-mode th,
-        body.dark-mode td {
-            border-bottom-color: #334155;
-        }
-        th {
-            background: #f8fafc;
-            font-weight: 600;
-            color: #1e293b;
-            position: sticky;
-            top: 0;
-            cursor: pointer;
-            user-select: none;
-            transition: background 0.3s;
-        }
-        th:hover {
-            background: #e2e8f0;
-        }
-        body.dark-mode th {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
-        body.dark-mode th:hover {
-            background: #1e293b;
-        }
-        tr {
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        tr:hover {
-            background: #f8fafc;
-        }
-        body.dark-mode tr:hover {
-            background: #334155;
-        }
-        .status-pendente {
-            background: #fef3c7;
-            color: #d97706;
-            padding: 4px 10px;
-            border-radius: 40px;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-block;
-        }
-        .status-aprovado {
-            background: #d1fae5;
-            color: #059669;
-            padding: 4px 10px;
-            border-radius: 40px;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-block;
-        }
-        .status-recusado {
-            background: #fee2e2;
-            color: #dc2626;
-            padding: 4px 10px;
-            border-radius: 40px;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-block;
-        }
-        .btn-acao {
-            padding: 5px 12px;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 11px;
-            margin: 0 3px;
-            transition: all 0.2s;
-        }
-        .btn-aprovar {
-            background: #10b981;
-            color: white;
-        }
-        .btn-aprovar:hover {
-            background: #059669;
-            transform: scale(1.02);
-        }
-        .btn-recusar {
-            background: #ef4444;
-            color: white;
-        }
-        .btn-recusar:hover {
-            background: #dc2626;
-            transform: scale(1.02);
-        }
-        .btn-ver {
-            background: #3b82f6;
-            color: white;
-        }
-        .btn-ver:hover {
-            background: #2563eb;
-        }
+        .skeleton-loader { padding: 20px; text-align: center; }
+        .spinner { display: inline-block; width: 30px; height: 30px; border: 3px solid #e2e8f0; border-top-color: #0047AB; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .skeleton-loader {
-            padding: 20px;
-            text-align: center;
-        }
-        .spinner {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 3px solid #e2e8f0;
-            border-top-color: #0047AB;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; border-radius: 32px; max-width: 900px; width: 95%; max-height: 85vh; overflow-y: auto; padding: 28px; animation: modalFadeIn 0.3s ease; transition: background 0.3s; }
+        body.dark-mode .modal-content { background: #1e293b; }
+        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0; }
+        body.dark-mode .modal-header { border-bottom-color: #334155; }
+        .modal-header h3 { font-size: 1.4rem; color: #003399; }
+        body.dark-mode .modal-header h3 { color: #60a5fa; }
+        .fechar-modal { font-size: 28px; cursor: pointer; color: #94a3b8; }
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .modal-content {
-            background: white;
-            border-radius: 32px;
-            max-width: 900px;
-            width: 95%;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 28px;
-            animation: modalFadeIn 0.3s ease;
-            transition: background 0.3s;
-        }
-        body.dark-mode .modal-content {
-            background: #1e293b;
-        }
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #e2e8f0;
-        }
-        body.dark-mode .modal-header {
-            border-bottom-color: #334155;
-        }
-        .modal-header h3 {
-            font-size: 1.4rem;
-            color: #003399;
-        }
-        body.dark-mode .modal-header h3 {
-            color: #60a5fa;
-        }
-        .fechar-modal {
-            font-size: 28px;
-            cursor: pointer;
-            color: #94a3b8;
-        }
+        .detalhes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .detalhe-item { background: #f8fafc; padding: 12px; border-radius: 16px; }
+        body.dark-mode .detalhe-item { background: #0f172a; }
+        .detalhe-label { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; }
+        body.dark-mode .detalhe-label { color: #94a3b8; }
+        .detalhe-valor { font-size: 14px; font-weight: 600; color: #1e293b; margin-top: 4px; word-break: break-word; }
+        body.dark-mode .detalhe-valor { color: #e2e8f0; }
+        .detalhe-item input, .detalhe-item select { width: 100%; padding: 8px 12px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 14px; font-weight: 600; font-family: 'Inter', sans-serif; background: white; margin-top: 4px; }
+        body.dark-mode .detalhe-item input, body.dark-mode .detalhe-item select { background: #0f172a; border-color: #334155; color: white; }
+        .detalhe-item input:focus, .detalhe-item select:focus { outline: none; border-color: #0047AB; }
 
-        .detalhes-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-        .detalhe-item {
-            background: #f8fafc;
-            padding: 12px;
-            border-radius: 16px;
-        }
-        body.dark-mode .detalhe-item {
-            background: #0f172a;
-        }
-        .detalhe-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: #64748b;
-            text-transform: uppercase;
-        }
-        body.dark-mode .detalhe-label {
-            color: #94a3b8;
-        }
-        .detalhe-valor {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-top: 4px;
-            word-break: break-word;
-        }
-        body.dark-mode .detalhe-valor {
-            color: #e2e8f0;
-        }
+        .modal-acoes { display: flex; gap: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0; flex-wrap: wrap; }
+        body.dark-mode .modal-acoes { border-top-color: #334155; }
+        .modal-acoes button { flex: 1; padding: 12px 20px; border-radius: 40px; font-weight: 700; cursor: pointer; border: none; font-size: 14px; min-width: 100px; }
+        .btn-editar { background: #f59e0b; color: white; }
+        .btn-editar:hover { background: #d97706; }
+        .btn-salvar-edicao { background: #10b981; color: white; }
+        .btn-salvar-edicao:hover { background: #059669; }
+        .btn-cancelar-edicao { background: #ef4444; color: white; }
+        .btn-cancelar-edicao:hover { background: #dc2626; }
+        .btn-fechar { background: #6c757d; color: white; }
+        .btn-fechar:hover { background: #5a6268; }
 
-        .detalhe-item input,
-        .detalhe-item select {
-            width: 100%;
-            padding: 8px 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            font-family: 'Inter', sans-serif;
-            background: white;
-            margin-top: 4px;
-        }
-        body.dark-mode .detalhe-item input,
-        body.dark-mode .detalhe-item select {
-            background: #0f172a;
-            border-color: #334155;
-            color: white;
-        }
-        .detalhe-item input:focus,
-        .detalhe-item select:focus {
-            outline: none;
-            border-color: #0047AB;
-        }
+        .form-linha { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .form-linha-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .form-grupo { margin-bottom: 12px; }
+        .form-grupo label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 12px; color: #1e293b; }
+        body.dark-mode .form-grupo label { color: #e2e8f0; }
+        .form-grupo input, .form-grupo select { width: 100%; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 13px; background: white; }
+        body.dark-mode .form-grupo input, body.dark-mode .form-grupo select { background: #0f172a; border-color: #334155; color: white; }
+        .radio-group { display: flex; gap: 20px; align-items: center; }
+        .radio-group label { display: flex; align-items: center; gap: 8px; font-weight: normal; font-size: 13px; }
+        .btn-salvar { background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 12px; border-radius: 40px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 20px; font-size: 14px; }
+        .btn-salvar:hover { transform: translateY(-2px); }
 
-        .modal-acoes {
-            display: flex;
-            gap: 12px;
-            margin-top: 24px;
-            padding-top: 16px;
-            border-top: 1px solid #e2e8f0;
-            flex-wrap: wrap;
-        }
-        body.dark-mode .modal-acoes {
-            border-top-color: #334155;
-        }
-        .modal-acoes button {
-            flex: 1;
-            padding: 12px 20px;
-            border-radius: 40px;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            font-size: 14px;
-            min-width: 100px;
-        }
-        .btn-editar {
-            background: #f59e0b;
-            color: white;
-        }
-        .btn-editar:hover {
-            background: #d97706;
-        }
-        .btn-salvar-edicao {
-            background: #10b981;
-            color: white;
-        }
-        .btn-salvar-edicao:hover {
-            background: #059669;
-        }
-        .btn-cancelar-edicao {
-            background: #ef4444;
-            color: white;
-        }
-        .btn-cancelar-edicao:hover {
-            background: #dc2626;
-        }
-        .btn-fechar {
-            background: #6c757d;
-            color: white;
-        }
-        .btn-fechar:hover {
-            background: #5a6268;
-        }
-
-        .form-linha {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-        .form-linha-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-        .form-grupo {
-            margin-bottom: 12px;
-        }
-        .form-grupo label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 4px;
-            font-size: 12px;
-            color: #1e293b;
-        }
-        body.dark-mode .form-grupo label {
-            color: #e2e8f0;
-        }
-        .form-grupo input,
-        .form-grupo select {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 13px;
-            background: white;
-        }
-        body.dark-mode .form-grupo input,
-        body.dark-mode .form-grupo select {
-            background: #0f172a;
-            border-color: #334155;
-            color: white;
-        }
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-        .radio-group label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: normal;
-            font-size: 13px;
-        }
-        .btn-salvar {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 40px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-        .btn-salvar:hover {
-            transform: translateY(-2px);
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: white;
-            padding: 14px 24px;
-            border-radius: 60px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            z-index: 1100;
-            animation: slideIn 0.3s ease;
-            font-weight: 500;
-            font-size: 14px;
-            transition: background 0.3s;
-        }
-        body.dark-mode .toast {
-            background: #1e293b;
-            color: white;
-        }
-        .toast.success {
-            border-left: 4px solid #10b981;
-        }
-        .toast.error {
-            border-left: 4px solid #ef4444;
-        }
-        .toast.info {
-            border-left: 4px solid #3b82f6;
-        }
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        .checkbox {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: #0047AB;
-        }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: white; padding: 14px 24px; border-radius: 60px; display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); z-index: 1100; animation: slideIn 0.3s ease; font-weight: 500; font-size: 14px; transition: background 0.3s; }
+        body.dark-mode .toast { background: #1e293b; color: white; }
+        .toast.success { border-left: 4px solid #10b981; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        .toast.info { border-left: 4px solid #3b82f6; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .checkbox { width: 18px; height: 18px; cursor: pointer; accent-color: #0047AB; }
 
         @media (max-width: 900px) {
-            .detalhes-grid {
-                grid-template-columns: 1fr;
-            }
-            .toast {
-                bottom: 20px;
-                right: 20px;
-                left: 20px;
-                border-radius: 16px;
-            }
-            .header-info {
-                justify-content: center;
-            }
-            .form-linha,
-            .form-linha-3 {
-                grid-template-columns: 1fr;
-            }
-            .modal-acoes button {
-                flex: 1 1 100%;
-            }
+            .detalhes-grid { grid-template-columns: 1fr; }
+            .toast { bottom: 20px; right: 20px; left: 20px; border-radius: 16px; }
+            .header-info { justify-content: center; }
+            .form-linha, .form-linha-3 { grid-template-columns: 1fr; }
+            .modal-acoes button { flex: 1 1 100%; }
         }
     </style>
 </head>
@@ -854,8 +186,8 @@
             <div class="login-box">
                 <h2>🔐 ÁREA RESTRITA</h2>
                 <p>Acesso exclusivo para funcionários</p>
-                <input type="text" id="nomeUsuario" placeholder="Seu nome">
-                <input type="password" id="senhaInput" placeholder="Senha">
+                <input type="email" id="nomeUsuario" placeholder="E-mail">
+                <input type="password" id="senhaInput" placeholder="Senha" onkeypress="if(event.key==='Enter') verificarSenha()">
                 <button onclick="verificarSenha()">ACESSAR</button>
                 <div id="erroLogin" class="erro"></div>
             </div>
@@ -875,6 +207,7 @@
             <div class="header">
                 <h1>📋 PAINEL DO FUNCIONÁRIO</h1>
                 <div class="header-info">
+                    <span class="ultima-atualizacao" id="infoUsuario">👤</span>
                     <button class="btn-atualizar" onclick="forcarAtualizacao()">🔄 ATUALIZAR</button>
                     <button class="btn-exportar" onclick="exportarDados()">📥 EXPORTAR</button>
                     <button class="btn-cadastrar" onclick="abrirModalCadastro()">➕ CADASTRAR ALUNO</button>
@@ -1184,6 +517,7 @@
     <script>
         const API_URL = 'https://api-escolinha.onrender.com/api';
 
+        let usuarioLogado = null;
         let todosAlunos = [];
         let dadosFiltrados = [];
         let abaAtual = 'aprovado';
@@ -1196,8 +530,7 @@
         function alternarTema() {
             document.body.classList.toggle('dark-mode');
             localStorage.setItem('tema', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-            mostrarToast(document.body.classList.contains('dark-mode') ? '🌙 Modo escuro ativado' : '☀️ Modo claro ativado',
-            'info');
+            mostrarToast(document.body.classList.contains('dark-mode') ? '🌙 Modo escuro ativado' : '☀️ Modo claro ativado', 'info');
         }
 
         function mostrarToast(mensagem, tipo = 'success') {
@@ -1214,9 +547,7 @@
                 if (dataStr.includes('-')) {
                     let partes = dataStr.split(' ');
                     let dataParte = partes[0].split('-');
-                    if (dataParte.length === 3) {
-                        return `${dataParte[2]}/${dataParte[1]}/${dataParte[0]}`;
-                    }
+                    if (dataParte.length === 3) { return `${dataParte[2]}/${dataParte[1]}/${dataParte[0]}`; }
                 }
                 let data = new Date(dataStr);
                 if (isNaN(data.getTime())) return dataStr;
@@ -1228,9 +559,7 @@
             if (!dataStr) return '';
             try {
                 let partes = dataStr.split('/');
-                if (partes.length === 3) {
-                    return `${partes[2]}-${partes[1]}-${partes[0]}`;
-                }
+                if (partes.length === 3) { return `${partes[2]}-${partes[1]}-${partes[0]}`; }
                 let data = new Date(dataStr);
                 if (isNaN(data.getTime())) return '';
                 return data.toISOString().split('T')[0];
@@ -1250,7 +579,6 @@
             try {
                 const response = await fetch(`${API_URL}/alunos`);
                 const dados = await response.json();
-
                 if (Array.isArray(dados)) {
                     todosAlunos = dados;
                     ultimaAtualizacao = new Date();
@@ -1273,7 +601,6 @@
             const aprovados = todosAlunos.filter(a => a.status === 'aprovado').length;
             const pendentes = todosAlunos.filter(a => a.status === 'pendente').length;
             const recusados = todosAlunos.filter(a => a.status === 'recusado').length;
-
             document.getElementById('badgeAprovado').innerText = aprovados;
             document.getElementById('badgePendente').innerText = pendentes;
             document.getElementById('badgeRecusado').innerText = recusados;
@@ -1281,35 +608,28 @@
 
         function filtrarEOrdenar() {
             let filtrados = todosAlunos.filter(a => a.status === abaAtual);
-
             const busca = document.getElementById('buscaAluno').value.toLowerCase();
             const turma = document.getElementById('filtroTurma').value;
             const categoria = document.getElementById('filtroCategoria').value;
-
             filtrados = filtrados.filter(item => {
                 if (busca && !item.nome_aluno?.toLowerCase().includes(busca)) return false;
                 if (turma && item.turma !== turma) return false;
                 if (categoria && item.categoria !== categoria) return false;
                 return true;
             });
-
             filtrados.sort((a, b) => {
                 let valA = a[ordem.campo] || '';
                 let valB = b[ordem.campo] || '';
-                if (ordem.campo === 'idade') { valA = parseInt(valA) || 0;
-                    valB = parseInt(valB) || 0; }
+                if (ordem.campo === 'idade') { valA = parseInt(valA) || 0; valB = parseInt(valB) || 0; }
                 if (valA < valB) return ordem.direcao === 'asc' ? -1 : 1;
                 if (valA > valB) return ordem.direcao === 'asc' ? 1 : -1;
                 return 0;
             });
-
             dadosFiltrados = filtrados;
             renderizarTabela();
-
             const titulos = { 'aprovado': '👥 ALUNOS ATIVOS', 'pendente': '⏳ SOLICITAÇÕES PENDENTES', 'recusado': '❌ ALUNOS DESATIVADOS' };
             document.getElementById('secaoTitulo').innerHTML = titulos[abaAtual];
-            document.getElementById('resultadosInfo').innerHTML =
-                `Mostrando ${filtrados.length} de ${todosAlunos.filter(a => a.status === abaAtual).length} registros`;
+            document.getElementById('resultadosInfo').innerHTML = `Mostrando ${filtrados.length} de ${todosAlunos.filter(a => a.status === abaAtual).length} registros`;
         }
 
         function renderizarTabela() {
@@ -1318,13 +638,11 @@
                 tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; padding:40px;">📭 Nenhum registro encontrado</td></tr>';
                 return;
             }
-
             const getStatusHtml = (status) => {
                 if (status === 'pendente') return '<span class="status-pendente">Pendente</span>';
                 if (status === 'aprovado') return '<span class="status-aprovado">Aprovado</span>';
                 return '<span class="status-recusado">Desativado</span>';
             };
-
             const getAcoesHtml = (item) => {
                 if (item.status === 'pendente') {
                     return `<button class="btn-acao btn-aprovar" onclick="event.stopPropagation(); atualizarStatus('${item.protocolo}', 'aprovado')">✅ Aprovar</button>
@@ -1335,7 +653,6 @@
                             <button class="btn-acao btn-ver" onclick="event.stopPropagation(); abrirDetalhes('${item.protocolo}')">👁️ Ver</button>`;
                 }
             };
-
             tbody.innerHTML = dadosFiltrados.map(item => `
                     <tr onclick="abrirDetalhes('${item.protocolo}')">
                         <td onclick="event.stopPropagation()"><input type="checkbox" class="checkbox sel-item" value="${item.protocolo}"></td>
@@ -1349,31 +666,24 @@
                         <td onclick="event.stopPropagation()">${getAcoesHtml(item)}</td>
                     </tr>
                 `).join('');
-
             document.getElementById('selecionarTodos').checked = false;
         }
 
         function ordenarDados(campo) {
-            if (ordem.campo === campo) {
-                ordem.direcao = ordem.direcao === 'asc' ? 'desc' : 'asc';
-            } else {
-                ordem.campo = campo;
-                ordem.direcao = 'asc';
-            }
+            if (ordem.campo === campo) { ordem.direcao = ordem.direcao === 'asc' ? 'desc' : 'asc'; }
+            else { ordem.campo = campo; ordem.direcao = 'asc'; }
             filtrarEOrdenar();
         }
 
         // ==================== ATUALIZAR STATUS ====================
         async function atualizarStatus(protocolo, novoStatus) {
             mostrarToast('Atualizando status...', 'info');
-
             try {
                 const response = await fetch(`${API_URL}/aluno/${protocolo}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ status: novoStatus })
                 });
-
                 if (response.ok) {
                     await carregarDados();
                     mostrarToast(novoStatus === 'aprovado' ? '✅ Matrícula aprovada!' : '❌ Matrícula recusada!', 'success');
@@ -1389,11 +699,7 @@
         // ==================== ABRIR DETALHES ====================
         function abrirDetalhes(protocolo) {
             const item = todosAlunos.find(i => i.protocolo === protocolo);
-            if (!item) {
-                mostrarToast('Aluno não encontrado!', 'error');
-                return;
-            }
-
+            if (!item) { mostrarToast('Aluno não encontrado!', 'error'); return; }
             alunoEditando = item;
             modoEdicao = false;
             document.getElementById('modalTitulo').innerHTML = '📄 FICHA DO ALUNO';
@@ -1405,9 +711,7 @@
         function renderizarFicha(item) {
             const conteudo = document.getElementById('detalhesConteudo');
             const modalAcoes = document.getElementById('modalAcoes');
-
             if (modoEdicao) {
-                // MODO EDIÇÃO
                 document.getElementById('modalTitulo').innerHTML = '✏️ EDITANDO ALUNO';
                 conteudo.innerHTML = `
                         <div class="detalhe-item"><div class="detalhe-label">📋 Nome</div><input type="text" id="edit_nome_aluno" value="${item.nome_aluno || ''}"></div>
@@ -1482,13 +786,11 @@
                         <div class="detalhe-item"><div class="detalhe-label">📝 Observação</div><input type="text" id="edit_observacao" value="${item.observacao || ''}"></div>
                         <div class="detalhe-item"><div class="detalhe-label">⭐ Estrelas</div><input type="number" id="edit_estrelas" value="${item.estrelas || 0}" min="0" max="5"></div>
                     `;
-
                 modalAcoes.innerHTML = `
                         <button class="btn-salvar-edicao" onclick="salvarEdicao('${item.protocolo}')">💾 SALVAR</button>
                         <button class="btn-cancelar-edicao" onclick="cancelarEdicao()">❌ CANCELAR</button>
                     `;
             } else {
-                // MODO VISUALIZAÇÃO
                 document.getElementById('modalTitulo').innerHTML = '📄 FICHA DO ALUNO';
                 conteudo.innerHTML = `
                         <div class="detalhe-item"><div class="detalhe-label">📋 Nome</div><div class="detalhe-valor">${item.nome_aluno || '-'}</div></div>
@@ -1518,7 +820,6 @@
                         <div class="detalhe-item"><div class="detalhe-label">📝 Observação</div><div class="detalhe-valor">${item.observacao || '-'}</div></div>
                         <div class="detalhe-item"><div class="detalhe-label">⭐ Estrelas</div><div class="detalhe-valor">${item.estrelas || 0}</div></div>
                     `;
-
                 modalAcoes.innerHTML = `
                         <button class="btn-editar" onclick="ativarEdicao()">✏️ EDITAR</button>
                         <button class="btn-fechar" onclick="fecharModal()">🔒 FECHAR</button>
@@ -1527,15 +828,8 @@
         }
 
         // ==================== EDIÇÃO ====================
-        function ativarEdicao() {
-            modoEdicao = true;
-            renderizarFicha(alunoEditando);
-        }
-
-        function cancelarEdicao() {
-            modoEdicao = false;
-            renderizarFicha(alunoEditando);
-        }
+        function ativarEdicao() { modoEdicao = true; renderizarFicha(alunoEditando); }
+        function cancelarEdicao() { modoEdicao = false; renderizarFicha(alunoEditando); }
 
         async function salvarEdicao(protocolo) {
             const dadosEditados = {
@@ -1566,18 +860,14 @@
                 observacao: document.getElementById('edit_observacao').value,
                 estrelas: parseInt(document.getElementById('edit_estrelas').value) || 0
             };
-
             mostrarToast('💾 Salvando alterações...', 'info');
-
             try {
                 const response = await fetch(`${API_URL}/aluno/editar/${protocolo}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(dadosEditados)
                 });
-
                 const resultado = await response.json();
-
                 if (response.ok) {
                     mostrarToast('✅ Alterações salvas com sucesso!', 'success');
                     await carregarDados();
@@ -1604,11 +894,7 @@
             modoEdicao = false;
             alunoEditando = null;
         }
-
-        function fecharModalCadastro() {
-            document.getElementById('modalCadastro').style.display = 'none';
-        }
-
+        function fecharModalCadastro() { document.getElementById('modalCadastro').style.display = 'none'; }
         function abrirModalCadastro() {
             document.getElementById('modalCadastro').style.display = 'flex';
             document.getElementById('formCadastroAluno').reset();
@@ -1617,49 +903,28 @@
         // ==================== EXCLUIR SELECIONADOS ====================
         async function excluirSelecionados() {
             const selecionados = Array.from(document.querySelectorAll('.sel-item:checked')).map(cb => cb.value);
-            if (selecionados.length === 0) {
-                mostrarToast('Selecione pelo menos um registro', 'error');
-                return;
-            }
+            if (selecionados.length === 0) { mostrarToast('Selecione pelo menos um registro', 'error'); return; }
             if (!confirm(`Excluir ${selecionados.length} registro(s) permanentemente? Esta ação não pode ser desfeita.`)) return;
-
             mostrarToast('🗑️ Excluindo...', 'info');
             let sucesso = 0;
             let erro = 0;
-
             for (const protocolo of selecionados) {
                 try {
                     const response = await fetch(`${API_URL}/aluno/${protocolo}`, { method: 'DELETE' });
                     if (response.ok) { sucesso++; } else { erro++; }
                 } catch (e) { erro++; }
             }
-
             await carregarDados();
-            if (erro === 0) {
-                mostrarToast(`✅ ${sucesso} registro(s) excluído(s) com sucesso!`, 'success');
-            } else {
-                mostrarToast(`⚠️ ${sucesso} excluído(s), ${erro} com erro`, 'error');
-            }
+            if (erro === 0) { mostrarToast(`✅ ${sucesso} registro(s) excluído(s) com sucesso!`, 'success'); }
+            else { mostrarToast(`⚠️ ${sucesso} excluído(s), ${erro} com erro`, 'error'); }
         }
 
         // ==================== EXPORTAR DADOS ====================
         function exportarDados() {
-            if (dadosFiltrados.length === 0) {
-                mostrarToast('Nenhum dado para exportar', 'error');
-                return;
-            }
-            const cabecalhos = ['Nome', 'Turma', 'Categoria', 'Idade', 'Responsável', 'Telefone', 'Status', 'Email', 'Endereço',
-                'Bairro', 'RG', 'Remédio', 'Data Nasc', 'Sexo', 'Uniforme', 'Deficiência', 'Município', 'UF', 'Escola', 'Série',
-                'Observação'
-            ];
-            const linhas = dadosFiltrados.map(item => [item.nome_aluno || '', item.turma || '', item.categoria || '', item
-                .idade || '', item.responsavel || '', item.telefone || '', item.status || '', item.email || '', item
-                .endereco || '', item.bairro || '', item.rg || '', item.remedio || '', formatarData(item.data_nasc), item
-                .sexo || '', item.tamanho_uniforme || '', item.deficiencia || '', item.municipio || '', item.uf || '',
-                item.escola || '', item.serie || '', item.observacao || ''
-            ]);
-            const csv = [cabecalhos, ...linhas].map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
-                .join('\n');
+            if (dadosFiltrados.length === 0) { mostrarToast('Nenhum dado para exportar', 'error'); return; }
+            const cabecalhos = ['Nome', 'Turma', 'Categoria', 'Idade', 'Responsável', 'Telefone', 'Status', 'Email', 'Endereço', 'Bairro', 'RG', 'Remédio', 'Data Nasc', 'Sexo', 'Uniforme', 'Deficiência', 'Município', 'UF', 'Escola', 'Série', 'Observação'];
+            const linhas = dadosFiltrados.map(item => [item.nome_aluno || '', item.turma || '', item.categoria || '', item.idade || '', item.responsavel || '', item.telefone || '', item.status || '', item.email || '', item.endereco || '', item.bairro || '', item.rg || '', item.remedio || '', formatarData(item.data_nasc), item.sexo || '', item.tamanho_uniforme || '', item.deficiencia || '', item.municipio || '', item.uf || '', item.escola || '', item.serie || '', item.observacao || '']);
+            const csv = [cabecalhos, ...linhas].map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n');
             const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -1697,12 +962,10 @@
             const categoria = document.getElementById('cadCategoria').value;
             const rg = document.getElementById('cadRG').value.trim().replace(/\D/g, '');
             const responsavel = document.getElementById('cadResponsavel').value.trim();
-
             if (!nomeAluno || !dataNasc || !sexo || !turma || !categoria || !rg || !responsavel) {
                 mostrarToast('⚠️ Preencha os campos obrigatórios', 'error');
                 return;
             }
-
             const idade = (() => {
                 const hoje = new Date();
                 const nasc = new Date(dataNasc);
@@ -1715,32 +978,19 @@
             let dataEnvio = new Date().toLocaleString('pt-BR');
             try {
                 const partes = dataEnvio.split(/[/, :]+/);
-                if (partes.length >= 6) {
-                    dataEnvio = `${partes[2]}-${partes[1]}-${partes[0]} ${partes[3]}:${partes[4]}:${partes[5]}`;
-                }
+                if (partes.length >= 6) { dataEnvio = `${partes[2]}-${partes[1]}-${partes[0]} ${partes[3]}:${partes[4]}:${partes[5]}`; }
             } catch (e) {}
-            const enderecoCompleto =
-                `${document.getElementById('cadEndereco').value || ''}, ${document.getElementById('cadBairro').value || ''}, ${document.getElementById('cadMunicipio').value || ''}/${document.getElementById('cadUF').value || ''}`;
-
+            const enderecoCompleto = `${document.getElementById('cadEndereco').value || ''}, ${document.getElementById('cadBairro').value || ''}, ${document.getElementById('cadMunicipio').value || ''}/${document.getElementById('cadUF').value || ''}`;
             const dados = {
-                protocolo,
-                dataEnvio,
-                nomeAluno,
-                dataNasc,
-                idade,
-                turma,
-                categoria,
-                responsavel,
+                protocolo, dataEnvio, nomeAluno, dataNasc, idade, turma, categoria, responsavel,
                 telefone: document.getElementById('cadTelefone').value || '',
                 email: document.getElementById('cadEmail').value || '',
                 endereco: enderecoCompleto,
                 bairro: document.getElementById('cadBairro').value || '',
                 moradores: document.getElementById('cadMoradores').value || '1',
-                remedio: document.querySelector('input[name="cadRemedio"]:checked')?.value === 'Sim' ?
-                    `Sim - ${document.getElementById('cadRemedioDesc').value}` : 'Não',
+                remedio: document.querySelector('input[name="cadRemedio"]:checked')?.value === 'Sim' ? `Sim - ${document.getElementById('cadRemedioDesc').value}` : 'Não',
                 origem: document.getElementById('cadOrigem').value || 'Cadastro manual',
-                rg,
-                sexo,
+                rg, sexo,
                 peso: document.getElementById('cadPeso').value || '0',
                 altura: document.getElementById('cadAltura').value || '0',
                 calcado: document.getElementById('cadCalcado').value || '',
@@ -1753,7 +1003,6 @@
                 status: 'pendente',
                 observacao: ''
             };
-
             try {
                 const response = await fetch(`${API_URL}/prematricula`, {
                     method: 'POST',
@@ -1778,32 +1027,129 @@
             });
         });
 
-        // ==================== LOGIN ====================
+        // ==================== LOGIN REAL + PERSISTENTE ====================
         async function verificarSenha() {
+            const email = document.getElementById('nomeUsuario').value.trim();
+            const senha = document.getElementById('senhaInput').value;
+            const btn = document.querySelector('#telaLogin button');
+            if (!email || !senha) {
+                document.getElementById('erroLogin').innerText = 'Digite e-mail e senha!';
+                return;
+            }
+            btn.disabled = true;
+            btn.innerHTML = '⏳ VERIFICANDO...';
+            document.getElementById('erroLogin').innerText = '';
+            try {
+                const r = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, senha })
+                });
+                const dados = await r.json();
+                if (r.ok) {
+                    const usuario = { ...dados.usuario, loginEm: new Date().toISOString() };
+                    localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+                    usuarioLogado = usuario;
+                    entrarNoPainel();
+                } else {
+                    document.getElementById('erroLogin').innerText = dados.erro || 'E-mail ou senha incorretos';
+                }
+            } catch(e) {
+                console.error(e);
+                document.getElementById('erroLogin').innerText = 'Erro ao conectar. Tente novamente.';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'ACESSAR';
+            }
+        }
+
+        function entrarNoPainel() {
             document.getElementById('telaLogin').style.display = 'none';
             document.getElementById('painelInterno').style.display = 'block';
             if (localStorage.getItem('tema') === 'dark') document.body.classList.add('dark-mode');
+            const nomeUsuario = usuarioLogado?.nome || usuarioLogado?.email?.split('@')[0] || 'Funcionário';
+            document.getElementById('infoUsuario').innerHTML = `👤 ${nomeUsuario} | ✅ acesso`;
             carregarDados();
             setInterval(() => carregarDados(), 60000);
+            setInterval(atualizarTimestamp, 1000);
+            inicializarPush();
+        }
+
+        // ==================== PUSH NOTIFICATIONS ====================
+        async function inicializarPush() {
+            try {
+                if (!('Notification' in window) || !('serviceWorker' in navigator)) {
+                    console.log('⚠️ Push não suportado');
+                    return;
+                }
+                const permissao = await Notification.requestPermission();
+                if (permissao !== 'granted') {
+                    console.log('⚠️ Permissão negada');
+                    return;
+                }
+                const registration = await navigator.serviceWorker.ready;
+                const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
+                const { getMessaging, getToken } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-messaging.js');
+                const firebaseConfig = {
+                    apiKey: "AIzaSyBUPquSeneayoS-eiCgJB0K47eLM44eqIs",
+                    authDomain: "alvorada-4d410.firebaseapp.com",
+                    projectId: "alvorada-4d410",
+                    storageBucket: "alvorada-4d410.firebasestorage.app",
+                    messagingSenderId: "12705241722",
+                    appId: "1:12705241722:web:f95f70821505043e1f39c3"
+                };
+                const firebaseApp = initializeApp(firebaseConfig);
+                const messaging = getMessaging(firebaseApp);
+                const token = await getToken(messaging, {
+                    vapidKey: 'BHGLLbpMqsjtStrQe0W7gLrpQtt85CIpj0qD5ok84dM0-pH9euvw3JuOm-l0IlT5ydGetJbgiyQ400PiIa2ETJg',
+                    serviceWorkerRegistration: registration
+                });
+                if (token) {
+                    console.log('✅ Token push:', token);
+                    await fetch(`${API_URL}/salvar-token`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            token: token,
+                            email: usuarioLogado?.email || ''
+                        })
+                    });
+                    console.log('✅ Token salvo');
+                }
+            } catch(e) {
+                console.error('❌ Erro push:', e);
+            }
         }
 
         function logout() {
+            localStorage.removeItem('usuarioLogado');
             document.getElementById('painelInterno').style.display = 'none';
             document.getElementById('telaLogin').style.display = 'block';
             document.getElementById('senhaInput').value = '';
             document.getElementById('nomeUsuario').value = '';
+            document.getElementById('erroLogin').innerText = '';
+            usuarioLogado = null;
         }
+
+        // ==================== VERIFICA LOGIN SALVO ====================
+        window.addEventListener('load', () => {
+            const salvo = localStorage.getItem('usuarioLogado');
+            if (salvo) {
+                try {
+                    usuarioLogado = JSON.parse(salvo);
+                    entrarNoPainel();
+                } catch(e) {
+                    localStorage.removeItem('usuarioLogado');
+                }
+            }
+        });
 
         // Fechar modal clicando fora
         window.onclick = function(event) {
             const modal = document.getElementById('modalDetalhes');
-            if (event.target === modal) {
-                fecharModal();
-            }
+            if (event.target === modal) { fecharModal(); }
             const modalCadastro = document.getElementById('modalCadastro');
-            if (event.target === modalCadastro) {
-                fecharModalCadastro();
-            }
+            if (event.target === modalCadastro) { fecharModalCadastro(); }
         }
     </script>
 
