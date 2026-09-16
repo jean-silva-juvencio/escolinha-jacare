@@ -157,40 +157,31 @@
         .mural-titulo { text-align: center; color: #003399; font-family: 'Montserrat'; font-size: 1.6rem; font-weight: 900; margin-bottom: 25px; }
         body.dark-mode .mural-titulo { color: #60a5fa; }
         .mural-lista { display: flex; flex-direction: column; gap: 20px; }
-        .noticia-destaque { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s; cursor: pointer; border-left: 5px solid #0047AB; display: flex; flex-direction: row; align-items: stretch; }
+        .noticia-destaque { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); display: flex; gap: 20px; transition: all 0.3s; cursor: pointer; border-left: 5px solid #0047AB; align-items: flex-start; }
         body.dark-mode .noticia-destaque { background: #1e293b; }
-        .noticia-destaque:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,71,171,0.15); }
-        .noticia-destaque-imagem { width: 400px; min-width: 400px; max-width: 400px; height: 280px; display: flex; align-items: center; justify-content: center; background: #f0f4f8; overflow: hidden; padding: 8px; flex-shrink: 0; }
+        .noticia-destaque:hover { transform: translateX(5px); box-shadow: 0 10px 30px rgba(0,71,171,0.15); }
+        .noticia-destaque-imagem { width: 400px; height: 280px; border-radius: 16px; overflow: hidden; flex-shrink: 0; background: #f0f4f8; display: flex; align-items: center; justify-content: center; padding: 8px; }
         body.dark-mode .noticia-destaque-imagem { background: #0f172a; }
-        .noticia-destaque-imagem img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; border-radius: 8px; transition: transform 0.4s ease; }
-        .noticia-destaque:hover .noticia-destaque-imagem img { transform: scale(1.03); }
+        .noticia-destaque-imagem img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; border-radius: 8px; }
         .noticia-destaque-imagem .sem-imagem { font-size: 4rem; color: #94a3b8; }
-        .noticia-destaque-conteudo { flex: 1; padding: 25px 30px; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
-        .noticia-destaque-titulo { font-family: 'Montserrat'; font-weight: 800; font-size: 1.4rem; color: #003399; margin-bottom: 15px; line-height: 1.3; }
+        .noticia-destaque-conteudo { flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
+        .noticia-destaque-titulo { font-family: 'Montserrat'; font-weight: 800; font-size: 1.2rem; color: #003399; margin-bottom: 10px; line-height: 1.3; }
         body.dark-mode .noticia-destaque-titulo { color: #60a5fa; }
-        .noticia-destaque-texto { font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+        .noticia-destaque-texto { font-size: 0.9rem; color: #555; line-height: 1.5; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         body.dark-mode .noticia-destaque-texto { color: #94a3b8; }
-        .noticia-destaque-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding-top: 15px; border-top: 1px solid #f1f5f9; }
-        body.dark-mode .noticia-destaque-footer { border-top-color: #334155; }
-        .noticia-destaque-data { font-size: 0.8rem; color: #888; font-weight: 600; }
-        .noticia-destaque-btn { background: #0047AB; color: white; border: none; padding: 10px 22px; border-radius: 40px; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .noticia-destaque-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .noticia-destaque-data { font-size: 0.75rem; color: #888; font-weight: 600; }
+        .noticia-destaque-btn { background: #0047AB; color: white; border: none; padding: 8px 18px; border-radius: 40px; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
         .noticia-destaque-btn:hover { background: #003399; transform: scale(1.05); }
         .mural-vazio { text-align: center; padding: 50px; background: white; border-radius: 20px; color: #888; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
         body.dark-mode .mural-vazio { background: #1e293b; color: #94a3b8; }
         .mural-vazio .icone { font-size: 3rem; margin-bottom: 15px; opacity: 0.5; }
-        @media (max-width: 768px) {
-            .noticia-destaque { flex-direction: column; }
-            .noticia-destaque-imagem { width: 100%; min-width: 100%; max-width: 100%; height: 250px; padding: 10px; }
-            .noticia-destaque-imagem img { max-height: 240px; width: auto; height: auto; }
-            .noticia-destaque-titulo { font-size: 1.15rem; }
-            .noticia-destaque-texto { font-size: 0.9rem; -webkit-line-clamp: 5; }
-        }
         .modal-noticia-completa { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px); justify-content: center; align-items: center; z-index: 3000; padding: 20px; }
         .modal-noticia-completa.ativo { display: flex; }
         .modal-noticia-completa-content { background: white; border-radius: 28px; max-width: 750px; width: 100%; max-height: 90vh; overflow-y: auto; animation: fadeInUp 0.3s ease; }
         body.dark-mode .modal-noticia-completa-content { background: #1e293b; }
         .modal-noticia-completa-header { position: relative; }
-        .modal-noticia-completa-imagem { width: 100%; min-height: 200px; max-height: 500px; background: #f0f4f8; display: flex; align-items: center; justify-content: center; border-radius: 28px 28px 0 0; overflow: hidden; padding: 15px; }
+        .modal-noticia-completa-imagem { width: 100%; min-height: 200px; max-height: 500px; border-radius: 28px 28px 0 0; background: #f0f4f8; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 15px; }
         body.dark-mode .modal-noticia-completa-imagem { background: #0f172a; }
         .modal-noticia-completa-imagem img { max-width: 100%; max-height: 470px; width: auto; height: auto; object-fit: contain; display: block; border-radius: 12px; }
         .modal-noticia-completa-imagem .sem-imagem-modal { font-size: 5rem; color: #94a3b8; }
@@ -349,6 +340,11 @@
             .hero-content p { font-size: 0.8rem; }
             .btn-prematricula { padding: 8px 20px; font-size: 0.8rem; }
             .mural-titulo { font-size: 1.2rem; }
+            .noticia-destaque { flex-direction: column; padding: 15px; }
+            .noticia-destaque-imagem { width: 100%; height: 250px; padding: 10px; }
+            .noticia-destaque-imagem img { max-height: 240px; }
+            .noticia-destaque-titulo { font-size: 1.05rem; }
+            .noticia-destaque-texto { font-size: 0.85rem; -webkit-line-clamp: 4; }
             .modal-noticia-completa-body { padding: 20px; }
             .modal-noticia-completa-titulo { font-size: 1.3rem; }
             .modal-noticia-completa-texto { font-size: 0.9rem; }
@@ -653,6 +649,7 @@
 </div>
 
 <button id="btnTopo" class="btn-topo" title="Voltar ao topo">⬆️</button>
+
     <script>
     const API_URL = 'https://api-escolinha.onrender.com/api';
     let tickerAnimation = null;
@@ -661,7 +658,6 @@
 
     document.getElementById('anosHistoria').innerText = new Date().getFullYear() - 1998;
 
-    // ==================== SPLASH SCREEN ====================
     window.addEventListener('load', () => {
         setTimeout(() => {
             const splash = document.getElementById('splashScreen');
@@ -679,7 +675,6 @@
         else { menu.style.left = '0px'; hamburger.classList.add('active'); }
     }
 
-    // ========== CARREGAR ALUNOS DO NEON ==========
     async function carregarDados() {
         try {
             const r = await fetch(`${API_URL}/alunos`);
@@ -690,16 +685,13 @@
                 const totalAtivos = ativos.length;
                 const el = document.getElementById('totalAlunos');
                 if (el) { el.innerText = totalAtivos > 0 ? totalAtivos : '0'; }
-                console.log(`✅ ${totalAtivos} alunos ativos carregados do Neon`);
             }
         } catch(e) {
-            console.error('❌ Erro ao carregar alunos:', e);
             const el = document.getElementById('totalAlunos');
             if (el) el.innerText = '--';
         }
     }
 
-    // ========== CARREGAR NOTÍCIAS (MURAL) ==========
     async function carregarMuralNoticias() {
         const container = document.getElementById('muralNoticias');
         if (!container) return;
@@ -715,34 +707,14 @@
             container.innerHTML = noticiasRecentes.map(n => {
                 const dataFormatada = new Date(n.data_publicacao).toLocaleDateString('pt-BR');
                 const temImagem = n.imagem_url && n.imagem_url.trim() !== '';
-                return `
-                    <div class="noticia-destaque" onclick="abrirNoticiaCompleta(${n.id})">
-                        <div class="noticia-destaque-imagem">
-                            ${temImagem ? `<img src="${n.imagem_url}" alt="${n.titulo}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'sem-imagem\\'>📷</div>';">` : '<div class="sem-imagem">📷</div>'}
-                        </div>
-                        <div class="noticia-destaque-conteudo">
-                            <div>
-                                <div class="noticia-destaque-titulo">${n.titulo}</div>
-                                <div class="noticia-destaque-texto">${n.texto}</div>
-                            </div>
-                            <div class="noticia-destaque-footer">
-                                <span class="noticia-destaque-data">📅 ${dataFormatada}</span>
-                                <button class="noticia-destaque-btn">Ler mais →</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
+                return `<div class="noticia-destaque" onclick="abrirNoticiaCompleta(${n.id})"><div class="noticia-destaque-imagem">${temImagem ? `<img src="${n.imagem_url}" alt="${n.titulo}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'sem-imagem\\'>📷</div>';">` : '<div class="sem-imagem">📷</div>'}</div><div class="noticia-destaque-conteudo"><div><div class="noticia-destaque-titulo">${n.titulo}</div><div class="noticia-destaque-texto">${n.texto}</div></div><div class="noticia-destaque-footer"><span class="noticia-destaque-data">📅 ${dataFormatada}</span><button class="noticia-destaque-btn">Ler mais →</button></div></div></div>`;
             }).join('');
-            console.log(`✅ ${noticiasRecentes.length} notícias carregadas no mural`);
         } catch(e) {
-            console.error('❌ Erro ao carregar notícias:', e);
             container.innerHTML = '<div class="mural-vazio"><div class="icone">📰</div><p>Nenhuma notícia no momento</p></div>';
         }
     }
 
-    // ========== MODAL NOTÍCIA COMPLETA ==========
     let noticiasCompletas = [];
-
     async function abrirNoticiaCompleta(id) {
         try {
             if (noticiasCompletas.length === 0) {
@@ -762,9 +734,7 @@
             document.getElementById('modalNoticiaData').innerHTML = `📅 ${dataFormatada}`;
             document.getElementById('modalNoticiaTexto').innerText = noticia.texto;
             document.getElementById('modalNoticiaCompleta').classList.add('ativo');
-        } catch(e) {
-            console.error('Erro ao abrir notícia:', e);
-        }
+        } catch(e) {}
     }
 
     function fecharModalNoticiaCompleta() {
@@ -779,7 +749,6 @@
         if (e.key === 'Escape') fecharModalNoticiaCompleta();
     });
 
-    // ========== VERIFICAR STATUS DO SERVIDOR ==========
     async function verificarStatus() {
         const foto = document.querySelector('.equipe-foto');
         try {
@@ -795,14 +764,12 @@
                 if (foto) { foto.classList.remove('foto-online'); foto.classList.add('foto-offline'); }
             }
         } catch(e) {
-            console.error('❌ Erro ao verificar status:', e);
             const el = document.getElementById('statusOnline');
             if (el) { el.className = 'status-online offline'; el.innerHTML = '<span class="status-ponto"></span> OFFLINE'; }
             if (foto) { foto.classList.remove('foto-online'); foto.classList.add('foto-offline'); }
         }
     }
 
-    // ========== CLIMA ==========
     async function buscarClima() {
         try {
             const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-3.1019&longitude=-60.0250&current_weather=true&timezone=America/Manaus');
@@ -819,12 +786,9 @@
             document.getElementById('climaTemp').innerHTML = `${temp}°C`;
             document.getElementById('climaDesc').innerHTML = `Manaus • ${desc}`;
             document.getElementById('climaIcone').innerHTML = icone;
-        } catch(e) {
-            console.error('❌ Erro ao buscar clima:', e);
-        }
+        } catch(e) {}
     }
 
-    // ========== NOTÍCIAS TICKER ==========
     let noticiasLista = [];
     async function buscarNoticias() {
         try {
@@ -876,7 +840,6 @@
 
     document.getElementById('btnAcessibilidade')?.addEventListener('click', alternarAcessibilidade);
 
-    // ========== DEPOIMENTOS ==========
     let depoimentos = [], carrosselIndex = 0, carrosselTimer = null;
 
     async function carregarDepoimentos(t = 1) {
@@ -927,7 +890,6 @@
     document.getElementById('btnProximo')?.addEventListener('click', () => irParaSlide(carrosselIndex+1));
     document.getElementById('btnAnterior')?.addEventListener('click', () => irParaSlide(carrosselIndex-1));
 
-    // ========== ENVIAR CONTATO ==========
     async function enviarContato() {
         const nome = document.getElementById('contatoNome').value.trim();
         const whatsapp = document.getElementById('contatoWhatsApp').value.trim();
@@ -975,7 +937,6 @@
         }, 5000);
     }
 
-    // ========== INICIALIZAÇÃO ==========
     window.addEventListener('load', () => {
         buscarClima();
         buscarNoticias();
