@@ -20,14 +20,19 @@ CORS(app)
 
 # ==================== CONFIGURAÇÃO CLOUDINARY ====================
 cloudinary.config(
-    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME', 'PBMaz3jx'),
-    api_key=os.getenv('CLOUDINARY_API_KEY', '545953851437675'),
-    api_secret=os.getenv('CLOUDINARY_API_SECRET', 'HNzome7Mzq0Ks1ZrhjeHcG8DvNQ'),
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.getenv('CLOUDINARY_API_KEY'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET'),
     secure=True
 )
 
+# Log pra confirmar se carregou
+print(f"☁️ Cloudinary configurado:")
+print(f"   Cloud Name: {os.getenv('CLOUDINARY_CLOUD_NAME', '❌ NÃO CONFIGURADO')}")
+print(f"   API Key: {os.getenv('CLOUDINARY_API_KEY', '❌ NÃO CONFIGURADA')[:10]}..." if os.getenv('CLOUDINARY_API_KEY') else "   API Key: ❌ NÃO CONFIGURADA")
+print(f"   API Secret: {'✅ CONFIGURADA' if os.getenv('CLOUDINARY_API_SECRET') else '❌ NÃO CONFIGURADA'}")
+
 # ==================== CONFIGURAÇÃO FIREBASE ====================
-# Lê o JSON do Firebase das variáveis de ambiente
 firebase_json_str = os.getenv('FIREBASE_CREDENTIALS')
 
 if firebase_json_str:
@@ -73,7 +78,6 @@ def enviar_push(titulo, corpo, dados_extras=None):
             print("📭 Nenhum token registrado")
             return
         
-        # Envia para até 500 tokens por vez (limite do Firebase)
         sucesso = 0
         falha = 0
         
@@ -92,7 +96,6 @@ def enviar_push(titulo, corpo, dados_extras=None):
             except Exception as e:
                 print(f"⚠️ Erro ao enviar para token: {e}")
                 falha += 1
-                # Se o token for inválido, remove do banco
                 if 'not found' in str(e).lower() or 'invalid' in str(e).lower():
                     try:
                         conn = get_connection()
@@ -119,7 +122,6 @@ def home():
 # ==================== SALVAR TOKEN PUSH ====================
 @app.route('/api/salvar-token', methods=['POST'])
 def salvar_token():
-    """Salva o token de push do dispositivo"""
     dados = request.json
     token = dados.get('token', '').strip()
     email = dados.get('email', '').strip()
@@ -130,21 +132,16 @@ def salvar_token():
     try:
         conn = get_connection()
         cursor = conn.cursor()
-        
-        # Insere ou atualiza
         cursor.execute("""
             INSERT INTO tokens_push (token, usuario_email, criado_em)
             VALUES (%s, %s, NOW())
             ON CONFLICT (token) DO UPDATE SET usuario_email = %s, criado_em = NOW()
         """, (token, email, email))
-        
         conn.commit()
         cursor.close()
         conn.close()
-        
         print(f"✅ Token salvo: {token[:20]}...")
         return jsonify({'mensagem': 'Token salvo!'}), 200
-        
     except Exception as e:
         print(f"❌ Erro ao salvar token: {e}")
         return jsonify({'erro': str(e)}), 500
@@ -327,7 +324,6 @@ def prematricula():
 
         print(f"✅ Aluno salvo! Protocolo: {protocolo}")
         
-        # 🔔 ENVIA PUSH
         enviar_push(
             titulo="👥 Nova Matrícula!",
             corpo=f"{nome_aluno} - {turma} ({categoria})",
@@ -599,7 +595,6 @@ def contatos():
             cursor.close()
             conn.close()
             
-            # 🔔 ENVIA PUSH
             enviar_push(
                 titulo="📬 Novo Contato!",
                 corpo=f"{nome} - {assunto}",
@@ -679,14 +674,15 @@ def publicar_noticia():
         imagem_url = None
         if imagem_base64:
             try:
+                print(f"📤 Fazendo upload pro Cloudinary...")
                 upload_result = cloudinary.uploader.upload(
-                 imagem_base64,
-                 upload_preset='escolinha_jacare'
+                    imagem_base64,
+                    upload_preset='escolinha_jacare'
                 )
                 imagem_url = upload_result.get('secure_url')
-                print(f"✅ Imagem enviada para Cloudinary: {imagem_url}")
+                print(f"✅ Imagem enviada: {imagem_url}")
             except Exception as e:
-                print(f"⚠️ Erro ao enviar imagem: {e}")
+                print(f"⚠️ Erro Cloudinary: {e}")
                 return jsonify({'erro': f'Erro ao enviar imagem: {str(e)}'}), 500
         
         from datetime import timedelta
@@ -738,7 +734,7 @@ def excluir_noticia(id):
                         cloudinary.uploader.destroy(public_id)
                         print(f"🗑️ Imagem excluída do Cloudinary: {public_id}")
             except Exception as e:
-                print(f"⚠️ Erro ao excluir imagem do Cloudinary: {e}")
+                print(f"⚠️ Erro ao excluir imagem: {e}")
         
         cursor.execute("DELETE FROM noticias WHERE id = %s", (id,))
         conn.commit()
