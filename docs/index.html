@@ -232,13 +232,13 @@
         .btn-prematricula { background: linear-gradient(135deg, #ff9800, #f57c00, #ff9800); background-size: 200% 200%; animation: gradientShift 3s ease infinite; color: white; border: none; padding: 14px 35px; border-radius: 50px; font-weight: 800; font-size: 1rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.3s; }
         .btn-prematricula:hover { transform: scale(1.05); }
  
-        /* ==================== MURAL DE NOTÍCIAS (MODELO G1) ==================== */
+        /* ==================== MURAL DE NOTÍCIAS (MODELO G1 - IMAGEM ORIGINAL) ==================== */
         .mural-noticias-section { max-width: 80%; margin: 0 auto 30px; position: relative; z-index: 1; }
         .mural-titulo { text-align: center; color: #003399; font-family: 'Montserrat'; font-size: 1.6rem; font-weight: 900; margin-bottom: 25px; }
         body.dark-mode .mural-titulo { color: #60a5fa; }
         .mural-lista { display: flex; flex-direction: column; gap: 20px; }
         
-        /* CARD MODELO G1 */
+        /* CARD MODELO G1 - IMAGEM ORIGINAL */
         .noticia-destaque { 
             background: white; 
             border-radius: 16px; 
@@ -247,8 +247,9 @@
             transition: all 0.3s; 
             cursor: pointer; 
             border-left: 5px solid #0047AB;
-            display: grid;
-            grid-template-columns: 280px 1fr;
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
         }
         body.dark-mode .noticia-destaque { background: #1e293b; }
         .noticia-destaque:hover { 
@@ -256,22 +257,27 @@
             box-shadow: 0 10px 30px rgba(0,71,171,0.15); 
         }
         
-        /* IMAGEM À ESQUERDA */
+        /* IMAGEM - TAMANHO ORIGINAL (sem cortar) */
         .noticia-destaque-imagem { 
-            width: 280px; 
-            height: 200px; 
-            overflow: hidden; 
-            background: linear-gradient(135deg, #003399, #0047AB); 
+            width: 280px;
+            min-width: 280px;
+            max-width: 280px;
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            flex-shrink: 0;
+            background: #f0f4f8;
+            overflow: hidden;
+            padding: 10px;
         }
+        body.dark-mode .noticia-destaque-imagem { background: #0f172a; }
         .noticia-destaque-imagem img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
+            max-width: 100%;
+            max-height: 200px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
             display: block;
+            border-radius: 8px;
             transition: transform 0.4s ease;
         }
         .noticia-destaque:hover .noticia-destaque-imagem img {
@@ -279,15 +285,17 @@
         }
         .noticia-destaque-imagem .sem-imagem { 
             font-size: 3rem; 
-            color: rgba(255,255,255,0.5); 
+            color: #94a3b8;
         }
         
         /* CONTEÚDO À DIREITA */
         .noticia-destaque-conteudo { 
+            flex: 1;
             padding: 20px 25px; 
             display: flex; 
             flex-direction: column; 
             justify-content: space-between; 
+            min-width: 0;
         }
         .noticia-destaque-titulo { 
             font-family: 'Montserrat'; 
@@ -346,11 +354,18 @@
         /* RESPONSIVO - MURAL */
         @media (max-width: 768px) {
             .noticia-destaque { 
-                grid-template-columns: 1fr; 
+                flex-direction: column;
             }
             .noticia-destaque-imagem { 
                 width: 100%; 
-                height: 200px; 
+                min-width: 100%;
+                max-width: 100%;
+                padding: 15px;
+            }
+            .noticia-destaque-imagem img {
+                max-height: 250px;
+                width: auto;
+                height: auto;
             }
             .noticia-destaque-titulo { font-size: 1.1rem; }
             .noticia-destaque-texto { font-size: 0.9rem; -webkit-line-clamp: 5; }
@@ -1265,7 +1280,7 @@
         if (localStorage.getItem('acessibilidade') === 'active') { document.body.classList.add('acessibilidade'); document.getElementById('btnAcessibilidade').classList.add('ativo'); }
 
         const observer = new IntersectionObserver(entries => {
-            entries.forEach(e => { if (e.isIntersecting) { e.target.style.animation='fadeInUp 0.6s ease forwards'; observer.unobserve(e.target); } });
+            entries.forEach(e => { if (e.isIntersecting) { e.style.animation='fadeInUp 0.6s ease forwards'; observer.unobserve(e.target); } });
         }, { threshold: 0.1 });
         document.querySelectorAll('.card, .categorias-container, .patrocinadores, .loc-card, .info-card, .equipe-section').forEach(el => { el.style.opacity='0'; observer.observe(el); });
 
