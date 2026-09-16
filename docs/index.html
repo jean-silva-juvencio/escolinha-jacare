@@ -36,7 +36,6 @@
         body.acessibilidade .barra-superior, body.acessibilidade .card, body.acessibilidade .categorias-container, body.acessibilidade .patrocinadores, body.acessibilidade .loc-card, body.acessibilidade .info-card, body.acessibilidade footer { background: #000 !important; color: #FFD700 !important; border-color: #FFD700 !important; }
         body.acessibilidade .btn-prematricula, body.acessibilidade .btn-mapa, body.acessibilidade .btn-tema, body.acessibilidade .hamburger { background: #FFD700 !important; color: #000 !important; }
         body.acessibilidade .clima-widget { background: rgba(255,215,0,0.2) !important; color: #FFD700 !important; }
- 
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
         @keyframes pulseJump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
@@ -64,89 +63,20 @@
         @keyframes pingVermelho { 0% { box-shadow: 0 0 0 0 rgba(239,68,68,0.7); } 70% { box-shadow: 0 0 0 14px rgba(239,68,68,0); } 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); } }
         .foto-online { animation: pingVerde 2s ease-in-out infinite !important; border-color: #10b981 !important; }
         .foto-offline { animation: pingVermelho 2s ease-in-out infinite !important; border-color: #ef4444 !important; }
- 
         .stagger-item { opacity: 0; }
- 
-        /* ==================== SPLASH SCREEN ==================== */
-        .splash-screen {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #ffffff;
-            z-index: 99999;
-            display: flex; align-items: center; justify-content: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
+        .splash-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 99999; display: flex; align-items: center; justify-content: center; transition: opacity 0.6s ease, visibility 0.6s ease; }
         .splash-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        .splash-content {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; padding: 20px; max-width: 90%;
-        }
-        .splash-titulo {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2rem; font-weight: 900;
-            letter-spacing: 2px; margin-bottom: 12px;
-            background: linear-gradient(90deg, #003399 0%, #003399 50%, #FFD700 50%, #FFD700 100%);
-            background-size: 200% 100%;
-            background-position: 100% 0;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: splashTexto 5s linear forwards;
-        }
-        @keyframes splashTexto {
-            0% { background-position: 100% 0; }
-            100% { background-position: 0% 0; }
-        }
-        .splash-subtitulo {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.95rem; font-weight: 700;
-            letter-spacing: 4px;
-            color: #00aaff;
-            margin-bottom: 35px;
-        }
-        .splash-barra {
-            width: 280px; max-width: 80vw;
-            height: 4px;
-            background: #e2e8f0;
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-        }
-        .splash-barra-progresso {
-            height: 100%; width: 0%;
-            background: linear-gradient(90deg, #003399, #00aaff);
-            border-radius: 4px;
-            animation: splashBarra 5s linear forwards;
-            position: relative;
-        }
-        .splash-barra-progresso::after {
-            content: '';
-            position: absolute; top: 0; right: 0;
-            width: 40px; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8));
-            animation: splashBrilho 1s linear infinite;
-        }
-        @keyframes splashBarra {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-        @keyframes splashBrilho {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        @media (max-width: 400px) {
-            .splash-titulo { font-size: 1.4rem; }
-            .splash-subtitulo { font-size: 0.75rem; letter-spacing: 3px; }
-            .splash-barra { width: 220px; }
-        }
-        @media (min-width: 768px) {
-            .splash-titulo { font-size: 2.5rem; }
-            .splash-subtitulo { font-size: 1.1rem; }
-            .splash-barra { width: 350px; }
-        }
- 
-        /* BARRA SUPERIOR */
+        .splash-content { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; max-width: 90%; }
+        .splash-titulo { font-family: 'Montserrat', sans-serif; font-size: 2rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 12px; background: linear-gradient(90deg, #003399 0%, #003399 50%, #FFD700 50%, #FFD700 100%); background-size: 200% 100%; background-position: 100% 0; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: splashTexto 5s linear forwards; }
+        @keyframes splashTexto { 0% { background-position: 100% 0; } 100% { background-position: 0% 0; } }
+        .splash-subtitulo { font-family: 'Montserrat', sans-serif; font-size: 0.95rem; font-weight: 700; letter-spacing: 4px; color: #00aaff; margin-bottom: 35px; }
+        .splash-barra { width: 280px; max-width: 80vw; height: 4px; background: #e2e8f0; border-radius: 4px; overflow: hidden; position: relative; }
+        .splash-barra-progresso { height: 100%; width: 0%; background: linear-gradient(90deg, #003399, #00aaff); border-radius: 4px; animation: splashBarra 5s linear forwards; position: relative; }
+        .splash-barra-progresso::after { content: ''; position: absolute; top: 0; right: 0; width: 40px; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8)); animation: splashBrilho 1s linear infinite; }
+        @keyframes splashBarra { 0% { width: 0%; } 100% { width: 100%; } }
+        @keyframes splashBrilho { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        @media (max-width: 400px) { .splash-titulo { font-size: 1.4rem; } .splash-subtitulo { font-size: 0.75rem; letter-spacing: 3px; } .splash-barra { width: 220px; } }
+        @media (min-width: 768px) { .splash-titulo { font-size: 2.5rem; } .splash-subtitulo { font-size: 1.1rem; } .splash-barra { width: 350px; } }
         .barra-superior { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 10px 5%; }
         .container-superior { width: 100%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
         .logo-titulo { display: flex; align-items: center; gap: 10px; }
@@ -169,8 +99,6 @@
         .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
         .hamburger.active span:nth-child(2) { opacity: 0; }
         .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
- 
-        /* BARRA NOTICIAS */
         .barra-noticias { position: fixed; top: 72px; left: 0; right: 0; z-index: 999; background: white; padding: 7px 5%; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; }
         .container-noticias { width: 100%; display: flex; align-items: center; gap: 12px; }
         .selo-ao-vivo { display: inline-flex; align-items: center; gap: 5px; background: #dc2626; color: white; font-weight: 700; font-size: 0.7rem; padding: 4px 10px; border-radius: 30px; white-space: nowrap; flex-shrink: 0; animation: pulseSelo 1.5s ease-in-out infinite; }
@@ -178,19 +106,13 @@
         .ticker-wrapper { flex: 1; overflow: hidden; position: relative; }
         .ticker-content { display: inline-block; white-space: nowrap; will-change: transform; }
         .ticker-content span { display: inline-block; margin-right: 40px; background: rgba(0,51,153,0.08); padding: 4px 15px; border-radius: 40px; font-size: 0.8rem; font-weight: 600; color: #003399; }
- 
-        /* MENU MOBILE */
         .menu-mobile { position: fixed; top: 0; left: -280px; width: 280px; height: 100%; background: white; z-index: 9999; transition: left 0.3s ease; padding: 100px 20px 20px; box-shadow: 2px 0 10px rgba(0,0,0,0.2); }
         body.dark-mode .menu-mobile { background: #1e293b; }
         .menu-mobile a { display: block; padding: 15px; text-decoration: none; color: #1e293b; font-weight: 600; border-bottom: 1px solid #e2e8f0; }
         body.dark-mode .menu-mobile a { color: #e2e8f0; border-bottom-color: #334155; }
         .menu-mobile a:hover { background: #0047AB; color: white; border-radius: 12px; }
         .menu-mobile img { width: 22px; margin-right: 12px; vertical-align: middle; }
- 
-        /* CONTEUDO */
         .conteudo { max-width: 80%; margin: 0 auto; padding: 170px 0 20px; position: relative; z-index: 1; }
- 
-        /* HERO */
         .hero { position: relative; margin-top: 90px; margin-bottom: 30px; border-radius: 24px; overflow: hidden; min-height: 400px; background: linear-gradient(135deg, #003399, #0047AB); display: flex; align-items: center; justify-content: center; text-align: center; }
         body.dark-mode .hero { background: transparent; overflow: visible; }
         body.dark-mode .banner-espacial { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 24px; overflow: hidden; z-index: 0; }
@@ -231,177 +153,46 @@
         .hero-content p { font-size: 1.1rem; margin-bottom: 30px; opacity: 0.9; }
         .btn-prematricula { background: linear-gradient(135deg, #ff9800, #f57c00, #ff9800); background-size: 200% 200%; animation: gradientShift 3s ease infinite; color: white; border: none; padding: 14px 35px; border-radius: 50px; font-weight: 800; font-size: 1rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.3s; }
         .btn-prematricula:hover { transform: scale(1.05); }
- 
-        /* ==================== MURAL DE NOTÍCIAS (MODELO G1 - IMAGEM GRANDE) ==================== */
         .mural-noticias-section { max-width: 80%; margin: 0 auto 30px; position: relative; z-index: 1; }
         .mural-titulo { text-align: center; color: #003399; font-family: 'Montserrat'; font-size: 1.6rem; font-weight: 900; margin-bottom: 25px; }
         body.dark-mode .mural-titulo { color: #60a5fa; }
         .mural-lista { display: flex; flex-direction: column; gap: 20px; }
-        
-        /* CARD MODELO G1 - IMAGEM GRANDE */
-        .noticia-destaque { 
-            background: white; 
-            border-radius: 16px; 
-            overflow: hidden;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.08); 
-            transition: all 0.3s; 
-            cursor: pointer; 
-            border-left: 5px solid #0047AB;
-            display: flex;
-            flex-direction: row;
-            align-items: stretch;
-        }
+        .noticia-destaque { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s; cursor: pointer; border-left: 5px solid #0047AB; display: flex; flex-direction: row; align-items: stretch; }
         body.dark-mode .noticia-destaque { background: #1e293b; }
-        .noticia-destaque:hover { 
-            transform: translateY(-3px); 
-            box-shadow: 0 10px 30px rgba(0,71,171,0.15); 
-        }
-        
-        /* IMAGEM GRANDE - SEM CORTAR */
-        .noticia-destaque-imagem { 
-            width: 400px;
-            min-width: 400px;
-            max-width: 400px;
-            height: 280px;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            background: #f0f4f8;
-            overflow: hidden;
-            padding: 8px;
-            flex-shrink: 0;
-        }
+        .noticia-destaque:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,71,171,0.15); }
+        .noticia-destaque-imagem { width: 400px; min-width: 400px; max-width: 400px; height: 280px; display: flex; align-items: center; justify-content: center; background: #f0f4f8; overflow: hidden; padding: 8px; flex-shrink: 0; }
         body.dark-mode .noticia-destaque-imagem { background: #0f172a; }
-        .noticia-destaque-imagem img { 
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            display: block;
-            border-radius: 8px;
-            transition: transform 0.4s ease;
-        }
-        .noticia-destaque:hover .noticia-destaque-imagem img {
-            transform: scale(1.03);
-        }
-        .noticia-destaque-imagem .sem-imagem { 
-            font-size: 4rem; 
-            color: #94a3b8;
-        }
-        
-        /* CONTEÚDO À DIREITA */
-        .noticia-destaque-conteudo { 
-            flex: 1;
-            padding: 25px 30px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
-            min-width: 0;
-        }
-        .noticia-destaque-titulo { 
-            font-family: 'Montserrat'; 
-            font-weight: 800; 
-            font-size: 1.4rem; 
-            color: #003399; 
-            margin-bottom: 15px; 
-            line-height: 1.3; 
-        }
+        .noticia-destaque-imagem img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; border-radius: 8px; transition: transform 0.4s ease; }
+        .noticia-destaque:hover .noticia-destaque-imagem img { transform: scale(1.03); }
+        .noticia-destaque-imagem .sem-imagem { font-size: 4rem; color: #94a3b8; }
+        .noticia-destaque-conteudo { flex: 1; padding: 25px 30px; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; }
+        .noticia-destaque-titulo { font-family: 'Montserrat'; font-weight: 800; font-size: 1.4rem; color: #003399; margin-bottom: 15px; line-height: 1.3; }
         body.dark-mode .noticia-destaque-titulo { color: #60a5fa; }
-        .noticia-destaque-texto { 
-            font-size: 1rem; 
-            color: #555; 
-            line-height: 1.6; 
-            margin-bottom: 20px; 
-            display: -webkit-box; 
-            -webkit-line-clamp: 5; 
-            -webkit-box-orient: vertical; 
-            overflow: hidden; 
-        }
+        .noticia-destaque-texto { font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
         body.dark-mode .noticia-destaque-texto { color: #94a3b8; }
-        .noticia-destaque-footer { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            flex-wrap: wrap; 
-            gap: 10px; 
-            padding-top: 15px;
-            border-top: 1px solid #f1f5f9;
-        }
+        .noticia-destaque-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding-top: 15px; border-top: 1px solid #f1f5f9; }
         body.dark-mode .noticia-destaque-footer { border-top-color: #334155; }
-        .noticia-destaque-data { 
-            font-size: 0.8rem; 
-            color: #888; 
-            font-weight: 600; 
-        }
-        .noticia-destaque-btn { 
-            background: #0047AB; 
-            color: white; 
-            border: none; 
-            padding: 10px 22px; 
-            border-radius: 40px; 
-            font-size: 0.85rem; 
-            font-weight: 700; 
-            cursor: pointer; 
-            transition: all 0.2s; 
-        }
-        .noticia-destaque-btn:hover { 
-            background: #003399; 
-            transform: scale(1.05); 
-        }
+        .noticia-destaque-data { font-size: 0.8rem; color: #888; font-weight: 600; }
+        .noticia-destaque-btn { background: #0047AB; color: white; border: none; padding: 10px 22px; border-radius: 40px; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .noticia-destaque-btn:hover { background: #003399; transform: scale(1.05); }
         .mural-vazio { text-align: center; padding: 50px; background: white; border-radius: 20px; color: #888; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
         body.dark-mode .mural-vazio { background: #1e293b; color: #94a3b8; }
         .mural-vazio .icone { font-size: 3rem; margin-bottom: 15px; opacity: 0.5; }
-        
-        /* RESPONSIVO - MURAL */
         @media (max-width: 768px) {
-            .noticia-destaque { 
-                flex-direction: column;
-            }
-            .noticia-destaque-imagem { 
-                width: 100%; 
-                min-width: 100%;
-                max-width: 100%;
-                height: 250px;
-                padding: 10px;
-            }
-            .noticia-destaque-imagem img {
-                max-height: 240px;
-                width: auto;
-                height: auto;
-            }
+            .noticia-destaque { flex-direction: column; }
+            .noticia-destaque-imagem { width: 100%; min-width: 100%; max-width: 100%; height: 250px; padding: 10px; }
+            .noticia-destaque-imagem img { max-height: 240px; width: auto; height: auto; }
             .noticia-destaque-titulo { font-size: 1.15rem; }
             .noticia-destaque-texto { font-size: 0.9rem; -webkit-line-clamp: 5; }
         }
- 
-        /* MODAL NOTÍCIA COMPLETA - IMAGEM INTEIRA */
         .modal-noticia-completa { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px); justify-content: center; align-items: center; z-index: 3000; padding: 20px; }
         .modal-noticia-completa.ativo { display: flex; }
         .modal-noticia-completa-content { background: white; border-radius: 28px; max-width: 750px; width: 100%; max-height: 90vh; overflow-y: auto; animation: fadeInUp 0.3s ease; }
         body.dark-mode .modal-noticia-completa-content { background: #1e293b; }
         .modal-noticia-completa-header { position: relative; }
-        .modal-noticia-completa-imagem { 
-            width: 100%; 
-            min-height: 200px;
-            max-height: 500px;
-            background: #f0f4f8; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            border-radius: 28px 28px 0 0;
-            overflow: hidden;
-            padding: 15px;
-        }
+        .modal-noticia-completa-imagem { width: 100%; min-height: 200px; max-height: 500px; background: #f0f4f8; display: flex; align-items: center; justify-content: center; border-radius: 28px 28px 0 0; overflow: hidden; padding: 15px; }
         body.dark-mode .modal-noticia-completa-imagem { background: #0f172a; }
-        .modal-noticia-completa-imagem img {
-            max-width: 100%;
-            max-height: 470px;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            display: block;
-            border-radius: 12px;
-        }
+        .modal-noticia-completa-imagem img { max-width: 100%; max-height: 470px; width: auto; height: auto; object-fit: contain; display: block; border-radius: 12px; }
         .modal-noticia-completa-imagem .sem-imagem-modal { font-size: 5rem; color: #94a3b8; }
         .modal-noticia-completa-fechar { position: absolute; top: 15px; right: 15px; width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.6); color: white; border: none; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; z-index: 10; }
         .modal-noticia-completa-fechar:hover { background: rgba(0,0,0,0.8); transform: scale(1.1); }
@@ -411,8 +202,6 @@
         .modal-noticia-completa-data { font-size: 0.8rem; color: #888; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
         .modal-noticia-completa-texto { font-size: 1rem; color: #444; line-height: 1.7; white-space: pre-wrap; }
         body.dark-mode .modal-noticia-completa-texto { color: #cbd5e1; }
- 
-        /* INDICADORES */
         .indicadores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
         .indicador-card { background: white; border-radius: 20px; padding: 25px 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s; cursor: pointer; animation: bounce 2s ease-in-out infinite; }
         .indicador-card:hover { transform: translateY(-5px); animation-play-state: paused; box-shadow: 0 15px 30px rgba(0,71,171,0.15); }
@@ -422,8 +211,6 @@
         .indicador-card .label { font-size: 0.85rem; color: #666; }
         body.dark-mode .indicador-card .label { color: #94a3b8; }
         .indicador-card .detalhe { font-size: 0.7rem; color: #999; margin-top: 5px; }
- 
-        /* CARD GERAL */
         .card { background: white; border-radius: 24px; padding: 35px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
         .card h2 { font-family: 'Montserrat'; color: #003399; font-size: 1.8rem; margin-bottom: 20px; text-align: center; }
         .valores-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 25px; }
@@ -433,8 +220,6 @@
         .valor-item .emoji { font-size: 2.5rem; margin-bottom: 12px; display: block; }
         .valor-item h3 { font-size: 1.3rem; margin-bottom: 10px; color: #003399; }
         body.dark-mode .valor-item h3 { color: #60a5fa; }
- 
-        /* CATEGORIAS */
         .categorias-container { background: white; padding: 35px; border-radius: 24px; margin-bottom: 30px; }
         .categorias-container h2 { font-family: 'Montserrat'; color: #003399; font-size: 1.8rem; margin-bottom: 30px; text-align: center; }
         .grid-categorias { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 25px; }
@@ -443,8 +228,6 @@
         .cat-item:hover { transform: translateY(-5px); background: #0047AB; color: white; }
         .cat-item .emoji-cat { font-size: 2rem; display: block; margin-bottom: 10px; }
         .info-idades { background: #f0f7ff; padding: 15px; border-radius: 16px; text-align: center; font-size: 0.9rem; }
- 
-        /* INFORMAÇÕES */
         .info-card { background: white; border-radius: 24px; padding: 35px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
         .info-card h2 { font-family: 'Montserrat'; color: #003399; font-size: 1.8rem; margin-bottom: 25px; text-align: center; }
         .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -456,8 +239,6 @@
         .info-item p { font-size: 0.85rem; color: #555; line-height: 1.5; }
         body.dark-mode .info-item p { color: #94a3b8; }
         .info-item a { color: #0047AB; text-decoration: none; font-weight: 600; }
- 
-        /* PATROCINADORES TICKER */
         .patrocinadores { background: white; padding: 35px; border-radius: 24px; margin-bottom: 30px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.05); overflow: hidden; }
         .patrocinadores h2 { font-family: 'Montserrat'; color: #003399; font-size: 1.8rem; margin-bottom: 25px; }
         body.dark-mode .patrocinadores h2 { color: #60a5fa; }
@@ -475,8 +256,6 @@
         .chamada-patrocinio { margin-top: 20px; }
         .chamada-patrocinio a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #0047AB; font-weight: 600; }
         body.dark-mode .chamada-patrocinio a { color: #60a5fa; }
- 
-        /* EQUIPE */
         .equipe-section { background: white; padding: 35px; border-radius: 24px; margin-bottom: 30px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
         .equipe-section h2 { font-family: 'Montserrat'; color: #003399; font-size: 1.8rem; margin-bottom: 30px; }
         body.dark-mode .equipe-section h2 { color: #60a5fa; }
@@ -490,19 +269,14 @@
         .equipe-cargo { font-size: 0.8rem; color: #666; margin-bottom: 4px; font-weight: 500; }
         body.dark-mode .equipe-cargo { color: #94a3b8; }
         .equipe-frase { font-size: 0.75rem; color: #888; font-style: italic; margin-bottom: 15px; }
- 
-        /* INDICADOR ONLINE */
         .status-online { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 700; padding: 5px 12px; border-radius: 40px; margin-bottom: 12px; }
         .status-online.online { background: #d1fae5; color: #059669; }
         .status-online.offline { background: #fee2e2; color: #dc2626; }
         .status-ponto { width: 8px; height: 8px; border-radius: 50%; }
         .status-online.online .status-ponto { background: #10b981; animation: piscar 1.5s ease-in-out infinite; }
         .status-online.offline .status-ponto { background: #ef4444; }
- 
         .equipe-instagram { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; text-decoration: none; padding: 8px 16px; border-radius: 40px; font-size: 0.75rem; font-weight: 700; transition: all 0.3s; }
         .equipe-instagram:hover { transform: scale(1.05); }
- 
-        /* CONTATO INTERNO */
         .contato-interno { border-top: 2px solid #e2e8f0; margin-top: 20px; padding-top: 20px; text-align: left; }
         body.dark-mode .contato-interno { border-top-color: #334155; }
         .contato-interno h3 { font-family: 'Montserrat'; color: #003399; font-size: 1rem; margin-bottom: 15px; text-align: center; }
@@ -524,23 +298,17 @@
         body.dark-mode .contato-sucesso { background: #064e3b; border-color: #10b981; }
         .contato-sucesso p { color: #059669; font-weight: 600; font-size: 0.85rem; }
         body.dark-mode .contato-sucesso p { color: #34d399; }
- 
-        /* LOCALIZAÇÃO */
         .loc-card { background: white; padding: 30px; border-radius: 24px; text-align: center; border: 3px solid #00aaff; margin-bottom: 30px; }
         body.dark-mode .loc-card { background: #1e293b; }
         .mapa-container { width: 100%; height: 350px; border-radius: 15px; overflow: hidden; margin: 15px 0; }
         .mapa-container iframe { width: 100%; height: 100%; border: 0; }
         .btn-mapa { background: #0047AB; color: white; text-decoration: none; padding: 10px 20px; border-radius: 40px; display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; }
- 
-        /* RODAPÉ */
         footer { background: #003399; color: white; text-align: center; padding: 35px 5%; width: 100%; }
         footer a { color: white; text-decoration: none; }
         .contato-footer { margin-top: 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .contato-footer a { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15); padding: 8px 16px; border-radius: 40px; transition: all 0.3s; }
         .contato-footer a:hover { background: rgba(255,255,255,0.25); }
         .rights { margin-top: 20px; font-size: 0.8rem; opacity: 0.8; }
- 
-        /* DEPOIMENTOS */
         .depoimentos-section { max-width: 80%; margin: 30px auto 0; padding: 0 0 10px; position: relative; z-index: 1; }
         .depoimentos-titulo { text-align: center; color: #003399; font-family: 'Montserrat'; font-size: 1.4rem; font-weight: 900; margin-bottom: 18px; }
         body.dark-mode .depoimentos-titulo { color: white; }
@@ -565,14 +333,10 @@
         body.dark-mode .carrossel-dot.ativo { background: white; }
         .depoimentos-vazio { text-align: center; color: #003399; padding: 20px; font-size: 0.9rem; font-weight: 600; }
         body.dark-mode .depoimentos-vazio { color: rgba(255,255,255,0.7); }
- 
-        /* BOTÃO TOPO */
         .btn-topo { position: fixed; bottom: 25px; right: 20px; width: 50px; height: 50px; background: #0047AB; color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.4rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.3s; }
         .btn-topo.visible { opacity: 1; visibility: visible; }
         .toast { position: fixed; bottom: 100px; right: 20px; background: white; padding: 8px 16px; border-radius: 40px; z-index: 1100; transform: translateX(120%); transition: transform 0.3s ease; font-size: 0.8rem; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
         .toast.show { transform: translateX(0); }
- 
-        /* ===================== RESPONSIVO ===================== */
         @media (max-width: 768px) {
             .depoimentos-section { max-width: 95%; }
             .mural-noticias-section { max-width: 95%; }
@@ -619,13 +383,11 @@
             body.dark-mode .orbit-ring:nth-child(10) { width: 120px; height: 120px; }
             body.dark-mode .orbit-ring:nth-child(11) { width: 400px; height: 400px; }
         }
- 
         @media (min-width: 1200px) { .conteudo { max-width: 70%; } .mural-noticias-section { max-width: 70%; } }
     </style>
 </head>   
 <body>
 
-<!-- ==================== SPLASH SCREEN ==================== -->
 <div id="splashScreen" class="splash-screen">
     <div class="splash-content">
         <h1 class="splash-titulo">ESCOLINHA DO JACARÉ</h1>
@@ -636,7 +398,6 @@
     </div>
 </div>
 
-<!-- MENU MOBILE -->
 <div class="menu-mobile" id="menuMobile">
     <a href="index.html">🏠 INÍCIO</a>
     <a href="diretoria.html">📊 DIRETORIA</a>
@@ -650,7 +411,6 @@
     <a href="https://maps.app.goo.gl/Sz58rBrkoswb7wSq5" target="_blank"><img src="icones/maps.png" alt="Mapa"> LOCALIZAÇÃO</a>
 </div>
 
-<!-- BARRA SUPERIOR -->
 <div class="barra-superior">
     <div class="container-superior">
         <div class="logo-titulo">
@@ -677,7 +437,6 @@
     </div>
 </div>
 
-<!-- BARRA DE NOTÍCIAS -->
 <div class="barra-noticias">
     <div class="container-noticias">
         <div class="selo-ao-vivo"><span class="ponto-vivo"></span>AO VIVO</div>
@@ -687,7 +446,6 @@
     </div>
 </div>
 
-<!-- BANNER -->
 <div class="hero">
     <div class="banner-espacial">
         <div class="banner-bg"></div>
@@ -716,7 +474,6 @@
     </div>
 </div>
 
-<!-- ==================== MURAL DE NOTÍCIAS ==================== -->
 <div class="mural-noticias-section">
     <div class="mural-titulo">📰 DESTAQUES DA ESCOLINHA</div>
     <div class="mural-lista" id="muralNoticias">
@@ -727,7 +484,6 @@
     </div>
 </div>
 
-<!-- MODAL NOTÍCIA COMPLETA -->
 <div class="modal-noticia-completa" id="modalNoticiaCompleta">
     <div class="modal-noticia-completa-content">
         <div class="modal-noticia-completa-header">
@@ -742,7 +498,6 @@
     </div>
 </div>
 
-<!-- DEPOIMENTOS -->
 <div class="depoimentos-section">
     <div class="depoimentos-titulo">💬 O que as famílias dizem</div>
     <div class="carrossel-wrapper">
@@ -757,33 +512,13 @@
     </div>
 </div>
 
-<!-- CONTEÚDO PRINCIPAL -->
 <div class="conteudo">
 
     <div class="indicadores-grid">
-        <div class="indicador-card stagger-item">
-            <div class="icone">🏆</div>
-            <div class="valor" id="anosHistoria">28</div>
-            <div class="label">Anos de história</div>
-            <div class="detalhe">desde 1998</div>
-        </div>
-        <div class="indicador-card stagger-item">
-            <div class="icone">👥</div>
-            <div class="valor" id="totalAlunos">0</div>
-            <div class="label">Alunos ativos</div>
-        </div>
-        <div class="indicador-card stagger-item">
-            <div class="icone">⚽</div>
-            <div class="valor">5</div>
-            <div class="label">Modalidades</div>
-            <div class="detalhe">Futebol, Taekwondo, Tênis de Mesa, Ginástica, Judô</div>
-        </div>
-        <div class="indicador-card stagger-item">
-            <div class="icone">🎂</div>
-            <div class="valor">1998</div>
-            <div class="label">Ano de fundação</div>
-            <div class="detalhe">15 de abril</div>
-        </div>
+        <div class="indicador-card stagger-item"><div class="icone">🏆</div><div class="valor" id="anosHistoria">28</div><div class="label">Anos de história</div><div class="detalhe">desde 1998</div></div>
+        <div class="indicador-card stagger-item"><div class="icone">👥</div><div class="valor" id="totalAlunos">0</div><div class="label">Alunos ativos</div></div>
+        <div class="indicador-card stagger-item"><div class="icone">⚽</div><div class="valor">5</div><div class="label">Modalidades</div><div class="detalhe">Futebol, Taekwondo, Tênis de Mesa, Ginástica, Judô</div></div>
+        <div class="indicador-card stagger-item"><div class="icone">🎂</div><div class="valor">1998</div><div class="label">Ano de fundação</div><div class="detalhe">15 de abril</div></div>
     </div>
 
     <div class="card">
@@ -813,25 +548,12 @@
     <div class="info-card">
         <h2>ℹ️ INFORMAÇÕES</h2>
         <div class="info-grid">
-            <div class="info-item">
-                <span class="info-icone">🕐</span>
-                <h3>HORÁRIOS</h3>
-                <p>Treinos aos <strong>sábados</strong><br>das <strong>7:30 às 12:00</strong></p>
-            </div>
-            <div class="info-item">
-                <span class="info-icone">📍</span>
-                <h3>LOCALIZAÇÃO</h3>
-                <p>R. São Bernardo, 88<br>Alvorada I, Manaus - AM<br><a href="https://maps.app.goo.gl/Sz58rBrkoswb7wSq5" target="_blank">Ver no mapa →</a></p>
-            </div>
-            <div class="info-item">
-                <span class="info-icone">👕</span>
-                <h3>UNIFORME</h3>
-                <p>O uniforme é <strong>doado</strong> pela escolinha para todos os alunos matriculados</p>
-            </div>
+            <div class="info-item"><span class="info-icone">🕐</span><h3>HORÁRIOS</h3><p>Treinos aos <strong>sábados</strong><br>das <strong>7:30 às 12:00</strong></p></div>
+            <div class="info-item"><span class="info-icone">📍</span><h3>LOCALIZAÇÃO</h3><p>R. São Bernardo, 88<br>Alvorada I, Manaus - AM<br><a href="https://maps.app.goo.gl/Sz58rBrkoswb7wSq5" target="_blank">Ver no mapa →</a></p></div>
+            <div class="info-item"><span class="info-icone">👕</span><h3>UNIFORME</h3><p>O uniforme é <strong>doado</strong> pela escolinha para todos os alunos matriculados</p></div>
         </div>
     </div>
 
-    <!-- PATROCINADORES TICKER INFINITO -->
     <div class="patrocinadores">
         <h2>🏆 NOSSOS PATROCINADORES</h2>
         <div class="pat-ticker-wrapper">
@@ -854,7 +576,6 @@
         </div>
     </div>
 
-    <!-- DESENVOLVIMENTO -->
     <div class="equipe-section">
         <h2>💻 DESENVOLVIMENTO</h2>
         <div class="equipe-grid">
@@ -931,7 +652,7 @@
     </footer>
 </div>
 
-<button id="btnTopo" class="btn-topo" title="Voltar ao topo">⬆️</button> 
+<button id="btnTopo" class="btn-topo" title="Voltar ao topo">⬆️</button>
     <script>
     const API_URL = 'https://api-escolinha.onrender.com/api';
     let tickerAnimation = null;
@@ -968,9 +689,7 @@
                 const ativos = dados.filter(i => i.status === 'aprovado');
                 const totalAtivos = ativos.length;
                 const el = document.getElementById('totalAlunos');
-                if (el) {
-                    el.innerText = totalAtivos > 0 ? totalAtivos : '0';
-                }
+                if (el) { el.innerText = totalAtivos > 0 ? totalAtivos : '0'; }
                 console.log(`✅ ${totalAtivos} alunos ativos carregados do Neon`);
             }
         } catch(e) {
@@ -984,34 +703,22 @@
     async function carregarMuralNoticias() {
         const container = document.getElementById('muralNoticias');
         if (!container) return;
-        
         try {
             const r = await fetch(`${API_URL}/noticias`);
             if (!r.ok) throw new Error('Erro na API');
             const noticias = await r.json();
-            
             if (!Array.isArray(noticias) || noticias.length === 0) {
-                container.innerHTML = `
-                    <div class="mural-vazio">
-                        <div class="icone">📰</div>
-                        <p>Nenhuma notícia no momento</p>
-                    </div>
-                `;
+                container.innerHTML = '<div class="mural-vazio"><div class="icone">📰</div><p>Nenhuma notícia no momento</p></div>';
                 return;
             }
-            
             const noticiasRecentes = noticias.slice(0, 5);
-            
             container.innerHTML = noticiasRecentes.map(n => {
                 const dataFormatada = new Date(n.data_publicacao).toLocaleDateString('pt-BR');
                 const temImagem = n.imagem_url && n.imagem_url.trim() !== '';
-                
                 return `
                     <div class="noticia-destaque" onclick="abrirNoticiaCompleta(${n.id})">
                         <div class="noticia-destaque-imagem">
-                            ${temImagem 
-                                ? `<img src="${n.imagem_url}" alt="${n.titulo}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'sem-imagem\\'>📷</div>';">` 
-                                : '<div class="sem-imagem">📷</div>'}
+                            ${temImagem ? `<img src="${n.imagem_url}" alt="${n.titulo}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'sem-imagem\\'>📷</div>';">` : '<div class="sem-imagem">📷</div>'}
                         </div>
                         <div class="noticia-destaque-conteudo">
                             <div>
@@ -1026,16 +733,10 @@
                     </div>
                 `;
             }).join('');
-            
             console.log(`✅ ${noticiasRecentes.length} notícias carregadas no mural`);
         } catch(e) {
             console.error('❌ Erro ao carregar notícias:', e);
-            container.innerHTML = `
-                <div class="mural-vazio">
-                    <div class="icone">📰</div>
-                    <p>Nenhuma notícia no momento</p>
-                </div>
-            `;
+            container.innerHTML = '<div class="mural-vazio"><div class="icone">📰</div><p>Nenhuma notícia no momento</p></div>';
         }
     }
 
@@ -1048,25 +749,18 @@
                 const r = await fetch(`${API_URL}/noticias`);
                 noticiasCompletas = await r.json();
             }
-            
             const noticia = noticiasCompletas.find(n => n.id === id);
             if (!noticia) return;
-            
-            const dataFormatada = new Date(noticia.data_publicacao).toLocaleDateString('pt-BR', { 
-                day: '2-digit', month: 'long', year: 'numeric' 
-            });
-            
+            const dataFormatada = new Date(noticia.data_publicacao).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
             const modalImagem = document.getElementById('modalNoticiaImagem');
             if (noticia.imagem_url && noticia.imagem_url.trim() !== '') {
                 modalImagem.innerHTML = `<img src="${noticia.imagem_url}" style="max-width:100%;max-height:470px;width:auto;height:auto;object-fit:contain;display:block;border-radius:12px;" alt="${noticia.titulo}">`;
             } else {
                 modalImagem.innerHTML = '<div class="sem-imagem-modal">📷</div>';
             }
-            
             document.getElementById('modalNoticiaTitulo').innerText = noticia.titulo;
             document.getElementById('modalNoticiaData').innerHTML = `📅 ${dataFormatada}`;
             document.getElementById('modalNoticiaTexto').innerText = noticia.texto;
-            
             document.getElementById('modalNoticiaCompleta').classList.add('ativo');
         } catch(e) {
             console.error('Erro ao abrir notícia:', e);
@@ -1311,6 +1005,6 @@
             navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.update()));
         }
     });
-</script>
+    </script>
 </body>
 </html>
